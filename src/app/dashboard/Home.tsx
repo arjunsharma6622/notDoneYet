@@ -1,16 +1,13 @@
 "use client";
 
-import { followUser } from "@/actions/user";
 import ChooseRole from "@/components/ChooseRole";
-import { useState } from "react";
-import { toast } from "sonner";
 import useSWR from "swr";
 import Athlete from "./(athlete)/Athlete";
 import RecommendedUsers from "./(components)/RecommendedUsers";
+import VenueOwner from "./(venue)/VenueOwner";
 
 
 const Home = ({session} : any) => {
-  const [allUserPosts, setAllUserPosts] = useState([]);
 
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -31,7 +28,11 @@ const Home = ({session} : any) => {
               {userData?.role === "athlete" && (
                 <Athlete
                     userData={userData}
-                  allUserPosts={allUserPosts}
+                />
+              )}
+              {userData?.role === "venueOwner" && (
+                <VenueOwner
+                  userData={userData}
                 />
               )}
             </>

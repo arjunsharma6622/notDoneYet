@@ -1,6 +1,5 @@
 import React from 'react'
 import dateFormat from "dateformat";
-import ShowMoreText from "react-show-more-text";
 
 const AthleteExperienceCard = ({experience} : any) => {
   return (
@@ -72,19 +71,7 @@ const AthleteExperienceCard = ({experience} : any) => {
       <span className="text-base font-semibold">
         Description
       </span>
-
-      <ShowMoreText
-        /* Default options */
-        lines={2}
-        more="Show more"
-        className="content-css"
-        anchorClass="show-more-less-clickable"
-        expanded={false}
-        truncatedEndingComponent={"... "}
-        less={false}
-      >
         <p className="">{experience.description}</p>
-      </ShowMoreText>
     </div>
 
     <div className="text-sm py-2 pb-0 border-t">
@@ -92,18 +79,7 @@ const AthleteExperienceCard = ({experience} : any) => {
         Injury Information
       </span>
 
-      <ShowMoreText
-        /* Default options */
-        lines={2}
-        more="Show more"
-        className="content-css"
-        anchorClass="show-more-less-clickable"
-        expanded={false}
-        truncatedEndingComponent={"... "}
-        less={false}
-      >
         <p className="">{experience.healthInjury}</p>
-      </ShowMoreText>
     </div>
   </div>  )
 }

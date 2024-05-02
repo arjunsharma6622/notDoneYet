@@ -25,13 +25,12 @@ export const PATCH = async (request : NextRequest, { params } : { params: { user
 
 export const GET = async (request : NextRequest, { params } : { params: { userId: string } }) => {
   try {
-    connectDB();
+    await connectDB();
     const userID = params.userId;
-    const userData = await User.findById(userID).populate("posts");
+    const userData = await User.findById(userID)
     if (!userData) {
       throw new Error("User Not Found!");
     }
-
     return NextResponse.json(userData);
   } catch (err) {
     console.error(err);
