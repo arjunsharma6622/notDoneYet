@@ -1,0 +1,66 @@
+import { googleLogin } from "@/actions/Login";
+import { auth } from "@/auth";
+import { SignupForm } from "@/components/client/Form";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+
+const Page = async () => {
+  const session = await auth();
+  const user = session?.user;
+
+  if (user) redirect("/dashboard");
+
+  return (
+    <div className="flex justify-center items-center mt-20">
+      <Card className="w-[450px]">
+        <CardHeader className="">
+          <CardTitle>Signup</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <SignupForm />
+        </CardContent>
+        <CardFooter className="flex flex-col gap-6 mt-1">
+
+          <div className="w-full relative">
+            <hr className="w-full h-[1px]"/>
+          <span className="text-sm px-3 bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">Or</span>
+          </div>
+
+          <div className="flex gap-4 w-full">
+          <form action={googleLogin} className="w-full">
+            <Button type="submit" variant={"google"} className="w-full flex items-center justify-center gap-2">
+            <img src="./images/google.svg" alt="" className="w-5"/>
+
+              Login with Google
+            </Button>
+          </form>
+          <form action={googleLogin} className="w-full">
+            <Button type="submit" variant={"apple"} className="w-full flex items-center justify-center gap-2">
+            <img src="./images/apple.svg" alt="" className="w-5"/>
+              Login with Apple
+            </Button>
+          </form>
+          </div>
+
+          <p className="text-sm">
+            Already have an account?{" "}
+            <Link href="/login" className="text-blue-500">
+              Login
+            </Link>
+          </p>
+
+        </CardFooter>
+      </Card>
+    </div>
+  );
+};
+
+export default Page;
