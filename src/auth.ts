@@ -78,6 +78,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
       }
       return true;
-    }
+    },
+    jwt: async ({ token, user }) => {
+      await connectDB()
+      const userData = await User.findOne({ email: token?.email });
+      token._id = userData?._id;
+      return token;
+    },
+    session: async ({ session, token }) => {
+      if(session){
+        session.user._id = token?._id;
+      }
+      return session;
+    },
   }
 });
