@@ -13,7 +13,7 @@ const RecommendedUsers = ({userData} : {userData: any}) => {
 
     const handleFollowUser = async (userId : string) => {
         try {
-          followUser(userId, userData?._id);
+          await followUser(userId, userData?._id);
           console.log("done");
           toast.success("User Followed");
           console.log("done 2");

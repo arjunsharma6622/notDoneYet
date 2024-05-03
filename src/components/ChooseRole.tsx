@@ -1,8 +1,10 @@
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
 const ChooseRole = ({userData} : any) => {
+  const router = useRouter()
     const [choosenRole, setChoosenRole] : any = useState(null);
     const rolesData = [
         { value: "athlete", label: "Athlete", icon: "roleAthlete" },
@@ -17,7 +19,6 @@ const ChooseRole = ({userData} : any) => {
             role: choosenRole,
           });
           toast.success("Role updated successfully");
-          console.log(response.data);
         } catch (error) {
           console.error(error);
             toast.error("Error updating role");

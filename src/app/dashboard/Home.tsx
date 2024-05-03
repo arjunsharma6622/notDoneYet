@@ -5,6 +5,7 @@ import useSWR from "swr";
 import Athlete from "./(athlete)/Athlete";
 import RecommendedUsers from "./(components)/RecommendedUsers";
 import VenueOwner from "./(venue)/VenueOwner";
+import Brand from "./(brand)/Brand";
 
 
 const Home = ({session} : any) => {
@@ -35,6 +36,12 @@ const Home = ({session} : any) => {
                   userData={userData}
                 />
               )}
+              {
+                userData?.role === "brand" && (
+                  <Brand
+                    userData={userData}
+                  />
+                )}
             </>
           ) : (
             <ChooseRole userData={userData}/>

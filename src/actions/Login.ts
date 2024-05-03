@@ -21,4 +21,8 @@ const googleLogin = async () => {
   await signIn("google");
 }
 
-  export { credentialsLogin, googleLogin }
+const facebookLogin = async () => {
+  await signIn("facebook");
+}
+
+  export { credentialsLogin, googleLogin, facebookLogin }

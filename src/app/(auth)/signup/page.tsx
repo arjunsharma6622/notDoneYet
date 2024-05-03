@@ -42,12 +42,12 @@ const Page = async () => {
               Login with Google
             </Button>
           </form>
-          <form action={googleLogin} className="w-full">
+          {/* <form action={googleLogin} className="w-full">
             <Button type="submit" variant={"apple"} className="w-full flex items-center justify-center gap-2">
             <img src="./images/apple.svg" alt="" className="w-5"/>
               Login with Apple
             </Button>
-          </form>
+          </form> */}
           </div>
 
           <p className="text-sm">

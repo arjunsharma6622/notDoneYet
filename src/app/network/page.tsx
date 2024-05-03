@@ -1,7 +1,6 @@
 import fetchFollowing from '@/actions/fetchFollowing'
-import { unfollowUser } from '@/actions/user'
 import { auth } from '@/auth'
-import { toast } from 'sonner'
+import FollowingUserCard from './(components)/FollowingUserCard'
 
 
 const Page = async () => {
@@ -11,17 +10,6 @@ const Page = async () => {
     return data}).catch((err) => {
       console.log(err)
     })
-
-
-  const handleUnfollowUser = async (userId : string) => {
-    try {
-      await unfollowUser(userId, session.user._id);
-      console.log("done");
-      toast.success("User Unfollowed");
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
 
   return (
@@ -35,26 +23,7 @@ const Page = async () => {
 
       <div className='flex flex-col px-5'>
         {following?.map((follow : any, index : number) => (
-        <div key={follow._id} className={`flex gap-2 items-center justify-between py-5 ${index !== following.length - 1 && 'border-b border-gray-300'}`}>
-          <div className='flex gap-2'>
-          <div className='w-14'>
-          <img src={follow?.image} referrerPolicy='no-referrer' alt="" className='w-14 h-14 object-cover rounded-full'/>
-          </div>
-
-          <div>
-          <h1 className=''>{follow?.name}</h1>
-          <p className='text-gray-600 text-sm'>{follow?.bio}</p>
-          </div>
-          </div>
-
-          <div className='flex items-center gap-4 text-sm'>
-          <button className='px-4 py-2 bg-primary text-white rounded-md'>Message</button>
-          <form action={async () => { "use server"; handleUnfollowUser(follow._id)}}>
-          <button className='px-4 py-2 bg-red-500 text-white rounded-md' type='submit'>Unfollow</button>
-          </form>
-          </div>
-
-        </div>
+          <FollowingUserCard key={follow._id} follow={follow} following={following} index={index} session={session}/>
         ))}
       </div>
       </div>
