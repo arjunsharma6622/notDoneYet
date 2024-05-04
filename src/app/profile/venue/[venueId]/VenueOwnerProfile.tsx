@@ -3,12 +3,13 @@ import VenueCard from "@/components/VenueCard";
 import { BASE_URL } from "@/lib/utils";
 import axios from "axios";
 import { GrMapLocation } from "react-icons/gr";
+import ProfilePostCard from "../../(components)/ProfilePostCard";
 
-
-const VenueOwnerProfile = async ({venueData} : any) => {
-
-    const allVenues = await axios.get(`${BASE_URL}/api/venue/user/${venueData._id}`).then((res) => res.data).catch((err) => console.error("Error", err))
-
+const VenueOwnerProfile = async ({ venueData }: any) => {
+  const allVenues = await axios
+    .get(`${BASE_URL}/api/venue/user/${venueData._id}`)
+    .then((res) => res.data)
+    .catch((err) => console.error("Error", err));
 
   return (
     <div>
@@ -31,20 +32,17 @@ const VenueOwnerProfile = async ({venueData} : any) => {
             alt=""
             className="absolute left-6 -bottom-10 border-white border-8 w-44 h-44 object-cover rounded-full"
           />
-
         </div>
 
         <div className="px-6 mt-10 flex flex-col">
-        <span className="text-xs">Venues</span>
+          <span className="text-xs">Venues</span>
 
           <div className="flex justify-between items-center">
-            
             <div className="flex items-center gap-4">
-            <h1 className="text-3xl font-bold">{venueData.name}</h1>
-            <GrMapLocation className="cursor-pointer h-6 w-6" />
+              <h1 className="text-3xl font-bold">{venueData.name}</h1>
+              <GrMapLocation className="cursor-pointer h-6 w-6" />
             </div>
           </div>
-
 
           <h1>{venueData.bio}</h1>
         </div>
@@ -52,20 +50,22 @@ const VenueOwnerProfile = async ({venueData} : any) => {
         <div className="px-6 mt-10 flex flex-col gap-4">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-bold">Venues</h2>
-
           </div>
-          {allVenues?.map((venue : any) => (
-            <VenueCard venueDetails={venue} key={venue._id}/>
+          {allVenues?.map((venue: any) => (
+            <VenueCard venueDetails={venue} key={venue._id} />
           ))}
+        </div>
+
+        <div className="px-3 md:px-6 mt-10 flex flex-col gap-4">
+          <div className="flex justify-between items-center">
+            <h2 className="text-xl font-bold">Activity</h2>
           </div>
 
-
-        <div className="px-6 mt-10 flex flex-col gap-2">
-          <div className="flex justify-between items-center gap-1">
-            <h2 className="text-xl font-bold">Posts</h2>
+          <div className="flex flex-col gap-2">
+            {venueData.posts.map((post: any, index: number) => (
+              <ProfilePostCard post={post} key={index} />
+            ))}
           </div>
-
-          
         </div>
 
         <div className="px-6 mt-10 flex flex-col gap-2">
@@ -79,18 +79,15 @@ const VenueOwnerProfile = async ({venueData} : any) => {
         <div className="px-6 mt-10 flex flex-col gap-4">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-bold">Previous Events</h2>
-
           </div>
 
           <div className="flex flex-col gap-2">
-            {venueData.events?.map((event : any, index : number) => (
-              <PastEventCard key={index} eventDetails={event}/>
+            {venueData.events?.map((event: any, index: number) => (
+              <PastEventCard key={index} eventDetails={event} />
             ))}
           </div>
         </div>
       </div>
-
-
     </div>
   );
 };

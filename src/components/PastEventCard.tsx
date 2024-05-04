@@ -1,8 +1,5 @@
+const PastEventCard = (eventDetails: any) => {
+  return <div>PastEventCard</div>;
+};
 
-const PastEventCard = (eventDetails : any) => {
-  return (
-    <div>PastEventCard</div>
-  )
-}
-
-export default PastEventCard
+export default PastEventCard;

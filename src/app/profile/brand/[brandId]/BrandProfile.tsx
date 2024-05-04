@@ -1,11 +1,11 @@
-import { followUser, unfollowUser } from '@/actions/user';
-import { auth } from '@/auth';
+import { followUser, unfollowUser } from "@/actions/user";
+import { auth } from "@/auth";
 
-const BrandProfile = async ({userData} : {userData : any}) => {
-  const session:any = await auth()
+const BrandProfile = async ({ userData }: { userData: any }) => {
+  const session: any = await auth();
 
   const handleFollowClick = async () => {
-    "use server"
+    "use server";
     try {
       await followUser(userData._id, session?.user?._id);
     } catch (err) {
@@ -14,7 +14,7 @@ const BrandProfile = async ({userData} : {userData : any}) => {
   };
 
   const handleUnfollowClick = async () => {
-    "use server"
+    "use server";
     try {
       await unfollowUser(userData._id, session?.user?._id);
     } catch (err) {
@@ -22,10 +22,7 @@ const BrandProfile = async ({userData} : {userData : any}) => {
     }
   };
 
+  return <div>BrandProfile</div>;
+};
 
-  return (
-    <div>BrandProfile</div>
-  )
-}
-
-export default BrandProfile
+export default BrandProfile;

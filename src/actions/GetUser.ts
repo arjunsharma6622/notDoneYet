@@ -1,16 +1,14 @@
-"use server"
+"use server";
 
 import { User } from "@/lib/models/UserModel";
-import { connectDB } from "@/lib/utils"
-import mongoose from 'mongoose';
-
+import { connectDB } from "@/lib/utils";
 
 export async function getUser(email: string) {
-    try {
-        await connectDB();
-        const user = await User.findOne({ email });
-        return user;
-    } catch (error) {
-        return (error as Error).message
-    }
+  try {
+    await connectDB();
+    const user = await User.findOne({ email });
+    return user;
+  } catch (error) {
+    return (error as Error).message;
+  }
 }

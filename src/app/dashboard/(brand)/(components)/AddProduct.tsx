@@ -4,9 +4,17 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiImage, FiX, FiXCircle } from "react-icons/fi";
 
-const AddProduct = ({ open, setOpen, user } : { open: boolean, setOpen: (open: boolean) => void, user: any }) => {
+const AddProduct = ({
+  open,
+  setOpen,
+  user,
+}: {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  user: any;
+}) => {
   const [userData, setUserData] = useState(user);
-  const [images, setImages] : any = useState([]);
+  const [images, setImages]: any = useState([]);
   const {
     register,
     handleSubmit,
@@ -14,7 +22,6 @@ const AddProduct = ({ open, setOpen, user } : { open: boolean, setOpen: (open: b
     reset,
     watch,
   } = useForm();
-
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -24,52 +31,47 @@ const AddProduct = ({ open, setOpen, user } : { open: boolean, setOpen: (open: b
     };
   }, []);
 
-  const handleAddProduct = (data : any) => {
-    
-  };
+  const handleAddProduct = (data: any) => {};
 
-  const handleImageChange = (e : any) => {
+  const handleImageChange = (e: any) => {
     const files = Array.from(e.target.files);
-    setImages((prevImages : any) => [...prevImages, ...files]);
+    setImages((prevImages: any) => [...prevImages, ...files]);
   };
 
-  const handleRemoveImage = (index : number) => {
+  const handleRemoveImage = (index: number) => {
     const imageUrl = URL.createObjectURL(images[index]);
     URL.revokeObjectURL(imageUrl);
-    setImages((prevImages : any) => prevImages.filter((_ : any, i : number) => i !== index));
+    setImages((prevImages: any) =>
+      prevImages.filter((_: any, i: number) => i !== index),
+    );
   };
 
-  const handleImages = async (images : any) => {
-    try{
+  const handleImages = async (images: any) => {
+    try {
       const imageUrls = [];
 
-      for(let i=0; i<images.length; i++){
+      for (let i = 0; i < images.length; i++) {
         const image = images[i];
         console.log("image while uploading", image);
 
         const imageData = new FormData();
         imageData.append("file", image);
         imageData.append("upload_preset", "ml_default");
-        imageData.append("folder", `ndy/${userData?.name}/${watch('name')}`);
+        imageData.append("folder", `ndy/${userData?.name}/${watch("name")}`);
 
         const uploadResponse = await axios.post(
           "https://api.cloudinary.com/v1_1/dexnb3wk2/image/upload",
-          imageData
-        )
+          imageData,
+        );
 
         const imageUrl = uploadResponse.data.secure_url;
         imageUrls.push(imageUrl);
       }
       return imageUrls;
-
-    }
-
-    catch(err){
+    } catch (err) {
       console.error("Error uploading images to Cloudinary:", err);
     }
-  }
-
-
+  };
 
   return (
     <div>
@@ -164,7 +166,7 @@ const AddProduct = ({ open, setOpen, user } : { open: boolean, setOpen: (open: b
                       </div>
 
                       <div className="flex flex-wrap gap-2 mt-2">
-                        {images.map((image : any, index : number) => (
+                        {images.map((image: any, index: number) => (
                           <div key={index} className="relative w-1/4 h-1/4">
                             <img
                               src={URL.createObjectURL(image)}

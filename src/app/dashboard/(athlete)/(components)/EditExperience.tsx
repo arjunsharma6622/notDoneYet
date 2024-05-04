@@ -1,20 +1,39 @@
+import { updateUser } from "@/actions/updateUser";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
 import dateFormat from "dateformat";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiEdit2, FiImage, FiLink, FiTrash2, FiX } from "react-icons/fi";
+import { toast } from "sonner";
 
-const EditExperience = ({ user, open, setOpen } : { user: any, open: boolean, setOpen: (open: boolean) => void }) => {
-  const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
+const EditExperience = ({
+  user,
+  open,
+  setOpen,
+}: {
+  user: any;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}) => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const [userData, setUserData] = useState(user);
-  const [selectedExperience, setSelectedExperience] : any = useState(null);
+  const [selectedExperience, setSelectedExperience]: any = useState(null);
 
   useEffect(() => {
     if (selectedExperience) {
       reset(selectedExperience);
     }
-    reset({...selectedExperience, date : dateFormat(selectedExperience?.date, "isoDate")});
-
+    reset({
+      ...selectedExperience,
+      date: dateFormat(selectedExperience?.date, "isoDate"),
+    });
   }, [selectedExperience, reset]);
 
   useEffect(() => {
@@ -26,60 +45,53 @@ const EditExperience = ({ user, open, setOpen } : { user: any, open: boolean, se
   }, []);
 
   const onSubmit = handleSubmit(async (data) => {
-    // try {
-    //   console.log("In handle user update");
-    //   console.log(data);
+    try {
+      console.log("In handle user update");
+      console.log(data);
 
-    //   const updatedUserData = {
-    //     ...userData,
-    //     experience: userData.experience.map((experience) => {
-    //       if (experience._id === selectedExperience._id) {
-    //         return data;
-    //       }
-    //       return experience;
-    //     }),
-    //   };
+      const updatedUserData = {
+        ...userData,
+        experience: userData.experience.map((experience: any) => {
+          if (experience._id === selectedExperience._id) {
+            return data;
+          }
+          return experience;
+        }),
+      };
 
-    //   console.log("upddate experience data is");
-    //   console.log(updatedUserData);
+      console.log("upddate experience data is");
+      console.log(updatedUserData);
 
-    //   await axios.patch(`/api/user/${userData._id}`, updatedUserData);
+      await axios.patch(`/api/user/${userData._id}`, updatedUserData);
 
-    //   setSelectedExperience(null);
+      setSelectedExperience(null);
 
-
-    //   toast.success("Profile Updated", {
-    //     onClose: () => {
-    //       setOpen(false);
-    //     }
-    //   });
-    // } catch (err) {
-    //     toast.error("Profile Update Failed", {
-    //       onClose: () => {
-    //         setOpen(false);
-    //       }
-    //     })
-    //   console.log(err);
-    // }
+      toast.success("Profile Updated");
+      setOpen(false);
+      reset();
+      window.location.reload();
+    } catch (err) {
+      toast.error("Profile Update Failed");
+      console.log(err);
+    }
   });
 
-
-  const deleteExperience = async (experience : any) => {
-    // try {
-    //   const updatedUserData = {
-    //     ...userData,
-    //     experience: userData.experience.filter((exp : any) => exp._id !== experience._id),
-    //   };
-    //   await updateUser(updatedUserData);
-    //   toast.success("Profile Updated");
-    //   setOpen(false);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+  const deleteExperience = async (experience: any) => {
+    try {
+      const updatedUserData = {
+        ...userData,
+        experience: userData.experience.filter(
+          (exp: any) => exp._id !== experience._id,
+        ),
+      };
+      await updateUser(updatedUserData);
+      toast.success("Profile Updated");
+      setOpen(false);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
   };
-
-
-
 
   return (
     <div>
@@ -95,14 +107,18 @@ const EditExperience = ({ user, open, setOpen } : { user: any, open: boolean, se
             </div>
 
             {selectedExperience ? (
-              <form onSubmit={onSubmit} className="flex flex-col gap-6 overflow-scroll">
+              <form
+                onSubmit={onSubmit}
+                className="flex flex-col gap-6 overflow-scroll"
+              >
                 <div className="flex flex-col gap-6 px-6 py-4 overflow-y-scroll">
                   <div className="flex flex-col gap-2">
-                    <h2 className="text-xl font-semibold underline">Edit Tournament</h2>
+                    <h2 className="text-xl font-semibold underline">
+                      Edit Tournament
+                    </h2>
                     <div className="flex flex-col gap-4">
                       <div className="flex justify-between gap-6 items-center">
                         <div className="w-full">
-
                           <label htmlFor="experienceTitle">Title</label>
                           <input
                             type="text"
@@ -125,7 +141,9 @@ const EditExperience = ({ user, open, setOpen } : { user: any, open: boolean, se
                         </div>
                       </div>
                       <div>
-                        <label htmlFor="experienceDescription">Description</label>
+                        <label htmlFor="experienceDescription">
+                          Description
+                        </label>
                         <textarea
                           placeholder="Description"
                           id="experienceDescription"
@@ -134,22 +152,24 @@ const EditExperience = ({ user, open, setOpen } : { user: any, open: boolean, se
                         ></textarea>
                       </div>
                       <div className="flex items-center justify-between w-full gap-6">
-                      <div className="w-full">
-    <label htmlFor="experienceDate">Date</label>
-    <input
-        type="date"
-        id="experienceDate"
-        className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                defaultValue={dateFormat(selectedExperience.date, "yyyy-mm-dd")}
-                {...register("date", { required: true })}
-
-    />
-</div>
-
-
+                        <div className="w-full">
+                          <label htmlFor="experienceDate">Date</label>
+                          <input
+                            type="date"
+                            id="experienceDate"
+                            className="border rounded-md px-3 py-2 w-full focus:outline-none"
+                            defaultValue={dateFormat(
+                              selectedExperience.date,
+                              "yyyy-mm-dd",
+                            )}
+                            {...register("date", { required: true })}
+                          />
+                        </div>
 
                         <div className="w-full">
-                          <label htmlFor="experienceDuration">Duration in hours</label>
+                          <label htmlFor="experienceDuration">
+                            Duration in hours
+                          </label>
                           <input
                             type="text"
                             placeholder="Duration"
@@ -183,11 +203,12 @@ const EditExperience = ({ user, open, setOpen } : { user: any, open: boolean, se
                             <option value="draw">Draw</option>
                           </select>
                         </div>
-                        
                       </div>
                       <div className="flex items-center justify-between w-full gap-6">
                         <div className="w-full">
-                          <label htmlFor="experienceOrganization">Organization</label>
+                          <label htmlFor="experienceOrganization">
+                            Organization
+                          </label>
                           <input
                             type="text"
                             placeholder="Organization"
@@ -208,7 +229,9 @@ const EditExperience = ({ user, open, setOpen } : { user: any, open: boolean, se
                         </div>
                       </div>
                       <div>
-                        <label htmlFor="experienceHealthInjury">Health Injury</label>
+                        <label htmlFor="experienceHealthInjury">
+                          Health Injury
+                        </label>
                         <input
                           type="text"
                           placeholder="Health Injury"
@@ -220,8 +243,8 @@ const EditExperience = ({ user, open, setOpen } : { user: any, open: boolean, se
                       <div className="w-full flex items-center gap-4">
                         <span>Attachments</span>
                         <div className="flex gap-4 text-blue-500 items-center justify-start">
-                          <FiLink className="text-lg"/>
-                          <FiImage className="text-lg"/>
+                          <FiLink className="text-lg" />
+                          <FiImage className="text-lg" />
                         </div>
                       </div>
                     </div>
@@ -245,19 +268,27 @@ const EditExperience = ({ user, open, setOpen } : { user: any, open: boolean, se
               </form>
             ) : (
               <div className="flex flex-col gap-4 pb-4 px-6">
-                {user.experience?.map((experience : any, index : number) => (
-                  <div key={index} className="px-6 py-2 bg-gray-200 flex items-center gap-6 border rounded-md w-fit">
-
-                    {experience.title} . {experience.sport} . {dateFormat(experience.date, "mmmm, yyyy")}
+                {user.experience?.map((experience: any, index: number) => (
+                  <div
+                    key={index}
+                    className="px-6 py-2 bg-gray-200 flex items-center gap-6 border rounded-md w-fit"
+                  >
+                    {experience.title} . {experience.sport} .{" "}
+                    {dateFormat(experience.date, "mmmm, yyyy")}
                     <div className="flex items-center justify-normal gap-4">
-                        <FiEdit2 className="text-lg cursor-pointer" onClick={() => setSelectedExperience(experience)}/>
-                        <FiTrash2 className="text-lg text-red-500 cursor-pointer" onClick={() => deleteExperience(experience)}/>
+                      <FiEdit2
+                        className="text-lg cursor-pointer"
+                        onClick={() => setSelectedExperience(experience)}
+                      />
+                      <FiTrash2
+                        className="text-lg text-red-500 cursor-pointer"
+                        onClick={() => deleteExperience(experience)}
+                      />
                     </div>
                   </div>
                 ))}
               </div>
             )}
-
           </div>
         </div>
       )}

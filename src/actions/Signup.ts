@@ -20,7 +20,6 @@ const signup = async (name: string, email: string, password: string) => {
       email,
       password: hashedPassword,
     });
-
   } catch (error) {
     return (error as Error).message;
   }

@@ -2,6 +2,7 @@
 
 import { User } from "@/lib/models/UserModel";
 import { connectDB } from "@/lib/utils";
+import { revalidatePath } from "next/cache";
 
 export const updateUser = async (userData: any) => {
   try {
@@ -10,11 +11,12 @@ export const updateUser = async (userData: any) => {
     const updatedUserData = await User.findByIdAndUpdate(
       userData._id,
       userData,
-      { new: true }
+      { new: true },
     );
     if (!updatedUserData) {
       throw new Error("User Not Found!");
     }
+    revalidatePath("/dashboard");
   } catch (err) {
     console.error(err);
   }

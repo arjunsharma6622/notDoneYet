@@ -1,5 +1,4 @@
-import { Schema, models, model } from 'mongoose';
-
+import { Schema, models, model } from "mongoose";
 
 const commentSchema = new Schema(
   {
@@ -30,7 +29,7 @@ const commentSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const postSchema = new Schema(
@@ -77,7 +76,7 @@ const postSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export const Comment = models.Comment || model("Comment", commentSchema);

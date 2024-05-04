@@ -1,7 +1,7 @@
 import { compare } from "bcryptjs";
 import NextAuth, { CredentialsSignin } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import FacebookProvider from "next-auth/providers/facebook"
+import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
 import { User } from "./lib/models/UserModel";
 import { connectDB } from "./lib/utils";
@@ -14,7 +14,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     }),
     CredentialsProvider({
       name: "Credentials",
@@ -52,7 +52,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!isMatch)
           throw new CredentialsSignin({ cause: "Invalid Email or Password" });
 
-        return { name: user.name, email: user.email, _id: user._id, image: user.image };
+        return {
+          name: user.name,
+          email: user.email,
+          _id: user._id,
+          image: user.image,
+        };
       },
     }),
   ],
@@ -85,16 +90,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return true;
     },
     jwt: async ({ token, user }) => {
-      await connectDB()
+      await connectDB();
       const userData = await User.findOne({ email: token?.email });
       token._id = userData?._id;
       return token;
     },
     session: async ({ session, token }) => {
-      if(session){
+      if (session) {
         session.user._id = token?._id;
       }
       return session;
     },
-  }
+  },
 });

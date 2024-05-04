@@ -18,7 +18,7 @@ const MessagePage = ({ session }: any) => {
       try {
         console.log("fetching following users data");
         const users = await axios.get(
-          `/api/user/following/${session?.user._id}`
+          `/api/user/following/${session?.user._id}`,
         );
 
         setAllFollowingUsers(users.data);
@@ -36,7 +36,7 @@ const MessagePage = ({ session }: any) => {
       try {
         console.log("fetching conversations data");
         const conversations = await axios.get(
-          `/api/conversation/user/${session?.user._id}`
+          `/api/conversation/user/${session?.user._id}`,
         );
 
         setAllConversations(conversations.data);

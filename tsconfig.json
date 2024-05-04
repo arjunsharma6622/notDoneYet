@@ -21,6 +21,17 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/lib/models/booking.js", "src/lib/models/conversation.js", "src/lib/models/post.js", "src/lib/models/product.js", "src/lib/models/userModel.js", "src/lib/models/venue.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/lib/models/booking.js",
+    "src/lib/models/conversation.js",
+    "src/lib/models/post.js",
+    "src/lib/models/product.js",
+    "src/lib/models/userModel.js",
+    "src/lib/models/venue.js"
+  ],
   "exclude": ["node_modules"]
 }

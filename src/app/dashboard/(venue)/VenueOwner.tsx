@@ -11,24 +11,36 @@ import AddVenue from "./(components)/AddVenue";
 import BasicProfileEdit from "./(components)/BasicDetails";
 import EditVenue from "./(components)/EditVenue";
 import useSWR from "swr";
+import Link from "next/link";
+import ProfilePostCard from "../(components)/ProfilePostCard";
 
+const VenueOwner = ({ userData }: any) => {
+  const [openImagesEdit, setOpenImagesEdit] = useState(false);
+  const [openPostForm, setOpenPostForm] = useState(false);
+  const [openAboutEdit, setOpenAboutEdit] = useState(false);
+  const [openDetailsEdit, setOpenDetailsEdit] = useState(false);
+  const [openAddVenue, setOpenAddVenue] = useState(false);
+  const [openEditVenue, setOpenEditVenue] = useState(false);
+  const [openExperienceAdd, setOpenExperienceAdd] = useState(false);
+  const [openExperienceEdit, setOpenExperienceEdit] = useState(false);
+  
+  const [allUserPosts, setAllUserPosts] = useState([]);
 
-const VenueOwner = ({allUserPosts, userData} : any) => {
-    const [openImagesEdit, setOpenImagesEdit] = useState(false);
-    const [openPostForm, setOpenPostForm] = useState(false);
-    const [openAboutEdit, setOpenAboutEdit] = useState(false);
-    const [openDetailsEdit, setOpenDetailsEdit] = useState(false);
-    const [openAddVenue, setOpenAddVenue] = useState(false);
-    const [openEditVenue, setOpenEditVenue] = useState(false);
-    const [openExperienceAdd, setOpenExperienceAdd] = useState(false);
-    const [openExperienceEdit, setOpenExperienceEdit] = useState(false);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const res = await axios.get(`/api/posts/user/${userData?._id}`);
+      setAllUserPosts(res.data);
+    };
+    fetchPosts();
+  }, []);
 
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-
-    const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-    const { data : allVenues, error, isLoading } = useSWR(`/api/venue/user/${userData?._id}`, fetcher)
-
+  const {
+    data: allVenues,
+    error,
+    isLoading,
+  } = useSWR(`/api/venue/user/${userData?._id}`, fetcher);
 
   return (
     <div>
@@ -61,20 +73,18 @@ const VenueOwner = ({allUserPosts, userData} : any) => {
         </div>
 
         <div className="px-6 mt-10 flex flex-col">
-        <span className="text-xs">Venues</span>
+          <span className="text-xs">Venues</span>
 
           <div className="flex justify-between items-center">
-            
             <div className="flex items-center gap-4">
-            <h1 className="text-3xl font-bold">{userData?.name}</h1>
-            <GrMapLocation className="cursor-pointer h-6 w-6" />
+              <h1 className="text-3xl font-bold">{userData?.name}</h1>
+              <GrMapLocation className="cursor-pointer h-6 w-6" />
             </div>
             <FiEdit3
               className="cursor-pointer h-6 w-6 text-gray-600"
               onClick={() => setOpenDetailsEdit(true)}
             />
           </div>
-
 
           <h1>{userData.bio}</h1>
         </div>
@@ -94,11 +104,10 @@ const VenueOwner = ({allUserPosts, userData} : any) => {
               />
             </div>
           </div>
-          {allVenues?.map((venue : any) => (
-            <VenueCard venueDetails={venue} key={venue._id}/>
+          {allVenues?.map((venue: any) => (
+            <VenueCard venueDetails={venue} key={venue._id} />
           ))}
-          </div>
-
+        </div>
 
         <div className="px-6 mt-10 flex flex-col gap-2">
           <div className="flex justify-between items-center gap-1">
@@ -112,31 +121,8 @@ const VenueOwner = ({allUserPosts, userData} : any) => {
             <FiPlus className="cursor-pointer h-6 w-6 text-gray-600" />
             <span>Add New Post</span>
           </div>
-
-          {allUserPosts?.map((post : any) => (
-            <div key={post._id} className="flex items-start gap-2 justify-start">
-              <div className="">
-                <img
-                  src={post.images[0]}
-                  alt=""
-                  className="w-24 object-cover h-24 rounded-md"
-                />
-              </div>
-              <div className="w-full text-sm">
-                <ShowMoreText
-                  /* Default options */
-                  lines={3}
-                  more="Show more"
-                  className="content-css"
-                  anchorClass="show-more-less-clickable"
-                  expanded={false}
-                  truncatedEndingComponent={"... "}
-                  less={false}
-                >
-                  <p className="">{post.description}</p>
-                </ShowMoreText>{" "}
-              </div>
-            </div>
+          {allUserPosts?.map((post: any) => (
+            <ProfilePostCard key={post._id} post={post} />
           ))}
         </div>
 
@@ -169,8 +155,8 @@ const VenueOwner = ({allUserPosts, userData} : any) => {
           </div>
 
           <div className="flex flex-col gap-2">
-            {userData.events?.map((event : any, index : number) => (
-              <PastEventCard key={index} eventDetails={event}/>
+            {userData.events?.map((event: any, index: number) => (
+              <PastEventCard key={index} eventDetails={event} />
             ))}
           </div>
         </div>
@@ -196,17 +182,15 @@ const VenueOwner = ({allUserPosts, userData} : any) => {
         </div>
       )}
 
-      {
-        openPostForm && (
-          <div className="absolute">
-            <PostForm
-              open={openPostForm}
-              setOpen={setOpenPostForm}
-              user={userData}
-            />
-          </div>
-        )
-      }
+      {openPostForm && (
+        <div className="absolute">
+          <PostForm
+            open={openPostForm}
+            setOpen={setOpenPostForm}
+            user={userData}
+          />
+        </div>
+      )}
 
       {openAddVenue && (
         <div className="absolute">
@@ -214,24 +198,20 @@ const VenueOwner = ({allUserPosts, userData} : any) => {
             open={openAddVenue}
             setOpen={setOpenAddVenue}
             user={userData}
-            
           />
         </div>
       )}
 
-
-{openEditVenue && (
-  <div className="absolute">
-    <EditVenue
-      open={openEditVenue}
-      setOpen={setOpenEditVenue}
-      user={userData}
-      allVenues={allVenues}
-    />
-  </div>
-)}
-
-
+      {openEditVenue && (
+        <div className="absolute">
+          <EditVenue
+            open={openEditVenue}
+            setOpen={setOpenEditVenue}
+            user={userData}
+            allVenues={allVenues}
+          />
+        </div>
+      )}
     </div>
   );
 };

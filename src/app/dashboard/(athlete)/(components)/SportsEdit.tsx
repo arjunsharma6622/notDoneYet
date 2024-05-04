@@ -1,22 +1,36 @@
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiX, FiXCircle } from "react-icons/fi";
+import { toast } from "sonner";
 
-const SportsEdit = ({ user, open, setOpen } : { user: any, open: boolean, setOpen: (open: boolean) => void }) => {
+const SportsEdit = ({
+  user,
+  open,
+  setOpen,
+}: {
+  user: any;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}) => {
   const [userData, setUserData] = useState(user);
   const [newSport, setNewSport] = useState("");
+
+  const router = useRouter();
 
   const handleUserUpdate = async () => {
     try {
       console.log("In handle user update");
       console.log(userData);
-      const res =  await axios.patch(`/api/user/${userData._id}`, userData);
+      const res = await axios.patch(`/api/user/${userData._id}`, userData);
+      toast.success("Sports Updated");
+      setOpen(false);
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
   };
-
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -25,7 +39,6 @@ const SportsEdit = ({ user, open, setOpen } : { user: any, open: boolean, setOpe
       document.body.style.overflow = "auto";
     };
   }, []);
-  
 
   console.log(userData);
 
@@ -68,7 +81,7 @@ const SportsEdit = ({ user, open, setOpen } : { user: any, open: boolean, setOpe
                   </div>
 
                   <div className="flex flex-wrap items-center gap-2">
-                    {userData.sports?.map((sport : any, index : number) => (
+                    {userData.sports?.map((sport: any, index: number) => (
                       <div
                         className="bg-gray-200 px-3 py-1 rounded-full flex items-center gap-1"
                         key={index}
@@ -77,10 +90,10 @@ const SportsEdit = ({ user, open, setOpen } : { user: any, open: boolean, setOpe
                         <FiXCircle
                           className="inline ml-2 text-xl cursor-pointer text-red-500"
                           onClick={() =>
-                            setUserData((prevUserData : any) => ({
+                            setUserData((prevUserData: any) => ({
                               ...prevUserData,
                               sports: prevUserData.sports.filter(
-                                (item :   any) => item !== sport
+                                (item: any) => item !== sport,
                               ),
                             }))
                           }

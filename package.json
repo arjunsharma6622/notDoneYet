@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prettify": "prettier -w ./src/"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.0.2",
@@ -17,6 +18,7 @@
     "clsx": "^2.1.1",
     "dateformat": "^5.0.3",
     "embla-carousel-react": "^8.0.2",
+    "javascript-time-ago": "^2.5.10",
     "lucide-react": "^0.377.0",
     "moment": "^2.30.1",
     "mongoose": "^8.3.3",
@@ -29,6 +31,8 @@
     "react-hook-form": "^7.51.3",
     "react-icons": "^5.2.0",
     "react-show-more-text": "^1.7.1",
+    "react-time-ago": "^7.3.1",
+    "react-timeago": "^7.2.0",
     "react-toastify": "^10.0.5",
     "sonner": "^1.4.41",
     "swr": "^2.2.5",
@@ -43,9 +47,11 @@
     "@types/react-datepicker": "^6.2.0",
     "@types/react-dom": "^18",
     "@types/react-show-more-text": "^1.4.5",
+    "@types/react-timeago": "^4.1.7",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8",
+    "prettier": "^3.2.5",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

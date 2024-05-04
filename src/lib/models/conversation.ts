@@ -1,5 +1,4 @@
-import { Schema, models, model } from 'mongoose';
-
+import { Schema, models, model } from "mongoose";
 
 const conversationSchema = new Schema(
   {
@@ -28,9 +27,8 @@ const conversationSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export const Conversation =
-  models.Conversation ||
-  model("Conversation", conversationSchema);
+  models.Conversation || model("Conversation", conversationSchema);

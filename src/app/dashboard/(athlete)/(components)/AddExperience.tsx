@@ -1,10 +1,19 @@
+import { updateAthleteExperience } from "@/actions/updateUser";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiImage, FiLink, FiX } from "react-icons/fi";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
-const AddExperience = ({ user, open, setOpen } : { user: any, open: boolean, setOpen: (open: boolean) => void }) => {
+const AddExperience = ({
+  user,
+  open,
+  setOpen,
+}: {
+  user: any;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}) => {
   const [userData, setUserData] = useState(user);
   const {
     register,
@@ -22,30 +31,26 @@ const AddExperience = ({ user, open, setOpen } : { user: any, open: boolean, set
     };
   }, []);
 
-  const handleUserUpdate = async (data : any) => {
-    // try {
-    //   console.log("In handle user update");
-    //   console.log(data);
+  const handleUserUpdate = async (data: any) => {
+    try {
+      const updatedExperienceData = {
+        ...userData,
+        experience: [...userData.experience, data],
+      };
 
-    //   const updatedExperienceData = {
-    //     ...userData,
-    //     experience: [...userData.experience, data],
-    //   };
+      console.log("upddate experience data is");
+      console.log(updatedExperienceData);
 
-    //   console.log("upddate experience data is");
-    //   console.log(updatedExperienceData);
+      await updateAthleteExperience(updatedExperienceData);
 
-    //   await updateAthleteExperience(updatedExperienceData);
-
-    //   toast.success("Profile Updated");
-    //   setOpen(false);
-    //   reset();
-    // } catch (err) {
-    //   console.log(err);
-    // }
+      toast.success("Profile Updated");
+      setOpen(false);
+      reset();
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
   };
-
-  console.log(userData);
 
   return (
     <div>
@@ -59,10 +64,15 @@ const AddExperience = ({ user, open, setOpen } : { user: any, open: boolean, set
                 onClick={() => setOpen(false)}
               />
             </div>
-            <form onSubmit={handleSubmit(handleUserUpdate)} className="flex flex-col gap-6 overflow-scroll">
+            <form
+              onSubmit={handleSubmit(handleUserUpdate)}
+              className="flex flex-col gap-6 overflow-scroll"
+            >
               <div className="flex flex-col gap-6 px-6 py-4 overflow-y-scroll">
                 <div className="flex flex-col gap-2">
-                  <h2 className="text-xl font-semibold underline">Add Tournament</h2>
+                  <h2 className="text-xl font-semibold underline">
+                    Add Tournament
+                  </h2>
                   <div className="flex flex-col gap-4">
                     <div className="flex justify-between gap-6 items-center">
                       <div className="w-full">
@@ -107,7 +117,9 @@ const AddExperience = ({ user, open, setOpen } : { user: any, open: boolean, set
                         />
                       </div>
                       <div className="w-full">
-                        <label htmlFor="experienceDuration">Duration in hours</label>
+                        <label htmlFor="experienceDuration">
+                          Duration in hours
+                        </label>
                         <input
                           type="text"
                           placeholder="Duration"
@@ -157,11 +169,12 @@ const AddExperience = ({ user, open, setOpen } : { user: any, open: boolean, set
                       </div>
                       )
 } */}
-
                     </div>
                     <div className="flex items-center justify-between w-full gap-6">
                       <div className="w-full">
-                        <label htmlFor="experienceOrganization">Organization</label>
+                        <label htmlFor="experienceOrganization">
+                          Organization
+                        </label>
                         <input
                           type="text"
                           placeholder="Organization"
@@ -182,7 +195,9 @@ const AddExperience = ({ user, open, setOpen } : { user: any, open: boolean, set
                       </div>
                     </div>
                     <div>
-                      <label htmlFor="experienceHealthInjury">Health Injury</label>
+                      <label htmlFor="experienceHealthInjury">
+                        Health Injury
+                      </label>
                       <input
                         type="text"
                         placeholder="Health Injury"
@@ -194,8 +209,8 @@ const AddExperience = ({ user, open, setOpen } : { user: any, open: boolean, set
                     <div className="w-full flex items-center gap-4">
                       <span>Attachments</span>
                       <div className="flex gap-4 text-blue-500 items-center justify-start">
-                        <FiLink className="text-lg"/>
-                        <FiImage className="text-lg"/>
+                        <FiLink className="text-lg" />
+                        <FiImage className="text-lg" />
                       </div>
                     </div>
                   </div>

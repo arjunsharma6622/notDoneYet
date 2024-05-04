@@ -1,26 +1,30 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  FiEdit2,
-  FiImage,
-  FiTrash2,
-  FiX,
-  FiXCircle
-} from "react-icons/fi";
+import { FiEdit2, FiImage, FiTrash2, FiX, FiXCircle } from "react-icons/fi";
 import { ToastContainer, toast } from "react-toastify";
 
-const EditVenue = ({ open, setOpen, allVenues, user } : { open: boolean, setOpen: (open: boolean) => void, allVenues: any, user: any }) => {
+const EditVenue = ({
+  open,
+  setOpen,
+  allVenues,
+  user,
+}: {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  allVenues: any;
+  user: any;
+}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
     setValue,
-    watch
+    watch,
   } = useForm();
 
-  const [selectedVenue, setSelectedVenue] : any = useState(null);
+  const [selectedVenue, setSelectedVenue]: any = useState(null);
 
   useEffect(() => {
     if (selectedVenue) {
@@ -28,7 +32,7 @@ const EditVenue = ({ open, setOpen, allVenues, user } : { open: boolean, setOpen
     }
   }, [selectedVenue, reset]);
 
-  const updateVenue : any = handleSubmit(async (data) => {
+  const updateVenue: any = handleSubmit(async (data) => {
     try {
       const updatedVenueData = {
         ...selectedVenue,
@@ -37,7 +41,7 @@ const EditVenue = ({ open, setOpen, allVenues, user } : { open: boolean, setOpen
 
       const res = await axios.patch(
         `/api/venue/${selectedVenue._id}`,
-        updatedVenueData
+        updatedVenueData,
       );
 
       toast.success("Venue updated successfully", {
@@ -82,20 +86,22 @@ const EditVenue = ({ open, setOpen, allVenues, user } : { open: boolean, setOpen
     }
   };
 
-  const [images, setImages] : any = useState([]);
+  const [images, setImages]: any = useState([]);
 
-  const handleImageChange = (e : any) => {
+  const handleImageChange = (e: any) => {
     const files = Array.from(e.target.files);
-    setImages((prevImages : any) => [...prevImages, ...files]);
+    setImages((prevImages: any) => [...prevImages, ...files]);
   };
 
-  const handleRemoveImage = (index : number) => {
+  const handleRemoveImage = (index: number) => {
     const imageUrl = URL.createObjectURL(images[index]);
     URL.revokeObjectURL(imageUrl);
-    setImages((prevImages : any) => prevImages.filter((_ : any, i : number) => i !== index));
+    setImages((prevImages: any) =>
+      prevImages.filter((_: any, i: number) => i !== index),
+    );
   };
 
-  const handleImages = async (images : any) => {
+  const handleImages = async (images: any) => {
     try {
       const imageUrls = [];
 
@@ -106,11 +112,11 @@ const EditVenue = ({ open, setOpen, allVenues, user } : { open: boolean, setOpen
         const imageData = new FormData();
         imageData.append("file", image);
         imageData.append("upload_preset", "ml_default");
-        imageData.append("folder", `ndy/${user?.name}/${watch('name')}`);
+        imageData.append("folder", `ndy/${user?.name}/${watch("name")}`);
 
         const uploadResponse = await axios.post(
           "https://api.cloudinary.com/v1_1/dexnb3wk2/image/upload",
-          imageData
+          imageData,
         );
 
         console.log(uploadResponse.data);
@@ -270,20 +276,22 @@ const EditVenue = ({ open, setOpen, allVenues, user } : { open: boolean, setOpen
                         </div>
 
                         <div className="flex flex-wrap gap-2 mt-2">
-                          {selectedVenue?.images.map((image : any, index : any) => (
-                            <div key={index} className="relative w-1/4 h-1/4">
-                              <img
-                                src={image}
-                                alt="Post"
-                                className="w-full h-full object-cover rounded-md"
-                              />
-                              <FiXCircle
-                                className="absolute w-5 h-5 top-0 right-0 m-2 text-red-500  rounded-full cursor-pointer"
-                                onClick={() => handleRemoveImage(index)}
-                              />
-                            </div>
-                          ))}
-                          {images.map((image : any, index : number) => (
+                          {selectedVenue?.images.map(
+                            (image: any, index: any) => (
+                              <div key={index} className="relative w-1/4 h-1/4">
+                                <img
+                                  src={image}
+                                  alt="Post"
+                                  className="w-full h-full object-cover rounded-md"
+                                />
+                                <FiXCircle
+                                  className="absolute w-5 h-5 top-0 right-0 m-2 text-red-500  rounded-full cursor-pointer"
+                                  onClick={() => handleRemoveImage(index)}
+                                />
+                              </div>
+                            ),
+                          )}
+                          {images.map((image: any, index: number) => (
                             <div key={index} className="relative w-1/4 h-1/4">
                               <img
                                 src={URL.createObjectURL(image)}
@@ -350,7 +358,7 @@ const EditVenue = ({ open, setOpen, allVenues, user } : { open: boolean, setOpen
             ) : (
               <div className="flex items-center justify-center px-6 py-4">
                 <div className="flex flex-col gap-4">
-                  {allVenues.map((venue : any) => (
+                  {allVenues.map((venue: any) => (
                     <div
                       key={venue._id}
                       className="w-full px-6 py-2 flex items-center gap-6 rounded-sm font-semibold bg-gray-200 text-gray-600"

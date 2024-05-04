@@ -8,7 +8,11 @@ const setTime = (date: any, time: any) => {
   date.setHours(hours, minutes, 0, 0);
 };
 
-const generateTimeSlots : any = ( startTime: any, endTime: any, intervalMinutes: any ) => {
+const generateTimeSlots: any = (
+  startTime: any,
+  endTime: any,
+  intervalMinutes: any,
+) => {
   const slots = [];
   const start = new Date();
   const end = new Date();
@@ -32,17 +36,21 @@ const generateTimeSlots : any = ( startTime: any, endTime: any, intervalMinutes:
   return slots;
 };
 
-const VenueBookingModal = ({ openBookingModal, setOpenBookingModal, venueDetails} : any) => {
+const VenueBookingModal = ({
+  openBookingModal,
+  setOpenBookingModal,
+  venueDetails,
+}: any) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedDateInfo, setSelectedDateInfo] : any = useState(null);
+  const [selectedDateInfo, setSelectedDateInfo]: any = useState(null);
 
   //   first slot click
-  const [firstSlot, setFirstSlot] : any = useState(null);
+  const [firstSlot, setFirstSlot]: any = useState(null);
 
   // last slot click
-  const [lastSlot, setLastSlot] : any = useState(null);
+  const [lastSlot, setLastSlot]: any = useState(null);
 
-  const [allSelectedSlots, setAllSelectedSlots] : any = useState([]);
+  const [allSelectedSlots, setAllSelectedSlots]: any = useState([]);
 
   const [isDisabledSlotsPresent, setIsDisabledSlotsPresent] = useState(false);
 
@@ -53,7 +61,7 @@ const VenueBookingModal = ({ openBookingModal, setOpenBookingModal, venueDetails
   const allTimeSlots = generateTimeSlots(
     venueDetails.timing.startTime,
     venueDetails.timing.endTime,
-    timeSlotIntervalMinutes
+    timeSlotIntervalMinutes,
   );
 
   const bookedTimeSlots = [
@@ -76,15 +84,15 @@ const VenueBookingModal = ({ openBookingModal, setOpenBookingModal, venueDetails
   ];
 
   //   this has to be with the time, on a particular selected date,it should check the time slots
-  const isSlotBooked : any = (slot : any) => {
+  const isSlotBooked: any = (slot: any) => {
     const bookedSlotsOnSelectedDate = selectedDateInfo?.slots?.find(
-      (bookedSlot : any) => bookedSlot.start <= slot && bookedSlot.end >= slot
+      (bookedSlot: any) => bookedSlot.start <= slot && bookedSlot.end >= slot,
     );
 
     return bookedSlotsOnSelectedDate;
   };
 
-  const handleDateSelect = (date : any) => {
+  const handleDateSelect = (date: any) => {
     setSelectedDate(date);
     const availableTimeSlots = bookedTimeSlots.find((slot) => {
       const bookedDate = new Date(slot.date);
@@ -105,21 +113,21 @@ const VenueBookingModal = ({ openBookingModal, setOpenBookingModal, venueDetails
     setSelectedDateInfo(availableTimeSlots);
   };
 
-  const handleSlotSelect = (slot : any) => {
+  const handleSlotSelect = (slot: any) => {
     if (!firstSlot) {
       setFirstSlot(slot);
       setAllSelectedSlots(
-        generateTimeSlots(slot.split("-")[0], slot.split("-")[1], 60)
+        generateTimeSlots(slot.split("-")[0], slot.split("-")[1], 60),
       );
     } else if (!lastSlot) {
       setLastSlot(slot);
       setAllSelectedSlots(
-        generateTimeSlots(firstSlot.split("-")[0], slot.split("-")[1], 60)
+        generateTimeSlots(firstSlot.split("-")[0], slot.split("-")[1], 60),
       );
     }
   };
 
-  const convertTimeSlot : any = (slot : any) => {
+  const convertTimeSlot: any = (slot: any) => {
     const [startTime, endTime] = slot.split(" - ");
     const [startHour, startMinute] = startTime.split(":").map(Number);
     const [endHour, endMinute] = endTime.split(":").map(Number);
@@ -138,10 +146,10 @@ const VenueBookingModal = ({ openBookingModal, setOpenBookingModal, venueDetails
 
     // Format the new time slot
     const newStartTime = `${String(newStartHour).padStart(2, "0")}:${String(
-      startMinute
+      startMinute,
     ).padStart(2, "0")}`;
     const newEndTime = `${String(newEndHour).padStart(2, "0")}:${String(
-      endMinute
+      endMinute,
     ).padStart(2, "0")}`;
 
     return `${newStartTime} - ${newEndTime}`;
@@ -149,15 +157,21 @@ const VenueBookingModal = ({ openBookingModal, setOpenBookingModal, venueDetails
 
   useEffect(() => {
     setIsDisabledSlotsPresent(
-      allSelectedSlots.some((slot : any) => isSlotBooked(slot))
+      allSelectedSlots.some((slot: any) => isSlotBooked(slot)),
     );
-    const allDisSlots = allSelectedSlots.filter((slot : any) => isSlotBooked(slot));
+    const allDisSlots = allSelectedSlots.filter((slot: any) =>
+      isSlotBooked(slot),
+    );
     setFirstDis(allDisSlots[0]);
     console.log("firstDis", firstDis);
     if (isDisabledSlotsPresent) {
       setLastSlot(convertTimeSlot(firstDis));
       setAllSelectedSlots(
-        generateTimeSlots(firstSlot?.split("-")[0], lastSlot?.split("-")[1], 60)
+        generateTimeSlots(
+          firstSlot?.split("-")[0],
+          lastSlot?.split("-")[1],
+          60,
+        ),
       );
     }
   }, [firstSlot, lastSlot, allSelectedSlots, isDisabledSlotsPresent]);
@@ -166,7 +180,7 @@ const VenueBookingModal = ({ openBookingModal, setOpenBookingModal, venueDetails
 
   console.log("isDisabledSlotsPresent", isDisabledSlotsPresent);
 
-  const toMakeSlotSelected = (slot : any) => {
+  const toMakeSlotSelected = (slot: any) => {
     return allSelectedSlots?.includes(slot);
   };
 
@@ -209,7 +223,7 @@ const VenueBookingModal = ({ openBookingModal, setOpenBookingModal, venueDetails
                     Available Time Slots:
                   </h3>
                   <ul className="flex items-center justify-center gap-6 flex-wrap">
-                    {allTimeSlots.map((slot : any) => (
+                    {allTimeSlots.map((slot: any) => (
                       <li key={slot} className="relative">
                         <button
                           className={`p-2 border rounded-md focus:outline-none ${
@@ -253,8 +267,8 @@ const VenueBookingModal = ({ openBookingModal, setOpenBookingModal, venueDetails
                                 generateTimeSlots(
                                   firstSlot.split("-")[0],
                                   firstSlot.split("-")[1],
-                                  60
-                                )
+                                  60,
+                                ),
                               );
                             }}
                           />

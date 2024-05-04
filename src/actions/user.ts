@@ -1,11 +1,13 @@
 "use server";
 
-
 import { User } from "@/lib/models/UserModel";
 import { connectDB } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
 
-export const followUser = async (targetUserId : string, followerUserId : string) => {
+export const followUser = async (
+  targetUserId: string,
+  followerUserId: string,
+) => {
   try {
     await connectDB();
 
@@ -22,14 +24,11 @@ export const followUser = async (targetUserId : string, followerUserId : string)
       throw new Error("Follower user not found");
     }
 
-
-
     // Check if follower is already following the user
     if (followedUser.followers.includes(followerUserId)) {
       console.log("Follower is already following the user");
       return; // Exit the function to prevent adding duplicate follow relationship
     }
-
 
     followedUser.followers.push(followerUserId);
     followerUser.following.push(targetUserId);
@@ -44,7 +43,10 @@ export const followUser = async (targetUserId : string, followerUserId : string)
   }
 };
 
-export const unfollowUser = async (targetUserId : string, followerUserId : string) => {
+export const unfollowUser = async (
+  targetUserId: string,
+  followerUserId: string,
+) => {
   try {
     await connectDB();
 
@@ -65,19 +67,17 @@ export const unfollowUser = async (targetUserId : string, followerUserId : strin
       return; // Exit the function to prevent adding duplicate follow relationship
     }
 
-
     followedUser.followers = followedUser.followers.filter(
-      (_id : string) => _id != followerUserId
+      (_id: string) => _id != followerUserId,
     );
     followerUser.following = followerUser.following.filter(
-      (_id : string) => _id != targetUserId
+      (_id: string) => _id != targetUserId,
     );
 
     await followedUser.save();
     await followerUser.save();
 
     revalidatePath("/network");
-
   } catch (err) {
     return err;
   }

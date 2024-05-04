@@ -1,35 +1,37 @@
 import { Conversation } from "@/lib/models/conversation";
 import { connectDB } from "@/lib/utils";
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server";
 
+export const GET = async (
+  request: NextRequest,
+  { params }: { params: { conversationId: string } },
+) => {
+  const conversationId = params.conversationId;
+  try {
+    await connectDB();
 
-export const GET = async (request : NextRequest, { params } : { params: { conversationId: string } }) => {
-    const conversationId = params.conversationId
-    try {
-        connectDB();
+    const messages = await Conversation.findOne({ _id: conversationId });
 
-        const messages = await Conversation.findOne({ _id : conversationId })
+    return NextResponse.json(messages);
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to fetch conversation messages");
+  }
+};
 
-
-        return NextResponse.json(messages)
-
-
-      } catch (error) {
-        console.error(error);
-        throw new Error("Failed to fetch conversation messages");
-      }
-}
-
-
-export const POST = async (request : NextRequest, { params } : { params: { conversationId: string } }) => {
+export const POST = async (
+  request: NextRequest,
+  { params }: { params: { conversationId: string } },
+) => {
   const { senderId, content } = await request.json();
   const conversationId = params.conversationId;
 
   try {
+    await connectDB()
     // Find the conversation by ID
     const conversation = await Conversation.findById(conversationId);
     if (!conversation) {
-      return NextResponse.json({ message: 'Conversation not found' });
+      return NextResponse.json({ message: "Conversation not found" });
     }
 
     // Create a new message object
@@ -42,21 +44,19 @@ export const POST = async (request : NextRequest, { params } : { params: { conve
     conversation.messages.push(newMessage);
     await conversation.save();
 
-    const updatedConversation = await Conversation.findById(conversationId).populate({
-      path : "users",
-      select : "name image bio"
-    })
+    const updatedConversation = await Conversation.findById(
+      conversationId,
+    ).populate({
+      path: "users",
+      select: "name image bio",
+    });
 
-    const recentMsg = updatedConversation.messages[updatedConversation.messages.length - 1]
+    const recentMsg =
+      updatedConversation.messages[updatedConversation.messages.length - 1];
 
     return NextResponse.json(recentMsg);
-
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ message: 'Failed to send message' });
+    return NextResponse.json({ message: "Failed to send message" });
   }
-}
-
-
-
-
+};

@@ -1,59 +1,45 @@
 import dateFormat from "dateformat";
 
-const Message = ({message, currentUser, otherUser, session} : any) => {
+const Message = ({ message, currentUser, otherUser, session }: any) => {
   return (
     <div
-    key={message._id}
-    className={`flex ${
-      currentUser
-        ? "justify-end"
-        : "justify-start"
-    }`}
-  >
-    <div
-      className={`${
-        currentUser
-          ? ""
-          : "flex-row-reverse"
-      }  flex items-start gap-3`}
+      key={message._id}
+      className={`flex ${currentUser ? "justify-end" : "justify-start"}`}
     >
       <div
-        className={`flex flex-col gap-1 ${
-          currentUser
-            ? "items-end"
-            : "items-start"
-        }`}
+        className={`${
+          currentUser ? "" : "flex-row-reverse"
+        }  flex items-start gap-3`}
       >
-        <span className="text-xs text-gray-500">
-          {dateFormat(message?.createdAt, "HH:MM")}
-        </span>
-
         <div
-          className={`flex relative text-sm items-center gap-4 ${
-            currentUser
-              ? "rounded-tr-none"
-              : "rounded-tl-none"
-          } bg-gray-100 py-2 rounded-xl px-4`}
+          className={`flex flex-col gap-1 ${
+            currentUser ? "items-end" : "items-start"
+          }`}
         >
-          {message?.content}
+          <span className="text-xs text-gray-500">
+            {dateFormat(message?.createdAt, "HH:MM")}
+          </span>
+
+          <div
+            className={`flex relative text-sm items-center gap-4 ${
+              currentUser ? "rounded-tr-none" : "rounded-tl-none"
+            } bg-gray-100 py-2 rounded-xl px-4`}
+          >
+            {message?.content}
+          </div>
+        </div>
+
+        <div>
+          <img
+            src={currentUser ? session?.user?.image : otherUser?.image}
+            alt=""
+            className="rounded-full w-10 h-10"
+            referrerPolicy="no-referrer"
+          />
         </div>
       </div>
-
-      <div>
-        <img
-          src={
-            currentUser
-              ? session?.user?.image
-              : otherUser?.image
-          }
-          alt=""
-          className="rounded-full w-10 h-10"
-          referrerPolicy='no-referrer'
-        />
-      </div>
     </div>
-  </div>
-  )
-}
+  );
+};
 
-export default Message
+export default Message;

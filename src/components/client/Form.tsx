@@ -9,27 +9,26 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
 const LoginForm = () => {
-    const router = useRouter()
+  const router = useRouter();
   return (
     <form
       action={async (formData) => {
         const email = formData.get("email") as string;
         const password = formData.get("password") as string;
 
-        if (!email || !password){
-            return toast.error("Please provide all the fields");
+        if (!email || !password) {
+          return toast.error("Please provide all the fields");
         }
 
         const toastId = toast.loading("Logging in...");
 
         const error = await credentialsLogin(email, password);
 
-        if(!error) {
-            toast.success("Logged in successfully", { id: toastId })
-            router.refresh()
-        }
-        else{
-            toast.error(String(error), { id: toastId })
+        if (!error) {
+          toast.success("Logged in successfully", { id: toastId });
+          router.refresh();
+        } else {
+          toast.error(String(error), { id: toastId });
         }
       }}
       className="flex flex-col gap-4"
@@ -54,54 +53,53 @@ const LoginForm = () => {
   );
 };
 
-
 const SignupForm = () => {
+  const router = useRouter();
 
-  const router = useRouter()
+  return (
+    <form
+      action={async (formData) => {
+        const name = formData.get("name") as string;
+        const email = formData.get("email") as string;
+        const password = formData.get("password") as string;
 
-  return(
-    <form action={async (formData) => {
-      const name = formData.get("name") as string;
-      const email = formData.get("email") as string;
-      const password = formData.get("password") as string;
+        if (!name || !email || !password) {
+          return toast.error("Please provide all the fields");
+        }
 
-      if (!name || !email || !password) {
-        return toast.error("Please provide all the fields");
-      }
+        const error = await signup(name, email, password);
+        if (!error) {
+          toast.success("Account created successfully");
+          router.push("/login");
+        } else {
+          toast.error(String(error));
+        }
+      }}
+      className="flex flex-col gap-4"
+    >
+      <div className="space-y-1">
+        <Label htmlFor="name">Name</Label>
+        <Input id="name" type="text" placeholder="name" name="name" />
+      </div>
 
-      const error = await signup(name, email, password);
-      if (!error) {
-        toast.success("Account created successfully");    
-        router.push("/login");
-      } else {
-        toast.error(String(error));
-      }
-      
-      
-    }} className="flex flex-col gap-4">
-    <div className="space-y-1">
-      <Label htmlFor="name">Name</Label>
-      <Input id="name" type="text" placeholder="name" name="name" />
-    </div>
+      <div className="space-y-1">
+        <Label htmlFor="email">Email</Label>
+        <Input id="email" type="email" placeholder="email" name="email" />
+      </div>
 
-    <div className="space-y-1">
-      <Label htmlFor="email">Email</Label>
-      <Input id="email" type="email" placeholder="email" name="email" />
-    </div>
+      <div className="space-y-1">
+        <Label htmlFor="password">Password</Label>
+        <Input
+          id="password"
+          type="password"
+          placeholder="password"
+          name="password"
+        />
+      </div>
 
-    <div className="space-y-1">
-      <Label htmlFor="password">Password</Label>
-      <Input
-        id="password"
-        type="password"
-        placeholder="password"
-        name="password"
-      />
-    </div>
-
-    <Button type="submit">Signup</Button>
-  </form>
-  )
-}
+      <Button type="submit">Signup</Button>
+    </form>
+  );
+};
 
 export { LoginForm, SignupForm };

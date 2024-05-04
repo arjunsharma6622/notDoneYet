@@ -3,7 +3,10 @@ import { connectDB } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 // update user route
-export const PATCH = async (request : NextRequest, { params } : { params: { userId: string } }) => {
+export const PATCH = async (
+  request: NextRequest,
+  { params }: { params: { userId: string } },
+) => {
   try {
     await connectDB();
     const data = await request.json();
@@ -19,15 +22,18 @@ export const PATCH = async (request : NextRequest, { params } : { params: { user
     return NextResponse.json(updatedData);
   } catch (err) {
     console.error(err);
-    throw new Error("Error updating user"); 
+    throw new Error("Error updating user");
   }
 };
 
-export const GET = async (request : NextRequest, { params } : { params: { userId: string } }) => {
+export const GET = async (
+  request: NextRequest,
+  { params }: { params: { userId: string } },
+) => {
   try {
     await connectDB();
     const userID = params.userId;
-    const userData = await User.findById(userID)
+    const userData = await User.findById(userID).populate("posts");
     if (!userData) {
       throw new Error("User Not Found!");
     }

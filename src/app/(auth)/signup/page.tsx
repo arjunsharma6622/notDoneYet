@@ -28,21 +28,25 @@ const Page = async () => {
           <SignupForm />
         </CardContent>
         <CardFooter className="flex flex-col gap-6 mt-1">
-
           <div className="w-full relative">
-            <hr className="w-full h-[1px]"/>
-          <span className="text-sm px-3 bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">Or</span>
+            <hr className="w-full h-[1px]" />
+            <span className="text-sm px-3 bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
+              Or
+            </span>
           </div>
 
           <div className="flex gap-4 w-full">
-          <form action={googleLogin} className="w-full">
-            <Button type="submit" variant={"google"} className="w-full flex items-center justify-center gap-2">
-            <img src="./images/google.svg" alt="" className="w-5"/>
-
-              Login with Google
-            </Button>
-          </form>
-          {/* <form action={googleLogin} className="w-full">
+            <form action={googleLogin} className="w-full">
+              <Button
+                type="submit"
+                variant={"google"}
+                className="w-full flex items-center justify-center gap-2"
+              >
+                <img src="./images/google.svg" alt="" className="w-5" />
+                Login with Google
+              </Button>
+            </form>
+            {/* <form action={googleLogin} className="w-full">
             <Button type="submit" variant={"apple"} className="w-full flex items-center justify-center gap-2">
             <img src="./images/apple.svg" alt="" className="w-5"/>
               Login with Apple
@@ -56,7 +60,6 @@ const Page = async () => {
               Login
             </Link>
           </p>
-
         </CardFooter>
       </Card>
     </div>

@@ -1,35 +1,42 @@
-import { auth, signOut } from "@/auth";
+import { auth } from "@/auth";
+import RecommendedPosts from "@/components/client/RecommendedPosts";
+import UserInfoCard from "@/components/client/UserInfoCard";
 import { Button } from "@/components/ui/button";
+import { BASE_URL } from "@/lib/utils";
+import axios from "axios";
 import Link from "next/link";
 
 export default async function Home() {
   const session = await auth();
   const user = session?.user;
+  let userData = {};
+
+  if(user){
+    userData = await axios.get(`${BASE_URL}/api/user/${user?._id}`).then((res) => res.data).catch((err) => console.error("Error", err));
+  }
+
+
   return (
-    <div className="h-dvh flex items-center justify-center">
-      {user ? (
-        <div className="flex items-center gap-4 flex-col">
-          <img referrerPolicy="no-referrer" src={user?.image as string} alt={user?.name as string} className="w-24 h-24 rounded-full" />
-          <h1>Hi {user.name}</h1>
-          <form
-            action={async () => {
-              "use server";
-              await signOut();
-            }}
-          >
-            <Button type="submit">Logout</Button>
-          </form>
+    <div className="flex justify-center gap-5 w-full">
+      { user ?
+        <div className="w-[95%] flex gap-10 md:flex-row flex-col items-start mt-5">
+        <div className="flex-[3]">
+        <UserInfoCard userData={userData} />
         </div>
-      ) : (
-        <div className="flex items-center gap-4">
-          <Button type="submit">
-            <Link href="/login">Login</Link>
-          </Button>
-          <Button type="submit">
-            <Link href="/signup">Signup</Link>
-          </Button>
+        <div className="flex-[6]">
+          <RecommendedPosts currUser={userData} />
         </div>
-      )}
+        <div className="flex-[3]"></div>
+        </div>
+
+        :
+        <div>
+          <p>Please Login</p>
+          <Link href="/login">
+            <Button>Login</Button>
+          </Link>
+        </div>
+}
     </div>
   );
 }
