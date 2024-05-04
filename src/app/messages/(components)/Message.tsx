@@ -1,4 +1,6 @@
 import dateFormat from "dateformat";
+import { BiCheckDouble } from "react-icons/bi";
+import { FiCheck } from "react-icons/fi";
 
 const Message = ({ message, currentUser, otherUser, session }: any) => {
   return (
@@ -25,7 +27,20 @@ const Message = ({ message, currentUser, otherUser, session }: any) => {
               currentUser ? "rounded-tr-none" : "rounded-tl-none"
             } bg-gray-100 py-2 rounded-xl px-4`}
           >
-            {message?.content}
+            <div>
+            <p>{message?.content}</p>
+            
+            {message.seen && currentUser && (
+              <div className="absolute bottom-[2px] right-1">
+              <BiCheckDouble className="w-4 h-4 text-blue-500" />
+              </div>
+            )}
+            {!message.seen && currentUser && (
+              <div className="absolute bottom-[2px] right-1">
+              <BiCheckDouble className="w-4 h-4 text-gray-400" />
+              </div>
+            )}
+            </div>
           </div>
         </div>
 

@@ -1,9 +1,10 @@
+import { Button } from "@/components/ui/button";
 import axios from "axios";
+import { format, isToday, isYesterday } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import { FiSend } from "react-icons/fi";
 import Message from "./Message";
-import { format, isToday, isYesterday } from "date-fns";
-import { Button } from "@/components/ui/button";
+import { BASE_URL } from "@/lib/utils";
 
 const formatDate = (date: any) => {
   const messageDate = new Date(date);
@@ -30,6 +31,7 @@ const CurrentConversation = ({
   const [currentMessage, setCurrentMessage] = useState("");
 
   const messagesEndRef: any = useRef(null);
+  
 
   const handleSendMessage = async () => {
     if (!currentConversation) {
@@ -76,6 +78,23 @@ const CurrentConversation = ({
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [currentConversation?.messages]);
+
+
+  useEffect(() => {
+    const updateSeen = async () => {
+      console.log("updating seen");
+      if (currentConversation) {
+        try {
+          await axios.put(`${BASE_URL}/api/conversation/${currentConversation?._id}/seen`, {
+            currUserId: session?.user._id,
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    updateSeen();
+  }, [currentConversation]);
 
   return (
     <div className="flex-[9] h-full overflow-y-scroll border rounded-md">

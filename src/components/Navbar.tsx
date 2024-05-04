@@ -61,7 +61,16 @@ const Navbar = async () => {
                 href={menuItem.path}
                 className="px-2 text-base cursor-pointer flex gap-2 items-center"
               >
+                { menuItem.name === "Messages" ?
+                <div className="relative">
                 <div className="text-xl">{menuItem.icon}</div>
+                <div className="text-white absolute font-medium -top-[7px] -right-[7px] h-4 w-4 px-1 py-1 flex text-[10px] items-center justify-center bg-red-500 rounded-full">
+                  3
+                </div>
+                </div>
+                :
+                <div className="text-xl">{menuItem.icon}</div>
+                }
                 {menuItem.name}
               </Link>
             ))}

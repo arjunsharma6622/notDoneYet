@@ -16,13 +16,10 @@ const MessagePage = ({ session }: any) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("fetching following users data");
         const users = await axios.get(
           `/api/user/following/${session?.user._id}`,
         );
-
         setAllFollowingUsers(users.data);
-        console.log(users.data);
       } catch (error) {
         console.log(error);
       }
@@ -34,13 +31,11 @@ const MessagePage = ({ session }: any) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("fetching conversations data");
         const conversations = await axios.get(
           `/api/conversation/user/${session?.user._id}`,
         );
 
         setAllConversations(conversations.data);
-        console.log(conversations.data);
       } catch (error) {
         console.log(error);
       }

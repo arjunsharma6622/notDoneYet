@@ -1,4 +1,7 @@
+import { BASE_URL } from "@/lib/utils";
+import axios from "axios";
 import { format, isToday, isYesterday } from "date-fns";
+import { useEffect, useState } from "react";
 
 const ConversationCard = ({
   session,
@@ -21,6 +24,28 @@ const ConversationCard = ({
       return format(messageDate, "MMMM dd, yyyy");
     }
   };
+
+  const [unread, setUnread] = useState(0);
+
+  useEffect(() => {
+    const fetchUnread = async () => {
+      try {
+        const unread = await axios.get(
+          `${BASE_URL}/api/conversation/${conversation._id}/unread`,
+        );
+        if(unread?.data?._id != session?.user._id) {
+          setUnread(unread.data?.count);        
+        }
+        else{
+          setUnread(0);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchUnread()
+  }, [currentConversation, session?.user._id, conversation]);
 
   return (
     <div
@@ -57,14 +82,21 @@ const ConversationCard = ({
           <span className="text-sm text-gray-500"></span>
         </div>
 
-        <div className="flex justify-between items-center">
-          <div className="text-xs flex truncated-text w-fit">
+        <div className="relative flex justify-between items-center">
+          <div className=" text-xs flex truncated-text w-fit">
             <span>
               {lastMessage?.senderId === session?.user._id
                 ? "You: "
                 : otherUser?.name + ": "}
               {lastMessage?.content}
             </span>
+            { unread > 0 &&
+            <div className="absolute top-0 right-0">
+              <div className="flex items-center justify-center w-4 h-4 bg-red-500 rounded-full text-white text-xs">
+                {unread}
+              </div>
+            </div>
+        } 
           </div>
         </div>
       </div>
