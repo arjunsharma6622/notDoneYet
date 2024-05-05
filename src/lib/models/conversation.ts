@@ -1,17 +1,17 @@
-import { Schema, models, model } from "mongoose";
+import mongoose from "mongoose";
 
-const conversationSchema = new Schema(
+const conversationSchema = new mongoose.Schema(
   {
     users: [
       {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
     ],
     messages: [
       {
         senderId: {
-          type: Schema.Types.ObjectId,
+          type: mongoose.Schema.Types.ObjectId,
           ref: "User",
         },
         content: {
@@ -32,4 +32,4 @@ const conversationSchema = new Schema(
 );
 
 export const Conversation =
-  models.Conversation || model("Conversation", conversationSchema);
+  mongoose.models.Conversation || mongoose.model("Conversation", conversationSchema);

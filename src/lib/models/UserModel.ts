@@ -1,4 +1,4 @@
-import { Schema, models, model } from "mongoose";
+import mongoose from "mongoose";
 
 export interface Experience {
   title: string;
@@ -40,19 +40,20 @@ export interface UserDocument extends Document {
   image: string;
   backgroundImg: string;
   role: "user" | "doctor" | "athlete" | "venueOwner" | "brand" | "root";
-  venues?: Schema.Types.ObjectId[];
+  venues?: mongoose.Schema.Types.ObjectId[];
   about?: string;
   bio?: string;
-  posts?: Schema.Types.ObjectId[];
-  followers?: Schema.Types.ObjectId[];
-  following?: Schema.Types.ObjectId[];
+  posts?: mongoose.Schema.Types.ObjectId[];
+  followers?: mongoose.Schema.Types.ObjectId[];
+  following?: mongoose.Schema.Types.ObjectId[];
   experience?: Experience[];
   education?: Education[];
   sports?: string[];
   skills?: string[];
+  conversations?: mongoose.Schema.Types.ObjectId[];
 }
 
-const experienceSchema = new Schema<Experience>(
+const experienceSchema = new mongoose.Schema<Experience>(
   {
     title: { type: String, required: true },
     description: { type: String },
@@ -82,7 +83,7 @@ const experienceSchema = new Schema<Experience>(
   { timestamps: true },
 );
 
-const educationSchema = new Schema<Education>(
+const educationSchema = new mongoose.Schema<Education>(
   {
     school: { type: String, required: true },
     degree: { type: String, required: true },
@@ -95,7 +96,7 @@ const educationSchema = new Schema<Education>(
   { timestamps: true },
 );
 
-const userSchema = new Schema<UserDocument>({
+const userSchema = new mongoose.Schema<UserDocument>({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, select: false },
@@ -115,16 +116,17 @@ const userSchema = new Schema<UserDocument>({
     default: "user",
     enum: ["user", "doctor", "athlete", "venueOwner", "brand", "root"],
   },
-  venues: [{ type: Schema.Types.ObjectId, ref: "Venue" }],
+  venues: [{ type: mongoose.Schema.Types.ObjectId, ref: "Venue" }],
   about: { type: String },
   bio: { type: String },
-  posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
-  followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  following: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
+  followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   experience: [experienceSchema],
   education: [educationSchema],
   sports: [String],
   skills: [String],
+  conversations: [{ type: mongoose.Schema.Types.ObjectId, ref: "Conversation" }],
 });
 
-export const User = models?.User || model<UserDocument>("User", userSchema);
+export const User = mongoose.models?.User || mongoose.model<UserDocument>("User", userSchema);

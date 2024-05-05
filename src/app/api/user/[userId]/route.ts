@@ -1,4 +1,5 @@
 import { User } from "@/lib/models/UserModel";
+import { Post } from "@/lib/models/post";
 import { connectDB } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -33,7 +34,8 @@ export const GET = async (
   try {
     await connectDB();
     const userID = params.userId;
-    const userData = await User.findById(userID).populate("posts");
+    const userData = await User.findById(userID)
+    // .populate("posts");
     if (!userData) {
       throw new Error("User Not Found!");
     }
