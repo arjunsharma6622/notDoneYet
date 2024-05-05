@@ -129,4 +129,4 @@ const userSchema = new mongoose.Schema<UserDocument>({
   conversations: [{ type: mongoose.Schema.Types.ObjectId, ref: "Conversation" }],
 });
 
-export const User = mongoose.models?.User || mongoose.model<UserDocument>("User", userSchema);
+export const User = mongoose.models.User || mongoose.model<UserDocument>("User", userSchema);

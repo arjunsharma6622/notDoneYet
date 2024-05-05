@@ -1,3 +1,4 @@
+import { User } from "@/lib/models/UserModel";
 import { Conversation } from "@/lib/models/conversation";
 import { connectDB } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
@@ -28,6 +29,7 @@ export const POST = async (
 
   try {
     await connectDB()
+    const userData = await User.findById(senderId);
     // Find the conversation by ID
     const conversation = await Conversation.findById(conversationId);
     if (!conversation) {
