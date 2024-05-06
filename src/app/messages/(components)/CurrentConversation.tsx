@@ -132,7 +132,7 @@ const CurrentConversation = ({
               </div>
             </div>
 
-            <div className="flex flex-col gap-4 w-full px-8 overflow-y-scroll h-full">
+            <div className="flex flex-col gap-4 w-full px-8 pt-4 overflow-y-scroll h-full">
               {currentConversation?.messages?.map(
                 (message: any, index: any) => {
                   const otherUser = currentConversation?.users.filter(
@@ -146,11 +146,16 @@ const CurrentConversation = ({
                     ).getDate()
                   ) {
                     return (
+                      <div key={index} className="relative gap-4 my-4 w-full">
+                        <hr />
+                        <div className="bg-white px-4 w-fit absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                       <div
                         key={index}
-                        className="text-center text-xs text-black font-medium bg-gray-200 py-1 px-4 rounded-md mx-auto mt-4"
+                        className="  text-center w-fit text-xs text-black font-medium bg-gray-200 py-1 px-4 rounded-md mx-auto"
                       >
                         {formatDate(message.createdAt)}
+                      </div>
+                      </div>
                       </div>
                     );
                   }

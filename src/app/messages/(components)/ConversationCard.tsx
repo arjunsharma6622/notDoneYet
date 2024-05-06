@@ -84,10 +84,10 @@ const ConversationCard = ({
 
         <div className="relative flex justify-between items-center">
           <div className=" text-xs flex truncated-text w-fit">
-            <span>
+            <span className={`${unread > 0 ? "text-black font-medium" : "text-gray-500"}`}>
               {lastMessage?.senderId === session?.user._id
                 ? "You: "
-                : otherUser?.name + ": "}
+                : otherUser?.name?.split(" ")[0] + ": "}
               {lastMessage?.content}
             </span>
             { unread > 0 &&
