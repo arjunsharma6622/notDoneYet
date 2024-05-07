@@ -1,16 +1,6 @@
 import { followUser, unfollowUser } from "@/actions/user";
 import { auth } from "@/auth";
 import AthleteExperienceCard from "@/components/AtheleteExperienceCard";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import axios from "axios";
-import Link from "next/link";
-import { FcLike } from "react-icons/fc";
 import ProfilePostCard from "../../(components)/ProfilePostCard";
 
 const AthleteProfile = async ({ userData }: any) => {

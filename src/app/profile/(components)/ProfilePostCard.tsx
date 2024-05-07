@@ -8,7 +8,7 @@ const ProfilePostCard = ({post} : any) => {
     >
       <div className="flex items-start justify-start gap-2 text-sm">
 
-{ post.images.length > 0 &&
+{ post?.images?.length > 0 &&
         <div className="">
                   <img
                     src={post?.images[0]}
@@ -24,8 +24,8 @@ const ProfilePostCard = ({post} : any) => {
       </div>
 
       <div className="flex justify-between items-center text-xs">
-      <span className="flex items-center justify-center gap-1">{post.likes.length} <FcLike className="w-4 h-4"/></span>
-      <span>{post.comments.length} Comments</span>
+      <span className="flex items-center justify-center gap-1">{post?.likes?.length} <FcLike className="w-4 h-4"/></span>
+      <span>{post?.comments?.length} Comments</span>
       </div>
     </Link>
   )
