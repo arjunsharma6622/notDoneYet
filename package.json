@@ -10,7 +10,10 @@
     "prettify": "prettier -w ./src/"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.569.0",
+    "@aws-sdk/s3-request-presigner": "^3.569.0",
     "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
@@ -25,9 +28,12 @@
     "next": "14.2.3",
     "next-auth": "beta",
     "next-themes": "^0.3.0",
+    "pusher": "^5.2.0",
+    "pusher-js": "^8.4.0-rc2",
     "react": "^18",
     "react-datepicker": "^6.9.0",
     "react-dom": "^18",
+    "react-easy-crop": "^5.0.7",
     "react-hook-form": "^7.51.3",
     "react-icons": "^5.2.0",
     "react-show-more-text": "^1.7.1",

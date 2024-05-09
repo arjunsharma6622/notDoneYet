@@ -31,9 +31,9 @@ const CurrentConversation = ({
   const [currentMessage, setCurrentMessage] = useState("");
 
   const messagesEndRef: any = useRef(null);
-  
 
   const handleSendMessage = async () => {
+    console.log("sending message");
     if (!currentConversation) {
       return;
     }
@@ -46,7 +46,7 @@ const CurrentConversation = ({
     try {
       const response = await axios.post(
         `/api/conversation/${currentConversation?._id}/`,
-        message,
+        message
       );
 
       setCurrentConversation((prevConversation: any) => {
@@ -61,6 +61,7 @@ const CurrentConversation = ({
   };
 
   const handleFirstMessage = async () => {
+    console.log("first message");
     try {
       const firstConversation = await axios.post(`/api/conversation/`, {
         senderId: session?.user._id,
@@ -79,15 +80,17 @@ const CurrentConversation = ({
     }
   }, [currentConversation?.messages]);
 
-
   useEffect(() => {
     const updateSeen = async () => {
       console.log("updating seen");
       if (currentConversation) {
         try {
-          await axios.put(`${BASE_URL}/api/conversation/${currentConversation?._id}/seen`, {
-            currUserId: session?.user._id,
-          });
+          await axios.put(
+            `${BASE_URL}/api/conversation/${currentConversation?._id}/seen`,
+            {
+              currUserId: session?.user._id,
+            }
+          );
         } catch (error) {
           console.log(error);
         }
@@ -95,6 +98,8 @@ const CurrentConversation = ({
     };
     updateSeen();
   }, [currentConversation]);
+
+  console.log("curr convo", currentConversation?.messages);
 
   return (
     <div className="flex-[9] h-full overflow-y-scroll border rounded-md">
@@ -106,7 +111,7 @@ const CurrentConversation = ({
                 <img
                   src={
                     currentConversation?.users?.filter(
-                      (user: any) => user._id !== session?.user._id,
+                      (user: any) => user._id !== session?.user._id
                     )[0]?.image
                   }
                   alt=""
@@ -118,14 +123,14 @@ const CurrentConversation = ({
                 <span>
                   {
                     currentConversation?.users?.filter(
-                      (user: any) => user._id !== session?.user._id,
+                      (user: any) => user._id !== session?.user._id
                     )[0]?.name
                   }
                 </span>
                 <span className="text-gray-400 text-xs">
                   {
                     currentConversation?.users?.filter(
-                      (user: any) => user._id !== session?.user._id,
+                      (user: any) => user._id !== session?.user._id
                     )[0]?.bio
                   }
                 </span>
@@ -136,26 +141,38 @@ const CurrentConversation = ({
               {currentConversation?.messages?.map(
                 (message: any, index: any) => {
                   const otherUser = currentConversation?.users.filter(
-                    (user: any) => user._id !== session?.user._id,
+                    (user: any) => user._id !== session?.user._id
                   )[0];
 
                   if (
                     new Date(message.createdAt).getDate() !==
                     new Date(
-                      currentConversation?.messages[index - 1]?.createdAt,
+                      currentConversation?.messages[index - 1]?.createdAt
                     ).getDate()
                   ) {
                     return (
-                      <div key={index} className="relative gap-4 my-4 w-full">
-                        <hr />
-                        <div className="bg-white px-4 w-fit absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                      <div
-                        key={index}
-                        className="  text-center w-fit text-xs text-black font-medium bg-gray-200 py-1 px-4 rounded-md mx-auto"
-                      >
-                        {formatDate(message.createdAt)}
-                      </div>
-                      </div>
+                      <div key={index} className="flex flex-col gap-4">
+                        <div className="relative gap-4 my-4 w-full">
+                          <hr />
+                          <div className="bg-white px-4 w-fit absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                            <div
+                              key={index}
+                              className="  text-center w-fit text-xs text-black font-medium bg-gray-200 py-1 px-4 rounded-md mx-auto"
+                            >
+                              {formatDate(message.createdAt)}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <Message
+                            key={index}
+                            currentUser={message.senderId === session?.user._id}
+                            session={session}
+                            message={message}
+                            otherUser={otherUser}
+                          />
+                        </div>
                       </div>
                     );
                   }
@@ -169,7 +186,7 @@ const CurrentConversation = ({
                       otherUser={otherUser}
                     />
                   );
-                },
+                }
               )}
 
               <div ref={messagesEndRef} />

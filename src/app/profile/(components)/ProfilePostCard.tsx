@@ -6,19 +6,19 @@ const ProfilePostCard = ({post} : any) => {
   return (
     <Link href={`/post/${post._id}`} className="border rounded-md px-5 py-5 flex flex-col gap-2"
     >
-      <div className="flex items-start justify-start gap-2 text-sm">
+      <div className="flex items-start justify-start gap-4 text-sm">
 
 { post?.images?.length > 0 &&
-        <div className="">
+        <div className="flex-[1.3]">
                   <img
                     src={post?.images[0]}
                     alt='slide'
-                    className="object-cover w-16 h-16"
+                    className="object-cover w-full rounded-lg"
                   />
           </div>
 }
 
-          <p>{post.description}</p>
+          <p className='flex-[11]'>{post.description}</p>
 
 
       </div>

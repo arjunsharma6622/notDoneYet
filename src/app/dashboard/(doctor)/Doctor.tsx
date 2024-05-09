@@ -3,15 +3,17 @@ import dateFormat from "dateformat";
 import { useState } from "react";
 import { FiEdit3, FiPlus } from "react-icons/fi";
 import ShowMoreText from "react-show-more-text";
+import useSWR from "swr";
 import AboutProfileEdit from "../(components)/AboutProfileEdit";
 import BasicProfileEdit from "../(components)/BasicProfileEdit";
+import ImageEdit from "../(components)/ImageEdit";
 import PostForm from "../(components)/PostForm";
 import AddEducation from "./(components)/AddEducation";
 import AddExperience from "./(components)/AddExperience";
 import EditEducation from "./(components)/EditEducation";
 import EditExperience from "./(components)/EditExperience";
 import EditSkills from "./(components)/EditSkills";
-import useSWR from "swr";
+import ProfilePostCard from "../(components)/ProfilePostCard";
 
 const Doctor = ({ userData } : any) => {
   const [openImagesEdit, setOpenImagesEdit] = useState(false);
@@ -39,6 +41,7 @@ const Doctor = ({ userData } : any) => {
         <div className="relative">
           <img
             src={
+              userData?.backgroundImg ||
               "https://www.fr.com/images/demo/fish-richardson-header-default.png"
             }
             referrerPolicy="no-referrer"
@@ -47,7 +50,7 @@ const Doctor = ({ userData } : any) => {
           />
           <img
             src={
-              userData?.profileImg ||
+              userData?.image ||
               "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
             }
             referrerPolicy="no-referrer"
@@ -100,32 +103,7 @@ const Doctor = ({ userData } : any) => {
           </div>
 
           {allUserPosts?.map((post : any) => (
-            <div
-              key={post._id}
-              className="flex items-start gap-2 justify-start"
-            >
-              <div className="">
-                <img
-                  src={post.images[0]}
-                  alt=""
-                  className="w-24 object-cover h-24 rounded-md"
-                />
-              </div>
-              <div className="w-full text-sm">
-                <ShowMoreText
-                  /* Default options */
-                  lines={3}
-                  more="Show more"
-                  className="content-css"
-                  anchorClass="show-more-less-clickable"
-                  expanded={false}
-                  truncatedEndingComponent={"... "}
-                  less={false}
-                >
-                  <p className="">{post.description}</p>
-                </ShowMoreText>{" "}
-              </div>
-            </div>
+            <ProfilePostCard key={post?._id} post={post} />
           ))}
         </div>
 
@@ -315,6 +293,16 @@ const Doctor = ({ userData } : any) => {
           <EditSkills
             open={openSkillsEdit}
             setOpen={setOpenSkillsEdit}
+            user={userData}
+          />
+        </div>
+      )}
+
+{openImagesEdit && (
+        <div className="absolute">
+          <ImageEdit
+            open={openImagesEdit}
+            setOpen={setOpenImagesEdit}
             user={userData}
           />
         </div>

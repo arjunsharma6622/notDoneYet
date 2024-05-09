@@ -93,11 +93,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       await connectDB();
       const userData = await User.findOne({ email: token?.email });
       token._id = userData?._id;
+      token.role = userData?.role;
+      token.image = userData?.image;
       return token;
     },
     session: async ({ session, token }) => {
       if (session) {
         session.user._id = token?._id;
+        session.user.role = token?.role;
+        session.user.image = token?.image;
       }
       return session;
     },

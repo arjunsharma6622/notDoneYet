@@ -1,15 +1,19 @@
 import { useState } from "react";
 import { FiEdit3, FiPlus } from "react-icons/fi";
 import AddProduct from "./(components)/AddProduct";
+import ImageEdit from "../(components)/ImageEdit";
 
 const Brand = ({ userData }: { userData: any }) => {
   const [openAddProduct, setOpenAddProduct] = useState(false);
   const [openEditProduct, setOpenEditProduct] = useState(false);
+  const [openImagesEdit, setOpenImagesEdit] = useState(false);
+
   return (
     <div className="flex flex-col rounded-md border gap-5">
       <div className="relative">
         <img
           src={
+            userData?.backgroundImg ||
             "https://www.fr.com/images/demo/fish-richardson-header-default.png"
           }
           referrerPolicy="no-referrer"
@@ -18,6 +22,7 @@ const Brand = ({ userData }: { userData: any }) => {
         />
         <img
           src={
+            userData?.image ||
             "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
           }
           referrerPolicy="no-referrer"
@@ -26,7 +31,8 @@ const Brand = ({ userData }: { userData: any }) => {
         />
 
         <div className="text-gray-600 absolute right-6 top-6 bg-white cursor-pointer rounded-full p-[6px]">
-          <FiEdit3 className="h-5 w-5 md:h-6 md:w-6" />
+          <FiEdit3 className="h-5 w-5 md:h-6 md:w-6" onClick={() => setOpenImagesEdit(true)}
+/>
         </div>
       </div>
       <div className="px-2 md:px-6 mt-2 flex flex-col">
@@ -62,6 +68,16 @@ const Brand = ({ userData }: { userData: any }) => {
           <AddProduct
             open={openAddProduct}
             setOpen={setOpenAddProduct}
+            user={userData}
+          />
+        </div>
+      )}
+
+{openImagesEdit && (
+        <div className="absolute">
+          <ImageEdit
+            open={openImagesEdit}
+            setOpen={setOpenImagesEdit}
             user={userData}
           />
         </div>

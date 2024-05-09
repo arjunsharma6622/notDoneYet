@@ -2,7 +2,7 @@ import dateFormat from "dateformat";
 import { BiCheckDouble } from "react-icons/bi";
 import { FiCheck } from "react-icons/fi";
 
-const Message = ({ message, currentUser, otherUser, session }: any) => {
+const Message = ({ message, currentUser, otherUser, showImage, session }: any) => {
   return (
     <div
       key={message._id}
@@ -44,7 +44,7 @@ const Message = ({ message, currentUser, otherUser, session }: any) => {
           </div>
         </div>
 
-        <div>
+        <div className="">
           <img
             src={currentUser ? session?.user?.image : otherUser?.image}
             alt=""

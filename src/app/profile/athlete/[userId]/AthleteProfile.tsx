@@ -2,9 +2,16 @@ import { followUser, unfollowUser } from "@/actions/user";
 import { auth } from "@/auth";
 import AthleteExperienceCard from "@/components/AtheleteExperienceCard";
 import ProfilePostCard from "../../(components)/ProfilePostCard";
+import { BASE_URL } from "@/lib/utils";
+import axios from "axios";
 
 const AthleteProfile = async ({ userData }: any) => {
   const session: any = await auth();
+
+  const postData = await axios
+  .get(`${BASE_URL}/api/posts/user/${userData._id}`)
+  .then((res) => res.data)
+  .catch((err) => console.error("Error", err));
 
   const handleFollowClick = async () => {
     "use server";
@@ -35,6 +42,7 @@ const AthleteProfile = async ({ userData }: any) => {
         <div className="relative">
           <img
             src={
+              userData.backgroundImg ||
               "https://www.fr.com/images/demo/fish-richardson-header-default.png"
             }
             alt=""
@@ -42,7 +50,7 @@ const AthleteProfile = async ({ userData }: any) => {
           />
           <img
             src={
-              userData.profileImg ||
+              userData.image ||
               "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
             }
             alt=""
@@ -115,7 +123,7 @@ const AthleteProfile = async ({ userData }: any) => {
           </div>
 
           <div className="flex flex-col gap-2">
-            {userData.posts.map((post: any, index: number) => (
+            {postData.map((post: any, index: number) => (
               <ProfilePostCard post={post} key={index} />
             ))}
           </div>

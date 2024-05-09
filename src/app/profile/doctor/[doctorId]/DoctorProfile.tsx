@@ -4,9 +4,17 @@ import { auth } from "@/auth";
 import DoctorEducationCard from "@/components/DoctorEducationCard";
 import DoctorExperienceCard from "@/components/DoctorExperienceCard";
 import Link from "next/link";
+import ProfilePostCard from "../../(components)/ProfilePostCard";
+import axios from "axios";
+import { BASE_URL } from "@/lib/utils";
 
 const DoctorProfile = async ({ userData }: any) => {
   const session: any = await auth();
+
+  const postData = await axios
+  .get(`${BASE_URL}/api/posts/user/${userData._id}`)
+  .then((res) => res.data)
+  .catch((err) => console.error("Error", err));
 
   const handleFollowClick = async () => {
     "use server";
@@ -116,22 +124,8 @@ const DoctorProfile = async ({ userData }: any) => {
           </div>
 
           <div className="flex flex-col gap-2">
-            {userData.posts.map((post: any, index: number) => (
-              <Link href={`/post/${post._id}`}
-                key={index}
-                className="border rounded-md px-5 py-5 flex flex-row items-start"
-              >
-                <div>
-                  <img
-                    src={post.images[0]}
-                    alt=""
-                    className="w-24 h-24 object-cover rounded-md"
-                  />
-                </div>
-                <div className="flex flex-col gap-1 text-sm pt-2 pb-3">
-                  <p>{post.description}</p>
-                </div>
-              </Link>
+            {postData?.map((post: any, index: number) => (
+              <ProfilePostCard key={index} post={post} />
             ))}
           </div>
         </div>

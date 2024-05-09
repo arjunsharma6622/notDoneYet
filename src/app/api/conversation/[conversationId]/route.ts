@@ -55,7 +55,8 @@ export const POST = async (
 
     const recentMsg =
       updatedConversation.messages[updatedConversation.messages.length - 1];
-
+      console.log("recent msg")
+      console.log(recentMsg);
     return NextResponse.json(recentMsg);
   } catch (error) {
     console.error(error);

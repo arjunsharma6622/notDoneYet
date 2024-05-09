@@ -13,6 +13,7 @@ const MessagePage = ({ session }: any) => {
   const [writeNewMsg, setWriteNewMsg]: any = useState(false);
   const [allFollowingUsers, setAllFollowingUsers]: any = useState([]);
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -28,6 +29,7 @@ const MessagePage = ({ session }: any) => {
     fetchData();
   }, [session]);
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,8 +43,12 @@ const MessagePage = ({ session }: any) => {
       }
     };
 
+
     fetchData();
-  }, [session, currentConversation]);
+  }, []);
+
+  // console.log("all conversations", allConversations);
+
 
   return (
     <div className="flex items-center justify-center w-full">

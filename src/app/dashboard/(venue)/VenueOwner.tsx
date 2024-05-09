@@ -4,15 +4,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FiEdit3, FiPlus } from "react-icons/fi";
 import { GrMapLocation } from "react-icons/gr";
-import ShowMoreText from "react-show-more-text";
+import useSWR from "swr";
 import AboutProfileEdit from "../(components)/AboutProfileEdit";
+import ImageEdit from "../(components)/ImageEdit";
 import PostForm from "../(components)/PostForm";
+import ProfilePostCard from "../(components)/ProfilePostCard";
 import AddVenue from "./(components)/AddVenue";
 import BasicProfileEdit from "./(components)/BasicDetails";
 import EditVenue from "./(components)/EditVenue";
-import useSWR from "swr";
-import Link from "next/link";
-import ProfilePostCard from "../(components)/ProfilePostCard";
 
 const VenueOwner = ({ userData }: any) => {
   const [openImagesEdit, setOpenImagesEdit] = useState(false);
@@ -48,6 +47,7 @@ const VenueOwner = ({ userData }: any) => {
         <div className="relative">
           <img
             src={
+              userData?.backgroundImg ||
               "https://www.fr.com/images/demo/fish-richardson-header-default.png"
             }
             referrerPolicy="no-referrer"
@@ -209,6 +209,16 @@ const VenueOwner = ({ userData }: any) => {
             setOpen={setOpenEditVenue}
             user={userData}
             allVenues={allVenues}
+          />
+        </div>
+      )}
+
+{openImagesEdit && (
+        <div className="absolute">
+          <ImageEdit
+            open={openImagesEdit}
+            setOpen={setOpenImagesEdit}
+            user={userData}
           />
         </div>
       )}

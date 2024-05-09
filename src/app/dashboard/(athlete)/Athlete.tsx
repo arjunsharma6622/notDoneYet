@@ -1,17 +1,16 @@
 "use client";
 import AthleteExperienceCard from "@/components/AtheleteExperienceCard";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FiEdit3, FiPlus } from "react-icons/fi";
+import useSWR from "swr";
 import AboutProfileEdit from "../(components)/AboutProfileEdit";
 import BasicProfileEdit from "../(components)/BasicProfileEdit";
+import ImageEdit from "../(components)/ImageEdit";
 import PostForm from "../(components)/PostForm";
+import ProfilePostCard from "../(components)/ProfilePostCard";
 import AddExperience from "./(components)/AddExperience";
 import EditExperience from "./(components)/EditExperience";
 import SportsEdit from "./(components)/SportsEdit";
-import ShowMoreText from "react-show-more-text";
-import useSWR from "swr";
-import Link from "next/link";
-import ProfilePostCard from "../(components)/ProfilePostCard";
 
 const Athlete = ({ userData }: any) => {
   const [openImagesEdit, setOpenImagesEdit] = useState(false);
@@ -59,6 +58,7 @@ const Athlete = ({ userData }: any) => {
               onClick={() => setOpenImagesEdit(true)}
             />
           </div>
+
         </div>
 
         <div className="px-2 md:px-6 mt-2 flex flex-col">
@@ -218,6 +218,16 @@ const Athlete = ({ userData }: any) => {
           <SportsEdit
             open={openSportsEdit}
             setOpen={setOpenSportsEdit}
+            user={userData}
+          />
+        </div>
+      )}
+
+      {openImagesEdit && (
+        <div className="absolute">
+          <ImageEdit
+            open={openImagesEdit}
+            setOpen={setOpenImagesEdit}
             user={userData}
           />
         </div>
