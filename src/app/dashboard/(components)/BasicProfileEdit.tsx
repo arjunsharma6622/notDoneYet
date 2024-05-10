@@ -30,8 +30,11 @@ const BasicProfileEdit = ({
     setValue("email", user.email);
     setValue("phone", user.phone);
     setValue("bio", user.bio);
-    setValue("country", user.country);
-    setValue("cityState", user.cityState);
+    setValue("address.street", user.address?.street);
+    setValue("address.city", user.address?.city);
+    setValue("address.state", user.address?.state);
+    setValue("address.country", user.address?.country);
+    setValue("address.postalCode", user.address?.postalCode);
   }, [user, setValue]);
 
   useEffect(() => {
@@ -43,6 +46,7 @@ const BasicProfileEdit = ({
   }, []);
 
   const onSubmit = async (data: any) => {
+    console.log(data)
     try {
       await updateUser(data);
       toast.success("Profile Updated");
@@ -70,7 +74,8 @@ const BasicProfileEdit = ({
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col gap-6 overflow-scroll"
             >
-              <div className="overflow-y-scroll px-6">
+              <div className="overflow-y-scroll px-6 flex flex-col gap-6">
+
                 <div className="flex flex-col gap-2">
                   <h2 className="text-xl font-semibold underline">
                     Basic Details
@@ -128,6 +133,7 @@ const BasicProfileEdit = ({
                     />
                   </div>
                 </div>
+
                 <div className="flex flex-col gap-2">
                   <h2 className="text-xl font-semibold underline">
                     Bio/Headling
@@ -147,9 +153,58 @@ const BasicProfileEdit = ({
                     />
                   </div>
                 </div>
+
                 <div className="flex flex-col gap-2">
                   <h2 className="text-xl font-semibold underline">Location</h2>
                   <div>
+                    <label
+                      htmlFor="street"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Street
+                    </label>
+                    <input
+                      type="text"
+                      id="street"
+                      {...register("address.street")}
+                      className="border rounded-md px-3 py-2 w-full focus:outline-none"
+                    />
+                  </div>
+                  <div className="flex gap-4 w-full">
+                    <div className="w-full">
+                      <label
+                        htmlFor="city"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        City
+                      </label>
+                      <input
+                        type="text"
+                        id="city"
+                        {...register("address.city")}
+                        className="border rounded-md px-3 py-2 w-full focus:outline-none"
+                      />
+                    </div>
+                    <div className="w-full">
+                      <label
+                        htmlFor="state"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        State
+                      </label>
+                      <input
+                        type="text"
+                        id="state"
+                        {...register("address.state")}
+                        className="border rounded-md px-3 py-2 w-full focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+
+                  <div className="flex gap-4 w-full">
+
+                  <div className="w-full">
                     <label
                       htmlFor="country"
                       className="block text-sm font-medium text-gray-700"
@@ -159,26 +214,28 @@ const BasicProfileEdit = ({
                     <input
                       type="text"
                       id="country"
-                      {...register("country")}
+                      {...register("address.country")}
                       className="border rounded-md px-3 py-2 w-full focus:outline-none"
                     />
                   </div>
-                  <div>
+                  <div className="w-full">
                     <label
-                      htmlFor="cityState"
+                      htmlFor="postalCode"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      City/State
+                      Postal Code
                     </label>
                     <input
-                      type="text"
-                      id="cityState"
-                      {...register("cityState")}
+                      type="number"
+                      id="postalCode"
+                      {...register("address.postalCode")}
                       className="border rounded-md px-3 py-2 w-full focus:outline-none"
                     />
+                  </div>
                   </div>
                 </div>
               </div>
+
               <div className="flex items-center justify-end gap-4 border-t px-6 py-3">
                 <Button
                   variant="destructive"

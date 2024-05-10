@@ -50,6 +50,10 @@ export interface UserDocument extends Document {
   education?: Education[];
   sports?: string[];
   skills?: string[];
+  address?: object;
+  phone?: string;
+  profileLikes?: mongoose.Schema.Types.ObjectId[];
+  likedProfiles?: mongoose.Schema.Types.ObjectId[];
   conversations?: mongoose.Schema.Types.ObjectId[];
 }
 
@@ -115,6 +119,15 @@ const userSchema = new mongoose.Schema<UserDocument>({
     type: String,
     default: "user",
     enum: ["user", "doctor", "athlete", "venueOwner", "brand", "root"],
+  },
+  profileLikes : [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
+  likedProfiles : [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
+  address: {
+    street: { type: String },
+    city: { type: String },
+    state: { type: String },
+    country: { type: String },
+    postalCode: { type: String },
   },
   venues: [{ type: mongoose.Schema.Types.ObjectId, ref: "Venue" }],
   about: { type: String },
