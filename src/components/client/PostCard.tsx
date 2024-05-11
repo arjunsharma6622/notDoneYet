@@ -1,112 +1,117 @@
-"use client"
+"use client";
 
-import { addComment, toggleLike } from '@/actions/posts';
-import { useState } from 'react';
-import { FiHeart, FiMessageCircle, FiShare, FiThumbsUp } from 'react-icons/fi';
-import TimeAgo from 'react-timeago'
-import { toast } from 'sonner';
-import useSWR from 'swr';
-import UserCommentCard from './UserCommentCard';
-import PostImageSection from './PostImageSection';
+import { addComment, toggleLike } from "@/actions/posts";
+import { useState } from "react";
+import { FiHeart, FiMessageCircle, FiShare, FiThumbsUp } from "react-icons/fi";
+import TimeAgo from "react-timeago";
+import { toast } from "sonner";
+import PostImageSection from "./PostImageSection";
+import UserCommentCard from "./UserCommentCard";
+import { RiHeart2Fill, RiHeart2Line } from "react-icons/ri";
 
-const PostCard = ({postData, currUser} : any) => {
-    const [openCommentInput, setOpenCommentInput] : [boolean, any] = useState(false);
-    const [commentText, setCommentText] : [string, any] = useState('');
-    const [openLikes, setOpenLikes] : [boolean, any] = useState(false);
 
-    const fetcher = (url : string) => fetch(url).then((res) => res.json());
+const PostCard = ({ postData, currUser }: any) => {
+  const [openCommentInput, setOpenCommentInput]: [boolean, any] =
+    useState(false);
+  const [commentText, setCommentText]: [string, any] = useState("");
+  const [openLikes, setOpenLikes]: [boolean, any] = useState(false);
 
-    const {
-      data: allPostComments,
-      error,
-      isLoading,
-    } = useSWR(`/api/posts/comments/${postData?._id}`, fetcher);
+  // const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-    const handlePostLike = async () => {
-        try {
-          console.log("clicked on like");
-    
-          const res : any = await toggleLike(postData?._id, currUser._id);
-          toast.success(res.message);
-        } catch (err) {
-          console.log(err);
-          toast.error("Failed to like post");
-        }
-      };
-    
-      const handlePostComment = async () => {
-        try {
-          if (!commentText) {
-            toast.error("Comment cannot be empty");
-            return;
-          }
-    
-          await addComment( currUser._id, postData?._id, null, commentText);
-          setCommentText("");
-    
-          toast.success("Comment posted successfully");
-    
-          // You might also want to update the postData's comments array here
-        } catch (error) {
-          console.error(error);
-          toast.error("Failed to post comment");
-        }
-      };
+  // const {
+  //   data: allPostComments,
+  //   error,
+  //   isLoading,
+  // } = useSWR(`/api/posts/comments/${postData?._id}`, fetcher);
+
+  const handlePostLike = async () => {
+    try {
+      console.log("clicked on like");
+
+      const res: any = await toggleLike(postData?._id, currUser._id);
+      toast.success(res.message);
+    } catch (err) {
+      console.log(err);
+      toast.error("Failed to like post");
+    }
+  };
+
+  const handlePostComment = async () => {
+    try {
+      if (!commentText) {
+        toast.error("Comment cannot be empty");
+        return;
+      }
+
+      await addComment(currUser._id, postData?._id, null, commentText);
+      setCommentText("");
+
+      toast.success("Comment posted successfully");
+
+      // You might also want to update the postData's comments array here
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to post comment");
+    }
+  };
 
   return (
-
-    <div className='flex border flex-col rounded-md px-4 py-4 gap-2'>
-        <div className='flex items-start gap-2 border-b pb-2'>
-            <div>
-                <img src={postData?.user?.image} alt="" className='rounded-full w-12 h-12'/>
-            </div>
-            <div>
-            <div className='text-base flex items-center gap-2'>
-                <p>{postData?.user?.name}</p>
-                <div className='w-1 h-1 bg-black rounded-full'></div>
-                <TimeAgo date={postData?.createdAt} className='text-xs text-gray-500'/>
-            </div>
-            <p className='text-xs'>{postData?.user?.bio}</p>
-
-            </div>
+    <div className="flex border flex-col rounded-md px-4 py-4 gap-2">
+      <div className="flex items-start gap-2 border-b pb-2">
+        <div>
+          <img
+            src={postData?.user?.image}
+            alt=""
+            className="rounded-full w-12 h-12"
+          />
         </div>
-
-        <div className='w-full flex flex-col gap-4 px-2 py-2'>
-            <p className='text-sm text-start'>{postData?.description}</p>
-         {    postData?.images.length > 0 &&
-        <PostImageSection images={postData?.images}/>
-         }
+        <div>
+          <div className="text-base flex items-center gap-2">
+            <p>{postData?.user?.name}</p>
+            <div className="w-1 h-1 bg-black rounded-full"></div>
+            <TimeAgo
+              date={postData?.createdAt}
+              className="text-xs text-gray-500"
+            />
+          </div>
+          <p className="text-xs">{postData?.user?.bio}</p>
         </div>
+      </div>
 
+      <div className="w-full flex flex-col gap-4 px-2 py-2">
+        <p className="text-sm text-start">{postData?.description}</p>
+        {postData?.images.length > 0 && (
+          <PostImageSection images={postData?.images} />
+        )}
+      </div>
 
-
-        <div className="flex items-center justify-between w-full">
+      <div className="flex items-center justify-between w-full">
         <div className="flex items-center text-sm justify-between w-full gap-2">
           <span>{postData?.likes?.length} Likes</span>
           <span
             onClick={() => setOpenCommentInput(!openCommentInput)}
             className="cursor-pointer"
           >
-            {allPostComments?.length} Comments
+            {postData?.comments?.length} Comments
           </span>
         </div>
       </div>
 
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center border-t border-b py-3 justify-between w-full px-6 gap-2">
-          {postData?.likes?.some((like : any) => like._id === currUser?._id) ? (
+          {postData?.likes?.some((like: any) => like._id === currUser?._id) ? (
             <div
-              className="flex items-center text-orange-500 cursor-pointer gap-2"
+              className="flex items-center text-pink-500 cursor-pointer gap-2"
               onClick={handlePostLike}
             >
-              <FiHeart className="w-5 h-5" /> <span>Liked</span>
+              <RiHeart2Fill className="w-5 h-5" /> <span>Liked</span>
             </div>
           ) : (
             <div
               className="flex items-center cursor-pointer gap-2"
               onClick={handlePostLike}
             >
-              <FiThumbsUp className="w-5 h-5" /> <span>Like</span>
+              <RiHeart2Line className="w-5 h-5" /> <span>Like</span>
             </div>
           )}
           <div
@@ -153,8 +158,8 @@ const PostCard = ({postData, currUser} : any) => {
             </div>
           </div>
           <div>
-            {allPostComments?.map((comment : any) => (
-<UserCommentCard key={comment._id} comment={comment}/>
+            {postData?.comments?.map((comment: any) => (
+              <UserCommentCard key={comment._id} comment={comment} />
             ))}
           </div>
         </div>
@@ -163,7 +168,7 @@ const PostCard = ({postData, currUser} : any) => {
       {openLikes && (
         <div className="flex flex-col w-full px-4">
           <div className="w-full border-b py-3 flex items-start gap-2">
-            {postData?.likes?.map((like : any) => (
+            {postData?.likes?.map((like: any) => (
               <div
                 key={like._id}
                 className="w-10 h-10 rounded-full overflow-hidden"
@@ -180,7 +185,7 @@ const PostCard = ({postData, currUser} : any) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default PostCard
+export default PostCard;

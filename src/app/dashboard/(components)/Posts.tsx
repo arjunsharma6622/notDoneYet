@@ -3,6 +3,7 @@ import ProfilePostCard from "./ProfilePostCard";
 import { FiPlus } from "react-icons/fi";
 import useSWR from "swr";
 import PostForm from "../(modals)/PostForm";
+import { API_HEAD } from "@/lib/utils";
 
 const Posts = ({ userData }: { userData: any }) => {
   const [openPostForm, setOpenPostForm] = useState(false);
@@ -12,7 +13,7 @@ const Posts = ({ userData }: { userData: any }) => {
     data: allUserPosts,
     error,
     isLoading,
-  } = useSWR(`/api/posts/user/${userData?._id}`, fetcher);
+  } = useSWR(`${API_HEAD}/posts/user/${userData?._id}`, fetcher);
 
   return (
     <>
