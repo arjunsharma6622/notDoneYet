@@ -1,19 +1,18 @@
 "use client";
 
-import React from "react";
 import useSWR from "swr";
-import Head from "./(components)/Head";
-import RecommendedUsers from "./(components)/RecommendedUsers";
 import About from "./(components)/About";
-import Posts from "./(components)/Posts";
-import UserProfileSkeleton from "./(components)/UserProfileSkleton";
-import Skills from "./(components)/Skills";
-import Experience from "./(components)/Experience";
-import Venues from "./(components)/Venues";
-import Education from "./(components)/Education";
-import Products from "./(components)/Products";
-import PastEvents from "./(components)/PastEvents";
 import Certificates from "./(components)/Certificates";
+import Experience from "./(components)/Experience";
+import Head from "./(components)/Head";
+import Posts from "./(components)/Posts";
+import RecommendedUsers from "./(components)/RecommendedUsers";
+import Skills from "./(components)/Skills";
+import UserProfileSkeleton from "./(components)/UserProfileSkleton";
+import Products from "./(components)/brand/Products";
+import PastEvents from "./(components)/venue/PastEvents";
+import Venues from "./(components)/venue/Venues";
+import Education from "./(components)/doctor/Education";
 
 const Profile = ({ session }: any) => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());

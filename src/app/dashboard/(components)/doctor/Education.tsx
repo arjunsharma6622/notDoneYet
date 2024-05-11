@@ -1,8 +1,9 @@
 import DoctorEducationCard from "@/components/DoctorEducationCard";
 import { useState } from "react";
 import { FiEdit3, FiPlus } from "react-icons/fi";
-import AddEducation from "../(modals)/doctor/AddEducation";
-import EditEducation from "../(modals)/doctor/EditEducation";
+import AddEducation from "../../(modals)/doctor/AddEducation";
+import EditEducation from "../../(modals)/doctor/EditEducation";
+
 
 const Education = ({ userData }: { userData: any }) => {
   const [openEducationAdd, setOpenEducationAdd] = useState(false);

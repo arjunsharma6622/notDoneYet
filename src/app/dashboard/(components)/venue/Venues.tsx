@@ -2,8 +2,8 @@ import VenueCard from "@/components/VenueCard";
 import { useState } from "react";
 import { FiEdit3, FiPlus } from "react-icons/fi";
 import useSWR from "swr";
-import AddVenue from "../(modals)/venue/AddVenue";
-import EditVenue from "../(modals)/venue/EditVenue";
+import AddVenue from "../../(modals)/venue/AddVenue";
+import EditVenue from "../../(modals)/venue/EditVenue";
 
 const Venues = ({ userData }: any) => {
   const [openAddVenue, setOpenAddVenue] = useState(false);

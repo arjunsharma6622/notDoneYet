@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FiEdit3, FiPlus } from "react-icons/fi";
-import AddProduct from "../(modals)/Brand/AddProduct";
+import AddProduct from "../../(modals)/Brand/AddProduct";
 
 const Products = ({ userData }: { userData: any }) => {
   const [openAddProduct, setOpenAddProduct] = useState(false);
