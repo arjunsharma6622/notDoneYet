@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { FiEdit2, FiImage, FiLink, FiTrash2, FiX } from "react-icons/fi";
 import { toast } from "sonner";
 
-const EditExperience = ({ user, open, setOpen } : { user: any, open: boolean, setOpen: any }) => {
+const EditDoctorExperience = ({ user, open, setOpen } : { user: any, open: boolean, setOpen: any }) => {
   const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
   const [userData, setUserData] = useState(user);
   const [selectedExperience, setSelectedExperience] : any = useState(null);
@@ -205,4 +205,4 @@ const EditExperience = ({ user, open, setOpen } : { user: any, open: boolean, se
   );
 };
 
-export default EditExperience;
+export default EditDoctorExperience;

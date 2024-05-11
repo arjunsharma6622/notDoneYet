@@ -42,7 +42,7 @@ const AddProduct = ({
     const imageUrl = URL.createObjectURL(images[index]);
     URL.revokeObjectURL(imageUrl);
     setImages((prevImages: any) =>
-      prevImages.filter((_: any, i: number) => i !== index),
+      prevImages.filter((_: any, i: number) => i !== index)
     );
   };
 
@@ -61,7 +61,7 @@ const AddProduct = ({
 
         const uploadResponse = await axios.post(
           "https://api.cloudinary.com/v1_1/dexnb3wk2/image/upload",
-          imageData,
+          imageData
         );
 
         const imageUrl = uploadResponse.data.secure_url;

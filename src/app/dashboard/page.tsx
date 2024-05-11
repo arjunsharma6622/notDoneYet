@@ -1,13 +1,12 @@
 import { auth } from "@/auth";
 import React from "react";
-import Home from "./Home";
+import Profile from "./Profile";
 
 const page = async () => {
   const session = await auth();
-  const user = session?.user;
   return (
     <div>
-      <Home session={session} />
+      <Profile session={session} />
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { FiImage, FiLink, FiX } from "react-icons/fi";
 import { toast } from "sonner";
 
-const AddExperience = ({ user, open, setOpen } : { user: any, open: boolean, setOpen: (open: boolean) => void }) => {
+const AddDoctorExperience = ({ user, open, setOpen } : { user: any, open: boolean, setOpen: (open: boolean) => void }) => {
   const [userData, setUserData] = useState(user);
   const {
     register,
@@ -157,4 +157,4 @@ const AddExperience = ({ user, open, setOpen } : { user: any, open: boolean, set
   );
 };
 
-export default AddExperience;
+export default AddDoctorExperience;

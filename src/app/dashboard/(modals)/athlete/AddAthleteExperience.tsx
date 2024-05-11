@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { FiImage, FiLink, FiX } from "react-icons/fi";
 import { toast } from "sonner";
 
-const AddExperience = ({
+const AddAthleteExperience = ({
   user,
   open,
   setOpen,
@@ -239,4 +239,4 @@ const AddExperience = ({
   );
 };
 
-export default AddExperience;
+export default AddAthleteExperience;

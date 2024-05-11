@@ -1,6 +1,5 @@
 "use client"
 
-import { updateUser } from "@/actions/updateUser";
 import EasyCrop from "@/components/client/EasyCrop";
 import { Button } from "@/components/ui/button";
 import axios from "axios";

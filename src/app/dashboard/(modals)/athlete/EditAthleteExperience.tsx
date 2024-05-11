@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { FiEdit2, FiImage, FiLink, FiTrash2, FiX } from "react-icons/fi";
 import { toast } from "sonner";
 
-const EditExperience = ({
+const EditAthleteExperience = ({
   user,
   open,
   setOpen,
@@ -296,4 +296,4 @@ const EditExperience = ({
   );
 };
 
-export default EditExperience;
+export default EditAthleteExperience;
