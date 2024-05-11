@@ -1,4 +1,5 @@
 import { followUser } from "@/actions/user";
+import { API_HEAD } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 import { FiMessageCircle } from "react-icons/fi";
@@ -12,7 +13,7 @@ const RecommendedUsers = ({ userData }: { userData: any }) => {
     data: allRecommendedUsers,
     error,
     isLoading,
-  } = useSWR(`/api/user/recommendedUsers/${userData?._id}`, fetcher);
+  } = useSWR(`${API_HEAD}/user/recommended/${userData?._id}`, fetcher);
 
   const handleFollowUser = async (userId: string) => {
     try {

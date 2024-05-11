@@ -1,12 +1,12 @@
 import { auth } from "@/auth";
-import { BASE_URL } from "@/lib/utils";
+import { API_HEAD, BASE_URL } from "@/lib/utils";
 import axios from "axios";
 import FollowingUserCard from "./(components)/FollowingUserCard";
 
 const Page = async () => {
   const session: any = await auth();
 
-  const following = await axios.get(`${BASE_URL}/api/user/following/${session?.user?._id}`).then((res) => res.data).catch((err) => console.error("Error", err));
+  const following = await axios.get(`${API_HEAD}/user/following/${session?.user?._id}`).then((res) => res.data).catch((err) => console.error("Error", err));
 
   return (
     <div className="flex items-center justify-center w-full">

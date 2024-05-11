@@ -1,5 +1,4 @@
 import { User } from "@/lib/models/UserModel";
-import { Post } from "@/lib/models/post";
 import { connectDB } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 

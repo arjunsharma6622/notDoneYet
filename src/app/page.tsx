@@ -5,8 +5,25 @@ import { Button } from "@/components/ui/button";
 import { BASE_URL } from "@/lib/utils";
 import axios from "axios";
 import Link from "next/link";
+import { decode } from 'next-auth/jwt';
+import { cookies } from "next/headers";
+
 
 export default async function Home() {
+
+  // const coks : any = cookies().get('authjs.session-token');
+  // console.log("coks", coks.value);
+
+  // const x = await decode({
+  //   token: coks.value,
+  //   salt: "authjs.session-token",
+  //   secret: process.env.AUTH_SECRET as string
+  // })
+
+  // console.log("x", x);
+
+
+
   const session = await auth();
   const user = session?.user;
   let userData = {};

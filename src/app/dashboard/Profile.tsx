@@ -13,6 +13,7 @@ import Products from "./(components)/brand/Products";
 import PastEvents from "./(components)/venue/PastEvents";
 import Venues from "./(components)/venue/Venues";
 import Education from "./(components)/doctor/Education";
+import { API_HEAD } from "@/lib/utils";
 
 const Profile = ({ session }: any) => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -21,7 +22,7 @@ const Profile = ({ session }: any) => {
     data: userData,
     error,
     isLoading,
-  } = useSWR(`/api/user/email/${session?.user?.email}`, fetcher);
+  } = useSWR(`${API_HEAD}/user/${session?.user?._id}`, fetcher);
 
   return (
     <div className="relative flex items-center justify-center px-2 ">

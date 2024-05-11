@@ -11,6 +11,11 @@ export const BASE_URL =
     ? "http://localhost:3000"
     : "https://notdoneyet.vercel.app";
 
+export const API_HEAD =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:8000/api"
+    : "https://notdoneyet-server.vercel.app/api";
+
 type ConnectionObject = {
   isConnected?: number;
 };
