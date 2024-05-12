@@ -4,7 +4,7 @@ import React from "react";
 
 const Experience = ({ userData }: { userData: any }) => {
   return (
-    <div className="px-3 md:px-6 flex flex-col gap-4">
+    <div className=" flex flex-col gap-4 border-t py-2 px-3 md:px-6 md:py-4">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-bold">Experience</h2>
       </div>

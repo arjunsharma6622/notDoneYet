@@ -16,6 +16,10 @@ const HeadActionOptions = ({
 }) => {
   const handleFollowClick = async () => {
     try {
+      if(userData._id === session?.user?._id){
+        toast.info("You can't follow yourself");
+        return;
+      }
       await followUser(userData._id, session?.user?._id);
       toast.success("Following user");
     } catch (err) {
@@ -36,6 +40,10 @@ const HeadActionOptions = ({
 
   const handleLikeProfile = async () => {
     try {
+      if(userData._id === session?.user?._id){
+        toast.info("You can't like yourself");
+        return;
+      }
       const message = await toggleProfileLike(session?.user?._id, userData._id);
       toast.success(message as string);
     } catch (err) {

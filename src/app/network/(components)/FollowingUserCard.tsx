@@ -1,6 +1,7 @@
 "use client";
 
 import { unfollowUser } from "@/actions/user";
+import Link from "next/link";
 import { toast } from "sonner";
 
 const FollowingUserCard = ({
@@ -29,7 +30,7 @@ const FollowingUserCard = ({
     <div
       className={`flex gap-2 items-center justify-between py-5 ${index !== following.length - 1 && "border-b border-gray-300"}`}
     >
-      <div className="flex gap-2">
+      <Link href={`/profile/${follow?.role}/${follow?._id}`} className="flex gap-2">
         <div className="w-14">
           <img
             src={follow?.image}
@@ -43,7 +44,7 @@ const FollowingUserCard = ({
           <h1 className="">{follow?.name}</h1>
           <p className="text-gray-600 text-sm">{follow?.bio}</p>
         </div>
-      </div>
+      </Link>
 
       <div className="flex items-center gap-4 text-sm">
         <button className="px-4 py-2 bg-primary text-white rounded-md">

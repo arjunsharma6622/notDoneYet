@@ -19,7 +19,7 @@ const Profile = async ({ userData }: any) => {
 
   return (
     <div>
-      <div className="flex flex-col rounded-md border gap-10">
+      <div className="flex flex-col rounded-md border gap-4">
         <Head session={session} userData={userData} />
 
         <About userData={userData} />

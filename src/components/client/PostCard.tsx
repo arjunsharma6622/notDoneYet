@@ -8,7 +8,7 @@ import TimeAgo from "react-timeago";
 import { toast } from "sonner";
 import PostImageSection from "./PostImageSection";
 import UserCommentCard from "./UserCommentCard";
-
+import Link from "next/link";
 
 const PostCard = ({ postData, currUser }: any) => {
   const [openCommentInput, setOpenCommentInput]: [boolean, any] =
@@ -49,26 +49,26 @@ const PostCard = ({ postData, currUser }: any) => {
 
   return (
     <div className="flex border flex-col rounded-md px-4 py-4 gap-2">
-      <div className="flex items-start gap-2 border-b pb-2">
-        <div>
-          <img
-            src={postData?.user?.image}
-            alt=""
-            className="rounded-full w-12 h-12"
-          />
-        </div>
-        <div>
-          <div className="text-base flex items-center gap-2">
-            <p>{postData?.user?.name}</p>
-            <div className="w-1 h-1 bg-black rounded-full"></div>
-            <TimeAgo
-              date={postData?.createdAt}
-              className="text-xs text-gray-500"
+        <div className="flex items-start gap-2 border-b pb-2">
+          <Link href={`/profile/${postData?.user?.role}/${postData?.user?._id}`}>
+            <img
+              src={postData?.user?.image}
+              alt=""
+              className="rounded-full w-12 h-12"
             />
+          </Link>
+          <div>
+            <div className="text-base flex items-center gap-2">
+              <Link href={`/profile/${postData?.user?.role}/${postData?.user?._id}`}>{postData?.user?.name}</Link>
+              <div className="w-1 h-1 bg-black rounded-full"></div>
+              <TimeAgo
+                date={postData?.createdAt}
+                className="text-xs text-gray-500"
+              />
+            </div>
+            <p className="text-xs">{postData?.user?.bio}</p>
           </div>
-          <p className="text-xs">{postData?.user?.bio}</p>
         </div>
-      </div>
 
       <div className="w-full flex flex-col gap-4 px-2 py-2">
         <p className="text-sm text-start">{postData?.description}</p>

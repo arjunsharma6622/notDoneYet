@@ -2,9 +2,14 @@ import { auth } from "@/auth";
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import FollowingUserCard from "./(components)/FollowingUserCard";
+import { redirect } from "next/navigation";
 
 const Page = async () => {
   const session: any = await auth();
+
+  if(!session){
+    redirect("/login")
+  }
 
   const following = await axios.get(`${API_HEAD}/user/following/${session?.user?._id}`).then((res) => res.data).catch((err) => console.error("Error", err));
 
