@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import dateFormat from "dateformat";
 import { useEffect, useState } from "react";
@@ -30,7 +31,7 @@ const EditEducation = ({ user, open, setOpen } : { user: any, open: boolean, set
         }),
       };
 
-      await axios.patch(`/api/user/${userData._id}`, updatedUserData);
+      await axios.patch(`${API_HEAD}/user/${userData._id}`, updatedUserData);
 
       setSelectedEducation(null);
 
@@ -49,7 +50,7 @@ const EditEducation = ({ user, open, setOpen } : { user: any, open: boolean, set
         ...userData,
         education: userData.education.filter((edu : any) => edu._id !== education._id),
       };
-      await axios.patch(`/api/user/${userData._id}`, updatedUserData);
+      await axios.patch(`${API_HEAD}/user/${userData._id}`, updatedUserData);
       toast.success("Profile Updated");
       window.location.reload();
 

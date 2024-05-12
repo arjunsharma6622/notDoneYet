@@ -4,6 +4,7 @@ import { FiEdit3, FiPlus } from "react-icons/fi";
 import useSWR from "swr";
 import AddVenue from "../../(modals)/venue/AddVenue";
 import EditVenue from "../../(modals)/venue/EditVenue";
+import { API_HEAD } from "@/lib/utils";
 
 const Venues = ({ userData }: any) => {
   const [openAddVenue, setOpenAddVenue] = useState(false);
@@ -15,7 +16,7 @@ const Venues = ({ userData }: any) => {
     data: allVenues,
     error,
     isLoading,
-  } = useSWR(`/api/venue/user/${userData?._id}`, fetcher);
+  } = useSWR(`${API_HEAD}/venue/user/${userData?._id}`, fetcher);
 
   return (
     <>

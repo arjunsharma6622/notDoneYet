@@ -1,3 +1,4 @@
+import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -15,7 +16,7 @@ const ChooseRole = ({ userData }: any) => {
 
   const handleRoleSave = async () => {
     try {
-      const response = await axios.patch(`/api/user/${userData?._id}`, {
+      const response = await axios.patch(`${API_HEAD}/user/${userData?._id}`, {
         role: choosenRole,
       });
       toast.success("Role updated successfully");

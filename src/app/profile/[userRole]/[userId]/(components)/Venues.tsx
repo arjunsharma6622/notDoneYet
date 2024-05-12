@@ -1,13 +1,13 @@
-import VenueCard from '@/components/VenueCard'
-import { BASE_URL } from '@/lib/utils';
+import VenueCard from '@/components/VenueCard';
+import { API_HEAD } from '@/lib/utils';
 import axios from 'axios';
-import React from 'react'
 
 const Venues = async ({ venueData } : any) => {
     const allVenues = await axios
-    .get(`${BASE_URL}/api/venue/user/${venueData._id}`)
+    .get(`${API_HEAD}/venue/user/${venueData._id}`)
     .then((res) => res.data)
     .catch((err) => console.error("Error", err));
+
   return (
     <div className="px-6 flex flex-col gap-4">
     <div className="flex justify-between items-center">

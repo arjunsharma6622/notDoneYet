@@ -1,8 +1,9 @@
+import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiEdit2, FiImage, FiTrash2, FiX, FiXCircle } from "react-icons/fi";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "sonner";
 
 const EditVenue = ({
   open,
@@ -36,30 +37,22 @@ const EditVenue = ({
     try {
       const updatedVenueData = {
         ...selectedVenue,
-        // Update the venue data here based on your server requirements
+        ...data, 
       };
 
       const res = await axios.patch(
-        `/api/venue/${selectedVenue._id}`,
+        `${API_HEAD}/venue/${selectedVenue._id}`,
         updatedVenueData,
       );
 
-      toast.success("Venue updated successfully", {
-        onClose: () => {
-          setOpen(false);
-        },
-      });
+      toast.success("Venue updated successfully");
 
       setSelectedVenue(null);
       reset(updatedVenueData);
+      window.location.reload();
     } catch (err) {
       console.log(err);
-
-      toast.error("Venue update failed", {
-        onClose: () => {
-          setOpen(false);
-        },
-      });
+      toast.error("Venue update failed");
     }
   });
 
@@ -67,22 +60,14 @@ const EditVenue = ({
     try {
       await axios.delete(`/api/venue/${selectedVenue._id}`);
 
-      toast.success("Venue deleted successfully", {
-        onClose: () => {
-          setOpen(false);
-        },
-      });
+      toast.success("Venue deleted successfully");
 
       setSelectedVenue(null);
       reset(selectedVenue);
     } catch (err) {
       console.log(err);
 
-      toast.error("Venue delete failed", {
-        onClose: () => {
-          setOpen(false);
-        },
-      });
+      toast.error("Venue delete failed");
     }
   };
 
@@ -379,7 +364,6 @@ const EditVenue = ({
           </div>
         </div>
       )}
-      <ToastContainer />
     </div>
   );
 };

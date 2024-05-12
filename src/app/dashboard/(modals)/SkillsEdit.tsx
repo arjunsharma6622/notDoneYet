@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -23,7 +24,7 @@ const SkillsEdit = ({
     try {
       console.log("In handle user update");
       console.log(userData);
-      const res = await axios.patch(`/api/user/${userData._id}`, userData);
+      const res = await axios.patch(`${API_HEAD}/user/${userData._id}`, userData);
       toast.success("Sports Updated");
       setOpen(false);
       window.location.reload();

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -17,7 +18,7 @@ const AddDoctorExperience = ({ user, open, setOpen } : { user: any, open: boolea
 
   const handleUserUpdate = async (data : any) => {
     try {
-      await axios.patch(`/api/user/${userData._id}`, {
+      await axios.patch(`${API_HEAD}/user/${userData._id}`, {
         experience: [...userData.experience, data],
       });
 

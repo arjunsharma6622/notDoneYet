@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -17,9 +18,7 @@ const AddEducation = ({ user, open, setOpen } : any) => {
 
   const handleUserUpdate = async (data : any) => {
     try {
-
-      await axios.patch(`/api/user/${userData._id}`, {education : [...userData.education, data]});
-
+      await axios.patch(`${API_HEAD}/user/${userData._id}`, {education : [...userData.education, data]});
       toast.success("Profile Updated");
       window.location.reload();
       reset();
@@ -29,7 +28,6 @@ const AddEducation = ({ user, open, setOpen } : any) => {
     }
   };
 
-  console.log(userData);
 
   return (
     <div>

@@ -1,8 +1,10 @@
+import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import "moment/locale/en-gb";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiImage, FiX, FiXCircle } from "react-icons/fi";
+import { toast } from "sonner";
 
 const AddVenue = ({
   open,
@@ -66,7 +68,6 @@ const AddVenue = ({
         const imageUrl = uploadResponse.data.secure_url;
         imageUrls.push(imageUrl);
       }
-
       return imageUrls;
     } catch (err) {
       console.error("Error uploading images to Cloudinary:", err);
@@ -79,18 +80,20 @@ const AddVenue = ({
       console.log("In handle add venue");
       console.log(data);
 
-      const res = await axios.post("/api/venue", {
+      const res = await axios.post(`${API_HEAD}/venue`, {
         ...data,
         owner: user._id,
         images: imageUrls,
       });
-
-      console.log("Venue added successfully");
-      console.log(res.data);
-
+      toast.success("Venue added successfully");
       reset();
+      setOpen(false);
+      window.location.reload();
     } catch (err) {
       console.log(err);
+      reset();
+      toast.error("Venue add failed");
+      setOpen(false);
     }
   };
 

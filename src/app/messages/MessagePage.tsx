@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import CurrentConversation from "./(components)/CurrentConversation";
 import Sidebar from "./(components)/Sidebar";
+import { API_HEAD } from "@/lib/utils";
 
 const MessagePage = ({ session }: any) => {
   const [currentMessage, setCurrentMessage]: any = useState("");
@@ -18,7 +19,7 @@ const MessagePage = ({ session }: any) => {
     const fetchData = async () => {
       try {
         const users = await axios.get(
-          `/api/user/following/${session?.user._id}`,
+          `${API_HEAD}/user/following/${session?.user._id}`,
         );
         setAllFollowingUsers(users.data);
       } catch (error) {
@@ -34,7 +35,7 @@ const MessagePage = ({ session }: any) => {
     const fetchData = async () => {
       try {
         const conversations = await axios.get(
-          `/api/conversation/user/${session?.user._id}`,
+          `${API_HEAD}/conversation/user/${session?.user._id}`,
         );
 
         setAllConversations(conversations.data);

@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
+import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import { format, isToday, isYesterday } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import { FiSend } from "react-icons/fi";
 import Message from "./Message";
-import { BASE_URL } from "@/lib/utils";
 
 const formatDate = (date: any) => {
   const messageDate = new Date(date);
@@ -45,7 +45,7 @@ const CurrentConversation = ({
 
     try {
       const response = await axios.post(
-        `/api/conversation/${currentConversation?._id}/`,
+        `${API_HEAD}/conversation/${currentConversation?._id}/`,
         message
       );
 
@@ -63,7 +63,7 @@ const CurrentConversation = ({
   const handleFirstMessage = async () => {
     console.log("first message");
     try {
-      const firstConversation = await axios.post(`/api/conversation/`, {
+      const firstConversation = await axios.post(`${API_HEAD}/conversation/`, {
         senderId: session?.user._id,
         recipientId: newUserToSendMsg._id,
         content: currentMessage,
@@ -86,7 +86,7 @@ const CurrentConversation = ({
       if (currentConversation) {
         try {
           await axios.put(
-            `${BASE_URL}/api/conversation/${currentConversation?._id}/seen`,
+            `${API_HEAD}/conversation/${currentConversation?._id}/seen`,
             {
               currUserId: session?.user._id,
             }

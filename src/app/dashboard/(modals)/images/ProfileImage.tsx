@@ -2,6 +2,7 @@
 
 import EasyCrop from "@/components/client/EasyCrop";
 import { Button } from "@/components/ui/button";
+import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import { useState } from "react";
 import { FiImage, FiXCircle } from "react-icons/fi";
@@ -44,7 +45,7 @@ const handleSaveImage = async () => {
     setImage(null)
     setImageToShow(null)
 
-    await axios.patch(`/api/user/${user?._id}`, {image: imageUrl});
+    await axios.patch(`${API_HEAD}/user/${user?._id}`, {image: imageUrl});
 
     toast.success("Image uploaded successfully");
   } catch (err) {

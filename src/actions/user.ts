@@ -145,6 +145,8 @@ export const toggleProfileLike = async (userId : string, profileId : string) => 
   try {
     await connectDB();
 
+    let messageToSend = ""
+
     const profile = await User.findById(profileId);
     if (!profile) {
       throw new Error("Profile not found");
@@ -163,15 +165,23 @@ export const toggleProfileLike = async (userId : string, profileId : string) => 
       user.likedProfiles = user.likedProfiles.filter(
         (_id: string) => _id != profileId
       );
+
+      messageToSend = "Profile unliked"
     } else {
       profile.profileLikes.push(userId);
       user.likedProfiles.push(profileId);
+
+      messageToSend = "Profile liked"
     }
 
     await profile.save();
     await user.save();
 
     revalidatePath("/network");
+    revalidatePath("/dashboard");
+    revalidatePath("/profile/*")
+
+    return messageToSend
   } catch (err) {
     return err;
   }

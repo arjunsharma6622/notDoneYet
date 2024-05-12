@@ -1,4 +1,4 @@
-import { BASE_URL } from "@/lib/utils";
+import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import { format, isToday, isYesterday } from "date-fns";
 import { useEffect, useState } from "react";
@@ -31,7 +31,7 @@ const ConversationCard = ({
     const fetchUnread = async () => {
       try {
         const unread = await axios.get(
-          `${BASE_URL}/api/conversation/${conversation._id}/unread`,
+          `${API_HEAD}/conversation/${conversation._id}/unread`,
         );
         if(unread?.data?._id != session?.user._id) {
           setUnread(unread.data?.count);        

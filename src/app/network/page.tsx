@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { API_HEAD, BASE_URL } from "@/lib/utils";
+import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import FollowingUserCard from "./(components)/FollowingUserCard";
 

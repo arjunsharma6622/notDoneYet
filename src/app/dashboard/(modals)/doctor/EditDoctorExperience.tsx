@@ -1,5 +1,6 @@
 import { updateUser } from "@/actions/updateUser";
 import { Button } from "@/components/ui/button";
+import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import dateFormat from "dateformat";
 import { useEffect, useState } from "react";
@@ -32,7 +33,7 @@ const EditDoctorExperience = ({ user, open, setOpen } : { user: any, open: boole
         }),
       };
 
-      await axios.patch(`/api/user/${userData._id}`, updatedUserData);
+      await axios.patch(`${API_HEAD}/user/${userData._id}`, updatedUserData);
 
       setSelectedExperience(null);
 

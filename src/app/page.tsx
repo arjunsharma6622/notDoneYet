@@ -2,11 +2,9 @@ import { auth } from "@/auth";
 import RecommendedPosts from "@/components/client/RecommendedPosts";
 import UserInfoCard from "@/components/client/UserInfoCard";
 import { Button } from "@/components/ui/button";
-import { BASE_URL } from "@/lib/utils";
+import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import Link from "next/link";
-import { decode } from 'next-auth/jwt';
-import { cookies } from "next/headers";
 
 
 export default async function Home() {
@@ -29,7 +27,7 @@ export default async function Home() {
   let userData = {};
 
   if(user){
-    userData = await axios.get(`${BASE_URL}/api/user/${user?._id}`).then((res) => res.data).catch((err) => console.error("Error", err));
+    userData = await axios.get(`${API_HEAD}/user/${user?._id}`).then((res) => res.data).catch((err) => console.error("Error", err));
   }
 
 

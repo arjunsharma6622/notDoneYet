@@ -2,12 +2,12 @@
 
 import { addComment, toggleLike } from "@/actions/posts";
 import { useState } from "react";
-import { FiHeart, FiMessageCircle, FiShare, FiThumbsUp } from "react-icons/fi";
+import { FiMessageCircle, FiShare } from "react-icons/fi";
+import { RiHeart2Fill, RiHeart2Line } from "react-icons/ri";
 import TimeAgo from "react-timeago";
 import { toast } from "sonner";
 import PostImageSection from "./PostImageSection";
 import UserCommentCard from "./UserCommentCard";
-import { RiHeart2Fill, RiHeart2Line } from "react-icons/ri";
 
 
 const PostCard = ({ postData, currUser }: any) => {
@@ -15,14 +15,6 @@ const PostCard = ({ postData, currUser }: any) => {
     useState(false);
   const [commentText, setCommentText]: [string, any] = useState("");
   const [openLikes, setOpenLikes]: [boolean, any] = useState(false);
-
-  // const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-  // const {
-  //   data: allPostComments,
-  //   error,
-  //   isLoading,
-  // } = useSWR(`/api/posts/comments/${postData?._id}`, fetcher);
 
   const handlePostLike = async () => {
     try {
@@ -98,7 +90,7 @@ const PostCard = ({ postData, currUser }: any) => {
       </div>
 
       <div className="flex items-center justify-between w-full">
-        <div className="flex items-center border-t border-b py-3 justify-between w-full px-6 gap-2">
+        <div className="flex items-center border-t pt-3 justify-between w-full px-6 gap-2">
           {postData?.likes?.some((like: any) => like._id === currUser?._id) ? (
             <div
               className="flex items-center text-pink-500 cursor-pointer gap-2"

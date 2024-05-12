@@ -1,5 +1,6 @@
 import EasyCrop from "@/components/client/EasyCrop";
 import { Button } from "@/components/ui/button";
+import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import { useState } from "react";
 import { FiImage, FiXCircle } from "react-icons/fi";
@@ -38,7 +39,7 @@ const BgImage = ({ user }: any) => {
       setBgImage(null);
       setBgImageToShow(null);
 
-      await axios.patch(`/api/user/${user?._id}`, { backgroundImg: imageUrl });
+      await axios.patch(`${API_HEAD}/user/${user?._id}`, { backgroundImg: imageUrl });
 
       toast.success("Image uploaded successfully");
     } catch (err) {

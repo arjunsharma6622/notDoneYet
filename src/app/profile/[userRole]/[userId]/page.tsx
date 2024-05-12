@@ -1,7 +1,6 @@
 import { auth } from "@/auth";
 import axios from "axios";
-// import AthleteProfile from "./AthleteProfile";
-import { BASE_URL } from "@/lib/utils";
+import { API_HEAD } from "@/lib/utils";
 import Profile from "./Profile";
 
 const Page = async ({ params }: { params: { userRole: string, userId: string } }) => {
@@ -10,7 +9,7 @@ const Page = async ({ params }: { params: { userRole: string, userId: string } }
   const userRole = params.userRole
 
   const userData = await axios
-    .get(`${BASE_URL}/api/user/${userID}`)
+    .get(`${API_HEAD}/user/${userID}`)
     .then((res) => res.data)
     .catch((err) => console.error("Error", err));
 
