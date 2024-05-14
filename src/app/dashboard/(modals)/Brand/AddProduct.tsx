@@ -1,8 +1,22 @@
+"use client"
+
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { API_HEAD, categories, genders } from "@/lib/utils";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import React, { useEffect, useState } from "react";
 import { FiImage, FiX, FiXCircle } from "react-icons/fi";
+import { toast } from "sonner";
+import ProductImages from "./ProductImages";
+import SizeQty from "./SizeQty";
 
 const AddProduct = ({
   open,
@@ -14,14 +28,30 @@ const AddProduct = ({
   user: any;
 }) => {
   const [userData, setUserData] = useState(user);
-  const [images, setImages]: any = useState([]);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    watch,
-  } = useForm();
+  const [croppedImages, setCroppedImages] = useState<string[]>([]);
+  const [croppedFiles, setCroppedFiles] = useState<File[]>([]);
+  const [submitClicked, setSubmitClicked] = useState(false);
+
+  const [imagesOpen, setImagesOpen] = useState(false);
+
+  const [sizes, setSizes] = useState<string[]>([]);
+  const [stock, setStock] = useState<{ size: string; quantity: number }[]>([]);
+
+  const [xImages, setXImages] = useState<string[]>([]);
+
+  const [productData, setProductData] = useState<any>({
+    name: "",
+    description: "",
+    category: "",
+    gender: "",
+    originalPrice : null,
+    presentPrice: null,
+  });
+
+  const handleOnChange = (e : React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setProductData((prevData : any) => ({ ...prevData, [name]: value }));
+  };
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -31,45 +61,59 @@ const AddProduct = ({
     };
   }, []);
 
-  const handleAddProduct = (data: any) => {};
-
-  const handleImageChange = (e: any) => {
-    const files = Array.from(e.target.files);
-    setImages((prevImages: any) => [...prevImages, ...files]);
-  };
-
   const handleRemoveImage = (index: number) => {
-    const imageUrl = URL.createObjectURL(images[index]);
-    URL.revokeObjectURL(imageUrl);
-    setImages((prevImages: any) =>
-      prevImages.filter((_: any, i: number) => i !== index)
+    setCroppedImages((prevImages) =>
+      prevImages.filter((_, i) => i !== index)
+    );
+    setCroppedFiles((prevFiles) =>
+      prevFiles.filter((_, i) => i !== index)
     );
   };
 
-  const handleImages = async (images: any) => {
+  const handleImages = async (images: File[]) => {
     try {
-      const imageUrls = [];
+      const imageUrls = await Promise.all(
+        croppedFiles.map(async (image) => {
+          const imageData = new FormData();
+          imageData.append("file", image);
+          imageData.append("upload_preset", "ml_default");
+          imageData.append(
+            "folder",
+            `ndy/${userData?.name}/${productData?.name}/product`
+          );
 
-      for (let i = 0; i < images.length; i++) {
-        const image = images[i];
-        console.log("image while uploading", image);
+          const uploadResponse = await axios.post(
+            "https://api.cloudinary.com/v1_1/dexnb3wk2/image/upload",
+            imageData
+          );
 
-        const imageData = new FormData();
-        imageData.append("file", image);
-        imageData.append("upload_preset", "ml_default");
-        imageData.append("folder", `ndy/${userData?.name}/${watch("name")}`);
-
-        const uploadResponse = await axios.post(
-          "https://api.cloudinary.com/v1_1/dexnb3wk2/image/upload",
-          imageData
-        );
-
-        const imageUrl = uploadResponse.data.secure_url;
-        imageUrls.push(imageUrl);
-      }
+          return uploadResponse.data.secure_url;
+        })
+      );
       return imageUrls;
     } catch (err) {
       console.error("Error uploading images to Cloudinary:", err);
+      throw new Error("Error uploading images to Cloudinary");
+    }
+  };
+
+
+
+  const handleAddProduct = async () => {
+    try {
+      const imageUrls = await handleImages(croppedFiles);
+      await axios.post(`${API_HEAD}/product/`, {
+        ...productData,
+        images: imageUrls,
+        user: userData?._id,
+        stock: stock,
+        sizes: sizes,
+      });
+      toast.success("Product added successfully");
+      setOpen(false);
+    } catch (err : any) {
+      console.error("Error Adding Product", err);
+      toast.error(`Error adding product ${err.message}`);
     }
   };
 
@@ -77,109 +121,162 @@ const AddProduct = ({
     <div>
       {open && (
         <div className="z-[40] fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 backdrop-filter backdrop-blur-sm">
-          <div className="w-[95%] md:w-[55%] max-h-[90%] bg-white rounded-md flex flex-col gap-4">
-            <div className="flex items-center justify-between border-b px-6 py-5">
-              <h1 className="text-2xl font-bold">Product</h1>
-              <FiX
-                className="cursor-pointer h-6 w-6 text-gray-600"
-                onClick={() => setOpen(false)}
-              />
-            </div>
-
-            <form
-              onSubmit={handleSubmit(handleAddProduct)}
-              className="flex flex-col gap-6 overflow-scroll"
+        <div className="w-[95%] md:w-[55%] max-h-[90%] bg-white rounded-md flex flex-col gap-4">
+          <div className="flex items-center justify-between border-b px-6 py-5">
+            <h1 className="text-2xl font-bold">Add Product</h1>
+            <FiX
+              className="cursor-pointer h-6 w-6 text-gray-600"
+              onClick={() => setOpen(false)}
+            />
+          </div>
+          {/* form */}
+            <div
+              className="flex flex-col gap-6 overflow-scroll px-6 py-4"
             >
-              <div className="flex flex-col gap-6 px-6 py-4 overflow-y-scroll">
-                <div className="flex flex-col gap-2">
-                  <h2 className="text-xl font-semibold underline">
-                    Add New Product
-                  </h2>
+              <div className="flex flex-col gap-6 overflow-y-scroll">
+                <h2 className="text-xl font-semibold underline">Add New Product</h2>
 
-                  <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4">
+                  <div className="w-full">
+                    <label htmlFor="productName">Product Name</label>
+                    <input
+                      type="text"
+                      placeholder="Product Name"
+                      id="productName"
+                      name="name"
+                      value={productData?.name}
+                      className="border rounded-md px-3 py-2 w-full focus:outline-none"
+                      onChange={(e) => handleOnChange(e)}
+                    />
+                  </div>
+                  <div className="flex justify-between gap-6 items-center">
                     <div className="w-full">
-                      <label htmlFor="productName">Product Name</label>
+                      <label htmlFor="originalPrice">Original Price</label>
                       <input
-                        type="text"
-                        placeholder="Product Name"
-                        id="productName"
+                        type="number"
+                        placeholder="Original Price"
+                        id="originalPrice"
+                        name="originalPrice"
+                        value={productData?.originalPrice}
                         className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                        {...register("name", { required: true })}
+                        onChange={(e) => handleOnChange(e)}
                       />
-                      {errors.name && <p>Actual Price is required.</p>}
                     </div>
-                    <div className="flex justify-between gap-6 items-center">
-                      <div className="w-full">
-                        <label htmlFor="actualPrice">Actual Price</label>
-                        <input
-                          type="text"
-                          placeholder="Actual Price"
-                          id="actualPrice"
-                          className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                          {...register("actualPrice", { required: true })}
-                        />
-                        {errors.name && <p>Product Name is required.</p>}
-                      </div>
-                      <div className="w-full">
-                        <label htmlFor="productPrice">Price</label>
-                        <input
-                          type="number"
-                          placeholder="Product Price"
-                          id="productPrice"
-                          className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                          {...register("price")}
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label htmlFor="productDescription">Description</label>
-                      <textarea
-                        placeholder="Description"
-                        id="productDescriptiion"
+                    <div className="w-full">
+                      <label htmlFor="presentPrice">Price</label>
+                      <input
+                        type="number"
+                        placeholder="Present Price"
+                        id="presentPrice"
+                        name="presentPrice"
+                        value={productData?.presentPrice}
                         className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                        {...register("description")}
-                      ></textarea>
+                        onChange={(e) => handleOnChange(e)}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label htmlFor="productDescription">Description</label>
+                    <textarea
+                      placeholder="Description"
+                      id="productDescription"
+                      className="border rounded-md px-3 py-2 w-full focus:outline-none"
+                      name="description"
+                      value={productData?.description}
+                      onChange={(e) => handleOnChange(e)}
+                    ></textarea>
+                  </div>
+
+                  <div className="flex justify-between gap-6 items-center">
+                    <div className="flex flex-col gap-1 w-full">
+                      <label htmlFor="category">Select Category</label>
+                      <Select onValueChange={(value) => setProductData({ ...productData, category: value })}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Category</SelectLabel>
+                            {categories.map((category) => (
+                              <SelectItem key={category} value={category}>
+                                {category}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="flex flex-col gap-1 w-full">
+                      <label htmlFor="gender">Select Gender</label>
+                      <Select onValueChange={(value) => setProductData({ ...productData, gender: value })}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select gender" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Gender</SelectLabel>
+                            {genders.map((gender) => (
+                              <SelectItem key={gender} value={gender}>
+                                {gender}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <p>Sizes and Quantity</p>
+                    {productData?.category && (
+                      <SizeQty category={productData.category} sizes={sizes} setSizes={setSizes} stock={stock} setStock={setStock} />
+                    )}
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <p>Images</p>
+
+                    <div
+                      onClick={() => {setImagesOpen(true); console.log("Clicked the main images button")}}
+                      className="flex items-center gap-2 border border-gray-300 border-dashed rounded-lg w-fit px-4 py-2 cursor-pointer bg-gray-50"
+                    >
+                      Add
+                      <FiImage className="w-5 h-5" />
                     </div>
 
-                    <div className="flex flex-col gap-2">
-                      <label htmlFor="venueImages">Images</label>
+                    {imagesOpen && (
+                      <div className="">
+                        <ProductImages
+                          croppedImages={croppedImages}
+                          setCroppedImages={setCroppedImages}
+                          open={imagesOpen}
+                          setOpen={setImagesOpen}
+                          handleRemoveImage={handleRemoveImage}
+                          croppedFiles={croppedFiles}
+                          setCroppedFiles={setCroppedFiles}
+                        />
+                      </div>
+                    )}
 
-                      <div className="flex items-center gap-2">
-                        <label
-                          htmlFor="postImage"
-                          className="cursor-pointer overflow-y-scroll flex items-center gap-2"
-                        >
-                          Add
-                          <input
-                            type="file"
-                            id="postImage"
-                            accept=".png, .jpg, .jpeg"
-                            style={{ display: "none" }}
-                            multiple
-                            onChange={handleImageChange}
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {croppedImages.map((image, index) => (
+                        <div key={index} className="relative w-1/4 h-1/4">
+                          <img
+                            src={image}
+                            alt="Post"
+                            className="w-full h-full object-cover rounded-md"
                           />
-                          <FiImage className="w-5 h-5" />
-                        </label>
-                        <p className="text-xs text-gray-400">
-                          Only .png, .jpg, .jpeg files are allowed
-                        </p>
-                      </div>
-
-                      <div className="flex flex-wrap gap-2 mt-2">
-                        {images.map((image: any, index: number) => (
-                          <div key={index} className="relative w-1/4 h-1/4">
-                            <img
-                              src={URL.createObjectURL(image)}
-                              alt="Post"
-                              className="w-full h-full object-cover rounded-md"
-                            />
-                            <FiXCircle
-                              className="absolute w-5 h-5 top-0 right-0 m-2 text-red-500  rounded-full cursor-pointer"
+                          <div className="flex items-center gap-4 absolute left-1/2 transform -translate-x-1/2 bottom-0 bg-gray-100/90 shadow-md rounded-md px-2 py-[5px]">
+                            <div
                               onClick={() => handleRemoveImage(index)}
-                            />
+                              className="text-red-500 flex items-center gap-1 text-xs cursor-pointer"
+                            >
+                              <FiXCircle className="w-4 h-4 rounded-full " />
+                              <span>Remove</span>
+                            </div>
                           </div>
-                        ))}
-                      </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -196,11 +293,12 @@ const AddProduct = ({
                 <Button
                   className="px-6 bg-primary py-2 rounded-sm font-semibold"
                   type="submit"
+                  onClick={handleAddProduct}
                 >
                   Save
                 </Button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       )}

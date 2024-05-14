@@ -8,6 +8,7 @@ import Experience from "./(components)/Experience";
 import Head from "./(components)/Head";
 import Skills from "./(components)/Skills";
 import Venues from "./(components)/Venues";
+import Products from "./(components)/brand/Products";
 
 const Profile = async ({ userData }: any) => {
   const session: any = await auth();
@@ -26,6 +27,10 @@ const Profile = async ({ userData }: any) => {
 
         {userData.role === 'venueOwner' && (
             <Venues venueData={userData} />
+        )}
+
+        {userData.role === 'brand' && (
+            <Products userData={userData} />
         )}
 
         {(userData.role === "doctor" || userData.role === "athlete") && (

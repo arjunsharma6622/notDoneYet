@@ -6,6 +6,20 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export const categories = [
+  "clothing",
+  "footware",
+  "accessories"
+]
+
+export const productSizes : Record<string, string[]> = {
+  "clothing": ["XS", "S", "M", "L", "XL", "XXL"],
+  "footware" : ["6", "7", "8", "9", "10", "11", "12"],
+  "accessories" : ["XS", "S", "M", "L", "XL", "XXL"]
+}
+
+export const genders = ["male", "female", "unisex"];
+
 export const API_HEAD =
   process.env.NODE_ENV === "development"
     ? "http://localhost:8000/api"

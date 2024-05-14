@@ -7,6 +7,7 @@ import { FiMoreVertical } from "react-icons/fi";
 import { RiHeart2Fill, RiHeart2Line } from "react-icons/ri";
 import { toast } from "sonner";
 
+
 const HeadActionOptions = ({
   userData,
   session,
@@ -14,8 +15,15 @@ const HeadActionOptions = ({
   userData: any;
   session: any;
 }) => {
+
   const handleFollowClick = async () => {
     try {
+      if(!session?.user){
+        toast.info("Please login to follow user", {
+          action : <Link href={"/login"} className="text-black underline">Login here</Link>
+        });
+        return;
+      }
       if(userData._id === session?.user?._id){
         toast.info("You can't follow yourself");
         return;
@@ -40,6 +48,12 @@ const HeadActionOptions = ({
 
   const handleLikeProfile = async () => {
     try {
+      if(!session?.user){
+        toast.info("Please login to like profile", {
+          action : <Link href={"/login"} className="text-black underline">Login here</Link>
+        });
+        return;
+      }
       if(userData._id === session?.user?._id){
         toast.info("You can't like yourself");
         return;
@@ -64,6 +78,7 @@ const HeadActionOptions = ({
           </button>
         </Link>
       ) : (
+        
         <form action={handleFollowClick}>
           <button
             className="bg-blue-600 text-white py-1 px-4 rounded-sm"

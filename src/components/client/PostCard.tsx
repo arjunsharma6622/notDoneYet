@@ -50,7 +50,7 @@ const PostCard = ({ postData, currUser }: any) => {
   return (
     <div className="flex border flex-col rounded-md px-4 py-4 gap-2">
         <div className="flex items-start gap-2 border-b pb-2">
-          <Link href={`/profile/${postData?.user?.role}/${postData?.user?._id}`}>
+          <Link href={`/profile/${postData?.user?.role}/${postData?.user?.userName}`}>
             <img
               src={postData?.user?.image}
               alt=""
@@ -59,7 +59,7 @@ const PostCard = ({ postData, currUser }: any) => {
           </Link>
           <div>
             <div className="text-base flex items-center gap-2">
-              <Link href={`/profile/${postData?.user?.role}/${postData?.user?._id}`}>{postData?.user?.name}</Link>
+              <Link href={`/profile/${postData?.user?.role}/${postData?.user?.userName}`}>{postData?.user?.name}</Link>
               <div className="w-1 h-1 bg-black rounded-full"></div>
               <TimeAgo
                 date={postData?.createdAt}

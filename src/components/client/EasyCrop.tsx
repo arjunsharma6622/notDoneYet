@@ -3,8 +3,9 @@
 import { useCallback, useState } from "react";
 import Cropper from "react-easy-crop";
 import getCroppedImg from "./Crop";
+import { FiCrop } from "react-icons/fi";
 
-const EasyCrop = ({ image, setImage, aspectRatio, widthOfImg, croppedImage, setCroppedImage } : any) => {
+const EasyCrop = ({ image, setImage, aspectRatio, widthOfImg,heightOfImg, croppedImage, setCroppedImage, inProductImages, croppedFile, setCroppedFile } : any) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
@@ -21,20 +22,56 @@ const EasyCrop = ({ image, setImage, aspectRatio, widthOfImg, croppedImage, setC
     return new File([blob], fileName, { type: blob.type });
   };
 
+  // const showCroppedImage = useCallback(async () => {
+  //   try {
+  //     const croppedImage = await getCroppedImg(
+  //       image,
+  //       croppedAreaPixels,
+  //       rotation,
+  //     );
+  //     setCroppedImage(croppedImage);
+  //     const file = await blobUrlToFile(croppedImage as string, "crop.png");
+
+  //     if(inProductImages){
+  //       setCroppedFile(file);
+  //       setImage(null)
+  //       setCroppedImage(null)
+  //     }else{
+  //       setImage(file);
+  //     }
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // }, [croppedAreaPixels, rotation, image]);
+
+
   const showCroppedImage = useCallback(async () => {
     try {
-      const croppedImage = await getCroppedImg(
-        image,
-        croppedAreaPixels,
-        rotation,
-      );
-      setCroppedImage(croppedImage);
-      const file = await blobUrlToFile(croppedImage as string, "crop.png");
-      setImage(file);
+      if (image !== null && croppedImage === null) {
+        const croppedImageFromCropper = await getCroppedImg(
+          image,
+          croppedAreaPixels,
+          rotation,
+        );
+
+        setCroppedImage(croppedImageFromCropper);
+        console.log("croppedImage", croppedImageFromCropper);
+
+        const file = await blobUrlToFile(croppedImageFromCropper as string, "crop.png");
+  
+        if (inProductImages) {
+          setCroppedFile(file);
+          setImage(null);
+          setCroppedImage(null);
+        } else {
+          setImage(file);
+        }
+      }
     } catch (e) {
       console.error(e);
     }
   }, [croppedAreaPixels, rotation, image]);
+  
 
   const onClose = useCallback(() => {
     setCroppedImage(null);
@@ -48,7 +85,7 @@ const EasyCrop = ({ image, setImage, aspectRatio, widthOfImg, croppedImage, setC
           display: image === null || croppedImage !== null ? "none" : "block",
         }}
       >
-        <div className={`relative flex justify-center ${widthOfImg} h-64`}>
+        <div className={`relative flex justify-center ${widthOfImg} ${heightOfImg ? heightOfImg : "h-64"} aspect-${aspectRatio}`}>
           <Cropper
             image={image}
             crop={crop}
@@ -70,15 +107,17 @@ const EasyCrop = ({ image, setImage, aspectRatio, widthOfImg, croppedImage, setC
         </div>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 w-full">
         <button
           style={{
             display: image === null || croppedImage !== null ? "none" : "block",
+            
           }}
-          className="bg-green-500 text-white py-2 px-4 rounded w-full"
-          onClick={showCroppedImage}
+          className="bg-blue-500 text-white py-2 px-4 rounded flex items-center gap-2 w-full justify-center"
+          onClick={() => showCroppedImage()}
         >
-          Done
+          <FiCrop className="w-5 h-5"/>
+          <span>Crop</span>
         </button>
       </div>
     </div>

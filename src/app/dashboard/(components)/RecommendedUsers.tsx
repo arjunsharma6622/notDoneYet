@@ -43,13 +43,13 @@ const RecommendedUsers = ({ userData }: { userData: any }) => {
                 "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
               }
               alt=""
-              className="rounded-full w-12 md:w-14 object-cover"
+              className="rounded-full w-12 md:w-12 object-cover"
               referrerPolicy="no-referrer"
             />
           </div>
           <div className="flex flex-col w-fit">
             <Link
-              href={`/profile/${user.role === "venueOwner" ? "venue" : user?.role === "user" ? "athlete" : user.role}/${user._id}`}
+              href={`/profile/${user.role === "venueOwner" ? "venue" : user?.role === "user" ? "athlete" : user.role}/${user.userName}`}
             >
               <h1 className="font-semibold text-sm md:text-base">
                 {user?.name}
@@ -57,27 +57,6 @@ const RecommendedUsers = ({ userData }: { userData: any }) => {
             </Link>
             <div className="text-xs md:text-sm">
               <span>{user.followers?.length} followers</span>
-              <span> · </span>
-              <span>{user.following?.length} following</span>
-            </div>
-            <div>
-              <p className="text-xs md:text-sm truncated-text">{user.bio}</p>
-            </div>
-
-            <div className="mt-1 md:mt-2">
-              {user.followingUser ? (
-                <button className="bg-primary text-white px-2 py-1 rounded-sm text-sm md:text-base flex items-center gap-1 md:gap-2 w-fit">
-                  <FiMessageCircle className="inline w-4 h-4 md:w-5 md:h-5" />
-                  <span>Message</span>
-                </button>
-              ) : (
-                <button
-                  onClick={() => handleFollowUser(user._id)}
-                  className="bg-primary text-white px-2 py-1 rounded-sm w-fit text-sm md:text-base"
-                >
-                  Follow
-                </button>
-              )}
             </div>
           </div>
         </div>

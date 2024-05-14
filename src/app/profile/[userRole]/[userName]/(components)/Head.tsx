@@ -42,10 +42,6 @@ const Head = ({ userData, session }: any) => {
               <div className="text-sm font-normal flex gap-1 items-center px-2 py-1 bg-gray-200 rounded-md">
                 {userData.followers?.length} <span>Followers</span>
               </div>
-              <div className="w-1 h-1 rounded-full bg-gray-500"></div>
-              <div className="text-sm font-normal flex gap-1 items-center px-2 py-1 bg-gray-200 rounded-md">
-                {userData.following?.length} <span>Following</span>
-              </div>
             </div>
           </div>
 

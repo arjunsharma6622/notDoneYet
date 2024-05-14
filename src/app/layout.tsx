@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Navbar/>
         {children}
-        <Toaster richColors={true} position="bottom-center" />
+        <Toaster richColors={true} position="bottom-center" duration={2000}/>
       </body>
     </html>
   );

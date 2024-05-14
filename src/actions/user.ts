@@ -83,64 +83,6 @@ export const unfollowUser = async (
   }
 };
 
-
-// export const likeProfile = async (userId : string, profileId : string) => {
-//   try {
-//     await connectDB();
-
-//     const profile = await User.findById(profileId);
-//     if (!profile) {
-//       throw new Error("Profile not found");
-//     }
-
-//     const user = await User.findById(userId);
-//     if (!user) {
-//       throw new Error("User not found");
-//     }
-
-
-
-//     await profile.profileLikes.push(userId);
-//     await user.likedProfiles.push(profileId);
-
-//     revalidatePath("/network");
-//   } catch (err) {
-//     return err;
-//   }
-// }
-
-
-// export const dislikeProfile = async (userId : string, profileId : string) => {
-//   try {
-//     await connectDB();
-
-//     const profile = await User.findById(profileId);
-//     if (!profile) {
-//       throw new Error("Profile not found");
-//     }
-
-//     const user = await User.findById(userId);
-//     if (!user) {
-//       throw new Error("User not found");
-//     }
-
-//     profile.profileLikes = profile.profileLikes.filter(
-//       (_id: string) => _id != userId
-//     );
-//     user.likedProfiles = user.likedProfiles.filter(
-//       (_id: string) => _id != profileId
-//     );
-
-//     await profile.save();
-//     await user.save();
-
-//     revalidatePath("/network");
-//   } catch (err) {
-//     return err;
-//   }
-// }
-
-
 export const toggleProfileLike = async (userId : string, profileId : string) => {
   try {
     await connectDB();
