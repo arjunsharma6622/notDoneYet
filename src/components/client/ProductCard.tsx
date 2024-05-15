@@ -1,9 +1,10 @@
+import Link from "next/link";
 import React from "react";
 import { BiSolidStar } from "react-icons/bi";
 
-const ProductCard = ({ product }: any) => {
+const ProductCard = ({ product,  }: any) => {
   return (
-    <div className=" w-full overflow-hidden flex flex-col gap-2">
+    <Link href={`/profile/brand/${product.brandUserName}/products/${product._id}`} className=" w-full overflow-hidden flex flex-col gap-2">
       <div className="w-full overflow-hidden relative rounded-lg  cursor-pointer">
         <img
           src={product?.images[0]}
@@ -39,7 +40,7 @@ const ProductCard = ({ product }: any) => {
           </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

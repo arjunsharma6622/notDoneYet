@@ -62,11 +62,12 @@ const Page = async ({
               <img
                 src={userData?.image}
                 alt=""
-                className="w-10 h-10 rounded-full"
+                className="w-12 h-12 rounded-full"
               />
             </div>
             <div className="flex flex-col">
               <span className="text-3xl font-bold">{userData?.name}</span>
+              <span className="text-xs -mt-1">/products</span>
             </div>
           </div>
             <div className="w-[70%] relative">
