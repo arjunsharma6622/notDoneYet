@@ -1,0 +1,92 @@
+"use client";
+
+import EditProduct from "@/app/dashboard/(modals)/Brand/EditProduct";
+import React, { useState } from "react";
+import { BiSolidStar } from "react-icons/bi";
+import { FiDelete, FiEdit2, FiEdit3, FiTrash } from "react-icons/fi";
+import DeleteProduct from "../../(modals)/Brand/DeleteProduct";
+
+const ProductCard = ({ product }: any) => {
+  const [openEdit, setOpenEdit] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+  return (
+    <>
+      <div className=" w-full overflow-hidden flex flex-col gap-2">
+        <div className="w-full overflow-hidden relative rounded-lg  cursor-pointer">
+          <img
+            src={product?.images[0]}
+            alt=""
+            className="hover:scale-105 transform transition duration-500 "
+          />
+          <div className="z-[20] flex text-xs items-center gap-1 absolute bottom-2 left-2 bg-white/90 px-2 py-2 rounded-md">
+            <div className="flex justify-center items-center gap-1">
+              <span>4.5</span>
+              <BiSolidStar className="w-4 h-4 text-green-500" />
+            </div>
+            |<div>3.2k</div>
+          </div>
+
+          <div className="z-[20] absolute top-2 right-2 flex items-center gap-2">
+            <div
+              className="flex text-xs items-center gap-1 bg-white px-2 py-2 rounded-full"
+              onClick={() => setOpenEdit(true)}
+            >
+              <div className="flex justify-center items-center gap-2">
+                <FiEdit3 className="w-4 h-4 text-gray-600" />
+              </div>
+            </div>
+            <div
+              className="flex text-xs items-center gap-1 bg-red-200 px-2 py-2 rounded-full"
+              onClick={() => setOpenDelete(true)}
+            >
+              <div className="flex justify-center items-center gap-2">
+                <FiTrash className="w-4 h-4 text-red-600" />
+              </div>
+            </div>
+          </div>
+
+          <div className=" absolute bottom-0 w-full z-[10] h-24 bg-gradient-to-t from-black/60 from-5% to-transparent to-90%"></div>
+        </div>
+        <div className="flex flex-col gap-0">
+          <div>
+            <p className=" font-medium">{product?.name}</p>
+          </div>
+          <p className="text-xs text-gray-500">{product?.description}</p>
+          <div className="flex items-center gap-2 mt-1">
+            <span className="text-sm font-medium">
+              Rs.{product?.pricing.presentPrice}
+            </span>
+            <span className="text-xs line-through text-gray-500">
+              Rs.{product?.pricing.originalPrice}
+            </span>
+            <span className="text-xs text-red-500">
+              ({product?.pricing?.discount}% off)
+            </span>
+          </div>
+        </div>
+      </div>
+      {openEdit && (
+        <div className="absolute">
+          <EditProduct
+            open={openEdit}
+            setOpen={setOpenEdit}
+            user={product}
+            product={product}
+          />
+        </div>
+      )}
+      {openDelete && (
+        <div className="absolute">
+            <DeleteProduct
+              open={openDelete}
+              setOpen={setOpenDelete}
+              user={product}
+              product={product}
+              />
+        </div>
+      )}
+    </>
+  );
+};
+
+export default ProductCard;

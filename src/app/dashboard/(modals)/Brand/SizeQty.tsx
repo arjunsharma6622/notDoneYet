@@ -55,6 +55,7 @@ const SizeQty = ({category, sizes, setSizes, stock, setStock} : any) => {
                 placeholder="Qty"
                 min={0}
                 className="w-14 text-sm placeholder:text-sm border outline-none py-1 px-2 rounded-md"
+                value={stock.find((item : { size: string; quantity: number }) => item.size === size)?.quantity || 0}
                 onChange={(e) => handleQuantityChange(e, size)}
               />
             )}
