@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 const Filters = () => {
 
-  const [priceRange, setPriceRange] = useState({ min: '0', max: '10000' });
+  const [priceRange, setPriceRange] = useState({ min: '1000', max: '8000' });
 
   const handlePriceChange = (value: number | number[], type: 'min' | 'max') => {
     if (typeof value === 'number') {
@@ -19,11 +19,14 @@ const Filters = () => {
 
 
   return (
-    <div className="border rounded-lg px-4 py-2">
-    <h3 className='text-lg font-medium'>Filter Products</h3>
+    <div className="flex flex-col gap-2  py-4 pt-0 sticky top-20">
+    <h3 className='text-lg font-medium'>Filters</h3>
 
 
-<div className='flex flex-col gap-3'>
+<div className='border rounded-md'>
+
+<div className='flex flex-col gap-3 px-6 border-b py-4 '>
+  <p className='text-sm font-bold uppercase'>Price</p>
     <div className="filter-section text-sm">
       <label htmlFor="minPrice">Min Price: <span>Rs.{parseInt(priceRange.min)}</span>
 </label>
@@ -59,6 +62,17 @@ const Filters = () => {
         onChange={(value) => handlePriceChange(value, 'max')}
       />
     </div>
+
+    </div>
+<div className='flex flex-col gap-3 px-6 border-b py-4 '>
+  <p className='text-sm font-bold uppercase'>Color</p>
+
+  </div>
+<div className='flex flex-col gap-3 px-6 py-4 '>
+  <p className='text-sm font-bold uppercase'>Discount</p>
+        
+  </div>
+
 
     </div>
 
