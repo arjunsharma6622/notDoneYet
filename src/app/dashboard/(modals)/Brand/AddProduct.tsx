@@ -15,8 +15,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FiImage, FiX, FiXCircle } from "react-icons/fi";
 import { toast } from "sonner";
-import ProductImages from "./ProductImages";
+// import ProductImages from "./ProductImagessss";
 import SizeQty from "./SizeQty";
+import MultiImages from "../MultiImages";
 
 const AddProduct = ({
   open,
@@ -246,7 +247,7 @@ const AddProduct = ({
 
                     {imagesOpen && (
                       <div className="">
-                        <ProductImages
+                        <MultiImages
                           croppedImages={croppedImages}
                           setCroppedImages={setCroppedImages}
                           open={imagesOpen}
@@ -254,6 +255,7 @@ const AddProduct = ({
                           handleRemoveImage={handleRemoveImage}
                           croppedFiles={croppedFiles}
                           setCroppedFiles={setCroppedFiles}
+                          aspectRatio={3/4}
                         />
                       </div>
                     )}

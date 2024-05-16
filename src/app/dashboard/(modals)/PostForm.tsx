@@ -1,9 +1,10 @@
 import { createPost } from "@/actions/posts";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { FiImage, FiX, FiXCircle } from "react-icons/fi";
+import { BiImageAdd } from "react-icons/bi";
+import { FiX, FiXCircle } from "react-icons/fi";
 import { toast } from "sonner";
+import MultiImages from "./MultiImages";
 
 const PostForm = ({
   open,
@@ -14,19 +15,18 @@ const PostForm = ({
   setOpen: (open: boolean) => void;
   user: any;
 }) => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
+
+   
+  const [imagesOpen, setImagesOpen] = useState(false);
+  const [croppedImages, setCroppedImages] = useState([]);
+  const [croppedFiles, setCroppedFiles] = useState([]);
   const [images, setImages]: any = useState([]);
   const [textareaHeight, setTextareaHeight] = useState("auto");
-
-  const handleImageChange = (e: any) => {
-    const files = Array.from(e.target.files);
-    setImages((prevImages: any) => [...prevImages, ...files]);
-  };
+  
+  const [postData, setPostData] = useState({
+    description: "",
+    images: [],
+  });
 
   const handleTextareaInput = (event: any) => {
     event.target.style.height = "auto";
@@ -42,10 +42,11 @@ const PostForm = ({
   }, []);
 
   const handleRemoveImage = (index: number) => {
-    const imageUrl = URL.createObjectURL(images[index]);
-    URL.revokeObjectURL(imageUrl);
-    setImages((prevImages: any) =>
-      prevImages.filter((_: any, i: number) => i !== index),
+    setCroppedImages((prevImages) =>
+      prevImages.filter((_, i) => i !== index)
+    );
+    setCroppedFiles((prevFiles) =>
+      prevFiles.filter((_, i) => i !== index)
     );
   };
 
@@ -53,8 +54,8 @@ const PostForm = ({
     try {
       const imageUrls = [];
 
-      for (let i = 0; i < images.length; i++) {
-        const image = images[i];
+      for (let i = 0; i < croppedFiles.length; i++) {
+        const image = croppedFiles[i];
         console.log("image while uploading", image);
 
         const imageData = new FormData();
@@ -78,26 +79,25 @@ const PostForm = ({
     }
   };
 
-  const onSubmit = async (data: any) => {
+  const handlePostCreate = async () => {
     try {
-      const imageUrls = await handleImages(images);
-      console.log("All images uploaded successfully");
-      console.log(imageUrls);
+      const imageUrls : any = await handleImages(images);
 
-      data.images = imageUrls;
-      console.log("Data with images", data);
-      await createPost({ ...data, user: user._id });
-      console.log("Post created successfully");
-
+      postData.images = imageUrls;
+      console.log("Data with images", postData);
+      await createPost({ ...postData, user: user._id });
       setImages([]);
-      reset();
+      setCroppedImages([]);
+      setCroppedFiles([]);
       toast.success("Post created successfully");
       setOpen(false);
       window.location.reload();
     } catch (err) {
+      toast.error("Error creating post");
       console.error("Error uploading images:", err);
     }
   };
+
 
   return (
     <div>
@@ -111,8 +111,7 @@ const PostForm = ({
                 onClick={() => setOpen(false)}
               />
             </div>
-            <form
-              onSubmit={handleSubmit(onSubmit)}
+            <div
               className=" flex flex-col gap-2  overflow-scroll"
             >
               <div className="px-6">
@@ -120,7 +119,9 @@ const PostForm = ({
                   <div className="overflow-y-scroll">
                     <textarea
                       id="description"
-                      {...register("description", { required: true })}
+                      name="description"
+                      value={postData.description}
+                      onChange={(e) => setPostData({ ...postData, description: e.target.value })}
                       className="form-textarea mt-1 h-auto w-full focus:outline-none resize-none"
                       placeholder="Whats on your mind?"
                       style={{ height: textareaHeight }}
@@ -128,12 +129,8 @@ const PostForm = ({
                       onInput={handleTextareaInput}
                     ></textarea>
 
-                    {errors.description && (
-                      <p className="text-red-500">This field is required</p>
-                    )}
-
                     <div className="flex flex-wrap gap-2 mt-2">
-                      {images.map((image: any, index: number) => (
+                      {croppedFiles.map((image: any, index: number) => (
                         <div key={index} className="relative w-1/4 h-1/4">
                           <img
                             src={URL.createObjectURL(image)}
@@ -149,37 +146,41 @@ const PostForm = ({
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2">
-                    <label
-                      htmlFor="postImage"
-                      className="cursor-pointer overflow-y-scroll"
+                    <div
+                      onClick={() => setImagesOpen(true)}
+                      className="w-fit flex items-center gap-2 cursor-pointer overflow-y-scroll"
                     >
-                      <input
-                        type="file"
-                        id="postImage"
-                        accept=".png, .jpg, .jpeg"
-                        style={{ display: "none" }}
-                        multiple
-                        onChange={handleImageChange}
-                      />
-                      <FiImage className="w-5 h-5" />
-                    </label>
-                    <p className="text-xs text-gray-400">
-                      Only .png, .jpg, .jpeg files are allowed
-                    </p>
-                  </div>
+                      <BiImageAdd className="w-6 h-6" />
+                      <span className="text-xs text-gray-500">Add Images to your post</span>
+                    </div>
+
+                    {imagesOpen && (
+                      <div className="absolute">
+                        <MultiImages
+                          open={imagesOpen}
+                          setOpen={setImagesOpen}
+                          setImages={setImages}
+                          croppedImages={croppedImages}
+                          setCroppedImages={setCroppedImages}
+                          croppedFiles={croppedFiles}
+                          setCroppedFiles={setCroppedFiles}
+                          handleRemoveImage={handleRemoveImage}
+                          aspectRatio={2/1}
+                        />
+                      </div>
+                    )}
                 </div>
               </div>
 
               <div className="flex items-center justify-end gap-4 border-t px-6 py-3">
                 <button
-                  type="submit"
+                  onClick={handlePostCreate}
                   className="w-fit bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded"
                 >
                   Create Post
                 </button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       )}

@@ -22,29 +22,6 @@ const EasyCrop = ({ image, setImage, aspectRatio, widthOfImg,heightOfImg, croppe
     return new File([blob], fileName, { type: blob.type });
   };
 
-  // const showCroppedImage = useCallback(async () => {
-  //   try {
-  //     const croppedImage = await getCroppedImg(
-  //       image,
-  //       croppedAreaPixels,
-  //       rotation,
-  //     );
-  //     setCroppedImage(croppedImage);
-  //     const file = await blobUrlToFile(croppedImage as string, "crop.png");
-
-  //     if(inProductImages){
-  //       setCroppedFile(file);
-  //       setImage(null)
-  //       setCroppedImage(null)
-  //     }else{
-  //       setImage(file);
-  //     }
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // }, [croppedAreaPixels, rotation, image]);
-
-
   const showCroppedImage = useCallback(async () => {
     try {
       if (image !== null && croppedImage === null) {
@@ -107,19 +84,13 @@ const EasyCrop = ({ image, setImage, aspectRatio, widthOfImg,heightOfImg, croppe
         </div>
       </div>
 
-      <div className="flex items-center gap-2 w-full">
         <button
-          style={{
-            display: image === null || croppedImage !== null ? "none" : "block",
-            
-          }}
-          className="bg-blue-500 text-white py-2 px-4 rounded flex items-center gap-2 w-full justify-center"
+          className={`bg-blue-500 text-white py-2 px-4 rounded ${ (image === null || croppedImage !== null) ? "hidden" : "flex"} items-center justify-center gap-2 w-full`}
           onClick={() => showCroppedImage()}
         >
           <FiCrop className="w-5 h-5"/>
           <span>Crop</span>
         </button>
-      </div>
     </div>
   );
 };

@@ -2,11 +2,49 @@ import { auth } from "@/auth";
 import axios from "axios";
 import { API_HEAD } from "@/lib/utils";
 import Profile from "./Profile";
+import type { Metadata, ResolvingMetadata } from 'next'
+
+type Props = {
+  params: { userRole: string, userName: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+ 
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const userRole = params.userRole;
+  const userName = params.userName
+ 
+  // fetch data
+  const userData = await fetch(`https://notdoneyet-server.vercel.app/api/user/profile/details?role=${userRole}&userName=${userName}`).then((res) => res.json())
+ 
+ 
+  return {
+    title: userData.name,
+    description: userData.bio,
+    openGraph: {
+      title: userData.name,
+      description: userData.bio,
+      images: [userData.image, userData.backgroundImg],
+      siteName: "Not Done Yet",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: userData.name,
+      description: userData.bio,
+      images: [userData.image, userData.backgroundImg],
+    },
+  }
+}
 
 const Page = async ({ params }: { params: { userRole: string, userName: string } }) => {
   const session = await auth();
   const userName = params.userName;
   const userRole = params.userRole
+
+
 
 
   const userData = await axios

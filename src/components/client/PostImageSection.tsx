@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react";
 import ImagesModal from "./ImagesModal";
 
@@ -8,12 +10,12 @@ const PostImageSection = ({images} : any) => {
         {images.length > 0 && (
             <div onClick={() => setOpenImagesModal(true)}>
                 {images.length === 1 && (
-                    <img src={images[0]} className="w-full h-full object-cover" />
+                    <img src={images[0]} className="w-full h-full object-cover rounded-md" />
                 )}
                 {images.length === 2 && (
                     <div className="grid grid-cols-2 gap-2">
-                        <img src={images[0]} className="w-full h-full object-cover" />
-                        <img src={images[1]} className="w-full h-full object-cover" />
+                        <img src={images[0]} className="w-full h-full object-cover rounded-md" />
+                        <img src={images[1]} className="w-full h-full object-cover rounded-md" />
                     </div>
                 )}
                 {images.length === 3 && (

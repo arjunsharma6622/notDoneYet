@@ -2,13 +2,27 @@
 
 import { addComment, toggleLike } from "@/actions/posts";
 import { useState } from "react";
-import { FiMessageCircle, FiShare } from "react-icons/fi";
+import {
+  FiCode,
+  FiLink,
+  FiMessageCircle,
+  FiMoreVertical,
+  FiShare,
+} from "react-icons/fi";
 import { RiHeart2Fill, RiHeart2Line } from "react-icons/ri";
 import TimeAgo from "react-timeago";
 import { toast } from "sonner";
 import PostImageSection from "./PostImageSection";
 import UserCommentCard from "./UserCommentCard";
 import Link from "next/link";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { BiBookmark, BiShare, BiSolidBookmark } from "react-icons/bi";
+import { API_HEAD, CLIENT_HEAD } from "@/lib/utils";
+import axios from "axios";
 
 const PostCard = ({ postData, currUser }: any) => {
   const [openCommentInput, setOpenCommentInput]: [boolean, any] =
@@ -47,10 +61,34 @@ const PostCard = ({ postData, currUser }: any) => {
     }
   };
 
+  const copyPostLink = () => {
+    navigator.clipboard.writeText(`${CLIENT_HEAD}/post/${postData?._id}`);
+    toast.success("Post link copied");
+  };
+
+  const savePostToUser = async () => {
+    try {
+      const res: any = await axios.post(
+        `${API_HEAD}/user/post/toggleSavePost`,
+        {
+          postId: postData?._id,
+          userId: currUser._id,
+        }
+      );
+      toast.success(res.data.message);
+    } catch (err) {
+      toast.error("Failed to save post in your account");
+      console.log(err);
+    }
+  };
+
   return (
-    <div className="flex border flex-col rounded-md px-4 py-4 gap-2">
-        <div className="flex items-start gap-2 border-b pb-2">
-          <Link href={`/profile/${postData?.user?.role}/${postData?.user?.userName}`}>
+    <div className="flex border flex-col rounded-md px-2 py-2 gap-2">
+      <div className="flex items-center justify-between gap-4 border-b pb-2">
+        <div className="flex items-center gap-2">
+          <Link
+            href={`/profile/${postData?.user?.role}/${postData?.user?.userName}`}
+          >
             <img
               src={postData?.user?.image}
               alt=""
@@ -59,7 +97,11 @@ const PostCard = ({ postData, currUser }: any) => {
           </Link>
           <div>
             <div className="text-base flex items-center gap-2">
-              <Link href={`/profile/${postData?.user?.role}/${postData?.user?.userName}`}>{postData?.user?.name}</Link>
+              <Link
+                href={`/profile/${postData?.user?.role}/${postData?.user?.userName}`}
+              >
+                {postData?.user?.name}
+              </Link>
               <div className="w-1 h-1 bg-black rounded-full"></div>
               <TimeAgo
                 date={postData?.createdAt}
@@ -69,6 +111,43 @@ const PostCard = ({ postData, currUser }: any) => {
             <p className="text-xs">{postData?.user?.bio}</p>
           </div>
         </div>
+
+        <Popover>
+          <PopoverTrigger>
+            <FiMoreVertical className="w-5 h-5" />
+          </PopoverTrigger>
+          <PopoverContent className=" w-56 px-4 py-4 flex items-start flex-col gap-2 justify-center">
+            <div
+              onClick={copyPostLink}
+              className="text-sm flex items-center gap-4 cursor-pointer hover:bg-gray-100 w-full px-2 py-2 rounded-md"
+            >
+              <FiLink className="w-5 h-5" />
+              <p>Copy post link</p>
+            </div>
+            <div
+              onClick={savePostToUser}
+              className="text-sm flex items-center gap-4 cursor-pointer hover:bg-gray-100 w-full px-2 py-2 rounded-md"
+            >
+              {currUser.savedPosts.includes(postData?._id) ? (
+                <>
+                  <BiSolidBookmark className="w-5 h-5" />
+                  <p>Saved Post</p>
+                </>
+              ) : (
+                <>
+                  <BiBookmark className="w-5 h-5" />
+                  <p>Save the post</p>
+                </>
+              )}
+            </div>
+
+            <div className="text-sm flex items-center gap-4 cursor-pointer hover:bg-gray-100 w-full px-2 py-2 rounded-md">
+              <FiCode className="w-5 h-5" />
+              <p>Embed post</p>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </div>
 
       <div className="w-full flex flex-col gap-4 px-2 py-2">
         <p className="text-sm text-start">{postData?.description}</p>

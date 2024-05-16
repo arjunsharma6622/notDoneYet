@@ -4,14 +4,15 @@ import React, { useEffect, useState } from "react";
 import { BiImageAdd } from "react-icons/bi";
 import { FiAlertCircle, FiImage, FiInfo, FiX, FiXCircle } from "react-icons/fi";
 
-const ProductImages = ({
+const MultiImages = ({
   open,
   setOpen,
   croppedImages,
   setCroppedImages,
   handleRemoveImage,
   croppedFiles,
-  setCroppedFiles
+  setCroppedFiles,
+  aspectRatio
 }: any) => {
   const [croppedImage, setCroppedImage]: any = useState(null);
   const [croppedFile, setCroppedFile]: any = useState(null);
@@ -26,7 +27,6 @@ const ProductImages = ({
 
   useEffect(() => {
     if(croppedFile){
-        console.log("cropped fileeee --- ", URL.createObjectURL(croppedFile), croppedFile)
         setCroppedFiles([...croppedFiles, croppedFile]);
     }
   }, [croppedFile, setCroppedFiles]);
@@ -45,7 +45,7 @@ const ProductImages = ({
         <div className=" fixed inset-0 flex items-center justify-center bg-gray-400 bg-opacity-50 backdrop-filter backdrop-blur-sm z-[45]">
           <div className="w-[95%] md:w-[65%] max-h-[90%] bg-white rounded-md flex flex-col">
             <div className="flex items-center justify-between border-b px-6 py-5">
-              <h1 className="text-2xl font-bold">Crop Image</h1>
+              <h1 className="text-2xl font-bold">Add Images</h1>
 
             </div>
 
@@ -81,7 +81,7 @@ const ProductImages = ({
                       setImage={setImage}
                       setCroppedImage={setCroppedImage}
                       croppedImage={croppedImage}
-                      aspectRatio={3 / 4}
+                      aspectRatio={aspectRatio}
                       widthOfImg={"w-96"}
                       heightOfImg={"h-96"}
                       inProductImages={true}
@@ -146,4 +146,4 @@ const ProductImages = ({
   );
 };
 
-export default ProductImages;
+export default MultiImages;

@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card"
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
+} from "@/components/ui/carousel";
+import { useEffect } from "react";
 import { FiX } from "react-icons/fi";
 
 const ImagesModal = ({ images, open, setOpen } : any) => {
