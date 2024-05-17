@@ -30,9 +30,9 @@ const Posts = ({ userData }: { userData: any }) => {
           </div>
         </div>
 
-<div className="grid grid-cols-2 gap-4">
-        {allUserPosts?.map((post: any) => (
-          <ProfilePostCard key={post._id} post={post}/>
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {allUserPosts?.slice(0, 2)?.map((post: any) => (
+          <ProfilePostCard dashboardCard={true} currUser={userData} key={post._id} post={post}/>
         ))}
       </div>
       </div>

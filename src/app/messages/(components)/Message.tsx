@@ -1,6 +1,6 @@
 import { BiCheckDouble } from "react-icons/bi";
 import { formatMessageTime } from "../(utils)/FormatDate";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 const Message = ({ message, currentUser, otherUser, showImage, session }: any) => {
   return (

@@ -37,6 +37,7 @@ export interface UserDocument extends Document {
   email: string;
   password?: string;
   googleId?: string;
+  userName: string;
   image: string;
   backgroundImg: string;
   role: "user" | "doctor" | "athlete" | "venueOwner" | "brand" | "root";
@@ -55,6 +56,8 @@ export interface UserDocument extends Document {
   profileLikes?: mongoose.Schema.Types.ObjectId[];
   likedProfiles?: mongoose.Schema.Types.ObjectId[];
   conversations?: mongoose.Schema.Types.ObjectId[];
+  products: mongoose.Schema.Types.ObjectId[];
+  savedPosts : mongoose.Schema.Types.ObjectId[]
 }
 
 const experienceSchema = new mongoose.Schema<Experience>(
@@ -63,6 +66,7 @@ const experienceSchema = new mongoose.Schema<Experience>(
     description: { type: String },
     location: { type: String },
     duration: { type: String },
+
     mediaAttachments: [
       {
         links: { type: String },
@@ -105,6 +109,7 @@ const userSchema = new mongoose.Schema<UserDocument>({
   email: { type: String, required: true, unique: true },
   password: { type: String, select: false },
   googleId: { type: String },
+  userName: { type: String, required: true, unique: true },
   image: {
     type: String,
     default:
@@ -140,6 +145,8 @@ const userSchema = new mongoose.Schema<UserDocument>({
   sports: [String],
   skills: [String],
   conversations: [{ type: mongoose.Schema.Types.ObjectId, ref: "Conversation" }],
+  products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+  savedPosts : [{type: mongoose.Schema.Types.ObjectId, ref: "Post"}]
 });
 
 export const User = mongoose.models.User || mongoose.model<UserDocument>("User", userSchema);

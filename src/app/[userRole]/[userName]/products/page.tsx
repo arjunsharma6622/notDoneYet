@@ -4,7 +4,7 @@ import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import { FiChevronDown, FiSearch } from "react-icons/fi";
 import Filters from "./(components)/Filters";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 const Page = async ({
   params,

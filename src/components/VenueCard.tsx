@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useState } from "react";
 import { BiSolidStar } from "react-icons/bi";
 import { FiClock, FiMapPin } from "react-icons/fi";

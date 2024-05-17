@@ -1,5 +1,5 @@
 import {timeAgo} from "@/lib/utils";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 const UserCommentCard = ({ comment }: any) => {
   return (

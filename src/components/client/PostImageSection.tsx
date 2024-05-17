@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import ImagesModal from "./ImagesModal";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 const PostImageSection = ({images} : any) => {
     const [openImagesModal, setOpenImagesModal] = useState(false);

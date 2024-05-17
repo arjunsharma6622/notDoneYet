@@ -1,6 +1,6 @@
 import React from "react";
 import dateFormat from "dateformat";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 const AthleteExperienceCard = ({ experience }: any) => {
   return (

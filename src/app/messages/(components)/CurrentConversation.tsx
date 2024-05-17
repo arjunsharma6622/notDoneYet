@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { FiSend } from "react-icons/fi";
 import Message from "./Message";
 import { formatConversationDate } from "../(utils)/FormatDate";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 
 const CurrentConversation = ({

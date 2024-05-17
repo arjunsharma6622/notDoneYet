@@ -18,7 +18,7 @@ export async function generateMetadata(
   const userName = params.userName
  
   // fetch data
-  const userData = await fetch(`https://notdoneyet-server.vercel.app/api/user/profile/details?role=${userRole}&userName=${userName}`).then((res) => res.json())
+  const userData = await axios.get(`https://notdoneyet-server.vercel.app/api/user/profile/details?role=${userRole}&userName=${userName}`).then((res) => res.data)
  
  
   return {

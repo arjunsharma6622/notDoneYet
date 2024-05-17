@@ -17,6 +17,7 @@ import { FiImage, FiX, FiXCircle } from "react-icons/fi";
 import { toast } from "sonner";
 import SizeQty from "./SizeQty";
 import MultiImages from "../MultiImages";
+import ModalLayout from "@/components/ModalLayout";
 
 const EditProduct = ({
   open,
@@ -117,7 +118,7 @@ const EditProduct = ({
   return (
     <div>
       {open && (
-        <div className="z-[40] fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 backdrop-filter backdrop-blur-sm">
+        <ModalLayout>
         <div className="w-[95%] md:w-[70%] max-h-[90%] bg-white rounded-md flex flex-col gap-4">
           <div className="flex items-center justify-between border-b px-6 py-5">
             <h1 className="text-2xl font-bold">Edit Product</h1>
@@ -321,7 +322,7 @@ const EditProduct = ({
               </div>
             </div>
           </div>
-        </div>
+          </ModalLayout>
       )}
     </div>
   );

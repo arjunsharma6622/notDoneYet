@@ -1,7 +1,7 @@
 "use client";
 
 import { unfollowUser } from "@/actions/user";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 import { toast } from "sonner";
 

@@ -1,17 +1,15 @@
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 import { BiSolidStar } from "react-icons/bi";
 
 const ProductCard = ({ product,  }: any) => {
   return (
     <Link href={`/brand/${product.brandUserName}/products/${product._id}`} className=" w-full overflow-hidden flex flex-col gap-2">
-      <div className="w-full overflow-hidden relative rounded-lg  cursor-pointer">
-        <Image
-        width={300}
-        height={600}
-          layout="intrinsic"
+      <div className="overflow-hidden relative rounded-lg  cursor-pointer">
+        <img
           src={product?.images[0]}
           alt=""
+          loading="lazy"
           className="hover:scale-105 transform transition duration-500 "
         />
         <div className="z-[20] flex text-xs items-center gap-1 absolute bottom-2 left-2 bg-white/90 px-2 py-2 rounded-md">

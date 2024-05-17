@@ -1,6 +1,6 @@
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { BiSolidStar } from "react-icons/bi";
 import { FiShoppingCart } from "react-icons/fi";
 

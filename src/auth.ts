@@ -95,6 +95,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       token._id = userData?._id;
       token.role = userData?.role;
       token.image = userData?.image;
+      // token.userName = userData?.name;
+      // token.savedPosts = userData?.savedPosts;
       return token;
     },
     session: async ({ session, token }) => {
@@ -102,6 +104,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user._id = token?._id;
         session.user.role = token?.role;
         session.user.image = token?.image;
+        // session.user.userName = token?.userName;
+        // session.user.savedPosts = token?.savedPosts;
       }
       return session;
     },

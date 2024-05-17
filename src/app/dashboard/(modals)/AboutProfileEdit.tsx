@@ -1,4 +1,5 @@
 import { updateUser } from "@/actions/user";
+import ModalLayout from "@/components/ModalLayout";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -41,7 +42,8 @@ const AboutProfileEdit = ({
   return (
     <div>
       {open && (
-        <div className="z-[40] fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 backdrop-filter backdrop-blur-sm">
+        // <div className="z-[40] fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 backdrop-filter backdrop-blur-sm">
+        <ModalLayout>
           <div className="w-[95%] md:w-[55%] max-h-[90%] bg-white rounded-md flex flex-col gap-4">
             <div className="flex items-center justify-between border-b px-6 py-5">
               <h1 className="text-2xl font-bold">Edit About</h1>
@@ -83,7 +85,8 @@ const AboutProfileEdit = ({
               </div>
             </form>
           </div>
-        </div>
+        </ModalLayout>
+
       )}
     </div>
   );

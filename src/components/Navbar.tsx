@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import NavDesktop from "./client/NavDesktop";
 import NavMobile from "./client/NavMobile";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 const Navbar = async () => {
   const session = await auth();

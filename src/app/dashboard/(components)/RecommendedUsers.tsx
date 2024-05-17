@@ -1,6 +1,6 @@
 import { followUser } from "@/actions/user";
 import { API_HEAD } from "@/lib/utils";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 import React from "react";
 import { FiMessageCircle } from "react-icons/fi";

@@ -1,3 +1,4 @@
+import ModalLayout from "@/components/ModalLayout";
 import EasyCrop from "@/components/client/EasyCrop";
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
@@ -42,7 +43,7 @@ const MultiImages = ({
   return (
     <div>
       {open && (
-        <div className=" fixed inset-0 flex items-center justify-center bg-gray-400 bg-opacity-50 backdrop-filter backdrop-blur-sm z-[45]">
+        <ModalLayout>
           <div className="w-[95%] md:w-[65%] max-h-[90%] bg-white rounded-md flex flex-col">
             <div className="flex items-center justify-between border-b px-6 py-5">
               <h1 className="text-2xl font-bold">Add Images</h1>
@@ -140,7 +141,7 @@ const MultiImages = ({
                 </Button>
               </div>
           </div>
-        </div>
+          </ModalLayout>
       )}
     </div>
   );

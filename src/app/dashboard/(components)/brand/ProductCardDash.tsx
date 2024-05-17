@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { BiSolidStar } from "react-icons/bi";
 import { FiDelete, FiEdit2, FiEdit3, FiTrash } from "react-icons/fi";
 import DeleteProduct from "../../(modals)/Brand/DeleteProduct";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 const ProductCard = ({ product }: any) => {
   const [openEdit, setOpenEdit] = useState(false);
