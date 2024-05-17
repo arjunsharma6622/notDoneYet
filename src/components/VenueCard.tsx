@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { BiSolidStar } from "react-icons/bi";
 import { FiClock, FiMapPin } from "react-icons/fi";
-import VenueBookingModal from "./VenueBookingModal";
+// import VenueBookingModal from "./VenueBookingModal";
 
 const VenueCard = ({ venueDetails }: any) => {
   const [openBookingModal, setOpenBookingModal] = useState(false);
@@ -63,7 +63,7 @@ const VenueCard = ({ venueDetails }: any) => {
         </button>
       </div>
 
-      {
+      {/* {
         <div className="absolut">
           <VenueBookingModal
             venueDetails={venueDetails}
@@ -71,7 +71,7 @@ const VenueCard = ({ venueDetails }: any) => {
             openBookingModal={openBookingModal}
           />
         </div>
-      }
+      } */}
     </div>
   );
 };

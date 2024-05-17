@@ -1,7 +1,7 @@
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
-import { format, isToday, isYesterday } from "date-fns";
 import { useEffect, useState } from "react";
+import { formatDate } from "../(utils)/FormatDate";
 
 const ConversationCard = ({
   session,
@@ -13,17 +13,7 @@ const ConversationCard = ({
   setNewUserToSendMsg,
   setWriteNewMsg,
 }: any) => {
-  const formatDate = (date: any) => {
-    const messageDate = new Date(date);
 
-    if (isToday(messageDate)) {
-      return format(messageDate, "h:MM");
-    } else if (isYesterday(messageDate)) {
-      return "Yesterday";
-    } else {
-      return format(messageDate, "MMMM dd, yyyy");
-    }
-  };
 
   const [unread, setUnread] = useState(0);
 

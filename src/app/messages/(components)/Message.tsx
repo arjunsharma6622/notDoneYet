@@ -1,6 +1,5 @@
-import dateFormat from "dateformat";
 import { BiCheckDouble } from "react-icons/bi";
-import { FiCheck } from "react-icons/fi";
+import { formatMessageTime } from "../(utils)/FormatDate";
 
 const Message = ({ message, currentUser, otherUser, showImage, session }: any) => {
   return (
@@ -19,7 +18,7 @@ const Message = ({ message, currentUser, otherUser, showImage, session }: any) =
           }`}
         >
           <span className="text-xs text-gray-500">
-            {dateFormat(message?.createdAt, "HH:MM")}
+            {formatMessageTime(message?.createdAt)}
           </span>
 
           <div

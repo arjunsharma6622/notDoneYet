@@ -7,7 +7,7 @@ const Head = ({ userData, session }: any) => {
     athlete: "Athlete",
     brand: "Brand",
     doctor: "Doctor",
-    venueOwner: "Venue",
+    venue: "Venue",
   };
 
   return (

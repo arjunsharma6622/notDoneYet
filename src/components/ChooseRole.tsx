@@ -10,7 +10,7 @@ const ChooseRole = ({ userData }: any) => {
   const rolesData = [
     { value: "athlete", label: "Athlete", icon: "roleAthlete" },
     { value: "doctor", label: "Doctor", icon: "roleDoctor" },
-    { value: "venueOwner", label: "Venue Owner", icon: "roleVenue" },
+    { value: "venue", label: "Venue", icon: "roleVenue" },
     { value: "brand", label: "Brand", icon: "roleBrand" },
   ];
 

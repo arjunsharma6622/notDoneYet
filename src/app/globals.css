@@ -74,3 +74,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+.truncatedText {
+  -webkit-line-clamp: 2; /* Chrome, Safari, Opera browsers */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}

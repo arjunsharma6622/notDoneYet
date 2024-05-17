@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import ProfilePostCard from "./ProfilePostCard";
+import { API_HEAD } from "@/lib/utils";
+import { useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import useSWR from "swr";
 import PostForm from "../(modals)/PostForm";
-import { API_HEAD } from "@/lib/utils";
+import ProfilePostCard from "@/components/client/ProfilePostCard";
 
 const Posts = ({ userData }: { userData: any }) => {
   const [openPostForm, setOpenPostForm] = useState(false);
@@ -30,9 +30,11 @@ const Posts = ({ userData }: { userData: any }) => {
           </div>
         </div>
 
+<div className="grid grid-cols-2 gap-4">
         {allUserPosts?.map((post: any) => (
-          <ProfilePostCard key={post._id} post={post} />
+          <ProfilePostCard key={post._id} post={post}/>
         ))}
+      </div>
       </div>
 
       {openPostForm && (

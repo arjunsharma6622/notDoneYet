@@ -1,5 +1,4 @@
-import React from 'react'
-import ProfilePostCard from '../../../../../components/client/ProfilePostCard'
+import ProfilePostCard from "@/components/client/ProfilePostCard"
 
 const Activity = ({ postData }: { postData: any }) => {
   return (

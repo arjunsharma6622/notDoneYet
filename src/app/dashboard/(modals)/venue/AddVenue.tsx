@@ -1,6 +1,5 @@
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
-import "moment/locale/en-gb";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiImage, FiX, FiXCircle } from "react-icons/fi";

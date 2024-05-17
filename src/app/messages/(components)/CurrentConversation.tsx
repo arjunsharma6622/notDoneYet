@@ -1,22 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
-import { format, isToday, isYesterday } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import { FiSend } from "react-icons/fi";
 import Message from "./Message";
+import { formatConversationDate } from "../(utils)/FormatDate";
 
-const formatDate = (date: any) => {
-  const messageDate = new Date(date);
-
-  if (isToday(messageDate)) {
-    return `Today`;
-  } else if (isYesterday(messageDate)) {
-    return `Yesterday`;
-  } else {
-    return format(messageDate, "MMMM dd, yyyy");
-  }
-};
 
 const CurrentConversation = ({
   currentConversation,
@@ -159,7 +148,7 @@ const CurrentConversation = ({
                               key={index}
                               className="  text-center w-fit text-xs text-black font-medium bg-gray-200 py-1 px-4 rounded-md mx-auto"
                             >
-                              {formatDate(message.createdAt)}
+                              {formatConversationDate(message.createdAt)}
                             </div>
                           </div>
                         </div>

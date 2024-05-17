@@ -27,10 +27,10 @@ const Profile = ({ session }: any) => {
   return (
     <div className="relative flex items-center justify-center px-2 ">
       {userData ? (
-        <div className={`${(userData?.role == "brand" || userData?.role == "venueOwner") ? "md:w-[80%]" : "md:w-[95%]"} flex  md:flex-row flex-col gap-5 items-start mt-5`}>
+        <div className={`${(userData?.role == "brand" || userData?.role == "venue") ? "md:w-[80%]" : "md:w-[95%]"} flex  md:flex-row flex-col gap-5 items-start mt-5`}>
           <div className="w-full  flex flex-col gap-5 border rounded-md md:flex-[8.5]">
             <Head userData={userData} />
-            {userData?.role == "venueOwner" && <Venues userData={userData} />}
+            {userData?.role == "venue" && <Venues userData={userData} />}
             <Posts userData={userData} />
             <About userData={userData} />
             {userData?.role == "brand" && <Products userData={userData} />}
@@ -41,7 +41,7 @@ const Profile = ({ session }: any) => {
               </>
             )}
             {userData?.role == "doctor" && <Education userData={userData} />}
-            {userData?.role == "venueOwner" && (
+            {userData?.role == "venue" && (
               <PastEvents userData={userData} />
             )}
             {(userData?.role == "doctor" || userData?.role == "athlete") && (
@@ -49,7 +49,7 @@ const Profile = ({ session }: any) => {
             )}
           </div>
 
-          {userData?.role !== "brand" && userData?.role !== "venueOwner" && (
+          {userData?.role !== "brand" && userData?.role !== "venue" && (
             <div className="w-full flex md:flex-col flex-col md:flex-[4] gap-4">
               <RecommendedUsers userData={userData} />
             </div>

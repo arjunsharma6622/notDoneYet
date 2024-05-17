@@ -25,7 +25,7 @@ const Profile = async ({ userData }: any) => {
 
         <About userData={userData} />
 
-        {userData.role === 'venueOwner' && (
+        {userData.role === 'venue' && (
             <Venues venueData={userData} />
         )}
 

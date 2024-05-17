@@ -13,7 +13,7 @@ const Head = ({ userData }: { userData: any }) => {
     athlete: "Athlete",
     brand: "Brand",
     doctor: "Doctor",
-    venueOwner: "Venue",
+    venue: "Venue",
   };
 
   return (
@@ -96,7 +96,7 @@ const Head = ({ userData }: { userData: any }) => {
           <Link
             className="w-fit mt-2 text-sm text-primary"
             target="_blank"
-            href={`/profile/${userRoles[userData?.role].toLowerCase()}/${userData?.userName}`}
+            href={`/${userRoles[userData?.role].toLowerCase()}/${userData?.userName}`}
           >
             <span className="">View my profile</span>
             <FiArrowUpRight className="inline w-4 h-4 md:w-5 md:h-5 mb-1" />

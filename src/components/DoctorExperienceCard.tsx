@@ -1,5 +1,4 @@
 import dateFormat from "dateformat";
-import ShowMore from "./ShowMore";
 
 const DoctorExperienceCard = ({ experience }: any) => {
   return (
@@ -26,7 +25,7 @@ const DoctorExperienceCard = ({ experience }: any) => {
 
       <div className="text-sm py-2 border-t">
         <span className="text-base font-semibold">Description</span>
-        <ShowMore content={experience.description} />
+        <p className="text-sm">{experience?.description}</p>
       </div>
     </div>
   );
