@@ -1,4 +1,4 @@
-import { updateUser } from "@/actions/updateUser";
+import { updateUser } from "@/actions/user";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";

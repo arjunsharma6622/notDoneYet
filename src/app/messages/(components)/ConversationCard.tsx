@@ -1,5 +1,6 @@
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { formatDate } from "../(utils)/FormatDate";
 
@@ -50,13 +51,14 @@ const ConversationCard = ({
       key={conversation._id}
     >
       <div className="">
-        <img
+        <Image
           src={otherUser?.image}
           alt=""
           loading="lazy"
           className="object-cover rounded-full"
-          width="48px"
-          height={"48px"}
+          width={48}
+          height={48}
+          layout="intrinsic"
           referrerPolicy="no-referrer"
         />
       </div>

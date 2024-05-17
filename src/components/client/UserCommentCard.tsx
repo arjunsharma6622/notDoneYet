@@ -1,10 +1,14 @@
 import {timeAgo} from "@/lib/utils";
+import Image from "next/image";
 
 const UserCommentCard = ({ comment }: any) => {
   return (
     <div key={comment._id} className="flex items-start flex-col w-full">
       <div className="w-full border-b py-3 flex items-start gap-2">
-        <img
+        <Image
+        width={40}
+        height={40}
+          layout="intrinsic"
           src={comment.user.image}
           alt="profile"
           className="w-10 h-10 rounded-full object-cover"

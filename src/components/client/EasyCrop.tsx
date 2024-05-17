@@ -47,12 +47,8 @@ const EasyCrop = ({ image, setImage, aspectRatio, widthOfImg,heightOfImg, croppe
     } catch (e) {
       console.error(e);
     }
-  }, [croppedAreaPixels, rotation, image]);
+  }, [croppedAreaPixels, rotation, image, croppedImage, inProductImages, setCroppedFile, setImage, setCroppedImage]);
   
-
-  const onClose = useCallback(() => {
-    setCroppedImage(null);
-  }, []);
 
   return (
     <div className=" flex flex-col gap-3 items-center justify-center">

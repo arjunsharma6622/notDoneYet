@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { BiSolidStar } from "react-icons/bi";
 import { FiClock, FiMapPin } from "react-icons/fi";
@@ -43,17 +44,21 @@ const VenueCard = ({ venueDetails }: any) => {
 
       <div className="overflow-x-scroll justify-start items-center gap-4 flex w-[calc(100%-10px)]">
         {venueDetails.images.map((image: any, index: number) => (
-          <img
+          <Image
             key={index}
             src={image}
-            className="rounded-lg w-56 h-44 object-cover"
+            width={224}
+            height={176}
+            alt=""
+            layout="intrinsic"
+            className="rounded-lg object-cover"
           />
         ))}
       </div>
 
       <div className="flex gap-6 items-center justify-end w-full border-t pt-3">
         <div>
-          <img src="/images/googleMaps.png" alt="" className="w-8 h-8" />
+          <Image src="/images/googleMaps.png" width={32} height={32} layout="intrinsic" alt="" className="" />
         </div>
         <button
           onClick={() => setOpenBookingModal(true)}

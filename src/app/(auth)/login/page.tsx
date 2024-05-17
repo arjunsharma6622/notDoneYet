@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -41,16 +42,10 @@ const Page = async () => {
                 variant={"google"}
                 className="w-full flex items-center justify-center gap-2"
               >
-                <img src="./images/google.svg" alt="" className="w-5" />
+                <Image layout="intrinsic" width={24} height={24} src="./images/google.svg" alt=""  />
                 Login with Google
               </Button>
             </form>
-            {/* <form action={facebookLogin} className="w-full">
-            <Button type="submit" variant={"apple"} className="w-full flex items-center justify-center gap-2">
-            <img src="./images/apple.svg" alt="" className="w-5"/>
-              Login with Apple
-            </Button>
-          </form> */}
           </div>
 
           <p className="text-sm">

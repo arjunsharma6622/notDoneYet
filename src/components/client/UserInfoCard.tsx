@@ -1,8 +1,9 @@
+import Image from "next/image"
 
 const UserInfoCard = ({userData} : any) => {
   return (
     <div className="flex flex-col gap-2 items-center justify-start border rounded-md h-fit px-4 py-4"> 
-        <img src={userData?.image} className="rounded-full w-20 h-20" referrerPolicy="no-referrer"/>
+        <Image width={40} height={40} layout="intrinsic" alt="" src={userData?.image} className="rounded-full w-20 h-20" referrerPolicy="no-referrer"/>
 
         <div className="flex flex-col gap-1 items-center">
             <p className="text-lg">{userData?.name}</p>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { BiSolidStar } from "react-icons/bi";
 
@@ -5,7 +6,10 @@ const ProductCard = ({ product,  }: any) => {
   return (
     <Link href={`/brand/${product.brandUserName}/products/${product._id}`} className=" w-full overflow-hidden flex flex-col gap-2">
       <div className="w-full overflow-hidden relative rounded-lg  cursor-pointer">
-        <img
+        <Image
+        width={300}
+        height={600}
+          layout="intrinsic"
           src={product?.images[0]}
           alt=""
           className="hover:scale-105 transform transition duration-500 "

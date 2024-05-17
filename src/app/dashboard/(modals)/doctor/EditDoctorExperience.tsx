@@ -1,4 +1,4 @@
-import { updateUser } from "@/actions/updateUser";
+import { updateUser } from "@/actions/user";
 import { Button } from "@/components/ui/button";
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";

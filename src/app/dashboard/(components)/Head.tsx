@@ -4,6 +4,7 @@ import BasicProfileEdit from "../(modals)/BasicProfileEdit";
 import ImageEdit from "../(modals)/images/ImageEdit";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
+import Image from "next/image";
 
 const Head = ({ userData }: { userData: any }) => {
   const [openImagesEdit, setOpenImagesEdit] = useState(false);
@@ -20,23 +21,29 @@ const Head = ({ userData }: { userData: any }) => {
     <>
       <div>
         <div className="relative">
-          <img
+          <Image
             src={
               userData?.backgroundImg ||
               "https://www.fr.com/images/demo/fish-richardson-header-default.png"
             }
             referrerPolicy="no-referrer"
+            width={1600}
+            height={400}
+            layout="intrinsic"
             alt=""
-            className="w-full object-cover aspect-[4/1] rounded-tr-md rounded-tl-md"
+            className="object-cover rounded-tr-md rounded-tl-md"
           />
-          <img
+          <Image
             src={
               userData?.image ||
               "https://www.fr.com/images/demo/fish-richardson-header-default.png"
             }
             referrerPolicy="no-referrer"
             alt=""
-            className="absolute left-6 md:-bottom-10 -bottom-6 border-4 w-20 h-20 border-white md:border-8 md:w-44 md:h-44 object-cover rounded-full"
+            width={160}
+            height={160}
+            layout="intrinsic"
+            className="absolute left-6 md:-bottom-10 -bottom-6 border-4 border-white md:border-8 object-cover rounded-full"
           />
 
           <div

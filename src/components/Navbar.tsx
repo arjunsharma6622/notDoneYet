@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import NavDesktop from "./client/NavDesktop";
 import NavMobile from "./client/NavMobile";
+import Image from "next/image";
 
 const Navbar = async () => {
   const session = await auth();
@@ -26,10 +27,13 @@ const Navbar = async () => {
             {session && session?.user ? (
               <div className="relative flex items-center justify-between gap-4 cursor-pointer">
                 <div className="flex items-center gap-2">
-                  <img
+                  <Image
                     src={session && (session.user.image as string)}
                     alt=""
-                    className="rounded-full w-7 h-7 object-cover"
+                    width={28}
+                    height={28}
+                    layout="intrinsic"
+                    className="rounded-full object-cover"
                     referrerPolicy="no-referrer"
                   />
 

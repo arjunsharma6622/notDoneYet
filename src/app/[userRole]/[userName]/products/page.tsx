@@ -1,10 +1,10 @@
 import { auth } from "@/auth";
 import ProductCard from "@/components/client/ProductCard";
 import { API_HEAD } from "@/lib/utils";
-import axios, { all } from "axios";
-import Filters from "./(components)/Filters";
+import axios from "axios";
 import { FiChevronDown, FiSearch } from "react-icons/fi";
-import HeadActionOptions from "../(components)/HeadActionOptions";
+import Filters from "./(components)/Filters";
+import Image from "next/image";
 
 const Page = async ({
   params,
@@ -59,10 +59,13 @@ const Page = async ({
 
           <div className="flex items-center gap-4">
             <div>
-              <img
+              <Image
                 src={userData?.image}
                 alt=""
-                className="w-12 h-12 rounded-full"
+                width={48}
+                height={48}
+                layout="intrinsic"
+                className="rounded-full"
               />
             </div>
             <div className="flex flex-col">

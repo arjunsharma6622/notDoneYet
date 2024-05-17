@@ -1,6 +1,7 @@
 "use client";
 
 import { unfollowUser } from "@/actions/user";
+import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
 
@@ -32,11 +33,14 @@ const FollowingUserCard = ({
     >
       <Link href={`/${follow?.role}/${follow?.userName}`} className="flex gap-2">
         <div className="w-14">
-          <img
+          <Image
             src={follow?.image}
             referrerPolicy="no-referrer"
             alt=""
-            className="w-14 h-14 object-cover rounded-full"
+            width={56}
+            height={56}
+            layout="intrinsic"
+            className="object-cover rounded-full"
           />
         </div>
 

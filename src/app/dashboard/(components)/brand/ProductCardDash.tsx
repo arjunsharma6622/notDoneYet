@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { BiSolidStar } from "react-icons/bi";
 import { FiDelete, FiEdit2, FiEdit3, FiTrash } from "react-icons/fi";
 import DeleteProduct from "../../(modals)/Brand/DeleteProduct";
+import Image from "next/image";
 
 const ProductCard = ({ product }: any) => {
   const [openEdit, setOpenEdit] = useState(false);
@@ -13,9 +14,12 @@ const ProductCard = ({ product }: any) => {
     <>
       <div className=" w-full overflow-hidden flex flex-col gap-2">
         <div className="w-full overflow-hidden relative rounded-lg  cursor-pointer">
-          <img
+          <Image
             src={product?.images[0]}
             alt=""
+            width={600}
+            height={800}
+            layout="intrinsic"
             className="hover:scale-105 transform transition duration-500 "
           />
           <div className="z-[20] flex text-xs items-center gap-1 absolute bottom-2 left-2 bg-white/90 px-2 py-2 rounded-md">

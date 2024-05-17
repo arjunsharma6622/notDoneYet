@@ -1,5 +1,6 @@
 import { followUser } from "@/actions/user";
 import { API_HEAD } from "@/lib/utils";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FiMessageCircle } from "react-icons/fi";
@@ -37,14 +38,17 @@ const RecommendedUsers = ({ userData }: { userData: any }) => {
           }`}
         >
           <div className="flex justify-center items-center">
-            <img
+            <Image
               src={
                 user?.image ||
                 "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
               }
               alt=""
-              className="rounded-full w-12 md:w-12 object-cover"
+              className="rounded-full object-cover"
               referrerPolicy="no-referrer"
+              height={48}
+              width={48}
+              layout="intrinsic"
             />
           </div>
           <div className="flex flex-col w-fit">

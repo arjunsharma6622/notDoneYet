@@ -1,5 +1,6 @@
 "use client"
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { CiMedicalCase } from 'react-icons/ci';
@@ -38,6 +39,25 @@ const NavMobile = ({session} : any) => {
           icon: <FiMessageSquare />,
         },
       ];
+
+      const socialImages = [
+        {
+          name: "linkedin",
+          icon: "linkedIn.svg",
+        },
+        {
+          name: "youtube",
+          icon: "youtube.svg",
+        },
+        {
+          name: "medium",
+          icon : "twitter.svg",
+        },
+        {
+          name: "github",
+          icon: "github.svg",
+        },
+      ]
   return (
     <>
       <div>
@@ -61,15 +81,16 @@ const NavMobile = ({session} : any) => {
             {session?.user ? (
               <div className="border-b w-full pb-4">
                 <div className="flex items-center justify-start gap-4">
-                  <img
+                  <Image
                     src={
                       (session && session.user.image) ||
                       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                     }
                     alt=""
-                    className="rounded-full w-10 h-10 object-cover"
-                    width={100}
-                    height={100}
+                    className="rounded-full object-cover"
+                    width={40}
+                    height={40}
+                    layout='intrinsic'
                     referrerPolicy="no-referrer"
                   />
                   <Link
@@ -121,34 +142,16 @@ const NavMobile = ({session} : any) => {
             <div className="flex flex-col gap-4">
               <p className="text-sm">Connect with us on</p>
               <div className="flex w-full items-center justify-start gap-4">
-                <div>
-                  <img
-                    src="/images/social/linkedIn.svg"
-                    alt=""
-                    className="w-8 h-8"
+                { socialImages.map(({name, icon}) => (
+                <div key={name}>
+                  <Image
+                    src={`/images/social/${icon}`}
+                    alt={name}
+                    width={32}
+                    height={32}
                   />
                 </div>
-                <div>
-                  <img
-                    src="/images/social/youtube.svg"
-                    alt=""
-                    className="w-8 h-8"
-                  />
-                </div>
-                <div>
-                  <img
-                    src="/images/social/medium.svg"
-                    alt=""
-                    className="w-8 h-8"
-                  />
-                </div>
-                <div>
-                  <img
-                    src="/images/social/github.svg"
-                    alt=""
-                    className="w-8 h-8"
-                  />
-                </div>
+                ))}
               </div>
             </div>
           </div>

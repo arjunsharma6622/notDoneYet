@@ -1,4 +1,5 @@
 import { timeAgo } from "@/lib/utils";
+import Image from "next/image";
 import Link from "next/link";
 import { FcLike } from "react-icons/fc";
 
@@ -11,7 +12,10 @@ const ProfilePostCard = ({ post }: any) => {
       <div className="flex items-start flex-col justify-start gap-4">
         <div className="flex items-center gap-2">
           <div>
-            <img
+            <Image
+            width={40}
+            height={40}
+            layout="intrinsic"
               src={post?.user?.image}
               alt=""
               className="w-10 h-10 rounded-full"
@@ -24,7 +28,7 @@ const ProfilePostCard = ({ post }: any) => {
           </div>
         </div>
         <div className="w-full flex flex-col gap-4 px-2 py-2">
-          {post?.images.length > 0 && <img src={post?.images[0]} alt="" />}
+          {post?.images.length > 0 && <Image width={300} height={300} src={post?.images[0]} alt="" />}
         </div>
         <p className="flex-[11] text-sm truncatedText">{post.description}</p>
 

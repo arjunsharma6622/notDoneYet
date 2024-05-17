@@ -22,6 +22,7 @@ import { RiHeart2Fill, RiHeart2Line } from "react-icons/ri";
 import { toast } from "sonner";
 import PostImageSection from "./PostImageSection";
 import UserCommentCard from "./UserCommentCard";
+import Image from "next/image";
 
 const PostCard = ({ postData, currUser }: any) => {
   const [openCommentInput, setOpenCommentInput]: [boolean, any] =
@@ -82,15 +83,18 @@ const PostCard = ({ postData, currUser }: any) => {
   };
 
   return (
-    <div className="flex border flex-col rounded-md px-2 py-2 gap-2">
+    <div className="flex border flex-col rounded-md px-2 py-2 gap-2 max-w-[650px]">
       <div className="flex items-center justify-between gap-4 border-b pb-2">
         <div className="flex items-center gap-2">
           <Link
             href={`/${postData?.user?.role}/${postData?.user?.userName}`}
           >
-            <img
+            <Image
               src={postData?.user?.image}
               alt=""
+              width={48}
+              height={48}
+              referrerPolicy="no-referrer"
               className="rounded-full w-12 h-12"
             />
           </Link>
@@ -202,10 +206,12 @@ const PostCard = ({ postData, currUser }: any) => {
       {openCommentInput && (
         <div className="flex flex-col w-full px-4">
           <div className="w-full border-b py-3 flex items-start gap-2">
-            <img
+            <Image
               src={currUser.image}
               alt="profile"
-              className="w-9 h-9 rounded-full object-cover"
+              width={36}
+              height={36}
+              className=" rounded-full object-cover"
               referrerPolicy="no-referrer"
             />
 
@@ -244,10 +250,12 @@ const PostCard = ({ postData, currUser }: any) => {
                 key={like._id}
                 className="w-10 h-10 rounded-full overflow-hidden"
               >
-                <img
+                <Image
                   src={like.profileImg}
                   alt="profile"
-                  className="w-full h-full object-cover"
+                  width={40}
+                  height={40}
+                  className="object-cover"
                   referrerPolicy="no-referrer"
                 />
               </div>

@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { FiSend } from "react-icons/fi";
 import Message from "./Message";
 import { formatConversationDate } from "../(utils)/FormatDate";
+import Image from "next/image";
 
 
 const CurrentConversation = ({
@@ -86,7 +87,7 @@ const CurrentConversation = ({
       }
     };
     updateSeen();
-  }, [currentConversation]);
+  }, [currentConversation, session?.user._id]);
 
   console.log("curr convo", currentConversation?.messages);
 
@@ -97,14 +98,17 @@ const CurrentConversation = ({
           <div className="relative flex flex-col h-full justify-end w-full">
             <div className="flex items-start gap-2 border-b px-4 py-3">
               <div>
-                <img
+                <Image
                   src={
                     currentConversation?.users?.filter(
                       (user: any) => user._id !== session?.user._id
                     )[0]?.image
                   }
                   alt=""
-                  className="rounded-full h-10 w-10 object-cover"
+                  width={40}
+                  height={40}
+                  layout="intrinsic"
+                  className="rounded-full object-cover"
                   referrerPolicy="no-referrer"
                 />
               </div>
@@ -218,10 +222,12 @@ const CurrentConversation = ({
                 }}
               >
                 <div>
-                  <img
+                  <Image
                     src={user.image}
                     alt=""
-                    className="rounded-full h-10 w-10 object-cover"
+                    width={40}
+                    height={40}
+                    className="rounded-full object-cover"
                     referrerPolicy="no-referrer"
                   />
                 </div>
@@ -240,10 +246,13 @@ const CurrentConversation = ({
           <div className="flex flex-col h-full justify-between w-full">
             <div className="flex items-start gap-2 border-b px-4 py-3">
               <div>
-                <img
+                <Image
                   src={newUserToSendMsg.image}
                   alt=""
-                  className="rounded-full h-10 w-10 object-cover"
+                  height={40}
+                  width={40}
+                  layout="intrinsic"
+                  className="rounded-full object-cover"
                   referrerPolicy="no-referrer"
                 />
               </div>

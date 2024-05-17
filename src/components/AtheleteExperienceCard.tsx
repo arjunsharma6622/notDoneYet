@@ -1,5 +1,6 @@
 import React from "react";
 import dateFormat from "dateformat";
+import Image from "next/image";
 
 const AthleteExperienceCard = ({ experience }: any) => {
   return (
@@ -8,7 +9,7 @@ const AthleteExperienceCard = ({ experience }: any) => {
         <h1 className="text-xl font-semibold">{experience.title}</h1>
 
         <div>
-          <img src="/images/goldMedal.png" alt="" className="w-8 h-8" />
+          <Image width={32} height={32} layout="intrinsic" src="/images/goldMedal.png" alt="" className="" />
         </div>
       </div>
 

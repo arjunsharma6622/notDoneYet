@@ -1,5 +1,6 @@
 import { BiCheckDouble } from "react-icons/bi";
 import { formatMessageTime } from "../(utils)/FormatDate";
+import Image from "next/image";
 
 const Message = ({ message, currentUser, otherUser, showImage, session }: any) => {
   return (
@@ -44,10 +45,13 @@ const Message = ({ message, currentUser, otherUser, showImage, session }: any) =
         </div>
 
         <div className="">
-          <img
+          <Image
             src={currentUser ? session?.user?.image : otherUser?.image}
             alt=""
-            className="rounded-full w-10 h-10"
+            width={40}
+            height={40}
+            layout="intrinsic"
+            className="rounded-full"
             referrerPolicy="no-referrer"
           />
         </div>

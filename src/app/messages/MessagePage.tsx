@@ -46,7 +46,7 @@ const MessagePage = ({ session }: any) => {
 
 
     fetchData();
-  }, []);
+  }, [session?.user._id]);
 
   // console.log("all conversations", allConversations);
 

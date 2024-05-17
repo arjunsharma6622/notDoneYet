@@ -1,5 +1,6 @@
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -38,7 +39,7 @@ const ChooseRole = ({ userData }: any) => {
               className={`flex items-center cursor-pointer ${choosenRole === role.value ? "bg-gray-200" : ""} gap-6 border rounded-md px-4 py-2`}
               onClick={() => setChoosenRole(role.value)}
             >
-              <img src={`/images/${role.icon}.png`} alt="" className="w-12" />
+              <Image width={48} height={48} layout="intrinsic" src={`/images/${role.icon}.png`} alt="" className="" />
               <span className="font-medium">{role.label}</span>
             </div>
           ))}

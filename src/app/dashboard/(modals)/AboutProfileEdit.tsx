@@ -1,4 +1,4 @@
-import { updateUser } from "@/actions/updateUser";
+import { updateUser } from "@/actions/user";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";

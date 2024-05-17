@@ -23,59 +23,6 @@ export const createPost = async (postData: any) => {
     console.log(error);
   }
 };
-
-// export const fetchUserRecommendedPosts = async (
-//   currentUserId: string,
-//   limit = 10,
-//   page = 1,
-// ) => {
-//   try {
-//     await connectDB();
-//     const user: any = await User.findById(currentUserId)
-//       .populate({
-//         path: "following",
-//         select: "posts",
-//       })
-//       .lean();
-
-//     const followingUserPosts = user.following.flatMap((f: any) => f.posts);
-
-//     const recommendedPosts = await Post.aggregate([
-//       {
-//         $match: {
-//           _id: { $in: followingUserPosts },
-//           createdAt: { $gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) }, // filter posts created in the last 7 days
-//         },
-//       },
-//       {
-//         $lookup: {
-//           from: "users",
-//           localField: "user",
-//           foreignField: "_id",
-//           as: "user",
-//         },
-//       },
-//       {
-//         $unwind: "$user",
-//       },
-//       {
-//         $sort: { createdAt: -1 },
-//       },
-//       {
-//         $skip: (page - 1) * limit,
-//       },
-//       {
-//         $limit: limit,
-//       },
-//     ]);
-
-//     return recommendedPosts;
-//   } catch (error) {
-//     console.error(error);
-//     throw new Error("Failed to fetch recommended posts");
-//   }
-// };
-
 export const toggleLike = async (postId: string, userId: string) => {
   try {
     await connectDB();
@@ -108,7 +55,6 @@ export const toggleLike = async (postId: string, userId: string) => {
     console.log(error);
   }
 };
-
 export const addComment = async (
   userId: string,
   postId: string,
@@ -157,21 +103,3 @@ export const addComment = async (
     throw error;
   }
 };
-
-//   fetch all comments of a post, and populate the user and parent comment fields
-
-// export const fetchPostComments = async (postId: string) => {
-//   try {
-//     await connectDB();
-
-//     const comments = await Comment.find({}).populate({
-//       path: "user",
-//       select: "name profileImg",
-//     });
-
-//     return { comments: comments };
-//   } catch (error) {
-//     console.error(error);
-//     throw new Error("Failed to fetch post comments");
-//   }
-// };

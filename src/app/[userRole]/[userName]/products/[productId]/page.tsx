@@ -1,5 +1,6 @@
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
+import Image from "next/image";
 import { BiSolidStar } from "react-icons/bi";
 import { FiShoppingCart } from "react-icons/fi";
 
@@ -29,10 +30,13 @@ const Page = async ({
         <div className="w-[95%] mt-4 flex flex-col gap-4">
       <div className="flex items-center gap-4">
         <div>
-          <img
+          <Image
             src={userData?.image}
             alt=""
-            className="w-8 h-8 rounded-full"
+            width={32}
+            height={32}
+            layout="intrinsic"
+            className="rounded-full"
           />
         </div>
         <div className="flex flex-col">

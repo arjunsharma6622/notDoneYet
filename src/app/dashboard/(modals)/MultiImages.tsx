@@ -23,13 +23,13 @@ const MultiImages = ({
     if (croppedImage) {
       setCroppedImages([...croppedImages, croppedImage]);
     }
-  }, [croppedImage, setCroppedImages]);
+  }, [croppedImage, setCroppedImages, croppedImages]);
 
   useEffect(() => {
     if(croppedFile){
         setCroppedFiles([...croppedFiles, croppedFile]);
     }
-  }, [croppedFile, setCroppedFiles]);
+  }, [croppedFile, setCroppedFiles, croppedFiles]);
 
   const handleImageChange = (e: any) => {
     const files = Array.from(e.target.files);
