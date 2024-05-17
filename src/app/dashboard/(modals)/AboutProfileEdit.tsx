@@ -23,9 +23,7 @@ const AboutProfileEdit = ({
     try {
       await updateUser(data);
       toast.success("Profile Updated");
-      setOpen(false);
-      window.location.reload();
-
+      setOpen(false)
     } catch (err) {
       console.log(err);
     }

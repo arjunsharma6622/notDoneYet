@@ -4,7 +4,7 @@ import { User } from "@/lib/models/UserModel";
 import { connectDB } from "@/lib/utils";
 import { hash } from "bcryptjs";
 
-const signup = async (name: string, email: string, password: string) => {
+const signup = async (name: string, email: string, password: string, userName: string) => {
   try {
     // connect DB
     await connectDB();
@@ -18,6 +18,7 @@ const signup = async (name: string, email: string, password: string) => {
     await User.create({
       name,
       email,
+      userName,
       password: hashedPassword,
     });
   } catch (error) {

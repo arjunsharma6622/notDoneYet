@@ -1,12 +1,12 @@
+"use client"
+
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import Image from "next/legacy/image";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
 const ChooseRole = ({ userData }: any) => {
-  const router = useRouter();
   const [choosenRole, setChoosenRole]: any = useState(null);
   const rolesData = [
     { value: "athlete", label: "Athlete", icon: "roleAthlete" },

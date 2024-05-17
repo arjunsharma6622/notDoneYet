@@ -14,6 +14,7 @@ import PastEvents from "./(components)/venue/PastEvents";
 import Venues from "./(components)/venue/Venues";
 import Education from "./(components)/doctor/Education";
 import { API_HEAD } from "@/lib/utils";
+import ChooseRole from "@/components/ChooseRole";
 
 const Profile = ({ session }: any) => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -27,25 +28,37 @@ const Profile = ({ session }: any) => {
   return (
     <div className="relative flex items-center justify-center px-2 ">
       {userData ? (
-        <div className={`${(userData?.role == "brand" || userData?.role == "venue") ? "md:w-[80%]" : "md:w-[95%]"} flex  md:flex-row flex-col gap-5 items-start mt-5`}>
+        <div
+          className={`${userData?.role == "brand" || userData?.role == "venue" ? "md:w-[80%]" : "md:w-[95%]"} flex  md:flex-row flex-col gap-5 items-start mt-5`}
+        >
           <div className="w-full  flex flex-col gap-5 border rounded-md md:flex-[8.5]">
-            <Head userData={userData} />
-            {userData?.role == "venue" && <Venues userData={userData} />}
-            <Posts userData={userData} />
-            <About userData={userData} />
-            {userData?.role == "brand" && <Products userData={userData} />}
-            {(userData?.role == "doctor" || userData?.role == "athlete") && (
+            {userData && userData?.role !== "user" ? (
               <>
-                <Skills userData={userData} />
-                <Experience userData={userData} />
+                <Head userData={userData} />
+                {userData?.role == "venue" && <Venues userData={userData} />}
+                <Posts userData={userData} />
+                <About userData={userData} />
+                {userData?.role == "brand" && <Products userData={userData} />}
+                {(userData?.role == "doctor" ||
+                  userData?.role == "athlete") && (
+                  <>
+                    <Skills userData={userData} />
+                    <Experience userData={userData} />
+                  </>
+                )}
+                {userData?.role == "doctor" && (
+                  <Education userData={userData} />
+                )}
+                {userData?.role == "venue" && (
+                  <PastEvents userData={userData} />
+                )}
+                {(userData?.role == "doctor" ||
+                  userData?.role == "athlete") && (
+                  <Certificates userData={userData} />
+                )}
               </>
-            )}
-            {userData?.role == "doctor" && <Education userData={userData} />}
-            {userData?.role == "venue" && (
-              <PastEvents userData={userData} />
-            )}
-            {(userData?.role == "doctor" || userData?.role == "athlete") && (
-              <Certificates userData={userData} />
+            ) : (
+              <ChooseRole userData={userData} />
             )}
           </div>
 
@@ -54,7 +67,6 @@ const Profile = ({ session }: any) => {
               <RecommendedUsers userData={userData} />
             </div>
           )}
-
         </div>
       ) : (
         <UserProfileSkeleton />

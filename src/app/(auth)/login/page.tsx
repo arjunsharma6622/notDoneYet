@@ -42,7 +42,7 @@ const Page = async () => {
                 variant={"google"}
                 className="w-full flex items-center justify-center gap-2"
               >
-                <Image layout="intrinsic" width={24} height={24} src="./images/google.svg" alt=""  />
+                <Image layout="intrinsic" width={24} height={24} src="/images/google.svg" alt=""  />
                 Login with Google
               </Button>
             </form>

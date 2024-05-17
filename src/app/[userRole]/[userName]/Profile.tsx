@@ -37,7 +37,7 @@ const Profile = async ({ userData }: any) => {
           <Skills userData={userData} />
         )}
 
-        <Activity currUser={userData} postData={postData} />
+        <Activity userData={userData} postData={postData} />
 
         {(userData.role === "doctor" || userData.role === "athlete") && (
           <Experience userData={userData} />
