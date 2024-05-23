@@ -11,13 +11,6 @@ import { toast } from "sonner";
 const DeleteProduct = ({ open, setOpen, user, product }: any) => {
   const [enterredName, setEnterredName] = useState("");
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
 
   const handleProductDelete = async () => {
     try {

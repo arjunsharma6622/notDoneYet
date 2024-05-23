@@ -2,56 +2,68 @@ import { auth } from "@/auth";
 import axios from "axios";
 import { API_HEAD } from "@/lib/utils";
 import Profile from "./Profile";
-import type { Metadata, ResolvingMetadata } from 'next'
+import type { Metadata, ResolvingMetadata } from "next";
 
 type Props = {
-  params: { userRole: string, userName: string }
-  searchParams: { [key: string]: string | string[] | undefined }
-}
- 
+  params: { userRole: string; userName: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
 export async function generateMetadata(
   { params, searchParams }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   // read route params
   const userRole = params.userRole;
-  const userName = params.userName
- 
+  const userName = params.userName;
+
   // fetch data
-  const userData = await axios.get(`https://notdoneyet-server.vercel.app/api/user/profile/details?role=${userRole}&userName=${userName}`).then((res) => res.data)
- 
- 
-  return {
-    title: userData.name,
-    description: userData.bio,
-    openGraph: {
+  const userData = await axios
+    .get(
+      `https://notdoneyet-server.vercel.app/api/user/profile/details?role=${userRole}&userName=${userName}`
+    )
+    .then((res) => res.data)
+    .catch((err) => console.error("Error", err.response?.data?.error));
+
+  if (userData) {
+    return {
       title: userData.name,
       description: userData.bio,
-      images: [userData.image, userData.backgroundImg],
-      siteName: "Not Done Yet",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: userData.name,
-      description: userData.bio,
-      images: [userData.image, userData.backgroundImg],
-    },
+      openGraph: {
+        title: userData.name,
+        description: userData.bio,
+        images: [userData.image, userData.backgroundImg],
+        siteName: "Not Done Yet",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: userData.name,
+        description: userData.bio,
+        images: [userData.image, userData.backgroundImg],
+      },
+    }
   }
+  return {
+    title: "Not Done Yet",
+    description: "Not Done Yet",
+  };
 }
 
-const Page = async ({ params }: { params: { userRole: string, userName: string } }) => {
+const Page = async ({
+  params,
+}: {
+  params: { userRole: string; userName: string };
+}) => {
   const session = await auth();
   const userName = params.userName;
-  const userRole = params.userRole
-
-
-
+  const userRole = params.userRole;
 
   const userData = await axios
-  .get(`${API_HEAD}/user/profile/details?role=${userRole}&userName=${userName}`)
-  .then((res) => res.data)
-  .catch((err) => console.error("Error", err.message));
-
+    .get(
+      `${API_HEAD}/user/profile/details?role=${userRole}&userName=${userName}`
+    )
+    .then((res) => res.data)
+    .catch((err) => console.error("Error", err.message));
 
   return (
     <div className="relative flex items-center justify-center w-full px-2">

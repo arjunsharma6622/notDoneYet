@@ -24,13 +24,6 @@ const AddAthleteExperience = ({
     watch,
   } = useForm();
 
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
 
   const handleUserUpdate = async (data: any) => {
     try {

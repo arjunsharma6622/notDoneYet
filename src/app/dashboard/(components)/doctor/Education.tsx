@@ -1,6 +1,6 @@
 import DoctorEducationCard from "@/components/DoctorEducationCard";
+import { IconButton } from "@/components/ui/IconButton";
 import { useState } from "react";
-import { FiEdit3, FiPlus } from "react-icons/fi";
 import AddEducation from "../../(modals)/doctor/AddEducation";
 import EditEducation from "../../(modals)/doctor/EditEducation";
 
@@ -15,14 +15,8 @@ const Education = ({ userData }: { userData: any }) => {
           <h2 className="text-xl font-bold">Education</h2>
 
           <div className="flex justify-start items-center gap-4">
-            <FiPlus
-              className="cursor-pointer h-6 w-6 text-gray-600"
-              onClick={() => setOpenEducationAdd(true)}
-            />
-            <FiEdit3
-              className="cursor-pointer h-6 w-6 text-gray-600"
-              onClick={() => setOpenEducationEdit(true)}
-            />
+            <IconButton variant={"add"} onClick={() => setOpenEducationAdd(true)} />
+            <IconButton variant={"edit"} onClick={() => setOpenEducationEdit(true)} />
           </div>
         </div>
 

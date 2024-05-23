@@ -1,7 +1,7 @@
 import ModalLayout from "@/components/ModalLayout";
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiImage, FiX, FiXCircle } from "react-icons/fi";
 import { toast } from "sonner";
@@ -23,13 +23,6 @@ const AddVenue = ({
     watch,
   } = useForm();
 
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
 
   const [images, setImages]: any = useState([]);
 
@@ -210,6 +203,37 @@ const AddVenue = ({
                       ></textarea>
                       {errors.description && <p>Description is required.</p>}
                     </div>
+
+
+                    <div className="flex flex-col gap-2">
+                      <h2 className="text-xl font-semibold underline">
+                        Venue Timings
+                      </h2>
+                      <div className="flex items-center gap-4">
+                        <div>
+                          <label htmlFor="venueStartTime">Start Time</label>
+                          <input
+                            type="time"
+                            id="venueStartTime"
+                            className="border rounded-md px-3 py-2 w-full focus:outline-none"
+                            {...register("timing.startTime", {
+                              required: true,
+                            })}
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="venueCloseTime">End Time</label>
+                          <input
+                            type="time"
+                            id="venueCloseTime"
+                            className="border rounded-md px-3 py-2 w-full focus:outline-none"
+                            {...register("timing.endTime", { required: true })}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+
                     <div className="flex flex-col gap-2">
                       <label htmlFor="venueImages">Images</label>
 
@@ -251,33 +275,6 @@ const AddVenue = ({
                       </div>
                     </div>
 
-                    <div className="flex flex-col gap-2">
-                      <h2 className="text-xl font-semibold underline">
-                        Venue Timings
-                      </h2>
-                      <div className="flex items-center gap-4">
-                        <div>
-                          <label htmlFor="venueStartTime">Start Time</label>
-                          <input
-                            type="time"
-                            id="venueStartTime"
-                            className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                            {...register("timing.startTime", {
-                              required: true,
-                            })}
-                          />
-                        </div>
-                        <div>
-                          <label htmlFor="venueCloseTime">End Time</label>
-                          <input
-                            type="time"
-                            id="venueCloseTime"
-                            className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                            {...register("timing.endTime", { required: true })}
-                          />
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>

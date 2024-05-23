@@ -38,13 +38,6 @@ const BasicProfileEdit = ({
     setValue("address.postalCode", user.address?.postalCode);
   }, [user, setValue]);
 
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
 
   const onSubmit = async (data: any) => {
     console.log(data)

@@ -1,6 +1,6 @@
 import PastEventCard from "@/components/PastEventCard";
-import React, { useState } from "react";
-import { FiEdit3, FiPlus } from "react-icons/fi";
+import { IconButton } from "@/components/ui/IconButton";
+import { useState } from "react";
 
 const PastEvents = ({ userData }: { userData: any }) => {
   const [openExperienceAdd, setOpenExperienceAdd] = useState(false);
@@ -13,14 +13,8 @@ const PastEvents = ({ userData }: { userData: any }) => {
           <h2 className="text-xl font-bold">Past Events</h2>
 
           <div className="flex justify-start items-center gap-4">
-            <FiPlus
-              className="cursor-pointer h-6 w-6 text-gray-600"
-              onClick={() => setOpenExperienceAdd(true)}
-            />
-            <FiEdit3
-              className="cursor-pointer h-6 w-6 text-gray-600"
-              onClick={() => setOpenExperienceEdit(true)}
-            />
+            <IconButton variant={"add"} onClick={() => setOpenExperienceAdd(true)} />
+            <IconButton variant={"edit"} onClick={() => setOpenExperienceEdit(true)} />
           </div>
         </div>
 

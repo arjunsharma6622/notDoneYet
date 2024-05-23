@@ -1,12 +1,13 @@
 import { updateUser } from "@/actions/user";
 import ModalLayout from "@/components/ModalLayout";
+import { IconButton } from "@/components/ui/IconButton";
 import { Button } from "@/components/ui/button";
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import dateFormat from "dateformat";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FiEdit2, FiImage, FiLink, FiTrash2, FiX } from "react-icons/fi";
+import { FiImage, FiLink, FiX } from "react-icons/fi";
 import { toast } from "sonner";
 
 const EditAthleteExperience = ({
@@ -37,14 +38,6 @@ const EditAthleteExperience = ({
       date: dateFormat(selectedExperience?.date, "isoDate"),
     });
   }, [selectedExperience, reset]);
-
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -83,7 +76,7 @@ const EditAthleteExperience = ({
       const updatedUserData = {
         ...userData,
         experience: userData.experience.filter(
-          (exp: any) => exp._id !== experience._id,
+          (exp: any) => exp._id !== experience._id
         ),
       };
       await updateUser(updatedUserData);
@@ -162,7 +155,7 @@ const EditAthleteExperience = ({
                             className="border rounded-md px-3 py-2 w-full focus:outline-none"
                             defaultValue={dateFormat(
                               selectedExperience.date,
-                              "yyyy-mm-dd",
+                              "yyyy-mm-dd"
                             )}
                             {...register("date", { required: true })}
                           />
@@ -278,12 +271,12 @@ const EditAthleteExperience = ({
                     {experience.title} . {experience.sport} .{" "}
                     {dateFormat(experience.date, "mmmm, yyyy")}
                     <div className="flex items-center justify-normal gap-4">
-                      <FiEdit2
-                        className="text-lg cursor-pointer"
+                      <IconButton
+                        variant="edit"
                         onClick={() => setSelectedExperience(experience)}
                       />
-                      <FiTrash2
-                        className="text-lg text-red-500 cursor-pointer"
+                      <IconButton
+                        variant="delete"
                         onClick={() => deleteExperience(experience)}
                       />
                     </div>
@@ -292,7 +285,7 @@ const EditAthleteExperience = ({
               </div>
             )}
           </div>
-          </ModalLayout>
+        </ModalLayout>
       )}
     </div>
   );

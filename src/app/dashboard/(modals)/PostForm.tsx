@@ -1,11 +1,11 @@
 import { createPost } from "@/actions/posts";
+import ModalLayout from "@/components/ModalLayout";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BiImageAdd } from "react-icons/bi";
 import { FiX, FiXCircle } from "react-icons/fi";
 import { toast } from "sonner";
 import MultiImages from "./MultiImages";
-import ModalLayout from "@/components/ModalLayout";
 
 const PostForm = ({
   open,
@@ -34,13 +34,6 @@ const PostForm = ({
     event.target.style.height = `${event.target.scrollHeight}px`;
   };
 
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
 
   const handleRemoveImage = (index: number) => {
     setCroppedImages((prevImages) =>

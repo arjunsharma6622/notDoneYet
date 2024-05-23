@@ -1,19 +1,46 @@
 "use client";
 
+import DeleteVenue from "@/app/dashboard/(modals)/venue/DeleteVenue";
+import EditVenue from "@/app/dashboard/(modals)/venue/EditVenue";
 import Image from "next/legacy/image";
+import Link from "next/link";
 import { useState } from "react";
 import { BiSolidStar } from "react-icons/bi";
-import { FiClock, FiMapPin } from "react-icons/fi";
+import { FiArrowUpRight, FiClock, FiMapPin } from "react-icons/fi";
+import { IconButton } from "./ui/IconButton";
+import { Button } from "./ui/button";
 // import VenueBookingModal from "./VenueBookingModal";
 
-const VenueCard = ({ venueDetails }: any) => {
+const VenueCard = ({ venueDetails, userData }: any) => {
   const [openBookingModal, setOpenBookingModal] = useState(false);
+  const [openEditVenue, setOpenEditVenue] = useState(false);
+  const [openDeleteVenue, setOpenDeleteVenue] = useState(false);
 
   return (
+    <>
+
     <div className="shadow-md border flex flex-col gap-3 rounded-lg px-5 py-4">
       <div className="flex flex-col gap-1 border-b pb-2">
-        <div className="flex flex-col gap-0">
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center justify-between">
+            <div className="flex flex-col">
           <h1 className="text-xl  font-bold">{venueDetails.name} </h1>
+
+          <Link
+            className="w-fit text-sm text-primary"
+            target="_blank"
+            href={`/venue/${userData?.userName}`}
+          >
+            <span className="">View my profile</span>
+            <FiArrowUpRight className="inline w-4 h-4 md:w-5 md:h-5" />
+          </Link>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <IconButton variant={"edit"} onClick={() => setOpenEditVenue(true)}/>
+            <IconButton variant={"delete"} onClick={() => setOpenDeleteVenue(true)}/>
+            </div>
+            </div>
           <div className="flex items-center gap-1">
             {Array(5)
               .fill(0)
@@ -60,12 +87,12 @@ const VenueCard = ({ venueDetails }: any) => {
         <div>
           <Image src="/images/googleMaps.png" width={32} height={32} layout="intrinsic" alt="" className="" />
         </div>
-        <button
+        <Button
           onClick={() => setOpenBookingModal(true)}
-          className="bg-primary rounded-md text-sm px-5 py-2 text-white"
+          className="px-5 py-2"
         >
           Book Now
-        </button>
+        </Button>
       </div>
 
       {/* {
@@ -78,6 +105,31 @@ const VenueCard = ({ venueDetails }: any) => {
         </div>
       } */}
     </div>
+      {
+        openEditVenue && (
+          <div className="absoulte">
+            <EditVenue
+              venueDetails={venueDetails}
+              setOpen={setOpenEditVenue}
+              open={openEditVenue}
+              user={userData}
+            />
+          </div>
+        )
+      }
+      {
+        openDeleteVenue && (
+          <div className="absolute">
+            <DeleteVenue
+              venueDetails={venueDetails}
+              setOpen={setOpenDeleteVenue}
+              open={openDeleteVenue}
+              user={userData}
+            />
+          </div>
+        )
+      }
+    </>
   );
 };
 

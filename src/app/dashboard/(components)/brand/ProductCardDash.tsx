@@ -1,11 +1,12 @@
 "use client";
 
 import EditProduct from "@/app/dashboard/(modals)/Brand/EditProduct";
-import React, { useState } from "react";
-import { BiSolidStar } from "react-icons/bi";
-import { FiDelete, FiEdit2, FiEdit3, FiTrash } from "react-icons/fi";
-import DeleteProduct from "../../(modals)/Brand/DeleteProduct";
+import { IconButton } from "@/components/ui/IconButton";
 import Image from "next/legacy/image";
+import { useState } from "react";
+import { BiSolidStar } from "react-icons/bi";
+import { FiTrash } from "react-icons/fi";
+import DeleteProduct from "../../(modals)/Brand/DeleteProduct";
 
 const ProductCard = ({ product }: any) => {
   const [openEdit, setOpenEdit] = useState(false);
@@ -31,22 +32,8 @@ const ProductCard = ({ product }: any) => {
           </div>
 
           <div className="z-[20] absolute top-2 right-2 flex items-center gap-2">
-            <div
-              className="flex text-xs items-center gap-1 bg-white px-2 py-2 rounded-full"
-              onClick={() => setOpenEdit(true)}
-            >
-              <div className="flex justify-center items-center gap-2">
-                <FiEdit3 className="w-4 h-4 text-gray-600" />
-              </div>
-            </div>
-            <div
-              className="flex text-xs items-center gap-1 bg-red-200 px-2 py-2 rounded-full"
-              onClick={() => setOpenDelete(true)}
-            >
-              <div className="flex justify-center items-center gap-2">
-                <FiTrash className="w-4 h-4 text-red-600" />
-              </div>
-            </div>
+            <IconButton variant={"edit"} onClick={() => setOpenEdit(true)} />
+            <IconButton variant={"delete"} onClick={() => setOpenDelete(true)} />
           </div>
 
           <div className=" absolute bottom-0 w-full z-[10] h-24 bg-gradient-to-t from-black/60 from-5% to-transparent to-90%"></div>

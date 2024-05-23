@@ -1,10 +1,10 @@
+import { IconButton } from "@/components/ui/IconButton";
+import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 import { useState } from "react";
-import { FiArrowUpRight, FiEdit3, FiInfo, FiMapPin } from "react-icons/fi";
+import { FiArrowUpRight, FiInfo, FiMapPin } from "react-icons/fi";
 import BasicProfileEdit from "../(modals)/BasicProfileEdit";
 import ImageEdit from "../(modals)/images/ImageEdit";
-import Link from "next/link";
-import { Separator } from "@/components/ui/separator";
-import Image from "next/legacy/image";
 
 const Head = ({ userData }: { userData: any }) => {
   const [openImagesEdit, setOpenImagesEdit] = useState(false);
@@ -45,10 +45,9 @@ const Head = ({ userData }: { userData: any }) => {
           />
 
           <div
-            onClick={() => setOpenImagesEdit(true)}
-            className="text-gray-600 absolute right-6 top-6 bg-white cursor-pointer rounded-full p-[6px]"
+            className="absolute right-6 top-6"
           >
-            <FiEdit3 className="h-5 w-5 md:h-6 md:w-6" />
+            <IconButton variant={"edit"} onClick={() => setOpenImagesEdit(true)} />
           </div>
         </div>
 
@@ -57,22 +56,21 @@ const Head = ({ userData }: { userData: any }) => {
 
           <div className="flex justify-between items-center">
             <div className="flex gap-3 items-center">
-            <h1 className="md:text-3xl text-lg font-bold">{userData?.name}</h1>
-            <Separator orientation="vertical" className="h-3 bg-gray-400" />
-            <div className="flex items-center gap-2">
-              <div className="text-sm font-normal flex gap-1 items-center px-2 py-1 bg-gray-200 rounded-md">
-                {userData.followers?.length} <span>Followers</span>
-              </div>
-              <div className="w-1 h-1 rounded-full bg-gray-500"></div>
-              <div className="text-sm font-normal flex gap-1 items-center px-2 py-1 bg-gray-200 rounded-md">
-                {userData.following?.length} <span>Following</span>
+              <h1 className="md:text-3xl text-lg font-bold">
+                {userData?.name}
+              </h1>
+              <Separator orientation="vertical" className="h-3 bg-gray-400" />
+              <div className="flex items-center gap-2">
+                <div className="text-sm font-normal flex gap-1 items-center px-2 py-1 bg-gray-200 rounded-md">
+                  {userData.followers?.length} <span>Followers</span>
+                </div>
+                <div className="w-1 h-1 rounded-full bg-gray-500"></div>
+                <div className="text-sm font-normal flex gap-1 items-center px-2 py-1 bg-gray-200 rounded-md">
+                  {userData.following?.length} <span>Following</span>
+                </div>
               </div>
             </div>
-          </div>
-            <FiEdit3
-              className="cursor-pointer md:h-6 md:w-6 w-5 h-5 text-gray-600"
-              onClick={() => setOpenDetailsEdit(true)}
-            />
+            <IconButton variant={"edit"} onClick={() => setOpenDetailsEdit(true)} />
           </div>
 
           <h1 className="text-sm md:text-base">{userData?.bio}</h1>
@@ -98,14 +96,17 @@ const Head = ({ userData }: { userData: any }) => {
             </div>
           )}
 
-          <Link
-            className="w-fit mt-2 text-sm text-primary"
-            target="_blank"
-            href={`/${userRoles[userData?.role]?.toLowerCase()}/${userData?.userName}`}
-          >
-            <span className="">View my profile</span>
-            <FiArrowUpRight className="inline w-4 h-4 md:w-5 md:h-5 mb-1" />
-          </Link>
+          {userData.role !== "venue" && (
+            <Link
+              className="w-fit mt-2 text-sm text-primary"
+              target="_blank"
+              href={`/${userRoles[userData?.role]?.toLowerCase()}/${userData?.userName}`}
+            >
+              <span className="">View my profile</span>
+              <FiArrowUpRight className="inline w-4 h-4 md:w-5 md:h-5 mb-1" />
+            </Link>
+          )}
+          
         </div>
       </div>
 

@@ -1,7 +1,7 @@
 import AthleteExperienceCard from "@/components/AtheleteExperienceCard";
 import DoctorExperienceCard from "@/components/DoctorExperienceCard";
+import { IconButton } from "@/components/ui/IconButton";
 import React, { useState } from "react";
-import { FiEdit3, FiPlus } from "react-icons/fi";
 import AddAthleteExperience from "../(modals)/athlete/AddAthleteExperience";
 import EditAthleteExperience from "../(modals)/athlete/EditAthleteExperience";
 import AddDoctorExperience from "../(modals)/doctor/AddDoctorExperience";
@@ -17,14 +17,8 @@ const Experience = ({ userData }: { userData: any }) => {
           <h2 className="text-xl font-bold">Experience</h2>
 
           <div className="flex justify-start items-center gap-4">
-            <FiPlus
-              className="cursor-pointer h-5 w-5 md:h-6 md:w-6 text-gray-600"
-              onClick={() => setOpenExperienceAdd(true)}
-            />
-            <FiEdit3
-              className="cursor-pointer h-5 w-5 md:h-6 md:w-6 text-gray-600"
-              onClick={() => setOpenExperienceEdit(true)}
-            />
+            <IconButton variant={"add"} onClick={() => setOpenExperienceAdd(true)} />
+            <IconButton variant={"edit"} onClick={() => setOpenExperienceEdit(true)} />
           </div>
         </div>
 

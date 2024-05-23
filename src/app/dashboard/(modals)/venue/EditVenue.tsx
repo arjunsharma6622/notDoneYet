@@ -1,20 +1,21 @@
 import ModalLayout from "@/components/ModalLayout";
+import { Button } from "@/components/ui/button";
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FiEdit2, FiImage, FiTrash2, FiX, FiXCircle } from "react-icons/fi";
+import { FiImage, FiX, FiXCircle } from "react-icons/fi";
 import { toast } from "sonner";
 
 const EditVenue = ({
   open,
   setOpen,
-  allVenues,
+  venueDetails,
   user,
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
-  allVenues: any;
+  venueDetails: any;
   user: any;
 }) => {
   const {
@@ -26,13 +27,17 @@ const EditVenue = ({
     watch,
   } = useForm();
 
-  const [selectedVenue, setSelectedVenue]: any = useState(null);
+  const [selectedVenue, setSelectedVenue]: any = useState(venueDetails);
 
   useEffect(() => {
     if (selectedVenue) {
       reset(selectedVenue);
     }
   }, [selectedVenue, reset]);
+
+
+
+
 
   const updateVenue: any = handleSubmit(async (data) => {
     try {
@@ -57,9 +62,9 @@ const EditVenue = ({
     }
   });
 
-  const deleteVenue = async () => {
+  const handleDeleteVenue = async ({ venueId }: { venueId: string }) => {
     try {
-      await axios.delete(`/api/venue/${selectedVenue._id}`);
+      await axios.delete(`/api/venue/${venueId}`);
 
       toast.success("Venue deleted successfully");
 
@@ -128,7 +133,6 @@ const EditVenue = ({
                 onClick={() => setOpen(false)}
               />
             </div>
-            {selectedVenue ? (
               <form
                 onSubmit={handleSubmit(updateVenue)}
                 className="flex flex-col gap-6 overflow-scroll"
@@ -227,16 +231,39 @@ const EditVenue = ({
                           <p>Google Maps Link is required.</p>
                         )}
                       </div>
-                      <div>
-                        <label htmlFor="venueDescription">Description</label>
-                        <textarea
-                          placeholder="Description"
-                          id="venueDescription"
-                          className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                          {...register("description", { required: true })}
-                        ></textarea>
-                        {errors.description && <p>Description is required.</p>}
+
+
+                      <div className="flex flex-col gap-2">
+                        <h2 className="text-xl font-semibold underline">
+                          Venue Timings
+                        </h2>
+                        <div className="flex items-center gap-4">
+                          <div>
+                            <label htmlFor="venueStartTime">Start Time</label>
+                            <input
+                              type="time"
+                              id="venueStartTime"
+                              className="border rounded-md px-3 py-2 w-full focus:outline-none"
+                              {...register("timing.startTime", {
+                                required: true,
+                              })}
+                            />
+                          </div>
+                          <div>
+                            <label htmlFor="venueCloseTime">End Time</label>
+                            <input
+                              type="time"
+                              id="venueCloseTime"
+                              className="border rounded-md px-3 py-2 w-full focus:outline-none"
+                              {...register("timing.endTime", {
+                                required: true,
+                              })}
+                            />
+                          </div>
+                        </div>
                       </div>
+
+
                       <div className="flex flex-col gap-2">
                         <label htmlFor="venueImages">Images</label>
 
@@ -293,75 +320,27 @@ const EditVenue = ({
                         </div>
                       </div>
 
-                      <div className="flex flex-col gap-2">
-                        <h2 className="text-xl font-semibold underline">
-                          Venue Timings
-                        </h2>
-                        <div className="flex items-center gap-4">
-                          <div>
-                            <label htmlFor="venueStartTime">Start Time</label>
-                            <input
-                              type="time"
-                              id="venueStartTime"
-                              className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                              {...register("timing.startTime", {
-                                required: true,
-                              })}
-                            />
-                          </div>
-                          <div>
-                            <label htmlFor="venueCloseTime">End Time</label>
-                            <input
-                              type="time"
-                              id="venueCloseTime"
-                              className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                              {...register("timing.endTime", {
-                                required: true,
-                              })}
-                            />
-                          </div>
-                        </div>
-                      </div>
+
                     </div>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-end gap-4 border-t px-6 py-3">
-                  <button
-                    className="px-6 py-2 rounded-sm font-semibold bg-gray-200 text-gray-600"
+                  <Button
+                  variant={"destructive"}
+                    className="px-6 py-2"
                     onClick={() => setOpen(false)}
                   >
                     Cancel
-                  </button>
-                  <button
-                    className="px-6 bg-primary py-2 rounded-sm font-semibold text-white"
+                  </Button>
+                  <Button
+                    className="px-6 py-2"
                     type="submit"
                   >
                     Save
-                  </button>
+                  </Button>
                 </div>
               </form>
-            ) : (
-              <div className="flex items-center justify-center px-6 py-4">
-                <div className="flex flex-col gap-4">
-                  {allVenues.map((venue: any) => (
-                    <div
-                      key={venue._id}
-                      className="w-full px-6 py-2 flex items-center gap-6 rounded-sm font-semibold bg-gray-200 text-gray-600"
-                    >
-                      <div>{venue.name}</div>
-                      <div className="gap-3 flex items-center">
-                        <FiEdit2
-                          className="h-5 w-5 cursor-pointer"
-                          onClick={() => setSelectedVenue(venue)}
-                        />
-                        <FiTrash2 className="text-red-500 h-5 w-5 cursor-pointer" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
           </ModalLayout>
       )}

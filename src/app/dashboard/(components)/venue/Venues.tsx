@@ -1,10 +1,9 @@
 import VenueCard from "@/components/VenueCard";
+import { IconButton } from "@/components/ui/IconButton";
+import { API_HEAD } from "@/lib/utils";
 import { useState } from "react";
-import { FiEdit3, FiPlus } from "react-icons/fi";
 import useSWR from "swr";
 import AddVenue from "../../(modals)/venue/AddVenue";
-import EditVenue from "../../(modals)/venue/EditVenue";
-import { API_HEAD } from "@/lib/utils";
 
 const Venues = ({ userData }: any) => {
   const [openAddVenue, setOpenAddVenue] = useState(false);
@@ -22,22 +21,22 @@ const Venues = ({ userData }: any) => {
     <>
       <div className="py-2 px-2 md:px-6 md:py-4   flex flex-col gap-2 border-t">
         <div className="flex justify-between items-center">
-          <h2 className="text-xl font-bold">Venues</h2>
+          <h2 className="text-xl font-bold">Venue Details</h2>
 
           <div className="flex justify-start items-center gap-4">
-            <FiPlus
-              className="cursor-pointer h-6 w-6 text-gray-600"
-              onClick={() => setOpenAddVenue(true)}
-            />
-            <FiEdit3
-              className="cursor-pointer h-6 w-6 text-gray-600"
-              onClick={() => setOpenEditVenue(true)}
-            />
+            {allVenues?.length === 0 && (
+              <IconButton
+                variant={"add"}
+                onClick={() => setOpenAddVenue(true)}
+              />
+            )}
           </div>
         </div>
-        {allVenues?.map((venue: any) => (
-          <VenueCard venueDetails={venue} key={venue._id} />
-        ))}
+        {allVenues?.length > 0 ? (
+          <VenueCard venueDetails={allVenues[0]} />
+        ) : (
+          <p className="text-gray-500">No Venue Added</p>
+        )}
       </div>
 
       {openAddVenue && (
@@ -46,17 +45,6 @@ const Venues = ({ userData }: any) => {
             user={userData}
             open={openAddVenue}
             setOpen={setOpenAddVenue}
-          />
-        </div>
-      )}
-
-      {openEditVenue && (
-        <div className="absolute">
-          <EditVenue
-            user={userData}
-            open={openEditVenue}
-            setOpen={setOpenEditVenue}
-            allVenues={allVenues}
           />
         </div>
       )}

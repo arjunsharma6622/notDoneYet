@@ -55,14 +55,6 @@ const AddProduct = ({
     setProductData((prevData : any) => ({ ...prevData, [name]: value }));
   };
 
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
-
   const handleRemoveImage = (index: number) => {
     setCroppedImages((prevImages) =>
       prevImages.filter((_, i) => i !== index)
