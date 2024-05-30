@@ -70,7 +70,7 @@ const SignupForm = () => {
   useEffect(() => {
     const checkUserName = async () => {
       const response = await axios.get(
-        `${API_HEAD}/checkUserName?userName=${userName}`
+        `${API_HEAD}/checkUserName?userName=${userName}`,
       );
       const available = response?.data?.available;
       setUserNameAvailable(available);
@@ -91,7 +91,7 @@ const SignupForm = () => {
           return toast.error("Please provide all the fields");
         }
 
-        if(userName && !userNameAvailable) {
+        if (userName && !userNameAvailable) {
           return toast.error("Username not available");
         }
 
@@ -107,12 +107,7 @@ const SignupForm = () => {
     >
       <div className="space-y-1">
         <Label htmlFor="name">Name</Label>
-        <Input
-          id="name"
-          type="text"
-          placeholder="name"
-          name="name"
-        />
+        <Input id="name" type="text" placeholder="name" name="name" />
       </div>
 
       <div className="space-y-1">
@@ -136,12 +131,7 @@ const SignupForm = () => {
 
       <div className="space-y-1">
         <Label htmlFor="email">Email</Label>
-        <Input
-          id="email"
-          type="email"
-          placeholder="email"
-          name="email"
-        />
+        <Input id="email" type="email" placeholder="email" name="email" />
       </div>
 
       <div className="space-y-1">

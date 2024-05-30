@@ -5,10 +5,7 @@ import { timeAgo } from "@/lib/utils";
 import Image from "next/legacy/image";
 import Link from "next/link";
 import { useState } from "react";
-import {
-  FiMessageCircle,
-  FiShare
-} from "react-icons/fi";
+import { FiMessageCircle, FiShare } from "react-icons/fi";
 import { RiHeart2Fill, RiHeart2Line } from "react-icons/ri";
 import { toast } from "sonner";
 import PostCardMore from "./PostCardMore";
@@ -51,8 +48,6 @@ const PostCard = ({ postData, currUser }: any) => {
       toast.error("Failed to post comment");
     }
   };
-
-
 
   return (
     <div className="flex border flex-col rounded-md px-2 py-2 gap-2 max-w-[650px]">

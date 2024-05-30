@@ -75,7 +75,6 @@
   }
 }
 
-
 .truncatedText {
   -webkit-line-clamp: 2; /* Chrome, Safari, Opera browsers */
   overflow: hidden;

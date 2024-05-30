@@ -83,11 +83,11 @@ export const unfollowUser = async (
   }
 };
 
-export const toggleProfileLike = async (userId : string, profileId : string) => {
+export const toggleProfileLike = async (userId: string, profileId: string) => {
   try {
     await connectDB();
 
-    let messageToSend = ""
+    let messageToSend = "";
 
     const profile = await User.findById(profileId);
     if (!profile) {
@@ -102,18 +102,18 @@ export const toggleProfileLike = async (userId : string, profileId : string) => 
     const isLiked = user.likedProfiles.includes(profileId);
     if (isLiked) {
       profile.profileLikes = profile.profileLikes.filter(
-        (_id: string) => _id != userId
+        (_id: string) => _id != userId,
       );
       user.likedProfiles = user.likedProfiles.filter(
-        (_id: string) => _id != profileId
+        (_id: string) => _id != profileId,
       );
 
-      messageToSend = "Profile unliked"
+      messageToSend = "Profile unliked";
     } else {
       profile.profileLikes.push(userId);
       user.likedProfiles.push(profileId);
 
-      messageToSend = "Profile liked"
+      messageToSend = "Profile liked";
     }
 
     await profile.save();
@@ -121,13 +121,13 @@ export const toggleProfileLike = async (userId : string, profileId : string) => 
 
     revalidatePath("/network");
     revalidatePath("/dashboard");
-    revalidatePath("/profile/*")
+    revalidatePath("/profile/*");
 
-    return messageToSend
+    return messageToSend;
   } catch (err) {
     return err;
   }
-}
+};
 
 export const updateUser = async (userData: any) => {
   try {

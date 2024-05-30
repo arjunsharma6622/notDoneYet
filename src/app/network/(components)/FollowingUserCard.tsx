@@ -31,7 +31,10 @@ const FollowingUserCard = ({
     <div
       className={`flex gap-2 items-center justify-between py-5 ${index !== following.length - 1 && "border-b border-gray-300"}`}
     >
-      <Link href={`/${follow?.role}/${follow?.userName}`} className="flex gap-2">
+      <Link
+        href={`/${follow?.role}/${follow?.userName}`}
+        className="flex gap-2"
+      >
         <div className="w-14">
           <Image
             src={follow?.image}

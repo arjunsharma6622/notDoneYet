@@ -9,7 +9,7 @@ import { toast } from "sonner";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
-  import.meta.url
+  import.meta.url,
 ).toString();
 
 const AddCertificate = ({ open, setOpen, user }: any) => {
@@ -36,7 +36,7 @@ const AddCertificate = ({ open, setOpen, user }: any) => {
 
       const uploadResponse: any = await axios.post(
         "https://api.cloudinary.com/v1_1/dexnb3wk2/image/upload",
-        imageData
+        imageData,
       );
       const imageUrl = uploadResponse?.data?.secure_url;
       setCertificateData({ ...certificateData, certificateDoc: imageUrl });
@@ -123,10 +123,10 @@ const AddCertificate = ({ open, setOpen, user }: any) => {
                           >
                             <div className="py-10 flex items-center justify-center gap-2 flex-col">
                               <div className="flex items-center gap-2">
-                            <FiImage />
-                            <FiFile />
-                            </div>
-                            <p>Upload</p>
+                                <FiImage />
+                                <FiFile />
+                              </div>
+                              <p>Upload</p>
                             </div>
                             <input
                               type="file"

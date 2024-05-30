@@ -20,7 +20,7 @@ const Products = async ({ userData }: { userData: any }) => {
               href={`/brand/${userData?.userName}/products`}
               className="flex text-sm items-center gap-0 text-blue-500"
             >
-              View shop <FiArrowUpRight className="w-5 h-5"/>
+              View shop <FiArrowUpRight className="w-5 h-5" />
             </Link>
           </div>
         </div>

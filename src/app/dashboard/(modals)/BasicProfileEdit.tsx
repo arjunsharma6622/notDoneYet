@@ -38,15 +38,13 @@ const BasicProfileEdit = ({
     setValue("address.postalCode", user.address?.postalCode);
   }, [user, setValue]);
 
-
   const onSubmit = async (data: any) => {
-    console.log(data)
+    console.log(data);
     try {
       await updateUser(data);
       toast.success("Profile Updated");
       setOpen(false);
       window.location.reload();
-
     } catch (err) {
       console.log(err);
     }
@@ -69,7 +67,6 @@ const BasicProfileEdit = ({
               className="flex flex-col gap-6 overflow-scroll"
             >
               <div className="overflow-y-scroll px-6 flex flex-col gap-6">
-
                 <div className="flex flex-col gap-2">
                   <h2 className="text-xl font-semibold underline">
                     Basic Details
@@ -195,37 +192,35 @@ const BasicProfileEdit = ({
                     </div>
                   </div>
 
-
                   <div className="flex gap-4 w-full">
-
-                  <div className="w-full">
-                    <label
-                      htmlFor="country"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Country
-                    </label>
-                    <input
-                      type="text"
-                      id="country"
-                      {...register("address.country")}
-                      className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                    />
-                  </div>
-                  <div className="w-full">
-                    <label
-                      htmlFor="postalCode"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Postal Code
-                    </label>
-                    <input
-                      type="number"
-                      id="postalCode"
-                      {...register("address.postalCode")}
-                      className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                    />
-                  </div>
+                    <div className="w-full">
+                      <label
+                        htmlFor="country"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Country
+                      </label>
+                      <input
+                        type="text"
+                        id="country"
+                        {...register("address.country")}
+                        className="border rounded-md px-3 py-2 w-full focus:outline-none"
+                      />
+                    </div>
+                    <div className="w-full">
+                      <label
+                        htmlFor="postalCode"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Postal Code
+                      </label>
+                      <input
+                        type="number"
+                        id="postalCode"
+                        {...register("address.postalCode")}
+                        className="border rounded-md px-3 py-2 w-full focus:outline-none"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -247,7 +242,7 @@ const BasicProfileEdit = ({
               </div>
             </form>
           </div>
-          </ModalLayout>
+        </ModalLayout>
       )}
     </div>
   );

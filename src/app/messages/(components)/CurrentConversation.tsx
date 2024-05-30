@@ -7,7 +7,6 @@ import Message from "./Message";
 import { formatConversationDate } from "../(utils)/FormatDate";
 import Image from "next/legacy/image";
 
-
 const CurrentConversation = ({
   currentConversation,
   setCurrentConversation,
@@ -36,7 +35,7 @@ const CurrentConversation = ({
     try {
       const response = await axios.post(
         `${API_HEAD}/conversation/${currentConversation?._id}/`,
-        message
+        message,
       );
 
       setCurrentConversation((prevConversation: any) => {
@@ -79,7 +78,7 @@ const CurrentConversation = ({
             `${API_HEAD}/conversation/${currentConversation?._id}/seen`,
             {
               currUserId: session?.user._id,
-            }
+            },
           );
         } catch (error) {
           console.log(error);
@@ -101,7 +100,7 @@ const CurrentConversation = ({
                 <Image
                   src={
                     currentConversation?.users?.filter(
-                      (user: any) => user._id !== session?.user._id
+                      (user: any) => user._id !== session?.user._id,
                     )[0]?.image
                   }
                   alt=""
@@ -116,14 +115,14 @@ const CurrentConversation = ({
                 <span>
                   {
                     currentConversation?.users?.filter(
-                      (user: any) => user._id !== session?.user._id
+                      (user: any) => user._id !== session?.user._id,
                     )[0]?.name
                   }
                 </span>
                 <span className="text-gray-400 text-xs">
                   {
                     currentConversation?.users?.filter(
-                      (user: any) => user._id !== session?.user._id
+                      (user: any) => user._id !== session?.user._id,
                     )[0]?.bio
                   }
                 </span>
@@ -134,13 +133,13 @@ const CurrentConversation = ({
               {currentConversation?.messages?.map(
                 (message: any, index: any) => {
                   const otherUser = currentConversation?.users.filter(
-                    (user: any) => user._id !== session?.user._id
+                    (user: any) => user._id !== session?.user._id,
                   )[0];
 
                   if (
                     new Date(message.createdAt).getDate() !==
                     new Date(
-                      currentConversation?.messages[index - 1]?.createdAt
+                      currentConversation?.messages[index - 1]?.createdAt,
                     ).getDate()
                   ) {
                     return (
@@ -179,7 +178,7 @@ const CurrentConversation = ({
                       otherUser={otherUser}
                     />
                   );
-                }
+                },
               )}
 
               <div ref={messagesEndRef} />

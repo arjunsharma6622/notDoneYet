@@ -7,11 +7,14 @@ import { redirect } from "next/navigation";
 const Page = async () => {
   const session: any = await auth();
 
-  if(!session){
-    redirect("/login")
+  if (!session) {
+    redirect("/login");
   }
 
-  const following = await axios.get(`${API_HEAD}/user/following/${session?.user?._id}`).then((res) => res.data).catch((err) => console.error("Error", err));
+  const following = await axios
+    .get(`${API_HEAD}/user/following/${session?.user?._id}`)
+    .then((res) => res.data)
+    .catch((err) => console.error("Error", err));
 
   return (
     <div className="flex items-center justify-center w-full">

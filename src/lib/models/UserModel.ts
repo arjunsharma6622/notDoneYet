@@ -57,7 +57,7 @@ export interface UserDocument extends Document {
   likedProfiles?: mongoose.Schema.Types.ObjectId[];
   conversations?: mongoose.Schema.Types.ObjectId[];
   products: mongoose.Schema.Types.ObjectId[];
-  savedPosts : mongoose.Schema.Types.ObjectId[]
+  savedPosts: mongoose.Schema.Types.ObjectId[];
 }
 
 const experienceSchema = new mongoose.Schema<Experience>(
@@ -117,16 +117,15 @@ const userSchema = new mongoose.Schema<UserDocument>({
   },
   backgroundImg: {
     type: String,
-    default:
-      "https://www.fr.com/images/demo/fish-richardson-header-default.png",
+    default: "https://placehold.co/1000x250.png",
   },
   role: {
     type: String,
     default: "user",
     enum: ["user", "doctor", "athlete", "venueOwner", "brand", "root"],
   },
-  profileLikes : [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
-  likedProfiles : [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
+  profileLikes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  likedProfiles: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   address: {
     street: { type: String },
     city: { type: String },
@@ -144,9 +143,12 @@ const userSchema = new mongoose.Schema<UserDocument>({
   education: [educationSchema],
   sports: [String],
   skills: [String],
-  conversations: [{ type: mongoose.Schema.Types.ObjectId, ref: "Conversation" }],
+  conversations: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "Conversation" },
+  ],
   products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
-  savedPosts : [{type: mongoose.Schema.Types.ObjectId, ref: "Post"}]
+  savedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
 });
 
-export const User = mongoose.models.User || mongoose.model<UserDocument>("User", userSchema);
+export const User =
+  mongoose.models.User || mongoose.model<UserDocument>("User", userSchema);

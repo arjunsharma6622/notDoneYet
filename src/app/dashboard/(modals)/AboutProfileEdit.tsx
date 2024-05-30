@@ -23,7 +23,7 @@ const AboutProfileEdit = ({
     try {
       await updateUser(data);
       toast.success("Profile Updated");
-      setOpen(false)
+      setOpen(false);
     } catch (err) {
       console.log(err);
     }
@@ -75,7 +75,6 @@ const AboutProfileEdit = ({
             </form>
           </div>
         </ModalLayout>
-
       )}
     </div>
   );

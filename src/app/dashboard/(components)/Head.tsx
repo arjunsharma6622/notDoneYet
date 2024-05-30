@@ -44,10 +44,11 @@ const Head = ({ userData }: { userData: any }) => {
             className="absolute left-6 md:-bottom-10 -bottom-6 border-4 border-white md:border-8 object-cover rounded-full"
           />
 
-          <div
-            className="absolute right-6 top-6"
-          >
-            <IconButton variant={"edit"} onClick={() => setOpenImagesEdit(true)} />
+          <div className="absolute right-6 top-6">
+            <IconButton
+              variant={"edit"}
+              onClick={() => setOpenImagesEdit(true)}
+            />
           </div>
         </div>
 
@@ -70,7 +71,10 @@ const Head = ({ userData }: { userData: any }) => {
                 </div>
               </div>
             </div>
-            <IconButton variant={"edit"} onClick={() => setOpenDetailsEdit(true)} />
+            <IconButton
+              variant={"edit"}
+              onClick={() => setOpenDetailsEdit(true)}
+            />
           </div>
 
           <h1 className="text-sm md:text-base">{userData?.bio}</h1>
@@ -106,7 +110,6 @@ const Head = ({ userData }: { userData: any }) => {
               <FiArrowUpRight className="inline w-4 h-4 md:w-5 md:h-5 mb-1" />
             </Link>
           )}
-          
         </div>
       </div>
 

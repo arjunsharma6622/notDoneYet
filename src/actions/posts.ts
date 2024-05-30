@@ -97,7 +97,7 @@ export const addComment = async (
       await parentComment.save();
     }
     revalidatePath(`/`);
-    return { message : "Comment added successfully" };
+    return { message: "Comment added successfully" };
   } catch (error) {
     console.error(error);
     throw error;

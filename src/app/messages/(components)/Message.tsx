@@ -2,7 +2,13 @@ import { BiCheckDouble } from "react-icons/bi";
 import { formatMessageTime } from "../(utils)/FormatDate";
 import Image from "next/legacy/image";
 
-const Message = ({ message, currentUser, otherUser, showImage, session }: any) => {
+const Message = ({
+  message,
+  currentUser,
+  otherUser,
+  showImage,
+  session,
+}: any) => {
   return (
     <div
       key={message._id}
@@ -28,18 +34,18 @@ const Message = ({ message, currentUser, otherUser, showImage, session }: any) =
             } bg-gray-100 py-2 rounded-xl px-4`}
           >
             <div>
-            <p>{message?.content}</p>
-            
-            {message.seen && currentUser && (
-              <div className="absolute bottom-[2px] right-1">
-              <BiCheckDouble className="w-4 h-4 text-blue-500" />
-              </div>
-            )}
-            {!message.seen && currentUser && (
-              <div className="absolute bottom-[2px] right-1">
-              <BiCheckDouble className="w-4 h-4 text-gray-400" />
-              </div>
-            )}
+              <p>{message?.content}</p>
+
+              {message.seen && currentUser && (
+                <div className="absolute bottom-[2px] right-1">
+                  <BiCheckDouble className="w-4 h-4 text-blue-500" />
+                </div>
+              )}
+              {!message.seen && currentUser && (
+                <div className="absolute bottom-[2px] right-1">
+                  <BiCheckDouble className="w-4 h-4 text-gray-400" />
+                </div>
+              )}
             </div>
           </div>
         </div>

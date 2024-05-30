@@ -9,7 +9,7 @@ const Activity = ({ postData, userData }: { postData: any; userData: any }) => {
         <div className="flex items-center gap-4">
           <h2 className="text-xl font-bold">Posts</h2>
           <Link
-            href={`/brand/${userData?.userName}/posts`}
+            href={`/${userData?.role}/${userData?.userName}/posts`}
             className="flex text-sm items-center gap-0 text-blue-500"
           >
             All posts <FiArrowUpRight className="w-5 h-5" />

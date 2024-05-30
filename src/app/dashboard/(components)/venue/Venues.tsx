@@ -3,7 +3,7 @@ import { IconButton } from "@/components/ui/IconButton";
 import { API_HEAD } from "@/lib/utils";
 import { useState } from "react";
 import useSWR from "swr";
-import AddVenue from "../../(modals)/venue/AddVenue";
+import AddVenue from "../../(modals)/venue/AddVenue/AddVenue";
 
 const Venues = ({ userData }: any) => {
   const [openAddVenue, setOpenAddVenue] = useState(false);
@@ -35,7 +35,7 @@ const Venues = ({ userData }: any) => {
         {allVenues?.length > 0 ? (
           <VenueCard venueDetails={allVenues[0]} />
         ) : (
-          <p className="text-gray-500">No Venue Added</p>
+          <p className="text-gray-500 text-sm">No Venue Added</p>
         )}
       </div>
 

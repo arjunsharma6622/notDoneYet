@@ -76,7 +76,7 @@ const EditAthleteExperience = ({
       const updatedUserData = {
         ...userData,
         experience: userData.experience.filter(
-          (exp: any) => exp._id !== experience._id
+          (exp: any) => exp._id !== experience._id,
         ),
       };
       await updateUser(updatedUserData);
@@ -155,7 +155,7 @@ const EditAthleteExperience = ({
                             className="border rounded-md px-3 py-2 w-full focus:outline-none"
                             defaultValue={dateFormat(
                               selectedExperience.date,
-                              "yyyy-mm-dd"
+                              "yyyy-mm-dd",
                             )}
                             {...register("date", { required: true })}
                           />

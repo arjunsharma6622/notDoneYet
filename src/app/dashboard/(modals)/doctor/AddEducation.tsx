@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { FiX } from "react-icons/fi";
 import { toast } from "sonner";
 
-const AddEducation = ({ user, open, setOpen } : any) => {
+const AddEducation = ({ user, open, setOpen }: any) => {
   const [userData, setUserData] = useState(user);
   const {
     register,
@@ -17,18 +17,19 @@ const AddEducation = ({ user, open, setOpen } : any) => {
     watch,
   } = useForm();
 
-  const handleUserUpdate = async (data : any) => {
+  const handleUserUpdate = async (data: any) => {
     try {
-      await axios.patch(`${API_HEAD}/user/${userData._id}`, {education : [...userData.education, data]});
+      await axios.patch(`${API_HEAD}/user/${userData._id}`, {
+        education: [...userData.education, data],
+      });
       toast.success("Profile Updated");
       window.location.reload();
       reset();
     } catch (err) {
-        toast.error("Profile Update Failed")
+      toast.error("Profile Update Failed");
       console.log(err);
     }
   };
-
 
   return (
     <div>
@@ -42,10 +43,15 @@ const AddEducation = ({ user, open, setOpen } : any) => {
                 onClick={() => setOpen(false)}
               />
             </div>
-            <form onSubmit={handleSubmit(handleUserUpdate)} className="flex flex-col gap-6 overflow-scroll">
+            <form
+              onSubmit={handleSubmit(handleUserUpdate)}
+              className="flex flex-col gap-6 overflow-scroll"
+            >
               <div className="flex flex-col gap-6 px-6 py-4 overflow-y-scroll">
                 <div className="flex flex-col gap-2">
-                  <h2 className="text-xl font-semibold underline">Add Education</h2>
+                  <h2 className="text-xl font-semibold underline">
+                    Add Education
+                  </h2>
                   <div className="flex flex-col gap-4">
                     <div className="flex justify-between gap-6 items-center">
                       <div className="w-full">
@@ -73,7 +79,9 @@ const AddEducation = ({ user, open, setOpen } : any) => {
                     </div>
                     <div className="flex justify-between gap-6 items-center">
                       <div className="w-full">
-                        <label htmlFor="educationFieldOfStudy">Field of Study</label>
+                        <label htmlFor="educationFieldOfStudy">
+                          Field of Study
+                        </label>
                         <input
                           type="text"
                           placeholder="Field of Study"
@@ -81,7 +89,9 @@ const AddEducation = ({ user, open, setOpen } : any) => {
                           className="border rounded-md px-3 py-2 w-full focus:outline-none"
                           {...register("fieldOfStudy", { required: true })}
                         />
-                        {errors.fieldOfStudy && <p>Field of Study is required.</p>}
+                        {errors.fieldOfStudy && (
+                          <p>Field of Study is required.</p>
+                        )}
                       </div>
                       <div className="w-full">
                         <label htmlFor="educationGPA">GPA/Score</label>
@@ -95,7 +105,6 @@ const AddEducation = ({ user, open, setOpen } : any) => {
                       </div>
                     </div>
                     <div className="flex justify-between gap-6 items-center">
-
                       <div className="w-full">
                         <label htmlFor="educationStartDate">Start Date</label>
                         <input
@@ -116,7 +125,6 @@ const AddEducation = ({ user, open, setOpen } : any) => {
                         />
                         {errors.endDate && <p>End Date is required.</p>}
                       </div>
-
                     </div>
                     <div>
                       <label htmlFor="educationDescription">Description</label>
@@ -127,7 +135,6 @@ const AddEducation = ({ user, open, setOpen } : any) => {
                         {...register("description")}
                       ></textarea>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -148,7 +155,7 @@ const AddEducation = ({ user, open, setOpen } : any) => {
               </div>
             </form>
           </div>
-          </ModalLayout>
+        </ModalLayout>
       )}
     </div>
   );

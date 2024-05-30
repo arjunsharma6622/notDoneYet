@@ -25,7 +25,10 @@ const SkillsEdit = ({
     try {
       console.log("In handle user update");
       console.log(userData);
-      const res = await axios.patch(`${API_HEAD}/user/${userData._id}`, userData);
+      const res = await axios.patch(
+        `${API_HEAD}/user/${userData._id}`,
+        userData,
+      );
       toast.success("Sports Updated");
       setOpen(false);
       window.location.reload();
@@ -33,7 +36,6 @@ const SkillsEdit = ({
       console.log(err);
     }
   };
-
 
   console.log(userData);
 
@@ -43,7 +45,11 @@ const SkillsEdit = ({
         <ModalLayout>
           <div className="w-[95%] md:w-[55%] max-h-[90%] bg-white rounded-md flex flex-col gap-4">
             <div className="flex items-center justify-between border-b px-6 py-5">
-              <h1 className="text-2xl font-bold">{userData?.role === "doctor" ? "Edit your Skills" : "Edit sports you play"}</h1>
+              <h1 className="text-2xl font-bold">
+                {userData?.role === "doctor"
+                  ? "Edit your Skills"
+                  : "Edit sports you play"}
+              </h1>
               <FiX
                 className="cursor-pointer h-6 w-6 text-gray-600"
                 onClick={() => setOpen(false)}
@@ -51,12 +57,18 @@ const SkillsEdit = ({
             </div>
             <div className="flex flex-col gap-6 px-6 py-4 overflow-scroll">
               <div className="flex flex-col gap-2">
-                <h2 className="text-xl font-semibold underline">{userData?.role === "doctor" ? "Skills" : "Sports"}</h2>
+                <h2 className="text-xl font-semibold underline">
+                  {userData?.role === "doctor" ? "Skills" : "Sports"}
+                </h2>
                 <div className="flex flex-col gap-4">
                   <div className="flex justify-between items-center gap-4">
                     <input
                       type="text"
-                      placeholder={userData?.role === "doctor" ? "Add a new skill" : "Add a new sport"}
+                      placeholder={
+                        userData?.role === "doctor"
+                          ? "Add a new skill"
+                          : "Add a new sport"
+                      }
                       className=" border rounded-md px-3 py-2 w-[80%]"
                       onChange={(e) => setNewSport(e.target.value)}
                       value={newSport}
@@ -115,7 +127,7 @@ const SkillsEdit = ({
               </Button>
             </div>
           </div>
-          </ModalLayout>
+        </ModalLayout>
       )}
     </div>
   );

@@ -22,7 +22,7 @@ const Page = async ({
 
   const userData = await axios
     .get(
-      `${API_HEAD}/user/profile/details?role=${userRole}&userName=${userName}`
+      `${API_HEAD}/user/profile/details?role=${userRole}&userName=${userName}`,
     )
     .then((res) => res.data)
     .catch((err) => console.error("Error", err));
@@ -33,13 +33,13 @@ const Page = async ({
     .catch((err) => console.error("Error", err));
 
   const allClothes = allProducts?.filter(
-    (product: any) => product.category === "clothing"
+    (product: any) => product.category === "clothing",
   );
   const allAccessories = allProducts?.filter(
-    (product: any) => product.category === "accessories"
+    (product: any) => product.category === "accessories",
   );
   const allFootwares = allProducts?.filter(
-    (product: any) => product.category === "footware"
+    (product: any) => product.category === "footware",
   );
 
   return (
@@ -56,23 +56,22 @@ const Page = async ({
           </div>
 
           <div className="flex items-center justify-center gap-6 flex-[1.5]">
-
-          <div className="flex items-center gap-4">
-            <div>
-              <Image
-                src={userData?.image}
-                alt=""
-                width={48}
-                height={48}
-                layout="intrinsic"
-                className="rounded-full"
-              />
+            <div className="flex items-center gap-4">
+              <div>
+                <Image
+                  src={userData?.image}
+                  alt=""
+                  width={48}
+                  height={48}
+                  layout="intrinsic"
+                  className="rounded-full"
+                />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-3xl font-bold">{userData?.name}</span>
+                <span className="text-xs -mt-1">/products</span>
+              </div>
             </div>
-            <div className="flex flex-col">
-              <span className="text-3xl font-bold">{userData?.name}</span>
-              <span className="text-xs -mt-1">/products</span>
-            </div>
-          </div>
             <div className="w-[70%] relative">
               <input
                 type="text"

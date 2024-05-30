@@ -91,7 +91,7 @@ const DeleteProduct = ({ open, setOpen, user, product }: any) => {
               </div>
             </div>
           </div>
-          </ModalLayout>
+        </ModalLayout>
       )}
     </div>
   );

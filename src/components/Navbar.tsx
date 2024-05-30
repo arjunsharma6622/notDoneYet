@@ -14,7 +14,7 @@ const Navbar = async () => {
   };
 
   return (
-    <div className="sticky top-0 z-[60] bg-white">
+    <div className="sticky top-0 z-[30] bg-white">
       <div className="w-full  top-4 md:flex hidden px-20 py-3 border border-b items-center">
         <div className=" w-full flex justify-between items-center gap-8">
           <div className="flex-[1] flex justify-start gap-4 items-center">

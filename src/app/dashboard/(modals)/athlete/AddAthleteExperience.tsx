@@ -24,7 +24,6 @@ const AddAthleteExperience = ({
     watch,
   } = useForm();
 
-
   const handleUserUpdate = async (data: any) => {
     try {
       const updatedExperienceData = {

@@ -9,7 +9,14 @@ const AthleteExperienceCard = ({ experience }: any) => {
         <h1 className="text-xl font-semibold">{experience.title}</h1>
 
         <div>
-          <Image width={32} height={32} layout="intrinsic" src="/images/goldMedal.png" alt="" className="" />
+          <Image
+            width={32}
+            height={32}
+            layout="intrinsic"
+            src="/images/goldMedal.png"
+            alt=""
+            className=""
+          />
         </div>
       </div>
 

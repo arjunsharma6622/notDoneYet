@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
 import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { API_HEAD, categories, genders } from "@/lib/utils";
 import axios from "axios";
@@ -23,7 +23,7 @@ const EditProduct = ({
   open,
   setOpen,
   user,
-  product
+  product,
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -31,80 +31,66 @@ const EditProduct = ({
   product: any;
 }) => {
   const [userData, setUserData] = useState(user);
-  const [croppedImages, setCroppedImages] = useState<string[]>([]);
-  const [croppedFiles, setCroppedFiles] = useState<File[]>([]);
 
   const [imagesOpen, setImagesOpen] = useState(false);
 
   const [sizes, setSizes] = useState<string[]>(product.sizes);
-  const [stock, setStock] = useState<{ size: string; quantity: number }[]>(product.stock);
+  const [stock, setStock] = useState<{ size: string; quantity: number }[]>(
+    product.stock,
+  );
+  const [productImages, setProductImages] = useState<string[]>([]);
+  const [productDataImages, setProductDataImages] = useState<string[]>(
+    product?.images,
+  );
 
+  const [productData, setProductData]: any = useState<any>(product);
 
-  const [productData, setProductData] : any = useState<any>(product);
-
-  const handleOnChange = (e : React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleOnChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
-    setProductData((prevData : any) => ({ ...prevData, [name]: value }));
+    setProductData((prevData: any) => ({ ...prevData, [name]: value }));
   };
 
-
-  const handleRemoveImage = (index: number) => {
-    setCroppedImages((prevImages) =>
-      prevImages.filter((_, i) => i !== index)
-    );
-    setCroppedFiles((prevFiles) =>
-      prevFiles.filter((_, i) => i !== index)
-    );
+  const handleRemoveImage = (
+    setImages: React.Dispatch<React.SetStateAction<string[]>>,
+    index: number,
+  ) => {
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
 
-  const handleImages = async (images: File[]) => {
+  const handleEditProduct = async () => {
     try {
-      const imageUrls = await Promise.all(
-        croppedFiles.map(async (image) => {
-          const imageData = new FormData();
-          imageData.append("file", image);
-          imageData.append("upload_preset", "ml_default");
-          imageData.append(
-            "folder",
-            `ndy/${userData?.name}/${productData?.name}/product`
-          );
-
-          const uploadResponse = await axios.post(
-            "https://api.cloudinary.com/v1_1/dexnb3wk2/image/upload",
-            imageData
-          );
-
-          return uploadResponse.data.secure_url;
-        })
-      );
-      return imageUrls;
-    } catch (err) {
-      console.error("Error uploading images to Cloudinary:", err);
-      throw new Error("Error uploading images to Cloudinary");
-    }
-  };
-
-
-
-  const handleAddProduct = async () => {
-    try {
-      let imageUrls = []
-      if(croppedFiles.length > 0) {
-        imageUrls = await handleImages(croppedFiles);
-      }
-      await handleImages(croppedFiles);
       await axios.put(`${API_HEAD}/product/${product._id}`, {
         ...productData,
-        images: [...productData.images, ...imageUrls],
+        images: [...productData.images, ...productImages],
         user: userData?._id,
         stock: stock,
         sizes: sizes,
       });
       toast.success("Product added successfully");
       setOpen(false);
-    } catch (err : any) {
+    } catch (err: any) {
       console.error("Error Adding Product", err);
       toast.error(`Error adding product ${err.message}`);
+    }
+  };
+
+  const handleRemoveProductImage = async (imageUrl: string) => {
+    try {
+      if (imageUrl) {
+        setProductData((prevData: any) => ({
+          ...prevData,
+          images: prevData.images.filter((image: any) => image !== imageUrl),
+        }));
+        await axios.get(`${API_HEAD}/images/deleteImage?imageUrl=${imageUrl}`);
+        toast.success("Image(s) deleted successfully");
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Error deleting image");
     }
   };
 
@@ -112,20 +98,20 @@ const EditProduct = ({
     <div>
       {open && (
         <ModalLayout>
-        <div className="w-[95%] md:w-[70%] max-h-[90%] bg-white rounded-md flex flex-col gap-4">
-          <div className="flex items-center justify-between border-b px-6 py-5">
-            <h1 className="text-2xl font-bold">Edit Product</h1>
-            <FiX
-              className="cursor-pointer h-6 w-6 text-gray-600"
-              onClick={() => setOpen(false)}
-            />
-          </div>
-          {/* form */}
-            <div
-              className="flex flex-col gap-6 overflow-scroll px-6 py-4"
-            >
+          <div className="w-[95%] md:w-[70%] max-h-[90%] bg-white rounded-md flex flex-col gap-4">
+            <div className="flex items-center justify-between border-b px-6 py-5">
+              <h1 className="text-2xl font-bold">Edit Product</h1>
+              <FiX
+                className="cursor-pointer h-6 w-6 text-gray-600"
+                onClick={() => setOpen(false)}
+              />
+            </div>
+            {/* form */}
+            <div className="flex flex-col gap-6 overflow-scroll px-6 py-4">
               <div className="flex flex-col gap-6 overflow-y-scroll">
-                <h2 className="text-xl font-semibold underline">Add New Product</h2>
+                <h2 className="text-xl font-semibold underline">
+                  Add New Product
+                </h2>
 
                 <div className="flex flex-col gap-4">
                   <div className="w-full">
@@ -150,7 +136,15 @@ const EditProduct = ({
                         name="originalPrice"
                         value={productData?.pricing?.originalPrice}
                         className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                        onChange={(e) => {setProductData((prevData : any) => ({ ...prevData, pricing: { ...prevData.pricing, originalPrice: parseInt(e.target.value) || 0 } }));}}
+                        onChange={(e) => {
+                          setProductData((prevData: any) => ({
+                            ...prevData,
+                            pricing: {
+                              ...prevData.pricing,
+                              originalPrice: parseInt(e.target.value) || 0,
+                            },
+                          }));
+                        }}
                       />
                     </div>
                     <div className="w-full">
@@ -162,7 +156,15 @@ const EditProduct = ({
                         name="presentPrice"
                         value={productData?.pricing?.presentPrice}
                         className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                        onChange={(e) => {setProductData((prevData : any) => ({ ...prevData, pricing: { ...prevData.pricing, presentPrice: parseInt(e.target.value) || 0 } }));}}
+                        onChange={(e) => {
+                          setProductData((prevData: any) => ({
+                            ...prevData,
+                            pricing: {
+                              ...prevData.pricing,
+                              presentPrice: parseInt(e.target.value) || 0,
+                            },
+                          }));
+                        }}
                       />
                     </div>
                   </div>
@@ -181,7 +183,12 @@ const EditProduct = ({
                   <div className="flex justify-between gap-6 items-center">
                     <div className="flex flex-col gap-1 w-full">
                       <label htmlFor="category">Select Category</label>
-                      <Select value={productData?.category} onValueChange={(value) => setProductData({ ...productData, category: value })}>
+                      <Select
+                        value={productData?.category}
+                        onValueChange={(value) =>
+                          setProductData({ ...productData, category: value })
+                        }
+                      >
                         <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select category" />
                         </SelectTrigger>
@@ -199,7 +206,12 @@ const EditProduct = ({
                     </div>
                     <div className="flex flex-col gap-1 w-full">
                       <label htmlFor="gender">Select Gender</label>
-                      <Select value={productData?.gender} onValueChange={(value) => setProductData({ ...productData, gender: value })}>
+                      <Select
+                        value={productData?.gender}
+                        onValueChange={(value) =>
+                          setProductData({ ...productData, gender: value })
+                        }
+                      >
                         <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select gender" />
                         </SelectTrigger>
@@ -220,7 +232,13 @@ const EditProduct = ({
                   <div className="flex flex-col gap-2">
                     <p>Sizes and Quantity</p>
                     {productData?.category && (
-                      <SizeQty category={productData.category} sizes={sizes} setSizes={setSizes} stock={stock} setStock={setStock} />
+                      <SizeQty
+                        category={productData.category}
+                        sizes={sizes}
+                        setSizes={setSizes}
+                        stock={stock}
+                        setStock={setStock}
+                      />
                     )}
                   </div>
 
@@ -228,7 +246,10 @@ const EditProduct = ({
                     <p>Images</p>
 
                     <div
-                      onClick={() => {setImagesOpen(true); console.log("Clicked the main images button")}}
+                      onClick={() => {
+                        setImagesOpen(true);
+                        console.log("Clicked the main images button");
+                      }}
                       className="flex items-center gap-2 border border-gray-300 border-dashed rounded-lg w-fit px-4 py-2 cursor-pointer bg-gray-50"
                     >
                       Add
@@ -238,29 +259,55 @@ const EditProduct = ({
                     {imagesOpen && (
                       <div className="">
                         <MultiImages
-                          croppedImages={croppedImages}
-                          setCroppedImages={setCroppedImages}
                           open={imagesOpen}
                           setOpen={setImagesOpen}
-                          handleRemoveImage={handleRemoveImage}
-                          croppedFiles={croppedFiles}
-                          setCroppedFiles={setCroppedFiles}
                           aspectRatio={3 / 4}
+                          imageUrls={productImages}
+                          setImageUrls={setProductImages}
+                          baseUrlPath={`ndy/products/${user?.brandUserName}/${productData?.name}`}
+                          handleRemoveImage={handleRemoveImage}
                         />
                       </div>
                     )}
 
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {croppedImages.map((image, index) => (
-                        <div key={index} className="relative w-1/4 h-1/4">
+                    <div className="grid grid-cols-4 gap-2 mt-2">
+                      {productImages?.map((image: any, index: number) => (
+                        <div key={index} className="relative">
                           <img
                             src={image}
                             alt="Post"
                             className="w-full h-full object-cover rounded-md"
+                            loading="lazy"
                           />
-                          <div className="flex items-center gap-4 absolute top-2 right-2 bg-gray-100/90 shadow-md rounded-md px-2 py-[5px]">
+                          <div className="flex items-center gap-4 absolute top-2 right-2  bg-gray-100/90 shadow-md rounded-md px-2 py-[5px]">
                             <div
-                              onClick={() => handleRemoveImage(index)}
+                              onClick={async () => {
+                                await handleRemoveProductImage(image);
+                                handleRemoveImage(setProductImages, index);
+                              }}
+                              className="text-red-500 flex items-center gap-1 text-xs cursor-pointer"
+                            >
+                              <FiXCircle className="w-4 h-4 rounded-full " />
+                              <span>Remove</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+
+                      {productDataImages?.map((image: any, index: number) => (
+                        <div key={index} className="relative">
+                          <img
+                            src={image}
+                            alt="Post"
+                            className="w-full h-full object-cover rounded-md"
+                            loading="lazy"
+                          />
+                          <div className="flex items-center gap-4 absolute top-2 right-2  bg-gray-100/90 shadow-md rounded-md px-2 py-[5px]">
+                            <div
+                              onClick={async () => {
+                                await handleRemoveProductImage(image);
+                                handleRemoveImage(setProductDataImages, index);
+                              }}
                               className="text-red-500 flex items-center gap-1 text-xs cursor-pointer"
                             >
                               <FiXCircle className="w-4 h-4 rounded-full " />
@@ -270,29 +317,6 @@ const EditProduct = ({
                         </div>
                       ))}
                     </div>
-                    <div className="grid grid-cols-4 gap-2 mt-2"> 
-                      {productData?.images.map((image : any, index : number) => (
-                        <div key={index} className="relative">
-                          <img
-                            src={image}
-                            alt="Post"
-                            className="w-full h-full object-cover rounded-md"
-                            loading="lazy"
-                          />
-                          {/* <div className="flex items-center gap-4 absolute top-2 right-2  bg-gray-100/90 shadow-md rounded-md px-2 py-[5px]">
-                            <div
-                              onClick={() => handleRemoveImage(index)}
-                              className="text-red-500 flex items-center gap-1 text-xs cursor-pointer"
-                            >
-                              <FiXCircle className="w-4 h-4 rounded-full " />
-                              <span>Remove</span>
-                            </div>
-                          </div> */}
-                        </div>
-                      ))}
-                    </div>
-
-
                   </div>
                 </div>
               </div>
@@ -308,14 +332,14 @@ const EditProduct = ({
                 <Button
                   className="px-6 bg-primary py-2 rounded-sm font-semibold"
                   type="submit"
-                  onClick={handleAddProduct}
+                  onClick={handleEditProduct}
                 >
                   Save
                 </Button>
               </div>
             </div>
           </div>
-          </ModalLayout>
+        </ModalLayout>
       )}
     </div>
   );

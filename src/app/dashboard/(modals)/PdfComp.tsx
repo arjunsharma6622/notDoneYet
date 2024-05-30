@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Document, Page } from 'react-pdf';
+import { useState } from "react";
+import { Document, Page } from "react-pdf";
 
-export function PdfComp({file}: {file: string}) {
+export function PdfComp({ file }: { file: string }) {
   const [numPages, setNumPages] = useState<number>();
   const [pageNumber, setPageNumber] = useState<number>(1);
 
@@ -10,9 +10,16 @@ export function PdfComp({file}: {file: string}) {
   }
 
   return (
-    <div className='overflow-hidden rounded-lg w-fit'>
+    <div className="overflow-hidden rounded-lg w-fit">
       <Document file={file} onLoadSuccess={onDocumentLoadSuccess}>
-        <Page scale={1} width={500} height={500} pageNumber={1} renderTextLayer={false} renderAnnotationLayer={false}/>
+        <Page
+          scale={1}
+          width={500}
+          height={500}
+          pageNumber={1}
+          renderTextLayer={false}
+          renderAnnotationLayer={false}
+        />
       </Document>
     </div>
   );

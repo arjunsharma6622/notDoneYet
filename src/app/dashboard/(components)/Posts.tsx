@@ -22,14 +22,27 @@ const Posts = ({ userData }: { userData: any }) => {
         <div className="flex justify-between items-center gap-1">
           <h2 className="text-xl font-bold">Posts</h2>
 
-          <IconButton variant={"addLong"} text="Add Post" onClick={() => setOpenPostForm(true)} />
+          <IconButton
+            variant={"addLong"}
+            text="Add Post"
+            onClick={() => setOpenPostForm(true)}
+          />
         </div>
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {(allUserPosts?.length > 0) && allUserPosts?.slice(0, 2)?.map((post: any) => (
-          <ProfilePostCard dashboardCard={true} currUser={userData} key={post._id} post={post}/>
-        ))}
-      </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {allUserPosts?.length > 0 ? (
+            allUserPosts?.map((post: any, index: number) => (
+              <ProfilePostCard
+                key={index}
+                dashboardCard={true}
+                currUser={userData}
+                post={post}
+              />
+            ))
+          ) : (
+            <p className="text-gray-500 text-sm">No posts</p>
+          )}
+        </div>
       </div>
 
       {openPostForm && (

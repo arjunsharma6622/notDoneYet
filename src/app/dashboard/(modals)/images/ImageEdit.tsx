@@ -6,9 +6,34 @@ import { FiX } from "react-icons/fi";
 import BgImage from "./BgImage";
 import ProfileImage from "./ProfileImage";
 import ModalLayout from "@/components/ModalLayout";
+import { API_HEAD } from "@/lib/utils";
+import axios from "axios";
+import { toast } from "sonner";
 
 const ImageEdit = ({ open, setOpen, user }: any) => {
   const [selectedSection, setSelectedSection] = useState("profileImage");
+  const [backgroundImage, setBackgroundImage] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
+
+  const handleTerminateSaveImage = async () => {
+    try {
+      if (backgroundImage) {
+        await axios.get(
+          `${API_HEAD}/images/deleteImage?imageUrl=${backgroundImage}`,
+        );
+        toast.success("Image(s) deleted successfully");
+      }
+      if (profileImage) {
+        await axios.get(
+          `${API_HEAD}/images/deleteImage?imageUrl=${profileImage}`,
+        );
+        toast.success("Image(s) deleted successfully");
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Error deleting image");
+    }
+  };
 
   return (
     <div>
@@ -19,7 +44,10 @@ const ImageEdit = ({ open, setOpen, user }: any) => {
               <h1 className="text-2xl font-bold">Edit Images</h1>
               <FiX
                 className="cursor-pointer h-6 w-6 text-gray-600"
-                onClick={() => setOpen(false)}
+                onClick={async () => {
+                  await handleTerminateSaveImage();
+                  setOpen(false);
+                }}
               />
             </div>
 
@@ -41,13 +69,25 @@ const ImageEdit = ({ open, setOpen, user }: any) => {
               </div>
 
               {selectedSection === "profileImage" && (
-                <ProfileImage user={user} />
+                <ProfileImage
+                  setOpen={setOpen}
+                  user={user}
+                  profileImage={profileImage}
+                  setProfileImage={setProfileImage}
+                />
               )}
 
-              {selectedSection === "backgroundImage" && <BgImage user={user} />}
+              {selectedSection === "backgroundImage" && (
+                <BgImage
+                  setOpen={setOpen}
+                  user={user}
+                  backgroundImage={backgroundImage}
+                  setBackgroundImage={setBackgroundImage}
+                />
+              )}
             </div>
           </div>
-          </ModalLayout>
+        </ModalLayout>
       )}
     </div>
   );

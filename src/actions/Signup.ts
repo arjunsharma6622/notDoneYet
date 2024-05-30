@@ -4,7 +4,12 @@ import { User } from "@/lib/models/UserModel";
 import { connectDB } from "@/lib/utils";
 import { hash } from "bcryptjs";
 
-const signup = async (name: string, email: string, password: string, userName: string) => {
+const signup = async (
+  name: string,
+  email: string,
+  password: string,
+  userName: string,
+) => {
   try {
     // connect DB
     await connectDB();

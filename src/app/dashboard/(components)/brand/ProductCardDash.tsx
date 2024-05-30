@@ -33,7 +33,10 @@ const ProductCard = ({ product }: any) => {
 
           <div className="z-[20] absolute top-2 right-2 flex items-center gap-2">
             <IconButton variant={"edit"} onClick={() => setOpenEdit(true)} />
-            <IconButton variant={"delete"} onClick={() => setOpenDelete(true)} />
+            <IconButton
+              variant={"delete"}
+              onClick={() => setOpenDelete(true)}
+            />
           </div>
 
           <div className=" absolute bottom-0 w-full z-[10] h-24 bg-gradient-to-t from-black/60 from-5% to-transparent to-90%"></div>
@@ -68,12 +71,12 @@ const ProductCard = ({ product }: any) => {
       )}
       {openDelete && (
         <div className="absolute">
-            <DeleteProduct
-              open={openDelete}
-              setOpen={setOpenDelete}
-              user={product}
-              product={product}
-              />
+          <DeleteProduct
+            open={openDelete}
+            setOpen={setOpenDelete}
+            user={product}
+            product={product}
+          />
         </div>
       )}
     </>

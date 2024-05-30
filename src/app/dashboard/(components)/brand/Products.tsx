@@ -16,8 +16,6 @@ const Products = ({ userData }: { userData: any }) => {
     isLoading,
   } = useSWR(`${API_HEAD}/product/user?userId=${userData?._id}`, fetcher);
 
-
-
   return (
     <>
       <div className="py-2 px-2 md:px-6 md:py-4   flex flex-col gap-4 border-t">
@@ -27,8 +25,8 @@ const Products = ({ userData }: { userData: any }) => {
         </div>
         <div className="grid md:grid-cols-4 gap-4 gap-y-8 w-full">
           {allProducts?.map((product: any, index: number) => (
-              <ProductCard key={index} product={product} inDashboard={true}/>
-            ))}
+            <ProductCard key={index} product={product} inDashboard={true} />
+          ))}
         </div>
       </div>
 
@@ -41,7 +39,6 @@ const Products = ({ userData }: { userData: any }) => {
           />
         </div>
       )}
-
     </>
   );
 };

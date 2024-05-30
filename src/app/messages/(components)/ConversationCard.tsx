@@ -14,8 +14,6 @@ const ConversationCard = ({
   setNewUserToSendMsg,
   setWriteNewMsg,
 }: any) => {
-
-
   const [unread, setUnread] = useState(0);
 
   useEffect(() => {
@@ -24,18 +22,17 @@ const ConversationCard = ({
         const unread = await axios.get(
           `${API_HEAD}/conversation/${conversation._id}/unread`,
         );
-        if(unread?.data?._id != session?.user._id) {
-          setUnread(unread.data?.count);        
-        }
-        else{
+        if (unread?.data?._id != session?.user._id) {
+          setUnread(unread.data?.count);
+        } else {
           setUnread(0);
         }
       } catch (error) {
         console.log(error);
       }
-    }
+    };
 
-    fetchUnread()
+    fetchUnread();
   }, [currentConversation, session?.user._id, conversation]);
 
   return (
@@ -76,19 +73,21 @@ const ConversationCard = ({
 
         <div className="relative flex justify-between items-center">
           <div className=" text-xs flex truncated-text w-fit">
-            <span className={`${unread > 0 ? "text-black font-medium" : "text-gray-500"}`}>
+            <span
+              className={`${unread > 0 ? "text-black font-medium" : "text-gray-500"}`}
+            >
               {lastMessage?.senderId === session?.user._id
                 ? "You: "
                 : otherUser?.name?.split(" ")[0] + ": "}
               {lastMessage?.content}
             </span>
-            { unread > 0 &&
-            <div className="absolute top-0 right-0">
-              <div className="flex items-center justify-center w-4 h-4 bg-red-500 rounded-full text-white text-xs">
-                {unread}
+            {unread > 0 && (
+              <div className="absolute top-0 right-0">
+                <div className="flex items-center justify-center w-4 h-4 bg-red-500 rounded-full text-white text-xs">
+                  {unread}
+                </div>
               </div>
-            </div>
-        } 
+            )}
           </div>
         </div>
       </div>

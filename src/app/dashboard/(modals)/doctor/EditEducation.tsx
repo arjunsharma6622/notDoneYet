@@ -8,23 +8,41 @@ import { useForm } from "react-hook-form";
 import { FiEdit2, FiTrash2, FiX } from "react-icons/fi";
 import { toast } from "sonner";
 
-const EditEducation = ({ user, open, setOpen } : { user: any, open: boolean, setOpen: (open: boolean) => void }) => {
-  const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
+const EditEducation = ({
+  user,
+  open,
+  setOpen,
+}: {
+  user: any;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}) => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const [userData, setUserData] = useState(user);
-  const [selectedEducation, setSelectedEducation] : any = useState(null);
+  const [selectedEducation, setSelectedEducation]: any = useState(null);
 
   useEffect(() => {
     if (selectedEducation) {
       reset(selectedEducation);
     }
-    reset({...selectedEducation, startDate : dateFormat(selectedEducation?.startDate, "isoDate"), endDate : dateFormat(selectedEducation?.endDate, "isoDate")});
+    reset({
+      ...selectedEducation,
+      startDate: dateFormat(selectedEducation?.startDate, "isoDate"),
+      endDate: dateFormat(selectedEducation?.endDate, "isoDate"),
+    });
   }, [selectedEducation, reset]);
 
-  const onSubmit : any = handleSubmit(async (data) => {
+  const onSubmit: any = handleSubmit(async (data) => {
     try {
       const updatedUserData = {
         ...userData,
-        education: userData.education.map((education : any) => {
+        education: userData.education.map((education: any) => {
           if (education._id === selectedEducation._id) {
             return data;
           }
@@ -38,25 +56,25 @@ const EditEducation = ({ user, open, setOpen } : { user: any, open: boolean, set
 
       toast.success("Profile Updated");
       window.location.reload();
-
     } catch (err) {
-        toast.error("Profile Update Failed")
+      toast.error("Profile Update Failed");
       console.log(err);
     }
   });
 
-  const deleteEducation = async (education : any) => {
+  const deleteEducation = async (education: any) => {
     try {
       const updatedUserData = {
         ...userData,
-        education: userData.education.filter((edu : any) => edu._id !== education._id),
+        education: userData.education.filter(
+          (edu: any) => edu._id !== education._id,
+        ),
       };
       await axios.patch(`${API_HEAD}/user/${userData._id}`, updatedUserData);
       toast.success("Profile Updated");
       window.location.reload();
-
     } catch (err) {
-        toast.error("Profile Update Failed")
+      toast.error("Profile Update Failed");
       console.log(err);
     }
   };
@@ -75,14 +93,21 @@ const EditEducation = ({ user, open, setOpen } : { user: any, open: boolean, set
             </div>
 
             {selectedEducation ? (
-              <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 overflow-scroll">
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col gap-6 overflow-scroll"
+              >
                 <div className="flex flex-col gap-6 px-6 py-4 overflow-y-scroll">
                   <div className="flex flex-col gap-2">
-                    <h2 className="text-xl font-semibold underline">Edit Education</h2>
+                    <h2 className="text-xl font-semibold underline">
+                      Edit Education
+                    </h2>
                     <div className="flex flex-col gap-4">
                       <div className="flex justify-between gap-6 items-center">
                         <div className="w-full">
-                          <label htmlFor="educationSchool">School/College</label>
+                          <label htmlFor="educationSchool">
+                            School/College
+                          </label>
                           <input
                             type="text"
                             placeholder="School/College"
@@ -124,16 +149,18 @@ const EditEducation = ({ user, open, setOpen } : { user: any, open: boolean, set
                             {...register("gpa")}
                           />
                         </div>
-
                       </div>
                       <div className="flex items-center justify-between w-full gap-6">
-                      <div className="w-full">
+                        <div className="w-full">
                           <label htmlFor="educationStartDate">Start Date</label>
                           <input
                             type="date"
                             id="educationStartDate"
                             className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                            defaultValue={dateFormat(selectedEducation.startDate, "yyyy-mm-dd")}
+                            defaultValue={dateFormat(
+                              selectedEducation.startDate,
+                              "yyyy-mm-dd",
+                            )}
                             {...register("startDate", { required: true })}
                           />
                         </div>
@@ -143,14 +170,18 @@ const EditEducation = ({ user, open, setOpen } : { user: any, open: boolean, set
                             type="date"
                             id="educationEndDate"
                             className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                            defaultValue={dateFormat(selectedEducation.endDate, "yyyy-mm-dd")}
+                            defaultValue={dateFormat(
+                              selectedEducation.endDate,
+                              "yyyy-mm-dd",
+                            )}
                             {...register("endDate", { required: true })}
                           />
                         </div>
-
                       </div>
                       <div>
-                        <label htmlFor="educationDescription">Description</label>
+                        <label htmlFor="educationDescription">
+                          Description
+                        </label>
                         <textarea
                           placeholder="Description"
                           id="educationDescription"
@@ -179,21 +210,31 @@ const EditEducation = ({ user, open, setOpen } : { user: any, open: boolean, set
               </form>
             ) : (
               <div className="flex flex-col gap-4 pb-4 px-6">
-                {user.education?.map((education : any, index : any) => (
-                  <div key={index} className="px-6 py-2 bg-gray-200 flex items-center gap-6 border rounded-md w-fit">
-                    {education.school} . {education.degree} . {dateFormat(education.startDate, "mmmm, yyyy")} - {dateFormat(education.endDate, "mmmm, yyyy")}
+                {user.education?.map((education: any, index: any) => (
+                  <div
+                    key={index}
+                    className="px-6 py-2 bg-gray-200 flex items-center gap-6 border rounded-md w-fit"
+                  >
+                    {education.school} . {education.degree} .{" "}
+                    {dateFormat(education.startDate, "mmmm, yyyy")} -{" "}
+                    {dateFormat(education.endDate, "mmmm, yyyy")}
                     <div className="flex items-center justify-normal gap-4">
-                      <FiEdit2 className="text-lg cursor-pointer" onClick={() => setSelectedEducation(education)}/>
-                      <FiTrash2 className="text-lg text-red-500 cursor-pointer" onClick={() => deleteEducation(education)}/>
+                      <FiEdit2
+                        className="text-lg cursor-pointer"
+                        onClick={() => setSelectedEducation(education)}
+                      />
+                      <FiTrash2
+                        className="text-lg text-red-500 cursor-pointer"
+                        onClick={() => deleteEducation(education)}
+                      />
                     </div>
                   </div>
                 ))}
               </div>
             )}
           </div>
-          </ModalLayout>
+        </ModalLayout>
       )}
-
     </div>
   );
 };

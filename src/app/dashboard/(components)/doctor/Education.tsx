@@ -4,7 +4,6 @@ import { useState } from "react";
 import AddEducation from "../../(modals)/doctor/AddEducation";
 import EditEducation from "../../(modals)/doctor/EditEducation";
 
-
 const Education = ({ userData }: { userData: any }) => {
   const [openEducationAdd, setOpenEducationAdd] = useState(false);
   const [openEducationEdit, setOpenEducationEdit] = useState(false);
@@ -15,8 +14,14 @@ const Education = ({ userData }: { userData: any }) => {
           <h2 className="text-xl font-bold">Education</h2>
 
           <div className="flex justify-start items-center gap-4">
-            <IconButton variant={"add"} onClick={() => setOpenEducationAdd(true)} />
-            <IconButton variant={"edit"} onClick={() => setOpenEducationEdit(true)} />
+            <IconButton
+              variant={"add"}
+              onClick={() => setOpenEducationAdd(true)}
+            />
+            <IconButton
+              variant={"edit"}
+              onClick={() => setOpenEducationEdit(true)}
+            />
           </div>
         </div>
 

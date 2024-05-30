@@ -1,63 +1,63 @@
-"use client"
+"use client";
 
 import Image from "next/legacy/image";
-import Link from 'next/link';
-import { useState } from 'react';
-import { CiMedicalCase } from 'react-icons/ci';
-import { FiHome, FiMenu, FiMessageSquare, FiUser, FiX } from 'react-icons/fi';
-import { GrMapLocation } from 'react-icons/gr';
-import { Button } from '../ui/button';
+import Link from "next/link";
+import { useState } from "react";
+import { CiMedicalCase } from "react-icons/ci";
+import { FiHome, FiMenu, FiMessageSquare, FiUser, FiX } from "react-icons/fi";
+import { GrMapLocation } from "react-icons/gr";
+import { Button } from "../ui/button";
 
-const NavMobile = ({session} : any) => {
-    const [userMenuOpen, setUserMenuOpen] = useState(false);
-    const [openMobileMenu, setOpenMobileMenu] = useState(false);
-    const menuItems = [
-        {
-          name: "Home",
-          path: "/",
-          icon: <FiHome />,
-          subItems: ["Home", "About", "Contact"],
-        },
-        {
-          name: "Network",
-          path: "/network",
-          icon: <FiUser />,
-        },
-        {
-          name: "Doctors",
-          path: "/doctors",
-          icon: <CiMedicalCase strokeWidth={1} />,
-        },
-        {
-          name: "Venues",
-          path: "/venue",
-          icon: <GrMapLocation />,
-        },
-        {
-          name: "Messages",
-          path: "/messages",
-          icon: <FiMessageSquare />,
-        },
-      ];
+const NavMobile = ({ session }: any) => {
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [openMobileMenu, setOpenMobileMenu] = useState(false);
+  const menuItems = [
+    {
+      name: "Home",
+      path: "/",
+      icon: <FiHome />,
+      subItems: ["Home", "About", "Contact"],
+    },
+    {
+      name: "Network",
+      path: "/network",
+      icon: <FiUser />,
+    },
+    {
+      name: "Doctors",
+      path: "/doctors",
+      icon: <CiMedicalCase strokeWidth={1} />,
+    },
+    {
+      name: "Venues",
+      path: "/venue",
+      icon: <GrMapLocation />,
+    },
+    {
+      name: "Messages",
+      path: "/messages",
+      icon: <FiMessageSquare />,
+    },
+  ];
 
-      const socialImages = [
-        {
-          name: "linkedin",
-          icon: "linkedIn.svg",
-        },
-        {
-          name: "youtube",
-          icon: "youtube.svg",
-        },
-        {
-          name: "medium",
-          icon : "twitter.svg",
-        },
-        {
-          name: "github",
-          icon: "github.svg",
-        },
-      ]
+  const socialImages = [
+    {
+      name: "linkedin",
+      icon: "linkedIn.svg",
+    },
+    {
+      name: "youtube",
+      icon: "youtube.svg",
+    },
+    {
+      name: "medium",
+      icon: "twitter.svg",
+    },
+    {
+      name: "github",
+      icon: "github.svg",
+    },
+  ];
   return (
     <>
       <div>
@@ -90,7 +90,7 @@ const NavMobile = ({session} : any) => {
                     className="rounded-full object-cover"
                     width={40}
                     height={40}
-                    layout='intrinsic'
+                    layout="intrinsic"
                     referrerPolicy="no-referrer"
                   />
                   <Link
@@ -142,15 +142,15 @@ const NavMobile = ({session} : any) => {
             <div className="flex flex-col gap-4">
               <p className="text-sm">Connect with us on</p>
               <div className="flex w-full items-center justify-start gap-4">
-                { socialImages.map(({name, icon}) => (
-                <div key={name}>
-                  <Image
-                    src={`/images/social/${icon}`}
-                    alt={name}
-                    width={32}
-                    height={32}
-                  />
-                </div>
+                {socialImages.map(({ name, icon }) => (
+                  <div key={name}>
+                    <Image
+                      src={`/images/social/${icon}`}
+                      alt={name}
+                      width={32}
+                      height={32}
+                    />
+                  </div>
                 ))}
               </div>
             </div>

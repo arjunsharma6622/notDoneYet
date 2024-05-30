@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -30,72 +30,78 @@ const AddProduct = ({
   user: any;
 }) => {
   const [userData, setUserData] = useState(user);
-  const [croppedImages, setCroppedImages] = useState<string[]>([]);
-  const [croppedFiles, setCroppedFiles] = useState<File[]>([]);
-  const [submitClicked, setSubmitClicked] = useState(false);
 
   const [imagesOpen, setImagesOpen] = useState(false);
 
   const [sizes, setSizes] = useState<string[]>([]);
   const [stock, setStock] = useState<{ size: string; quantity: number }[]>([]);
 
-  const [xImages, setXImages] = useState<string[]>([]);
-
   const [productData, setProductData] = useState<any>({
     name: "",
     description: "",
     category: "",
     gender: "",
-    originalPrice : null,
+    originalPrice: null,
     presentPrice: null,
   });
 
-  const handleOnChange = (e : React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleOnChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
-    setProductData((prevData : any) => ({ ...prevData, [name]: value }));
+    setProductData((prevData: any) => ({ ...prevData, [name]: value }));
   };
 
-  const handleRemoveImage = (index: number) => {
-    setCroppedImages((prevImages) =>
-      prevImages.filter((_, i) => i !== index)
-    );
-    setCroppedFiles((prevFiles) =>
-      prevFiles.filter((_, i) => i !== index)
-    );
+  // const handleRemoveImage = (index: number) => {
+  //   setCroppedImages((prevImages) =>
+  //     prevImages.filter((_, i) => i !== index)
+  //   );
+  //   setCroppedFiles((prevFiles) =>
+  //     prevFiles.filter((_, i) => i !== index)
+  //   );
+  // };
+
+  // const handleImages = async (images: File[]) => {
+  //   try {
+  //     const imageUrls = await Promise.all(
+  //       croppedFiles.map(async (image) => {
+  //         const imageData = new FormData();
+  //         imageData.append("file", image);
+  //         imageData.append("upload_preset", "ml_default");
+  //         imageData.append(
+  //           "folder",
+  //           `ndy/${userData?.name}/${productData?.name}/product`
+  //         );
+
+  //         const uploadResponse = await axios.post(
+  //           "https://api.cloudinary.com/v1_1/dexnb3wk2/image/upload",
+  //           imageData
+  //         );
+
+  //         return uploadResponse.data.secure_url;
+  //       })
+  //     );
+  //     return imageUrls;
+  //   } catch (err) {
+  //     console.error("Error uploading images to Cloudinary:", err);
+  //     throw new Error("Error uploading images to Cloudinary");
+  //   }
+  // };
+
+  const [imageUrls, setImageUrls] = useState([]);
+
+  const handleRemoveImage = (
+    setImages: React.Dispatch<React.SetStateAction<string[]>>,
+    index: number,
+  ) => {
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
-
-  const handleImages = async (images: File[]) => {
-    try {
-      const imageUrls = await Promise.all(
-        croppedFiles.map(async (image) => {
-          const imageData = new FormData();
-          imageData.append("file", image);
-          imageData.append("upload_preset", "ml_default");
-          imageData.append(
-            "folder",
-            `ndy/${userData?.name}/${productData?.name}/product`
-          );
-
-          const uploadResponse = await axios.post(
-            "https://api.cloudinary.com/v1_1/dexnb3wk2/image/upload",
-            imageData
-          );
-
-          return uploadResponse.data.secure_url;
-        })
-      );
-      return imageUrls;
-    } catch (err) {
-      console.error("Error uploading images to Cloudinary:", err);
-      throw new Error("Error uploading images to Cloudinary");
-    }
-  };
-
-
 
   const handleAddProduct = async () => {
     try {
-      const imageUrls = await handleImages(croppedFiles);
+      // const imageUrls = await handleImages(croppedFiles);
       await axios.post(`${API_HEAD}/product/`, {
         ...productData,
         images: imageUrls,
@@ -105,7 +111,7 @@ const AddProduct = ({
       });
       toast.success("Product added successfully");
       setOpen(false);
-    } catch (err : any) {
+    } catch (err: any) {
       console.error("Error Adding Product", err);
       toast.error(`Error adding product ${err.message}`);
     }
@@ -115,20 +121,20 @@ const AddProduct = ({
     <div>
       {open && (
         <ModalLayout>
-        <div className="w-[95%] md:w-[70%] max-h-[90%] bg-white rounded-md flex flex-col gap-4">
-          <div className="flex items-center justify-between border-b px-6 py-5">
-            <h1 className="text-2xl font-bold">Add Product</h1>
-            <FiX
-              className="cursor-pointer h-6 w-6 text-gray-600"
-              onClick={() => setOpen(false)}
-            />
-          </div>
-          {/* form */}
-            <div
-              className="flex flex-col gap-6 overflow-scroll px-6 py-4"
-            >
+          <div className="w-[95%] md:w-[70%] max-h-[90%] bg-white rounded-md flex flex-col gap-4">
+            <div className="flex items-center justify-between border-b px-6 py-5">
+              <h1 className="text-2xl font-bold">Add Product</h1>
+              <FiX
+                className="cursor-pointer h-6 w-6 text-gray-600"
+                onClick={() => setOpen(false)}
+              />
+            </div>
+            {/* form */}
+            <div className="flex flex-col gap-6 overflow-scroll px-6 py-4">
               <div className="flex flex-col gap-6 overflow-y-scroll">
-                <h2 className="text-xl font-semibold underline">Add New Product</h2>
+                <h2 className="text-xl font-semibold underline">
+                  Add New Product
+                </h2>
 
                 <div className="flex flex-col gap-4">
                   <div className="w-full">
@@ -184,7 +190,11 @@ const AddProduct = ({
                   <div className="flex justify-between gap-6 items-center">
                     <div className="flex flex-col gap-1 w-full">
                       <label htmlFor="category">Select Category</label>
-                      <Select onValueChange={(value) => setProductData({ ...productData, category: value })}>
+                      <Select
+                        onValueChange={(value) =>
+                          setProductData({ ...productData, category: value })
+                        }
+                      >
                         <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select category" />
                         </SelectTrigger>
@@ -202,7 +212,11 @@ const AddProduct = ({
                     </div>
                     <div className="flex flex-col gap-1 w-full">
                       <label htmlFor="gender">Select Gender</label>
-                      <Select onValueChange={(value) => setProductData({ ...productData, gender: value })}>
+                      <Select
+                        onValueChange={(value) =>
+                          setProductData({ ...productData, gender: value })
+                        }
+                      >
                         <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select gender" />
                         </SelectTrigger>
@@ -223,7 +237,13 @@ const AddProduct = ({
                   <div className="flex flex-col gap-2">
                     <p>Sizes and Quantity</p>
                     {productData?.category && (
-                      <SizeQty category={productData.category} sizes={sizes} setSizes={setSizes} stock={stock} setStock={setStock} />
+                      <SizeQty
+                        category={productData.category}
+                        sizes={sizes}
+                        setSizes={setSizes}
+                        stock={stock}
+                        setStock={setStock}
+                      />
                     )}
                   </div>
 
@@ -231,7 +251,10 @@ const AddProduct = ({
                     <p>Images</p>
 
                     <div
-                      onClick={() => {setImagesOpen(true); console.log("Clicked the main images button")}}
+                      onClick={() => {
+                        setImagesOpen(true);
+                        console.log("Clicked the main images button");
+                      }}
                       className="flex items-center gap-2 border border-gray-300 border-dashed rounded-lg w-fit px-4 py-2 cursor-pointer bg-gray-50"
                     >
                       Add
@@ -241,35 +264,25 @@ const AddProduct = ({
                     {imagesOpen && (
                       <div className="">
                         <MultiImages
-                          croppedImages={croppedImages}
-                          setCroppedImages={setCroppedImages}
                           open={imagesOpen}
                           setOpen={setImagesOpen}
+                          aspectRatio={3 / 4}
+                          imageUrls={imageUrls}
+                          setImageUrls={setImageUrls}
+                          baseUrlPath={`ndy/products/${user?.brandUserName}/${productData?.name}`}
                           handleRemoveImage={handleRemoveImage}
-                          croppedFiles={croppedFiles}
-                          setCroppedFiles={setCroppedFiles}
-                          aspectRatio={3/4}
                         />
                       </div>
                     )}
 
                     <div className="flex flex-wrap gap-2 mt-2">
-                      {croppedImages.map((image, index) => (
+                      {imageUrls?.map((image, index) => (
                         <div key={index} className="relative w-1/4 h-1/4">
                           <img
                             src={image}
                             alt="Post"
                             className="w-full h-full object-cover rounded-md"
                           />
-                          <div className="flex items-center gap-4 absolute left-1/2 transform -translate-x-1/2 bottom-0 bg-gray-100/90 shadow-md rounded-md px-2 py-[5px]">
-                            <div
-                              onClick={() => handleRemoveImage(index)}
-                              className="text-red-500 flex items-center gap-1 text-xs cursor-pointer"
-                            >
-                              <FiXCircle className="w-4 h-4 rounded-full " />
-                              <span>Remove</span>
-                            </div>
-                          </div>
                         </div>
                       ))}
                     </div>

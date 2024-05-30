@@ -13,8 +13,14 @@ const PastEvents = ({ userData }: { userData: any }) => {
           <h2 className="text-xl font-bold">Past Events</h2>
 
           <div className="flex justify-start items-center gap-4">
-            <IconButton variant={"add"} onClick={() => setOpenExperienceAdd(true)} />
-            <IconButton variant={"edit"} onClick={() => setOpenExperienceEdit(true)} />
+            <IconButton
+              variant={"add"}
+              onClick={() => setOpenExperienceAdd(true)}
+            />
+            <IconButton
+              variant={"edit"}
+              onClick={() => setOpenExperienceEdit(true)}
+            />
           </div>
         </div>
 

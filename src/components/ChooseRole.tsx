@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
@@ -39,7 +39,14 @@ const ChooseRole = ({ userData }: any) => {
               className={`flex items-center cursor-pointer ${choosenRole === role.value ? "bg-gray-200" : ""} gap-6 border rounded-md px-4 py-2`}
               onClick={() => setChoosenRole(role.value)}
             >
-              <Image width={48} height={48} layout="intrinsic" src={`/images/${role.icon}.png`} alt="" className="" />
+              <Image
+                width={48}
+                height={48}
+                layout="intrinsic"
+                src={`/images/${role.icon}.png`}
+                alt=""
+                className=""
+              />
               <span className="font-medium">{role.label}</span>
             </div>
           ))}

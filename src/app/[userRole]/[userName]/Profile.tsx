@@ -20,31 +20,31 @@ const Profile = async ({ userData }: any) => {
 
   return (
     <div>
-      <div className="flex flex-col rounded-md border gap-4">
-        <Head session={session} userData={userData} />
+      <>
+        {userData.role === "venue" ? (
+          <h1>hello</h1>
+        ) : (
+          <div className="flex flex-col rounded-md border gap-4">
+            <Head session={session} userData={userData} />
 
-        <About userData={userData} />
+            <About userData={userData} />
 
-        {userData.role === 'venue' && (
-            <Venues venueData={userData} />
+            {userData.role === "brand" && <Products userData={userData} />}
+
+            {(userData.role === "doctor" || userData.role === "athlete") && (
+              <Skills userData={userData} />
+            )}
+
+            <Activity userData={userData} postData={postData} />
+
+            {(userData.role === "doctor" || userData.role === "athlete") && (
+              <Experience userData={userData} />
+            )}
+
+            {userData.role === "doctor" && <Education userData={userData} />}
+          </div>
         )}
-
-        {userData.role === 'brand' && (
-            <Products userData={userData} />
-        )}
-
-        {(userData.role === "doctor" || userData.role === "athlete") && (
-          <Skills userData={userData} />
-        )}
-
-        <Activity userData={userData} postData={postData} />
-
-        {(userData.role === "doctor" || userData.role === "athlete") && (
-          <Experience userData={userData} />
-        )}
-
-        {userData.role === "doctor" && <Education userData={userData} />}
-      </div>
+      </>
     </div>
   );
 };

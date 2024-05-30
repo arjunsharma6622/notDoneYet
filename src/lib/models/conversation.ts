@@ -22,7 +22,7 @@ const conversationSchema = new mongoose.Schema(
           type: Date,
           default: Date.now,
         },
-        seen : {type: Boolean, default: false}
+        seen: { type: Boolean, default: false },
       },
     ],
   },
@@ -32,4 +32,5 @@ const conversationSchema = new mongoose.Schema(
 );
 
 export const Conversation =
-  mongoose.models.Conversation || mongoose.model("Conversation", conversationSchema);
+  mongoose.models.Conversation ||
+  mongoose.model("Conversation", conversationSchema);

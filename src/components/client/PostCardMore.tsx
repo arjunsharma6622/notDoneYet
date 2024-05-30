@@ -8,7 +8,13 @@ import {
 import { API_HEAD, CLIENT_HEAD } from "@/lib/utils";
 import axios from "axios";
 import { BiBookmark, BiSolidBookmark } from "react-icons/bi";
-import { FiCode, FiEdit2, FiLink, FiMoreVertical, FiTrash } from "react-icons/fi";
+import {
+  FiCode,
+  FiEdit2,
+  FiLink,
+  FiMoreVertical,
+  FiTrash,
+} from "react-icons/fi";
 import { toast } from "sonner";
 
 const PostCardMore = ({ postData, currUser, dashboardCard }: any) => {
@@ -24,11 +30,21 @@ const PostCardMore = ({ postData, currUser, dashboardCard }: any) => {
         {
           postId: postData?._id,
           userId: currUser._id,
-        }
+        },
       );
       toast.success(res.data.message);
     } catch (err) {
       toast.error("Failed to save post in your account");
+      console.log(err);
+    }
+  };
+
+  const handlePostDelete = async () => {
+    try {
+      const res: any = await axios.delete(`${API_HEAD}/posts/${postData?._id}`);
+      toast.success("Post deleted successfully");
+    } catch (err) {
+      toast.error("Failed to delete post");
       console.log(err);
     }
   };
@@ -56,7 +72,7 @@ const PostCardMore = ({ postData, currUser, dashboardCard }: any) => {
               <p>Edit Post</p>
             </div>
             <div
-              onClick={copyPostLink}
+              onClick={handlePostDelete}
               className="text-sm flex text-red-500 items-center gap-4 cursor-pointer hover:bg-gray-100 w-full px-2 py-2 rounded-md"
             >
               <FiTrash className="w-5 h-5" />

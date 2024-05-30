@@ -7,7 +7,15 @@ import { useForm } from "react-hook-form";
 import { FiImage, FiLink, FiX } from "react-icons/fi";
 import { toast } from "sonner";
 
-const AddDoctorExperience = ({ user, open, setOpen } : { user: any, open: boolean, setOpen: (open: boolean) => void }) => {
+const AddDoctorExperience = ({
+  user,
+  open,
+  setOpen,
+}: {
+  user: any;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}) => {
   const [userData, setUserData] = useState(user);
   const {
     register,
@@ -17,7 +25,7 @@ const AddDoctorExperience = ({ user, open, setOpen } : { user: any, open: boolea
     watch,
   } = useForm();
 
-  const handleUserUpdate = async (data : any) => {
+  const handleUserUpdate = async (data: any) => {
     try {
       await axios.patch(`${API_HEAD}/user/${userData._id}`, {
         experience: [...userData.experience, data],
@@ -27,7 +35,7 @@ const AddDoctorExperience = ({ user, open, setOpen } : { user: any, open: boolea
       reset();
       window.location.reload();
     } catch (err) {
-        toast.error("Profile Update Failed")
+      toast.error("Profile Update Failed");
       console.log(err);
     }
   };
@@ -44,10 +52,15 @@ const AddDoctorExperience = ({ user, open, setOpen } : { user: any, open: boolea
                 onClick={() => setOpen(false)}
               />
             </div>
-            <form onSubmit={handleSubmit(handleUserUpdate)} className="flex flex-col gap-6 overflow-scroll">
+            <form
+              onSubmit={handleSubmit(handleUserUpdate)}
+              className="flex flex-col gap-6 overflow-scroll"
+            >
               <div className="flex flex-col gap-6 px-6 py-4 overflow-y-scroll">
                 <div className="flex flex-col gap-2">
-                  <h2 className="text-xl font-semibold underline">Add Experience</h2>
+                  <h2 className="text-xl font-semibold underline">
+                    Add Experience
+                  </h2>
                   <div className="flex flex-col gap-4">
                     <div className="flex justify-between gap-6 items-center">
                       <div className="w-full">
@@ -62,7 +75,9 @@ const AddDoctorExperience = ({ user, open, setOpen } : { user: any, open: boolea
                         {errors.title && <p>Title is required.</p>}
                       </div>
                       <div className="w-full">
-                        <label htmlFor="experienceOrganization">Organization</label>
+                        <label htmlFor="experienceOrganization">
+                          Organization
+                        </label>
                         <input
                           type="text"
                           placeholder="Organization"
@@ -115,7 +130,9 @@ const AddDoctorExperience = ({ user, open, setOpen } : { user: any, open: boolea
                         />
                       </div>
                       <div className="w-full">
-                        <label htmlFor="experienceOutcome">Specialization</label>
+                        <label htmlFor="experienceOutcome">
+                          Specialization
+                        </label>
                         <input
                           id="specialization"
                           className="border rounded-md px-3 py-2 w-full focus:outline-none"
@@ -123,14 +140,13 @@ const AddDoctorExperience = ({ user, open, setOpen } : { user: any, open: boolea
                           placeholder="Specialization"
                         />
                       </div>
-
                     </div>
 
                     <div className="w-full flex items-center gap-4">
                       <span>Attachments</span>
                       <div className="flex gap-4 text-blue-500 items-center justify-start">
-                        <FiLink className="text-lg"/>
-                        <FiImage className="text-lg"/>
+                        <FiLink className="text-lg" />
+                        <FiImage className="text-lg" />
                       </div>
                     </div>
                   </div>
@@ -153,7 +169,7 @@ const AddDoctorExperience = ({ user, open, setOpen } : { user: any, open: boolea
               </div>
             </form>
           </div>
-          </ModalLayout>
+        </ModalLayout>
       )}
     </div>
   );

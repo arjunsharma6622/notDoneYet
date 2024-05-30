@@ -1,22 +1,43 @@
-"use client"
+"use client";
 
+import axios from "axios";
 import { useCallback, useState } from "react";
 import Cropper from "react-easy-crop";
+import { FiUploadCloud } from "react-icons/fi";
+import { toast } from "sonner";
+import { Spinner } from "../ui/spinner";
 import getCroppedImg from "./Crop";
-import { FiCrop } from "react-icons/fi";
 
-const EasyCrop = ({ image, setImage, aspectRatio, widthOfImg,heightOfImg, croppedImage, setCroppedImage, inProductImages, croppedFile, setCroppedFile } : any) => {
+const EasyCrop = ({
+  image,
+  setImage,
+  aspectRatio,
+  widthOfImg,
+  heightOfImg,
+  imageUrls,
+  setImageUrls,
+  baseUrlPath,
+  inProfileImages,
+  setProfileImage,
+  inSports,
+  sportImagePath,
+  inVenueImages,
+  venueImagePath,
+}: any) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-//   const [croppedImage, setCroppedImage] : any = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
 
-  const onCropComplete = useCallback((croppedArea : any, croppedAreaPixels : any) => {
-    setCroppedAreaPixels(croppedAreaPixels);
-  }, []);
+  const onCropComplete = useCallback(
+    (croppedArea: any, croppedAreaPixels: any) => {
+      setCroppedAreaPixels(croppedAreaPixels);
+    },
+    [],
+  );
 
-  const blobUrlToFile = async (url : string, fileName : string) => {
+  const blobUrlToFile = async (url: string, fileName: string) => {
     const res = await fetch(url);
     const blob = await res.blob();
     return new File([blob], fileName, { type: blob.type });
@@ -24,41 +45,66 @@ const EasyCrop = ({ image, setImage, aspectRatio, widthOfImg,heightOfImg, croppe
 
   const showCroppedImage = useCallback(async () => {
     try {
-      if (image !== null && croppedImage === null) {
+      if (image !== null) {
         const croppedImageFromCropper = await getCroppedImg(
           image,
           croppedAreaPixels,
           rotation,
         );
 
-        setCroppedImage(croppedImageFromCropper);
-        console.log("croppedImage", croppedImageFromCropper);
+        setIsUploading(true);
 
-        const file = await blobUrlToFile(croppedImageFromCropper as string, "crop.png");
-  
-        if (inProductImages) {
-          setCroppedFile(file);
+        const file = await blobUrlToFile(
+          croppedImageFromCropper as string,
+          "crop.png",
+        );
+        const imageData = new FormData();
+        imageData.append("file", file);
+        imageData.append("upload_preset", "ml_default");
+        imageData.append("folder", baseUrlPath);
+
+        const uploadResponse = await axios.post(
+          "https://api.cloudinary.com/v1_1/dexnb3wk2/image/upload",
+          imageData,
+        );
+
+        const imageUrl = uploadResponse.data.secure_url;
+
+        if (inProfileImages) {
+          setProfileImage(imageUrl);
           setImage(null);
-          setCroppedImage(null);
+        } else if (inSports) {
+          setImageUrls(sportImagePath, [...imageUrls, imageUrl]);
+          setImage(null);
+        } else if(inVenueImages){
+          setImageUrls(venueImagePath, [...imageUrls, imageUrl]);
+          setImage(null);
         } else {
-          setImage(file);
+          setImageUrls((prev: any) => [...prev, imageUrl]);
+          setImage(null);
         }
+        toast.success("Image uploaded successfully");
+
+        setIsUploading(false);
       }
     } catch (e) {
+      setIsUploading(false);
+      toast.error("Error uploading image");
       console.error(e);
     }
-  }, [croppedAreaPixels, rotation, image, croppedImage, inProductImages, setCroppedFile, setImage, setCroppedImage]);
-  
+  }, [croppedAreaPixels, rotation, image, setImage]);
 
   return (
     <div className=" flex flex-col gap-3 items-center justify-center">
       <div
         className=""
         style={{
-          display: image === null || croppedImage !== null ? "none" : "block",
+          display: image === null ? "none" : "block",
         }}
       >
-        <div className={`relative flex justify-center ${widthOfImg} ${heightOfImg ? heightOfImg : "h-64"} aspect-${aspectRatio}`}>
+        <div
+          className={`relative flex justify-center ${widthOfImg} ${heightOfImg ? heightOfImg : "h-64"} aspect-${aspectRatio}`}
+        >
           <Cropper
             image={image}
             crop={crop}
@@ -80,13 +126,25 @@ const EasyCrop = ({ image, setImage, aspectRatio, widthOfImg,heightOfImg, croppe
         </div>
       </div>
 
-        <button
-          className={`bg-blue-500 text-white py-2 px-4 rounded ${ (image === null || croppedImage !== null) ? "hidden" : "flex"} items-center justify-center gap-2 w-full`}
-          onClick={() => showCroppedImage()}
-        >
-          <FiCrop className="w-5 h-5"/>
-          <span>Crop</span>
-        </button>
+      <button
+      type="button"
+        className={`bg-blue-500 text-white py-2 px-4 rounded ${image === null ? "hidden" : "flex"} items-center justify-center gap-2 w-full`}
+        onClick={() => {
+          showCroppedImage();
+        }}
+      >
+        {!isUploading ? (
+          <>
+            <FiUploadCloud className="w-5 h-5" />
+            <span>Upload</span>
+          </>
+        ) : (
+          <>
+            <Spinner className="w-5 h-5 text-white" />
+            <span>Uploading</span>
+          </>
+        )}
+      </button>
     </div>
   );
 };

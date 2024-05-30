@@ -12,10 +12,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-    FacebookProvider({
-      clientId: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -79,11 +75,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               email,
               image,
               googleId: id,
+              userName : email?.split("@")[0],
             });
           }
 
           return true;
         } catch (error) {
+          console.log(error);
           throw new CredentialsSignin("Error creating user");
         }
       }
