@@ -11,6 +11,7 @@ import { amenities } from "@/lib/utils";
 import Image from "next/image";
 import { FiCheckCircle } from "react-icons/fi";
 import Link from "next/link";
+import RatingForm from "@/components/client/RatingForm";
 
 const VenueProfile = ({ venueData, session }: any) => {
   return (
@@ -18,8 +19,9 @@ const VenueProfile = ({ venueData, session }: any) => {
 
 <div className="flex-[9] flex w-full">
     <div className="flex flex-col gap-4">
-        <div>
+        <div className="flex flex-col gap-2">
         <h1 className="text-4xl font-bold">{venueData.name}</h1>
+        <p className=" text-sm">{venueData.description}</p>
         <HeadActionOptions userData={venueData} session={session}/>
 
         </div>
@@ -105,6 +107,10 @@ const VenueProfile = ({ venueData, session }: any) => {
 
 <div className="flex-[4] flex w-full">
 
+
+<div className="flex flex-col gap-2">
+
+
 <div className="flex items-center gap-4">
     {venueData?.socialLinks?.map((social: any, index: number) => (
       <Link key={index} href={social.link}>
@@ -115,13 +121,10 @@ const VenueProfile = ({ venueData, session }: any) => {
 
 
 <div className="flex flex-col gap-2">
-      <p>{venueData.location.address}</p>
-      <p>{venueData.location.city}</p>
-      <p>{venueData.location.state}</p>
-      <p>{venueData.location.country}</p>
-      <p>{venueData.location.zipCode}</p>
-      <p>{venueData.name}</p>
-      <p>{venueData.name}</p>
+  <p>{`${venueData.location.address}, ${venueData.location.city}, ${venueData.location.state}, ${venueData.location.country}, ${venueData.location.zipCode}`}</p>
+      </div>
+
+      <RatingForm />
       </div>
       </div>
     </div>

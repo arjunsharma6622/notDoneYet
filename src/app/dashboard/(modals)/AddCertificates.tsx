@@ -2,15 +2,9 @@ import ModalLayout from "@/components/ModalLayout";
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
 import { FiFile, FiImage, FiX } from "react-icons/fi";
-import { pdfjs } from "react-pdf";
-import { PdfComp } from "./PdfComp";
+// import { PdfComp } from "./PdfComp";
 import axios from "axios";
 import { toast } from "sonner";
-
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.js",
-  import.meta.url,
-).toString();
 
 const AddCertificate = ({ open, setOpen, user }: any) => {
   const [certificateData, setCertificateData] = useState({
@@ -142,7 +136,8 @@ const AddCertificate = ({ open, setOpen, user }: any) => {
                         {certificateDoc &&
                           (certificateData?.certificateDoc &&
                           !isCertificateUploading ? (
-                            <PdfComp file={certificateData?.certificateDoc} />
+                            // <PdfComp file={certificateData?.certificateDoc} />
+                            <p>PDF Uploaded</p>
                           ) : (
                             <p>Loading...</p>
                           ))}
