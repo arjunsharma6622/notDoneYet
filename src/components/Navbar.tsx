@@ -17,10 +17,9 @@ const Navbar = async () => {
     <div className="sticky top-0 z-[30] bg-white">
       <div className="w-full  top-4 md:flex hidden px-20 py-3 border border-b items-center">
         <div className=" w-full flex justify-between items-center gap-8">
-          <div className="flex-[1] flex justify-start gap-4 items-center">
-            <span className=" font-extrabold text-2xl">NDY</span>
+          <div className="flex-[1] flex justify-start gap-4 items-center w">
+              <Image src={"/images/logo.png"} alt="logo" width={48} height={48}/>
           </div>
-
           <NavDesktop />
 
           <div className="flex-[1] flex justify-end">
@@ -62,7 +61,7 @@ const Navbar = async () => {
 
       <div className="w-full px-2 py-3 md:hidden flex relative justify-between items-center gap-4 border border-b">
         <div className=" flex gap-2 justify-start items-center w-full">
-          <span className=" font-extrabold text-xl">NDY</span>
+          <Image src={"/images/logo.png"} alt="logo" width={44} height={44} />
           <input
             type="text"
             placeholder="search"

@@ -17,7 +17,7 @@ const VenueProfile = ({ venueData, session }: any) => {
   return (
     <div className="flex items-start gap-4">
 
-<div className="flex-[9] flex w-full">
+<div className="flex-[8] flex w-full">
     <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
         <h1 className="text-4xl font-bold">{venueData.name}</h1>
@@ -108,7 +108,7 @@ const VenueProfile = ({ venueData, session }: any) => {
 <div className="flex-[4] flex w-full">
 
 
-<div className="flex flex-col gap-2">
+<div className="w-full flex flex-col gap-2">
 
 
 <div className="flex items-center gap-4">
@@ -126,6 +126,9 @@ const VenueProfile = ({ venueData, session }: any) => {
 
       <RatingForm />
       </div>
+
+
+
       </div>
     </div>
   );
