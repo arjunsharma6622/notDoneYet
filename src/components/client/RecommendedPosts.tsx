@@ -4,7 +4,7 @@ import PostCard from "./PostCard";
 
 const RecommendedPosts = async ({userId} : {userId: string}) => {
 
-  const userData = await axios.get(`${API_HEAD}/user/${userId}`)
+  const userData = await axios.get(`${API_HEAD}/user/getUser?userId=${userId}`)
   .then((res) => res.data)
   .catch((err) => console.error("Error", err));
 

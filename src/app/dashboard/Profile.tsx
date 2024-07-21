@@ -23,7 +23,7 @@ const Profile = ({ session }: any) => {
     data: userData,
     error,
     isLoading,
-  } = useSWR(`${API_HEAD}/user/${session?.user?._id}`, fetcher);
+  } = useSWR(`${API_HEAD}/user/getUser?userId=${session?.user?._id}`, fetcher);
 
   return (
     <div className="relative flex items-center justify-center px-2 ">
