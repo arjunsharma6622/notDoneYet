@@ -9,10 +9,10 @@ const UserInfoCard = async ({userId, userName} : {userId?: string, userName?: st
 
   const queryParam = userId ? `userId=${userId}` : `userName=${userName}`;
 
-  const userData = await axios.get(`${API_HEAD}/user?${queryParam}`)
+  const userData = await axios.get(`${API_HEAD}/user/getUser?${queryParam}`)
     .then((res) => res.data)
     .catch((err) => console.error("Error", err));
-    
+
   return (
     <div className="flex flex-col gap-2 items-center justify-start border rounded-md h-fit px-4 py-4">
       <Image
