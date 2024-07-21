@@ -4,7 +4,7 @@ import { useState } from "react";
 import ImagesModal from "./ImagesModal";
 import Image from "next/legacy/image";
 
-const PostImageSection = ({ images }: any) => {
+const PostImageSection = ({ images, openModalOnClick=true }: any) => {
   const [openImagesModal, setOpenImagesModal] = useState(false);
   return (
     <div className="cursor-pointer max-w-[650px]">
@@ -25,7 +25,7 @@ const PostImageSection = ({ images }: any) => {
               <Image
                 alt=""
                 width={650}
-                height={325}
+                height={450}
                 layout="intrinsic"
                 src={images[0]}
                 className="w-full h-full object-cover rounded-md"
@@ -33,7 +33,7 @@ const PostImageSection = ({ images }: any) => {
               <Image
                 alt=""
                 width={650}
-                height={325}
+                height={450}
                 layout="intrinsic"
                 src={images[1]}
                 className="w-full h-full object-cover rounded-md"
@@ -110,7 +110,7 @@ const PostImageSection = ({ images }: any) => {
         </div>
       )}
 
-      {openImagesModal && (
+      {openImagesModal && openModalOnClick && (
         <div className="absolute">
           <ImagesModal
             images={images}

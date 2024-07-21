@@ -2,7 +2,7 @@ import ProfilePostCard from "@/components/client/ProfilePostCard";
 import Link from "next/link";
 import { FiArrowUpRight } from "react-icons/fi";
 
-const Activity = ({ postData, userData }: { postData: any; userData: any }) => {
+const Posts = ({ postData, userData }: { postData: any; userData: any }) => {
   return (
     <div className="flex flex-col gap-4 border-t py-2 px-3 md:px-6 md:py-4">
       <div className="flex justify-between items-center">
@@ -28,4 +28,4 @@ const Activity = ({ postData, userData }: { postData: any; userData: any }) => {
   );
 };
 
-export default Activity;
+export default Posts;

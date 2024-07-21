@@ -22,6 +22,7 @@ const BasicProfileEdit = ({
     handleSubmit,
     setValue,
     formState: { errors },
+    watch
   } = useForm({
     defaultValues: user,
   });

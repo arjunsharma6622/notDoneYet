@@ -32,7 +32,7 @@ export default async function Home() {
   return (
     <div className="flex justify-center gap-5 w-full">
       {user && userData ? (
-        <div className="w-[95%] flex gap-10 md:flex-row flex-col items-start mt-5">
+        <div className="w-full flex gap-10 md:flex-row flex-col items-start m-5">
           <div className="flex-[3]">
             <UserInfoCard userData={userData} />
           </div>

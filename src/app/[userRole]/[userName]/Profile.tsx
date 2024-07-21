@@ -2,19 +2,18 @@ import { auth } from "@/auth";
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import About from "./(components)/About";
-import Activity from "./(components)/Activity";
+import Products from "./(components)/brand/Products";
 import Education from "./(components)/Education";
 import Experience from "./(components)/Experience";
 import Head from "./(components)/Head";
+import Posts from "./(components)/Posts";
 import Skills from "./(components)/Skills";
-import Venues from "./(components)/Venues";
-import Products from "./(components)/brand/Products";
 
 const Profile = async ({ userData }: any) => {
   const session: any = await auth();
 
   const postData = await axios
-    .get(`${API_HEAD}/posts/user/${userData._id}`)
+    .get(`${API_HEAD}/posts/getPosts/user?userId=${userData._id}`)
     .then((res) => res.data)
     .catch((err) => console.error("Error", err));
 
@@ -35,7 +34,7 @@ const Profile = async ({ userData }: any) => {
               <Skills userData={userData} />
             )}
 
-            <Activity userData={userData} postData={postData} />
+            <Posts userData={userData} postData={postData} />
 
             {(userData.role === "doctor" || userData.role === "athlete") && (
               <Experience userData={userData} />

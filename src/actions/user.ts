@@ -135,7 +135,7 @@ export const updateUser = async (userData: any) => {
 
     const updatedUserData = await User.findByIdAndUpdate(
       userData._id,
-      userData,
+      { $set : userData},
       { new: true },
     );
     if (!updatedUserData) {

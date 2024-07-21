@@ -1,8 +1,9 @@
 import { timeAgo } from "@/lib/utils";
 import Image from "next/legacy/image";
 import Link from "next/link";
-import { FcLike } from "react-icons/fc";
 import PostCardMore from "./PostCardMore";
+import PostImageSection from "./PostImageSection";
+import { Heart } from "lucide-react";
 
 const ProfilePostCard = ({ post, currUser, dashboardCard }: any) => {
   return (
@@ -41,31 +42,27 @@ const ProfilePostCard = ({ post, currUser, dashboardCard }: any) => {
         </div>
 
         <Link href={`/post/${post._id}`} className="flex flex-col gap-2">
-          <div className="w-full grid grid-cols-2 gap-2">
-            {post?.images.length > 0 &&
-              post?.images
-                .slice(0, 2)
-                .map((image: any, index: number) => (
-                  <Image
-                    key={index}
-                    width={300}
-                    height={220}
-                    layout="intrinsic"
-                    src={image}
-                    alt=""
-                    className="w-full rounded-md object-cover"
-                  />
-                ))}
-          </div>
+          <PostImageSection openModalOnClick={false} images={post?.images} />
           <p className="flex-[11] text-sm truncatedText">{post.description}</p>
         </Link>
-
-        <div className="flex justify-between items-center text-xs">
+{ (post?.likes?.length > 0 || post?.comments?.length > 0) &&
+        <div className="w-full flex justify-between items-center text-xs">
           <span className="flex items-center justify-center gap-1">
-            {post?.likes?.length} <FcLike className="w-4 h-4" />
+            {post?.likes?.length > 0 &&
+              <>
+                {post?.likes?.length} <Heart fill="#ef4444" className="w-4 h-4 text-red-500" />
+              </>
+            }
           </span>
-          <span>{post?.comments?.length} Comments</span>
+          <span>
+            {post?.comments?.length > 0 &&
+              <>
+                {post?.comments?.length} Comments
+              </>
+            }
+          </span>
         </div>
+}
       </div>
     </div>
   );

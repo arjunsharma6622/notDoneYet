@@ -14,7 +14,7 @@ const Posts = ({ userData }: { userData: any }) => {
     data: allUserPosts,
     error,
     isLoading,
-  } = useSWR(`${API_HEAD}/posts/user/${userData?._id}`, fetcher);
+  } = useSWR(`${API_HEAD}/posts/getPosts/user?userId=${userData?._id}`, fetcher);
 
   return (
     <>

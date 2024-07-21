@@ -10,7 +10,7 @@ const Navbar = async () => {
       <div className="w-full  top-4 md:flex hidden px-20 py-3 border border-b items-center">
         <div className=" w-full flex justify-between items-center gap-8">
           <div className="flex-[1] flex justify-start gap-4 items-center w-full">
-              <Image src={"/logo.png"} alt="logo" width={56} height={10} className="object-contain"/>
+              <img src={"/logo.png"} alt="logo" className="object-contain w-16"/>
           </div>
           <NavDesktop />
 
