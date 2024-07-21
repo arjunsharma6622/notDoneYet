@@ -18,7 +18,7 @@ const page = async ({ params }: { params: { postId: string } }) => {
       {postData && postData.user && (
         <div className="md:w-[95%] flex md:flex-row md:gap-10 flex-col items-start mt-5">
           <div className="flex-[3] sticky top-20">
-            <UserInfoCard userData={postData.user} />
+            <UserInfoCard userName={postData?.user?.userName} />
           </div>
 
           <div className="flex-[6]">
