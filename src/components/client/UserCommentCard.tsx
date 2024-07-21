@@ -16,13 +16,12 @@ const UserCommentCard = ({ comment }: any) => {
         />
 
         <div className="flex flex-col gap-1 bg-gray-100 w-full px-3 py-2 rounded-md">
-          <div className="flex justify-between items-start">
-            <div className=" ">
+          <div className="w-full flex justify-between items-start">
+            <div className="w-fit">
               <p className="text-sm font-medium">{comment.user.name}</p>
-              <p className="text-xs">{comment.user.bio}</p>
             </div>
 
-            <span className="text-xs">{timeAgo(comment.createdAt)}</span>
+            <span className="text-xs w-fit">{timeAgo(comment.createdAt)}</span>
           </div>
 
           <div>

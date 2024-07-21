@@ -49,6 +49,10 @@ const PostCard = ({ postData, currUser }: any) => {
     }
   };
 
+  const isPostLiked = postData?.likes?.some(
+    (like: any) => like._id === currUser?._id
+  );
+
   return (
     <div className="flex border flex-col rounded-md px-2 py-2 gap-2 max-w-[650px]">
       <div className="flex items-center justify-between gap-4 border-b pb-2">
@@ -90,43 +94,37 @@ const PostCard = ({ postData, currUser }: any) => {
       </div>
 
       <div className="flex items-center justify-between w-full">
-        <div className="flex items-center text-sm justify-between w-full gap-2">
-          <span>{postData?.likes?.length} Likes</span>
-          <span
-            onClick={() => setOpenCommentInput(!openCommentInput)}
-            className="cursor-pointer"
-          >
-            {postData?.comments?.length} Comments
-          </span>
-        </div>
-      </div>
-
-      <div className="flex items-center justify-between w-full">
         <div className="flex items-center border-t pt-3 justify-between w-full px-6 gap-2">
-          {postData?.likes?.some((like: any) => like._id === currUser?._id) ? (
-            <div
-              className="flex items-center text-pink-500 cursor-pointer gap-2"
-              onClick={handlePostLike}
-            >
-              <RiHeart2Fill className="w-5 h-5" /> <span>Liked</span>
-            </div>
-          ) : (
-            <div
-              className="flex items-center cursor-pointer gap-2"
-              onClick={handlePostLike}
-            >
-              <RiHeart2Line className="w-5 h-5" /> <span>Like</span>
-            </div>
-          )}
           <div
-            className={`flex items-center gap-2 cursor-pointer ${
+            className={`flex flex-[1] items-center cursor-pointer gap-2 ${isPostLiked ? "text-pink-500" : ""}`}
+            onClick={handlePostLike}
+          >
+            {isPostLiked ? (
+              <RiHeart2Fill className="w-5 h-5" />
+            ) : (
+              <RiHeart2Line className="w-5 h-5" />
+            )}
+            {postData?.likes?.length > 0 && <>{postData?.likes?.length}</>}
+
+            <span>{postData?.likes?.length > 1 ? "Likes" : "Like"}</span>
+          </div>
+
+          <div
+            className={`flex flex-[1] justify-center items-center gap-2 cursor-pointer ${
               openCommentInput ? "text-orange-500" : ""
             }`}
             onClick={() => setOpenCommentInput(!openCommentInput)}
           >
-            <FiMessageCircle className="w-5 h-5" /> <span>Comment</span>
+            <FiMessageCircle className="w-5 h-5" />
+            {postData?.comments?.length > 0 && (
+              <>{postData?.comments?.length}</>
+            )}
+            <span>
+              {postData?.comments?.length > 1 ? "Comments" : "Comment"}
+            </span>
           </div>
-          <div className="flex items-center gap-2">
+
+          <div className="flex flex-[1] justify-end items-center gap-2">
             <FiShare className="w-5 h-5" /> <span>Share</span>
           </div>
         </div>
@@ -180,7 +178,7 @@ const PostCard = ({ postData, currUser }: any) => {
                 className="w-10 h-10 rounded-full overflow-hidden"
               >
                 <Image
-                  src={like.profileImg}
+                  src={like.image}
                   alt="profile"
                   width={40}
                   height={40}

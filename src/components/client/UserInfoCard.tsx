@@ -1,6 +1,14 @@
+import { API_HEAD } from "@/lib/utils";
+import axios from "axios";
 import Image from "next/legacy/image";
 
-const UserInfoCard = ({ userData }: any) => {
+const UserInfoCard = async ({userId} : {userId: string}) => {
+  
+  const userData = await axios.get(`${API_HEAD}/user/${userId}`)
+  .then((res) => res.data)
+  .catch((err) => console.error("Error", err));
+
+
   return (
     <div className="flex flex-col gap-2 items-center justify-start border rounded-md h-fit px-4 py-4">
       <Image
