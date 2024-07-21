@@ -12,7 +12,7 @@ const AddVenueSchema = z.object({
       .min(1, "This is required")
       .refine(async (uniqueName) => {
         if(!uniqueName) return true;
-        const res = await axios.get(`${API_HEAD}/checkVenueName?name=${uniqueName}`);
+        const res = await axios.get(`${API_HEAD}/checkVenueName?uniqueName=${uniqueName}`);
         return res.data?.available;
       }, {
         message: "Name not available, please choose another",

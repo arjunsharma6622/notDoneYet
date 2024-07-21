@@ -1,10 +1,9 @@
 import { auth } from "@/auth";
 import RecommendedPosts from "@/components/client/RecommendedPosts";
 import UserInfoCard from "@/components/client/UserInfoCard";
-import { Button } from "@/components/ui/button";
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
-import Link from "next/link";
+import { redirect } from "next/navigation";
 
 
 export default async function Home() {
@@ -43,12 +42,13 @@ export default async function Home() {
           <div className="flex-[3]"></div>
         </div>
       ) : (
-        <div>
-          <p>Please Login</p>
-          <Link href="/login">
-            <Button>Login</Button>
-          </Link>
-        </div>
+        // <div>
+        //   <p>Please Login</p>
+        //   <Link href="/login">
+        //     <Button>Login</Button>
+        //   </Link>
+        // </div>
+        redirect("https://ndy-static.vercel.app")
       )}
     </div>
   );

@@ -58,8 +58,8 @@ const Page = async ({ params }: { params: { uniqueName: string } }) => {
     .catch((err) => console.error("Error", err.response?.data?.error));
 
   return (
-    <div className="relative flex items-center justify-center w-full px-2">
-      <div className="md:w-[90%] flex md:flex-row md:gap-10 flex-col items-start mt-5">
+    <div className="relative flex items-center justify-center w-full">
+      <div className="md:w-[95%] flex md:flex-row md:gap-10 flex-col items-start mt-5">
         <div className="w-full flex flex-col gap-5 md:flex-[9]">
           <VenueProfile venueData={venueData} session={session} />
         </div>

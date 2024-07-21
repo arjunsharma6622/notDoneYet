@@ -300,6 +300,7 @@ const AddSportCard = ({
                 baseUrlPath={`ndy/venues/${user?.userName}/sports/${watch(
                   `sports.${index}.name`
                 )}`}
+                handle
                 inSports={true}
                 sportImagePath={`sports.${index}.images`}
               />
@@ -309,7 +310,7 @@ const AddSportCard = ({
 
         <div className="h-full w-full px-4 py-2">
           {watch(`sports.${index}.images`).length > 0 ? (
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-3 gap-2">
               {watch(`sports.${index}.images`) &&
                 watch(`sports.${index}.images`).map(
                   (image: string, imageIndex: number) => (

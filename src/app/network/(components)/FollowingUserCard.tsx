@@ -9,16 +9,16 @@ const FollowingUserCard = ({
   follow,
   following,
   index,
-  session,
+  sessionUserId,
 }: {
   follow: any;
   following: any;
   index: number;
-  session: any;
+  sessionUserId: string;
 }) => {
   const handleUnfollowUser = async () => {
     try {
-      await unfollowUser(follow?._id, session?.user?._id);
+      await unfollowUser(follow?._id, sessionUserId);
       toast.success("User Unfollowed");
       console.log("done");
     } catch (err: any) {

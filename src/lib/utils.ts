@@ -165,6 +165,8 @@ export const CLIENT_HEAD =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
     : "https://notdoneyet.vercel.app";
+    // ? "https://notdoneyet.vercel.app"
+    // : "http://localhost:3000";
 
 type ConnectionObject = {
   isConnected?: number;

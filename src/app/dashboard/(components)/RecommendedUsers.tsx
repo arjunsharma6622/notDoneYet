@@ -52,7 +52,7 @@ const RecommendedUsers = ({ userData }: { userData: any }) => {
             />
           </div>
           <div className="flex flex-col w-fit">
-            <Link href={`/${user.role}/${user.userName}`}>
+            <Link  href={`/${user.role}/${user.userName}`} target="_blank">
               <h1 className="font-semibold text-sm md:text-base">
                 {user?.name}
               </h1>

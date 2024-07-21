@@ -40,7 +40,7 @@ const EditVenueSchema = z.object({
       .refine(async (uniqueName) => {
         if(!uniqueName) return true;
         if(uniqueName && uniqueName === venueDetails?.uniqueName) return true;
-        const res = await axios.get(`${API_HEAD}/checkVenueName?name=${uniqueName}`);
+        const res = await axios.get(`${API_HEAD}/checkVenueName?uniqueName=${uniqueName}`);
         return res.data?.available;
       }, {
         message: "Name not available, please choose another",

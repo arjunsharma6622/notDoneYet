@@ -60,6 +60,7 @@ const VenueAmenities = ({
                         alt={amenity.name}
                         width={44}
                         height={44}
+                        loading="lazy"
                       />
                       <label>{amenity.name}</label>
                       {isAmenitySelected && (

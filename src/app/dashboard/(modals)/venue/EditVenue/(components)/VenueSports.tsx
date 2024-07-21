@@ -19,7 +19,7 @@ const VenueSports = ({
       <div className="flex items-center gap-4 mb-4">
         <h1 className="text-xl font-semibold">Venue Sports</h1>
 
-        {/* <IconButton
+        <IconButton
           onClick={() =>
             appendSports({
               name: "",
@@ -30,7 +30,7 @@ const VenueSports = ({
           }
           variant={"add"}
           type="button"
-        /> */}
+        />
       </div>
 
 
