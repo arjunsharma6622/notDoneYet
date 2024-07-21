@@ -2,13 +2,17 @@ import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import Image from "next/legacy/image";
 
-const UserInfoCard = async ({userId} : {userId: string}) => {
-  
-  const userData = await axios.get(`${API_HEAD}/user/${userId}`)
-  .then((res) => res.data)
-  .catch((err) => console.error("Error", err));
+const UserInfoCard = async ({userId, userName} : {userId?: string, userName?: string}) => {
+  if (!userId && !userName) {
+    throw new Error("Either userId or userName must be provided");
+  }
 
+  const queryParam = userId ? `userId=${userId}` : `userName=${userName}`;
 
+  const userData = await axios.get(`${API_HEAD}/user?${queryParam}`)
+    .then((res) => res.data)
+    .catch((err) => console.error("Error", err));
+    
   return (
     <div className="flex flex-col gap-2 items-center justify-start border rounded-md h-fit px-4 py-4">
       <Image

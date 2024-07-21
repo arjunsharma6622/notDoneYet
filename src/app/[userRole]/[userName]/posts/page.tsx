@@ -15,7 +15,7 @@ const page = async ({params}: {params: { userRole: string; userName: string }}) 
       {postsData && (
         <div className="md:w-[95%] flex md:flex-row md:gap-10 flex-col items-start mt-5">
           <div className="flex-[3] sticky top-20">
-            <UserInfoCard userData={postsData[0].user} />
+            <UserInfoCard userName={userName}/>
           </div>
 
           <div className="flex-[6]">
