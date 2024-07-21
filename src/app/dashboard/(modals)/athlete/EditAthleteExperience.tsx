@@ -36,6 +36,8 @@ const EditAthleteExperience = ({
     reset({
       ...selectedExperience,
       date: dateFormat(selectedExperience?.date, "isoDate"),
+      startDate: dateFormat(selectedExperience?.startDate, "isoDate"),
+      endDate: dateFormat(selectedExperience?.endDate, "isoDate"),
     });
   }, [selectedExperience, reset]);
 
@@ -94,7 +96,7 @@ const EditAthleteExperience = ({
         <ModalLayout>
           <div className="w-[95%] md:w-[55%] max-h-[90%] bg-white rounded-md flex flex-col gap-4">
             <div className="flex items-center justify-between border-b px-6 py-5">
-              <h1 className="text-2xl font-bold">Tournaments/Championships</h1>
+              <h1 className="text-2xl font-bold">Experience - {selectedExperience?.type}</h1>
               <FiX
                 className="cursor-pointer h-6 w-6 text-gray-600"
                 onClick={() => setOpen(false)}
@@ -109,7 +111,7 @@ const EditAthleteExperience = ({
                 <div className="flex flex-col gap-6 px-6 py-4 overflow-y-scroll">
                   <div className="flex flex-col gap-2">
                     <h2 className="text-xl font-semibold underline">
-                      Edit Tournament
+                      Edit {selectedExperience?.type}
                     </h2>
                     <div className="flex flex-col gap-4">
                       <div className="flex justify-between gap-6 items-center">
@@ -146,34 +148,71 @@ const EditAthleteExperience = ({
                           {...register("description")}
                         ></textarea>
                       </div>
-                      <div className="flex items-center justify-between w-full gap-6">
-                        <div className="w-full">
-                          <label htmlFor="experienceDate">Date</label>
-                          <input
-                            type="date"
-                            id="experienceDate"
-                            className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                            defaultValue={dateFormat(
-                              selectedExperience.date,
-                              "yyyy-mm-dd",
-                            )}
-                            {...register("date", { required: true })}
-                          />
-                        </div>
 
-                        <div className="w-full">
-                          <label htmlFor="experienceDuration">
-                            Duration in hours
-                          </label>
-                          <input
-                            type="text"
-                            placeholder="Duration"
-                            id="experienceDuration"
-                            className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                            {...register("duration")}
-                          />
-                        </div>
+                      <div className="flex items-center justify-between w-full gap-6">
+
+                        {selectedExperience?.type === "training" &&
+                          <>
+                            <div className="w-full">
+                              <label htmlFor="experienceStartDate">Start Date</label>
+                              <input
+                                type="date"
+                                id="experienceStartDate"
+                                className="border rounded-md px-3 py-2 w-full focus:outline-none"
+                                defaultValue={dateFormat(
+                                  selectedExperience.startDate,
+                                  "yyyy-mm-dd",
+                                )}
+                                {...register("startDate", { required: true })}
+                              />
+                            </div>
+                            <div className="w-full">
+                              <label htmlFor="experienceEndDate">End Date</label>
+                              <input
+                                type="date"
+                                id="experienceEndDate"
+                                className="border rounded-md px-3 py-2 w-full focus:outline-none"
+                                defaultValue={dateFormat(
+                                  selectedExperience.endDate,
+                                  "yyyy-mm-dd",
+                                )}
+                                {...register("endDate", { required: true })}
+                              />
+                            </div>
+                          </>
+                        }
+
+                        {selectedExperience?.type === "tournament" &&
+                          <>
+                            <div className="w-full">
+                              <label htmlFor="experienceDate">Date</label>
+                              <input
+                                type="date"
+                                id="experienceDate"
+                                className="border rounded-md px-3 py-2 w-full focus:outline-none"
+                                defaultValue={dateFormat(
+                                  selectedExperience.date,
+                                  "yyyy-mm-dd",
+                                )}
+                                {...register("date", { required: true })}
+                              />
+                            </div>
+                            <div className="w-full">
+                              <label htmlFor="experienceDuration">
+                                Duration in hours
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="Duration"
+                                id="experienceDuration"
+                                className="border rounded-md px-3 py-2 w-full focus:outline-none"
+                                {...register("duration")}
+                              />
+                            </div>
+                          </>
+                        }
                       </div>
+
                       <div className="flex items-center justify-between w-full gap-6">
                         <div className="w-full">
                           <label htmlFor="experienceLocation">Location</label>
@@ -185,19 +224,22 @@ const EditAthleteExperience = ({
                             {...register("location")}
                           />
                         </div>
-                        <div className="w-full">
-                          <label htmlFor="experienceOutcome">Outcome</label>
-                          <select
-                            id="experienceOutcome"
-                            className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                            {...register("outcome")}
-                          >
-                            <option value="">Select Outcome</option>
-                            <option value="win">Win</option>
-                            <option value="loss">Loss</option>
-                            <option value="draw">Draw</option>
-                          </select>
-                        </div>
+                        {selectedExperience?.type === "tournament" &&
+                          <div className="w-full">
+                            <label htmlFor="experienceOutcome">Outcome</label>
+                            <select
+                              id="experienceOutcome"
+                              className="border rounded-md px-3 py-2 w-full focus:outline-none"
+                              {...register("outcome")}
+                            >
+                              <option value="">Select Outcome</option>
+                              <option value="win">Win</option>
+                              <option value="loss">Loss</option>
+                              <option value="draw">Draw</option>
+                            </select>
+                          </div>
+                        }
+
                       </div>
                       <div className="flex items-center justify-between w-full gap-6">
                         <div className="w-full">
@@ -223,18 +265,23 @@ const EditAthleteExperience = ({
                           />
                         </div>
                       </div>
-                      <div>
-                        <label htmlFor="experienceHealthInjury">
-                          Health Injury
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="Health Injury"
-                          id="experienceHealthInjury"
-                          className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                          {...register("healthInjury")}
-                        />
-                      </div>
+
+                      {selectedExperience?.type === "tournament" &&
+                        <div>
+                          <label htmlFor="experienceHealthInjury">
+                            Health Injury
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Health Injury"
+                            id="experienceHealthInjury"
+                            className="border rounded-md px-3 py-2 w-full focus:outline-none"
+                            {...register("healthInjury")}
+                          />
+                        </div>
+                      }
+
+
                       <div className="w-full flex items-center gap-4">
                         <span>Attachments</span>
                         <div className="flex gap-4 text-blue-500 items-center justify-start">

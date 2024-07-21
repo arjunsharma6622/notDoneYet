@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 export interface Experience {
   title: string;
+  type: string;
   description?: string;
   location?: string;
   duration?: string;
@@ -64,9 +65,9 @@ const experienceSchema = new mongoose.Schema<Experience>(
   {
     title: { type: String, required: true },
     description: { type: String },
+    type: { type: String, required: true, enum: ["training", "tournament"] },
     location: { type: String },
     duration: { type: String },
-
     mediaAttachments: [
       {
         links: { type: String },

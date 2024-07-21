@@ -10,6 +10,13 @@ import EditDoctorExperience from "../(modals)/doctor/EditDoctorExperience";
 const Experience = ({ userData }: { userData: any }) => {
   const [openExperienceAdd, setOpenExperienceAdd] = useState(false);
   const [openExperienceEdit, setOpenExperienceEdit] = useState(false);
+
+  const sortedExperience = userData.experience?.sort((a: any, b: any) => {
+    const dateA = a.endDate ? new Date(a.endDate).getTime() : new Date(a.date).getTime();
+    const dateB = b.endDate ? new Date(b.endDate).getTime() : new Date(b.date).getTime();
+    return dateB - dateA;
+  });
+
   return (
     <>
       <div className="py-2 px-2 md:px-6 md:py-4   flex flex-col gap-4 border-t">
@@ -29,7 +36,7 @@ const Experience = ({ userData }: { userData: any }) => {
         </div>
 
         <div className="flex flex-col gap-2">
-          {userData?.experience?.map((experience: any, index: number) => {
+          {sortedExperience?.map((experience: any, index: number) => {
             return (
               <React.Fragment key={index}>
                 {userData?.role === "athlete" && (

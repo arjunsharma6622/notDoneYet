@@ -41,7 +41,7 @@ const Head = ({ userData }: { userData: any }) => {
             alt=""
             width={160}
             height={160}
-            className="absolute left-6 md:-bottom-10 -bottom-6 border-4 border-white md:border-8 object-cover rounded-full"
+            className="absolute left-6 -bottom-6 md:-bottom-10 border-white border-4 md:border-8 w-20 h-20 md:w-44 md:h-44 object-cover rounded-full"
           />
 
           <div className="absolute right-6 top-6">
