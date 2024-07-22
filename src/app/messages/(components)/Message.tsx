@@ -29,7 +29,7 @@ const Message = ({
           </span>
 
           <div
-            className={`flex relative text-sm items-center gap-4 ${
+            className={`max-w-xl flex relative text-sm items-center gap-4 ${
               currentUser ? "rounded-tr-none" : "rounded-tl-none"
             } bg-gray-100 py-2 rounded-xl px-4`}
           >

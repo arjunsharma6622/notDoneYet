@@ -129,7 +129,7 @@ const CurrentConversation = ({
               </div>
             </div>
 
-            <div className="flex flex-col gap-4 w-full px-8 pt-4 overflow-y-scroll h-full">
+            <div className="flex flex-col gap-4 w-full px-8 pt-4 mb-4 overflow-y-scroll h-full">
               {currentConversation?.messages?.map(
                 (message: any, index: any) => {
                   const otherUser = currentConversation?.users.filter(
