@@ -1,9 +1,5 @@
 import { auth } from "@/auth";
-import { API_HEAD } from "@/lib/utils";
-import axios from "axios";
-import FollowingUserCard from "./(components)/FollowingUserCard";
 import { redirect } from "next/navigation";
-import { Suspense } from "react";
 import FollowingUsers from "./(components)/FollowingUsers";
 
 const Page = async () => {
@@ -13,22 +9,15 @@ const Page = async () => {
     redirect("/login");
   }
 
-
-
   return (
     <div className="flex items-center justify-center w-full">
       <div className="flex justify-between gap-4 items-start md:w-[90%] mt-5">
         <div className="flex-[9] w-full flex flex-col gap-4 border rounded-md ">
           <div className="w-full px-5 border-b py-4">
             <h1 className="text-2xl font-bold">Atheletes You Follow</h1>
-            {/* <p>You Follow {following?.length} athletes</p> */}
           </div>
-
           <FollowingUsers userId={session?.user?._id}/>
-
-
         </div>
-
         <div className="flex-[3] w-full"></div>
       </div>
     </div>

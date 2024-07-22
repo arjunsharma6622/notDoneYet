@@ -1,10 +1,10 @@
-import { signOut } from "@/auth";
-import Image from "next/legacy/image";
+import { auth } from "@/auth";
+import NavAction from "./client/NavAction";
 import NavDesktop from "./client/NavDesktop";
 import NavMobile from "./client/NavMobile";
-import NavAction from "./client/NavAction";
 
 const Navbar = async () => {
+  const session : any = await auth()
   return (
     <div className="sticky top-0 z-[30] bg-white">
       <div className="w-full  top-4 md:flex hidden px-20 py-3 border border-b items-center">
@@ -12,8 +12,7 @@ const Navbar = async () => {
           <div className="flex-[1] flex justify-start gap-4 items-center w-full">
               <img src={"/logo.png"} alt="logo" className="object-contain w-16"/>
           </div>
-          <NavDesktop />
-
+          <NavDesktop session={session}/>
           <NavAction />
         </div>
       </div>

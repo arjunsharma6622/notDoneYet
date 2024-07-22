@@ -17,6 +17,7 @@ const FollowingUserCard = ({
   sessionUserId: string;
 }) => {
   const handleUnfollowUser = async () => {
+    console.log(follow?._id, sessionUserId);
     try {
       await unfollowUser(follow?._id, sessionUserId);
       toast.success("User Unfollowed");

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FiEdit, FiSearch } from "react-icons/fi";
 import ConversationCard from "./ConversationCard";
 
@@ -39,8 +39,7 @@ const Sidebar = ({
 
         <div className="flex flex-col h-full gap-1 overflow-y-scroll">
           {allConversations?.map((conversation: any, index: number) => {
-            const lastMessage =
-              conversation.messages[conversation.messages.length - 1];
+            const lastMessage = conversation?.messages[conversation.messages.length - 1];
             const otherUser = conversation.users.filter(
               (user: any) => user._id !== session?.user._id,
             )[0];

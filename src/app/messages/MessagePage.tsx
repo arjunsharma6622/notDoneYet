@@ -14,6 +14,8 @@ const MessagePage = ({ session }: any) => {
   const [writeNewMsg, setWriteNewMsg]: any = useState(false);
   const [allFollowingUsers, setAllFollowingUsers]: any = useState([]);
 
+  const [newMsgSent, setNewMsgSent] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,16 +38,21 @@ const MessagePage = ({ session }: any) => {
           `${API_HEAD}/conversation/user/${session?.user._id}`,
         );
 
-        setAllConversations(conversations.data);
+        const sortedConversations = conversations?.data?.sort((a:any, b:any) => {
+          const aLastMsgTime = a.messages[a.messages.length - 1].createdAt;
+          const bLastMsgTime = b.messages[b.messages.length - 1].createdAt;
+          return bLastMsgTime - aLastMsgTime;
+        });
+
+        setAllConversations(sortedConversations);
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchData();
-  }, [session?.user._id]);
+  }, [session?.user._id, newMsgSent]);
 
-  // console.log("all conversations", allConversations);
 
   return (
     <div className="flex items-center justify-center w-full">
@@ -55,6 +62,7 @@ const MessagePage = ({ session }: any) => {
       >
         <Sidebar
           allConversations={allConversations}
+          setAllConversations={setAllConversations}
           setCurrentConversation={setCurrentConversation}
           session={session}
           setWriteNewMsg={setWriteNewMsg}
@@ -72,6 +80,8 @@ const MessagePage = ({ session }: any) => {
           allFollowingUsers={allFollowingUsers}
           setNewUserToSendMsg={setNewUserToSendMsg}
           setWriteNewMsg={setWriteNewMsg}
+          setNewMsgSent={setNewMsgSent}
+          newMsgSent={newMsgSent}
         />
       </div>
     </div>

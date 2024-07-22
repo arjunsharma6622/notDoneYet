@@ -49,7 +49,7 @@ const HeadActionOptions = ({
     }
   };
 
-  const handleLikeProfile = async () => {
+  const handleLikeProfile = async ({error} : any) => {
     try {
       if (!session?.user) {
         toast.info("Please login to like profile", {
@@ -66,10 +66,14 @@ const HeadActionOptions = ({
         return;
       }
       const message = await toggleProfileLike(session?.user?._id, userData._id);
+      if(message?.error) {
+        toast.info(message?.error?.message);
+        return
+      }
       toast.success(message as string);
     } catch (err) {
       console.error("Error liking user:", err);
-      toast.error("Error liking user");
+      toast.error(`${err}`);
     }
   };
 

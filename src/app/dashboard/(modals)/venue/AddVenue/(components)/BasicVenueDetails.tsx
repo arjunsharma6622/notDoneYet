@@ -64,15 +64,15 @@ const BasicVenueDetails = ({
           </div>
           <div className="flex justify-between gap-6 items-start">
             <div className="w-full">
-              <Label htmlFor="number">Number</Label>
+              <Label htmlFor="phone">Phone</Label>
               <Input
                 type="string"
-                placeholder="Number"
+                placeholder="Phone"
                 inputMode="number"
                 maxLength={10}
-                id="number"
-                {...register("number", { required: true })}
-                error={errors?.number?.message}
+                id="phone"
+                {...register("phone", { required: true })}
+                error={errors?.phone?.message}
               />
             </div>
             <div className="w-full">

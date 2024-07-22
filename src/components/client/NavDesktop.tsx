@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
 import { CiMedicalCase } from "react-icons/ci";
 import { FiHome, FiMessageSquare, FiUser } from "react-icons/fi";
 import { GrMapLocation } from "react-icons/gr";
+import UnreadMsgsCount from "./UnreadMsgsCount";
 
-const NavDesktop = () => {
+const NavDesktop = ({session} : any) => {
   const menuItems = [
     {
       name: "Home",
@@ -46,9 +46,7 @@ const NavDesktop = () => {
           {menuItem.name === "Messages" ? (
             <div className="relative">
               <div className="text-xl">{menuItem.icon}</div>
-              <div className="text-white absolute font-medium -top-[7px] -right-[7px] h-4 w-4 px-1 py-1 flex text-[10px] items-center justify-center bg-red-500 rounded-full">
-                3
-              </div>
+              <UnreadMsgsCount userId={session?.user?._id}/>
             </div>
           ) : (
             <div className="text-xl">{menuItem.icon}</div>

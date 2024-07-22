@@ -83,7 +83,7 @@ export const unfollowUser = async (
   }
 };
 
-export const toggleProfileLike = async (userId: string, profileId: string) => {
+export const toggleProfileLike : any = async (userId: string, profileId: string) => {
   try {
     await connectDB();
 
@@ -101,9 +101,18 @@ export const toggleProfileLike = async (userId: string, profileId: string) => {
 
     const isLiked = user.likedProfiles.includes(profileId);
     if (isLiked) {
-      profile.profileLikes = profile.profileLikes.filter(
-        (_id: string) => _id != userId,
-      );
+      // error can occur if the current user id is not present in the profile likes of the other user, and vice versa, : TODD: need to fix
+      if(profile.profileLikes.includes(userId)){
+        profile.profileLikes = profile.profileLikes.filter(
+          (_id: string) => _id != userId,
+        );
+      }else{
+        user.likedProfiles = user.likedProfiles.filter(
+          (_id: string) => _id != profileId,
+        )
+        user.save();
+      }
+
       user.likedProfiles = user.likedProfiles.filter(
         (_id: string) => _id != profileId,
       );
@@ -124,9 +133,8 @@ export const toggleProfileLike = async (userId: string, profileId: string) => {
     revalidatePath("/profile/*");
 
     return messageToSend;
-  } catch (err) {
-    return err;
-  }
+  } catch (error : any) {
+    return { error: { message: error.message } };  }
 };
 
 export const updateUser = async (userData: any) => {

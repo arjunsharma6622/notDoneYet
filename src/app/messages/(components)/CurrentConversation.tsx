@@ -16,13 +16,14 @@ const CurrentConversation = ({
   allFollowingUsers,
   setNewUserToSendMsg,
   setWriteNewMsg,
+  setNewMsgSent,
+  newMsgSent,
 }: any) => {
   const [currentMessage, setCurrentMessage] = useState("");
 
   const messagesEndRef: any = useRef(null);
 
   const handleSendMessage = async () => {
-    console.log("sending message");
     if (!currentConversation) {
       return;
     }
@@ -38,19 +39,19 @@ const CurrentConversation = ({
         message,
       );
 
+      setNewMsgSent(!newMsgSent);
+
       setCurrentConversation((prevConversation: any) => {
         const updatedMessages = [...prevConversation.messages, response.data];
         return { ...prevConversation, messages: updatedMessages };
       });
       setCurrentMessage("");
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleFirstMessage = async () => {
-    console.log("first message");
     try {
       const firstConversation = await axios.post(`${API_HEAD}/conversation/`, {
         senderId: session?.user._id,
@@ -88,7 +89,6 @@ const CurrentConversation = ({
     updateSeen();
   }, [currentConversation, session?.user._id]);
 
-  console.log("curr convo", currentConversation?.messages);
 
   return (
     <div className="flex-[9] h-full overflow-y-scroll border rounded-md">
