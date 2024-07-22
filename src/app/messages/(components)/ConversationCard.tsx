@@ -74,7 +74,7 @@ const ConversationCard = ({
         <div className="relative flex justify-between items-center">
           <div className=" text-xs flex truncated-text w-fit">
             <span
-              className={`${unread > 0 ? "text-black font-medium" : "text-gray-500"}`}
+              className={`${unread > 0 ? "text-black font-medium" : "text-gray-500"} truncatedText1`}
             >
               {lastMessage?.senderId === session?.user._id
                 ? "You: "
