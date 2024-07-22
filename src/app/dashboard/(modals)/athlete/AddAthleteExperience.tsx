@@ -8,15 +8,7 @@ import { useForm } from "react-hook-form";
 import { FiImage, FiLink, FiX } from "react-icons/fi";
 import { toast } from "sonner";
 
-const AddAthleteExperience = ({
-  user,
-  open,
-  setOpen,
-}: {
-  user: any;
-  open: boolean;
-  setOpen: (open: boolean) => void;
-}) => {
+const AddAthleteExperience = ({ user, open, setOpen }: { user: any, open: boolean, setOpen: (open: boolean) => void }) => {
   const [userData, setUserData] = useState(user);
   const [experienceType, setExperienceType] = useState("training");
   const {

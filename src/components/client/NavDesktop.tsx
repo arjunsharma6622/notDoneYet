@@ -26,7 +26,7 @@ const NavDesktop = ({session} : any) => {
     },
     {
       name: "Venues",
-      path: "/venue",
+      path: "/venues",
       icon: <GrMapLocation />,
     },
     {

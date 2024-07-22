@@ -2,7 +2,6 @@ import ModalLayout from "@/components/ModalLayout";
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
 import { FiFile, FiImage, FiX } from "react-icons/fi";
-// import { PdfComp } from "./PdfComp";
 import axios from "axios";
 import { toast } from "sonner";
 
@@ -18,6 +17,8 @@ const AddCertificate = ({ open, setOpen, user }: any) => {
 
   const [isCertificateUploading, setIsCertificateUploading] = useState(false);
   const [certificateDoc, setCertificateDoc] = useState<any>(null);
+
+
 
   const handleCertificateDocChange = async (event: any) => {
     try {
@@ -42,6 +43,12 @@ const AddCertificate = ({ open, setOpen, user }: any) => {
       console.error("Error uploading images to Cloudinary:", err);
     }
   };
+
+  
+
+  const handleAddCertificate = () => {};
+
+  console.log(certificateData);
 
   return (
     <div>
@@ -118,12 +125,12 @@ const AddCertificate = ({ open, setOpen, user }: any) => {
                             <div className="py-10 flex items-center justify-center gap-2 flex-col">
                               <div className="flex items-center gap-2">
                                 <FiImage />
-                                <FiFile />
                               </div>
                               <p>Upload</p>
                             </div>
                             <input
                               type="file"
+                              accept="image/*"
                               id="cerfificateMedia"
                               className="hidden"
                               onChange={(event) =>
@@ -136,8 +143,10 @@ const AddCertificate = ({ open, setOpen, user }: any) => {
                         {certificateDoc &&
                           (certificateData?.certificateDoc &&
                           !isCertificateUploading ? (
-                            // <PdfComp file={certificateData?.certificateDoc} />
-                            <p>PDF Uploaded</p>
+                            <div>
+                            <p>Certificate Uploaded</p>
+                            <img src={certificateData?.certificateDoc} alt="" className="max-w-md w-full object-cover rounded-xl" />
+                            </div>
                           ) : (
                             <p>Loading...</p>
                           ))}
@@ -157,6 +166,7 @@ const AddCertificate = ({ open, setOpen, user }: any) => {
                 <Button
                   className="px-6 bg-primary py-2 rounded-sm font-semibold"
                   type="submit"
+                  onClick={handleAddCertificate}
                 >
                   Save
                 </Button>

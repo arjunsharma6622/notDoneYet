@@ -15,6 +15,7 @@ import Venues from "./(components)/venue/Venues";
 import Education from "./(components)/doctor/Education";
 import { API_HEAD } from "@/lib/utils";
 import ChooseRole from "@/components/ChooseRole";
+import FollowingUsers from "./(components)/FollowingUsers";
 
 const Profile = ({ session }: any) => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -41,11 +42,11 @@ const Profile = ({ session }: any) => {
                 {userData?.role == "brand" && <Products userData={userData} />}
                 {(userData?.role == "doctor" ||
                   userData?.role == "athlete") && (
-                  <>
-                    <Skills userData={userData} />
-                    <Experience userData={userData} />
-                  </>
-                )}
+                    <>
+                      <Skills userData={userData} />
+                      <Experience userData={userData} />
+                    </>
+                  )}
                 {userData?.role == "doctor" && (
                   <Education userData={userData} />
                 )}
@@ -54,8 +55,8 @@ const Profile = ({ session }: any) => {
                 )}
                 {(userData?.role == "doctor" ||
                   userData?.role == "athlete") && (
-                  <Certificates userData={userData} />
-                )}
+                    <Certificates userData={userData} />
+                  )}
               </>
             ) : (
               <ChooseRole userData={userData} />
@@ -63,8 +64,8 @@ const Profile = ({ session }: any) => {
           </div>
 
           {userData?.role !== "brand" && userData?.role !== "venue" && (
-            <div className="w-full flex md:flex-col flex-col md:flex-[4] gap-4">
-              <RecommendedUsers userData={userData} />
+            <div className="w-full flex md:flex-col flex-col md:flex-[3] gap-4">
+              <FollowingUsers userId={session?.user?._id} />
             </div>
           )}
         </div>

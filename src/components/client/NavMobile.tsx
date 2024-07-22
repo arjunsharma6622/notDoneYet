@@ -26,7 +26,7 @@ const NavMobile = () => {
     },
     {
       name: "Venues",
-      path: "/venue",
+      path: "/venues",
       icon: <GrMapLocation />,
     },
     {
