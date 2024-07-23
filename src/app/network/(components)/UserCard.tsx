@@ -1,13 +1,14 @@
 import { Button } from '@/components/ui/button'
 import { MapPin, Phone } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 
 const UserCard = ({ user }: any) => {
   return (
-    <div className='relative w-fit h-fit shadow rounded-md max-w-xs flex items-center gap-2 flex-col text-center'>
+    <div className='relative w-full h-fit shadow rounded-md max-w-xs flex items-center gap-2 flex-col text-center'>
       <img src={user?.backgroundImg} alt="" className='w-full aspect-[4/1] object-cover rounded-t-md' />
-      <img src={user?.image} alt="" className='absolute top-4 w-16 h-16 rounded-full object-cover' />
-      <div className='flex flex-col gap-1 mt-0 p-3'>
+      <Image width={100} height={100}  src={user?.image} alt="x" className='absolute top-4 w-16 h-16 rounded-full object-cover' />
+      <div className='w-full flex flex-col gap-1 mt-0 p-3'>
         <h1 className='text-xl font-bold'>{user?.name}</h1>
         {user?.bio &&
           <p className='text-gray-600 text-xs truncatedText1'>{user?.bio}</p>

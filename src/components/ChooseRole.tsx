@@ -6,7 +6,7 @@ import Image from "next/legacy/image";
 import { useState } from "react";
 import { toast } from "sonner";
 
-const ChooseRole = ({ userData }: any) => {
+const ChooseRole = ({ userData, className }: any) => {
   const [choosenRole, setChoosenRole]: any = useState(null);
   const rolesData = [
     { value: "athlete", label: "Athlete", icon: "roleAthlete" },
@@ -28,7 +28,7 @@ const ChooseRole = ({ userData }: any) => {
   };
 
   return (
-    <div className="max-w-md w-full border shadow-md rounded-md">
+    <div className={`max-w-md w-full border shadow-md rounded-md mx-auto ${className}`}>
       <div className="p-4 flex flex-col gap-4">
         <p>Welcome {userData?.name}</p>
         <h1 className="text-2xl font-bold">Choose Your Role</h1>

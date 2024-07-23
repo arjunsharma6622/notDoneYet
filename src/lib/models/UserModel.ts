@@ -119,7 +119,7 @@ const userSchema = new mongoose.Schema<UserDocument>({
   phone: { type: String },
   backgroundImg: {
     type: String,
-    default: "https://placehold.co/1000x250.png",
+    default: "https://www.beautylabinternational.com/wp-content/uploads/2020/03/Hero-Banner-Placeholder-Light-1024x480-1.png",
   },
   role: {
     type: String,

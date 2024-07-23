@@ -30,7 +30,7 @@ const FollowingUserCard = ({
 
   return (
     <div
-      className={`flex gap-2 items-start justify-between py-5 ${index !== following.length - 1 && "border-b border-gray-300"}`}
+      className={`flex flex-col gap-2 items-center justify-between py-5 ${index !== following.length - 1 && "border-b border-gray-300"}`}
     >
       <Link
         href={`/${follow?.role}/${follow?.userName}`}
@@ -51,9 +51,20 @@ const FollowingUserCard = ({
         <div>
           <h1 className="">{follow?.name}</h1>
 
-            <button className="px-3 py-1 mt-1 text-sm bg-primary text-white rounded-full">
-              Message
-            </button>
+      <div className="flex items-center gap-2 text-sm">
+        <button className="px-2 py-1 text-sm bg-primary text-white rounded-full">
+          Message
+        </button>
+        <form action={handleUnfollowUser}>
+          <button
+            className="px-2 py-1 text-sm bg-red-500 text-white rounded-full"
+            type="submit"
+          >
+            Unfollow
+          </button>
+        </form>
+      </div>
+          {/* <p className="text-gray-600 text-sm truncatedText1">{follow?.bio}</p> */}
         </div>
       </Link>
 
