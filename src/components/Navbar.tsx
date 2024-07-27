@@ -15,7 +15,7 @@ const Navbar = async () => {
               <img src={"/logo.png"} alt="logo" className="object-contain w-16"/>
           </div>
           {/* <Link href={"http://localhost:8000/auth/google"} target="_self"  className="bg-yellow-400 text-white">Google LGN</Link> */}
-          <NavDesktop session={session}/>
+          <NavDesktop userId={session?.user?._id}/>
           <NavAction />
         </div>
       </div>
@@ -24,7 +24,7 @@ const Navbar = async () => {
         <div className=" flex gap-4 justify-start items-center w-full">
           <img src={"/logo.png"} alt="logo" className="object-contain w-14" />
         </div>
-        <NavMobile />
+        <NavMobile userId={session?.user?._id}/>
       </div>
     </div>
   );

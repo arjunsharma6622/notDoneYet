@@ -12,9 +12,9 @@ const NavAction = async () => {
         await signOut();
     };
     return (
-        <div className="flex-[1] flex justify-end">
+        <div className="flex-[1] flex justify-end mb-6 md:mb-0">
             {session && session?.user ? (
-                <div className="relative flex items-center justify-between gap-4 cursor-pointer">
+                <div className="relative w-full md:max-w-[250px] md:w-fit flex-col md:flex-row flex items-start md:items-center justify-between gap-4 md:gap-4 cursor-pointer">
                     <div className="flex items-center gap-2">
                         <Image
                             src={session && (session.user.image as string)}
@@ -26,12 +26,12 @@ const NavAction = async () => {
                             referrerPolicy="no-referrer"
                         />
 
-                        <Link  href={"/dashboard"} className="text-blue-600 underline">
-                            {session.user.name?.split(" ")[0]}
+                        <Link  href={"/dashboard"} className="text-blue-600 underline truncatedText1">
+                            {session.user.name}
                         </Link>
                     </div>
 
-                    <form action={handleSignOut}>
+                    <form className='focus:outline-offset-0 ring-0' action={handleSignOut}>
                         <Button type="submit">Logout</Button>
                     </form>
                 </div>

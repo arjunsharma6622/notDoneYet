@@ -6,7 +6,7 @@ import { FiHome, FiMessageSquare, FiUser } from "react-icons/fi";
 import { GrMapLocation } from "react-icons/gr";
 import UnreadMsgsCount from "./UnreadMsgsCount";
 
-const NavDesktop = ({session} : any) => {
+const NavDesktop = ({ userId }: { userId: string }) => {
   const menuItems = [
     {
       name: "Home",
@@ -46,7 +46,7 @@ const NavDesktop = ({session} : any) => {
           {menuItem.name === "Messages" ? (
             <div className="relative">
               <div className="text-xl">{menuItem.icon}</div>
-              <UnreadMsgsCount userId={session?.user?._id}/>
+              <UnreadMsgsCount userId={userId}/>
             </div>
           ) : (
             <div className="text-xl">{menuItem.icon}</div>

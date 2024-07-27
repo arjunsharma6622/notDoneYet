@@ -1,12 +1,14 @@
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { CiMedicalCase } from "react-icons/ci";
-import { FiHome, FiMessageSquare, FiUser, FiX } from "react-icons/fi";
+import { FiHome, FiMessageSquare, FiUser } from "react-icons/fi";
 import { GrMapLocation } from "react-icons/gr";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import NavAction from "./NavAction";
+import UnreadMsgsCount from "./UnreadMsgsCount";
 
-const NavMobile = () => {
+const NavMobile = ({userId} : {userId: string}) => {
+
   const menuItems = [
     {
       name: "Home",
@@ -45,17 +47,25 @@ const NavMobile = () => {
         <SheetContent side="right">
           <div className="grid w-[200px] p-4">
             <NavAction />
-
-            {menuItems.map((menuItem) => (
-              <Link
-                key={menuItem.name}
-                href={menuItem.path}
-                className="px-2 text-base cursor-pointer flex gap-2 items-center"
-              >
-                <div className="text-xl">{menuItem.icon}</div>
-                {menuItem.name}
-              </Link>
-            ))}
+            <div className="flex flex-col gap-4">
+              {menuItems.map((menuItem) => (
+                <Link
+                  key={menuItem.name}
+                  href={menuItem.path}
+                  className="px-2 text-base cursor-pointer flex gap-2 items-center"
+                >
+                  {menuItem.name === "Messages" ? (
+                    <div className="relative">
+                      <div className="text-xl">{menuItem.icon}</div>
+                      <UnreadMsgsCount userId={userId}/>
+                    </div>
+                  ) : (
+                    <div className="text-xl">{menuItem.icon}</div>
+                  )}
+                  {menuItem.name}
+                </Link>
+              ))}
+            </div>
           </div>
         </SheetContent>
       </Sheet>

@@ -1,3 +1,5 @@
+"use client"
+
 import { API_HEAD } from '@/lib/utils'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
