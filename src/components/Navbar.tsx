@@ -2,6 +2,8 @@ import { auth } from "@/auth";
 import NavAction from "./client/NavAction";
 import NavDesktop from "./client/NavDesktop";
 import NavMobile from "./client/NavMobile";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
 const Navbar = async () => {
   const session : any = await auth()
@@ -12,6 +14,7 @@ const Navbar = async () => {
           <div className="flex-[1] flex justify-start gap-4 items-center w-full">
               <img src={"/logo.png"} alt="logo" className="object-contain w-16"/>
           </div>
+          {/* <Link href={"http://localhost:8000/auth/google"} target="_self"  className="bg-yellow-400 text-white">Google LGN</Link> */}
           <NavDesktop session={session}/>
           <NavAction />
         </div>

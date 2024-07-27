@@ -20,7 +20,7 @@ const Page = async () => {
   if (user) redirect("/dashboard");
 
   return (
-    <div className="flex justify-center items-center mt-20">
+    <div className="flex justify-center items-center mt-10 md:mt-20 px-4">
       <Card className="w-[450px]">
         <CardHeader className="">
           <CardTitle>Signup</CardTitle>
@@ -57,7 +57,7 @@ const Page = async () => {
 
           <p className="text-sm">
             Already have an account?{" "}
-            <Link href="/login" className="text-blue-500">
+            <Link href="/login" className="text-blue-500 underline">
               Login
             </Link>
           </p>

@@ -1,7 +1,6 @@
 import { compare } from "bcryptjs";
 import NextAuth, { CredentialsSignin } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
 import { User } from "./lib/models/UserModel";
 import { connectDB } from "./lib/utils";

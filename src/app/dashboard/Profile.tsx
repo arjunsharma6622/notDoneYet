@@ -28,7 +28,7 @@ const Profile = ({ session }: any) => {
 
   return (
     <div className="relative flex items-center justify-center px-2 ">
-      {userData ? (
+      {!userData ? (
         <>
           {userData && userData?.role !== "user" ? (
             <div
