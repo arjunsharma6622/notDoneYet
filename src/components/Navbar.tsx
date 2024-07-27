@@ -2,11 +2,9 @@ import { auth } from "@/auth";
 import NavAction from "./client/NavAction";
 import NavDesktop from "./client/NavDesktop";
 import NavMobile from "./client/NavMobile";
-import { Button } from "./ui/button";
-import Link from "next/link";
 
 const Navbar = async () => {
-  const session : any = await auth()
+  const session : any = await auth();
   return (
     <div className="sticky top-0 z-[30] bg-white">
       <div className="w-full  top-4 md:flex hidden px-20 py-3 border border-b items-center">

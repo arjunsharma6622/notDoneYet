@@ -41,7 +41,7 @@ const Head = ({ userData }: { userData: any }) => {
             alt=""
             width={160}
             height={160}
-            className="absolute left-6 -bottom-6 md:-bottom-10 border-white border-4 md:border-8 w-20 h-20 md:w-44 md:h-44 object-cover rounded-full"
+            className="absolute left-10 -bottom-6 md:-bottom-8 border-white border-4 md:border-8 w-20 h-20 md:w-44 md:h-44 object-cover rounded-full"
           />
 
           <div className="absolute right-6 top-6">
@@ -52,21 +52,21 @@ const Head = ({ userData }: { userData: any }) => {
           </div>
         </div>
 
-        <div className="px-2 md:px-6 mt-10 flex flex-col">
-          <span className="text-xs">{userRoles[userData?.role]}</span>
+        <div className="px-2 md:px-6 mt-2 md:mt-6 flex flex-col">
+          <span className="text-[10px]">{userRoles[userData?.role]}</span>
 
           <div className="flex justify-between items-center">
-            <div className="flex gap-3 items-center">
-              <h1 className="md:text-3xl text-lg font-bold">
+            <div className="flex gap-1 md:gap-3 items-start md:items-center flex-col md:flex-row">
+              <h1 className="md:text-3xl text-xl font-bold">
                 {userData?.name}
               </h1>
-              <Separator orientation="vertical" className="h-3 bg-gray-400" />
-              <div className="flex items-center gap-2">
-                <div className="text-sm font-normal flex gap-1 items-center px-2 py-1 bg-gray-200 rounded-md">
+              <Separator orientation="vertical" className="h-3 bg-gray-400 hidden md:block" />
+              <div className="flex items-center gap-1 md:gap-2 flex-row text-xs md:text-sm">
+                <div className=" font-normal flex gap-1 items-center px-2 py-1 bg-gray-200 rounded-md">
                   {userData.followers?.length} <span>Followers</span>
                 </div>
-                <div className="w-1 h-1 rounded-full bg-gray-500"></div>
-                <div className="text-sm font-normal flex gap-1 items-center px-2 py-1 bg-gray-200 rounded-md">
+                <div className="w-1 h-1 rounded-full bg-gray-500 hidden md:block"></div>
+                <div className=" font-normal flex gap-1 items-center px-2 py-1 bg-gray-200 rounded-md">
                   {userData.following?.length} <span>Following</span>
                 </div>
               </div>
@@ -77,15 +77,15 @@ const Head = ({ userData }: { userData: any }) => {
             />
           </div>
 
-          <h1 className="text-sm md:text-base">{userData?.bio}</h1>
+          <h1 className="text-xs md:text-sm mt-1 md:mt-1">{userData?.bio}</h1>
           {userData?.address ? (
             <div className="flex items-center justify-start gap-1">
-              <FiMapPin className="text-gray-500 w-4 h-4" />
-              <p className="mt-1 text-sm text-gray-500">{`${userData.address?.city}, ${userData.address?.state}, ${userData.address?.country}`}</p>
+              <FiMapPin className="text-gray-500 w-3 h-3 md:w-4 md:h-4" />
+              <p className="mt-1 text-xs md:text-sm text-gray-500">{`${userData.address?.city}, ${userData.address?.state}, ${userData.address?.country}`}</p>
             </div>
           ) : (
             <div>
-              <div className="mt-1 text-sm text-gray-500 flex items-center gap-1">
+              <div className="mt-1 text-xs md:text-sm text-gray-500 flex items-center gap-1">
                 <FiInfo className="w-4 h-4 mr-1" />
                 <p>
                   No address added.{" "}
@@ -102,7 +102,7 @@ const Head = ({ userData }: { userData: any }) => {
 
           {userData.role !== "venue" && (
             <Link
-              className="w-fit mt-2 text-sm text-primary"
+              className="w-fit mt-1 md:mt-2 text-xs md:text-sm text-primary"
               target="_blank"
               href={`/${userRoles[userData?.role]?.toLowerCase()}/${userData?.userName}`}
             >

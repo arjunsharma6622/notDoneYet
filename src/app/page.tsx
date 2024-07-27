@@ -22,8 +22,8 @@ export default async function Home() {
   return (
     <div className="flex justify-center gap-5 w-full">
       {user ? (
-        <div className="w-full flex gap-10 md:flex-row flex-col items-start m-5">
-          <div className="flex-[3]">
+        <div className="w-full flex gap-10 md:flex-row flex-col items-start m-2">
+          <div className="flex-[3] hidden">
             <UserInfoCard userId={user?._id}/>
           </div>
           <div className="flex-[6]">

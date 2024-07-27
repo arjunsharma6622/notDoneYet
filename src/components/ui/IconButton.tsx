@@ -35,16 +35,16 @@ const IconButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const IconComponent = () => {
       switch (variant) {
         case "add":
-          return <FiPlus className="cursor-pointer h-5 w-5 text-blue-600" />;
+          return <FiPlus className="cursor-pointer md:h-5 md:w-5 w-4 h-4 text-blue-600" />;
         case "edit":
-          return <FiEdit2 className="cursor-pointer h-5 w-5 text-gray-600" />;
+          return <FiEdit2 className="cursor-pointer md:h-5 md:w-5 w-4 h-4 text-gray-600" />;
         case "delete":
-          return <FiTrash2 className="cursor-pointer h-5 w-5 text-red-600" />;
+          return <FiTrash2 className="cursor-pointer md:h-5 md:w-5 w-4 h-4 text-red-600" />;
         case "addLong":
           return (
             <div className="flex items-center gap-1">
-              <FiPlus className="cursor-pointer h-5 w-5 text-blue-600" />
-              <span className="text-sm">{text}</span>
+              <FiPlus className="cursor-pointer md:h-5 md:w-5 h-4 w-4 text-blue-600" />
+              <span className="text-xs md:text-sm">{text}</span>
             </div>
           );
         default:
