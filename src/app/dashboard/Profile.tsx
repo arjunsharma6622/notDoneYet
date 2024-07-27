@@ -17,15 +17,8 @@ import { API_HEAD } from "@/lib/utils";
 import ChooseRole from "@/components/ChooseRole";
 import FollowingUsers from "./(components)/FollowingUsers";
 
-const Profile = ({ session }: any) => {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-  const {
-    data: userData,
-    error,
-    isLoading,
-  } = useSWR(`${API_HEAD}/user/getUser?userId=${session?.user?._id}`, fetcher);
-
+const Profile = ({ session, userData }: any) => {
+ 
   return (
     <div className="relative flex items-center justify-center px-2 ">
       {userData ? (

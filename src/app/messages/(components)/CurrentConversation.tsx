@@ -1,15 +1,18 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
+import { ArrowLeft } from "lucide-react";
+import Image from "next/legacy/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { FiSend } from "react-icons/fi";
-import Message from "./Message";
 import { formatConversationDate } from "../(utils)/FormatDate";
-import Image from "next/legacy/image";
+import Message from "./Message";
 
 const CurrentConversation = ({
-  currentConversation,
-  setCurrentConversation,
+  currentConversationId,
   session,
   writeNewMsg,
   newUserToSendMsg,
@@ -19,8 +22,28 @@ const CurrentConversation = ({
   setNewMsgSent,
   newMsgSent,
 }: any) => {
-  const [currentMessage, setCurrentMessage] = useState("");
 
+  const [currentMessage, setCurrentMessage] = useState("");
+  const [currentConversation, setCurrentConversation]: any = useState(null);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const conversation = await axios.get(
+          `${API_HEAD}/conversation/${currentConversationId}`,
+        );
+        setCurrentConversation(conversation.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [currentConversationId]);
+
+  const router = useRouter();
+  
   const messagesEndRef: any = useRef(null);
 
   const handleSendMessage = async () => {
@@ -91,12 +114,15 @@ const CurrentConversation = ({
 
 
   return (
-    <div className="flex-[9] h-full overflow-y-scroll border rounded-md">
+    <div className="flex-[9] h-full overflow-y-scroll border rounded-xl">
       {currentConversation && (
         <div className=" flex items-start h-full gap-4">
           <div className="relative flex flex-col h-full justify-end w-full">
-            <div className="flex items-start gap-2 border-b px-4 py-3">
-              <div>
+            <div className="flex gap-2 md:gap-4 items-center justify-start w-full border-b px-3 py-2 md:px-4 md:py-3">
+          <ArrowLeft className=" h-5 w-5 cursor-pointer" onClick={() => router.push("/messages")} />
+
+            <div className="flex w-full items-center gap-2">
+              <div className="flex w-fit">
                 <Image
                   src={
                     currentConversation?.users?.filter(
@@ -111,7 +137,7 @@ const CurrentConversation = ({
                   referrerPolicy="no-referrer"
                 />
               </div>
-              <div className="text-sm flex flex-col">
+              <div className="w-full text-sm flex flex-col">
                 <span>
                   {
                     currentConversation?.users?.filter(
@@ -119,7 +145,7 @@ const CurrentConversation = ({
                     )[0]?.name
                   }
                 </span>
-                <span className="text-gray-400 text-xs">
+                <span className="text-gray-400 text-[9px] md:text-xs truncatedText1">
                   {
                     currentConversation?.users?.filter(
                       (user: any) => user._id !== session?.user._id,
@@ -127,6 +153,7 @@ const CurrentConversation = ({
                   }
                 </span>
               </div>
+            </div>
             </div>
 
             <div className="flex flex-col gap-4 w-full px-8 pt-4 mb-4 overflow-y-scroll h-full">
@@ -206,7 +233,7 @@ const CurrentConversation = ({
         </div>
       )}
 
-      {writeNewMsg && (
+      {/* {writeNewMsg && (
         <div className="flex flex-col gap-10 h-full px-6 py-4">
           <h1>Who to message</h1>
           <div className="flex flex-col gap-4">
@@ -284,7 +311,7 @@ const CurrentConversation = ({
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

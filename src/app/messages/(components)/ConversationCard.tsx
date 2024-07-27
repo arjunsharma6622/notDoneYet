@@ -3,14 +3,14 @@ import axios from "axios";
 import Image from "next/legacy/image";
 import { useEffect, useState } from "react";
 import { formatDate } from "../(utils)/FormatDate";
+import Link from "next/link";
 
 const ConversationCard = ({
   session,
   conversation,
   otherUser,
   lastMessage,
-  setCurrentConversation,
-  currentConversation,
+  currentConversationId,
   setNewUserToSendMsg,
   setWriteNewMsg,
 }: any) => {
@@ -33,18 +33,14 @@ const ConversationCard = ({
     };
 
     fetchUnread();
-  }, [currentConversation, session?.user._id, conversation]);
+  }, [session?.user._id, conversation, conversation._id]);
 
   return (
-    <div
-      className={`flex items-start justify-start cursor-pointer gap-2 py-4 px-4 ${
-        currentConversation?._id === conversation._id ? "bg-gray-100" : ""
+    <Link
+      href={`/messages/${conversation._id}`}
+      className={`flex items-start border-b justify-start cursor-pointer gap-2 py-4 px-4 ${
+        currentConversationId === conversation._id ? "bg-gray-100" : ""
       }`}
-      onClick={() => {
-        setCurrentConversation(conversation);
-        setNewUserToSendMsg(null);
-        setWriteNewMsg(null);
-      }}
       key={conversation._id}
     >
       <div className="">
@@ -91,7 +87,7 @@ const ConversationCard = ({
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
