@@ -15,18 +15,18 @@ const NavAction = async () => {
     return (
         <div className="flex-[1] flex justify-end md:mb-0">
             {session && session?.user ? (
-                <div className="relative w-fit flex-row flex items-center gap-2 md:gap-4">
+                <div className="relative w-fit flex-row flex items-center gap-6">
                         <Link href={"/dashboard"} className="flex items-center gap-2 text-blue-600">
                             <Image
                                 src={session && (session.user.image as string)}
                                 alt=""
-                                width={28}
-                                height={28}
+                                width={32}
+                                height={32}
                                 layout="intrinsic"
                                 className="rounded-full object-cover"
                                 referrerPolicy="no-referrer"
                             />
-                            <span className='hidden md:block text-sm'>
+                            <span className=' text-sm'>
                                 Me
                             </span>
                         </Link>

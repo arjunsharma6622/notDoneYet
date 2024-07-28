@@ -1,5 +1,3 @@
-import { FiEdit, FiSearch } from "react-icons/fi";
-import ConversationCard from "./ConversationCard";
 import { auth } from "@/auth";
 import SidebarComp from "./SidebarComp";
 

@@ -1,38 +1,37 @@
 "use client";
 
+import { HeartPulse, Home, MapPinned, MessageSquareText, UsersRound } from "lucide-react";
 import Link from "next/link";
-import { CiMedicalCase } from "react-icons/ci";
-import { FiHome, FiMessageSquare, FiUser } from "react-icons/fi";
-import { GrMapLocation } from "react-icons/gr";
 import UnreadMsgsCount from "./UnreadMsgsCount";
 
 const NavDesktop = ({ userId }: { userId: string }) => {
+
   const menuItems = [
     {
       name: "Home",
       path: "/",
-      icon: <FiHome />,
+      icon: <Home strokeWidth={1.5}/>,
       subItems: ["Home", "About", "Contact"],
     },
     {
       name: "Network",
       path: "/network",
-      icon: <FiUser />,
+      icon: <UsersRound strokeWidth={1.5}/>,
     },
     {
       name: "Doctors",
       path: "/doctors",
-      icon: <CiMedicalCase strokeWidth={1} />,
+      icon: <HeartPulse strokeWidth={1.5} />,
     },
     {
       name: "Venues",
       path: "/venues",
-      icon: <GrMapLocation />,
+      icon: <MapPinned strokeWidth={1.5}/>,
     },
     {
       name: "Messages",
       path: "/messages",
-      icon: <FiMessageSquare />,
+      icon: <MessageSquareText strokeWidth={1.5}/>,
     },
   ];
   return (

@@ -1,10 +1,10 @@
 import { auth } from "@/auth";
+import { MessageSquareText } from "lucide-react";
+import Link from "next/link";
 import NavAction from "./client/NavAction";
 import NavDesktop from "./client/NavDesktop";
 import NavMobile from "./client/NavMobile";
 import UnreadMsgsCount from "./client/UnreadMsgsCount";
-import { MessageSquare } from "lucide-react";
-import Link from "next/link";
 
 const Navbar = async () => {
   const session: any = await auth();
@@ -34,7 +34,7 @@ const Navbar = async () => {
           >
             <div className="relative">
               <div className="text-xl">
-                <MessageSquare className="w-6 h-6" strokeWidth={1.5} />
+                <MessageSquareText className="w-6 h-6" strokeWidth={1.5} />
               </div>
               <UnreadMsgsCount userId={session?.user?._id} />
             </div>

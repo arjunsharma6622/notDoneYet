@@ -2,9 +2,9 @@
 
 import { API_HEAD } from '@/lib/utils';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import { Edit, Search } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import ConversationCard from './ConversationCard';
-import { Edit, Edit2, Search } from 'lucide-react';
 
 const SidebarComp = ({session, currentConversationId} : any) => {
 
@@ -35,19 +35,20 @@ const SidebarComp = ({session, currentConversationId} : any) => {
   return (
     <div className="border rounded-xl w-full h-full mt-0">
       <div>
-        <div className="flex justify-between items-center border-b py-3 px-4">
-          <div className="border rounded-md py-2 px-3">
+        <div className="flex justify-between items-center border-b py-2 px-3 md:py-3 md:px-4 gap-2">
+          <div className="flex border rounded-md py-2 px-3 w-full">
             <input
               type="text"
-              className="w-fit text-sm focus:outline-none"
+              className="w-full text-xs md:text-sm focus:outline-none"
               placeholder="search message"
             />
             <Search className="inline ml-1 text-lg text-gray-400" />
           </div>
 
-          <div className="">
+          <div className="w-fit bg-blue-100 text-blue-600 p-2 rounded-full cursor-pointer">
             <Edit
-              className="inline ml-1 text-xl cursor-pointer"
+              className="w-5 h-5"
+              strokeWidth={1.5}
               // onClick={() => {
               //   setWriteNewMsg(!writeNewMsg);
               //   setNewUserToSendMsg(null);
