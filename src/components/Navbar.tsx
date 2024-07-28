@@ -2,6 +2,8 @@ import { auth } from "@/auth";
 import NavAction from "./client/NavAction";
 import NavDesktop from "./client/NavDesktop";
 import NavMobile from "./client/NavMobile";
+import UnreadMsgsCount from "./client/UnreadMsgsCount";
+import { MessageSquare } from "lucide-react";
 
 const Navbar = async () => {
   const session : any = await auth();
@@ -22,6 +24,12 @@ const Navbar = async () => {
         <div className=" flex gap-4 justify-start items-center w-full">
           <img src={"/logo.png"} alt="logo" className="object-contain w-14" />
         </div>
+        <div className="relative">
+                      <div className="text-xl">
+                        <MessageSquare className="w-5 h-5" strokeWidth={1.5}/>
+                      </div>
+                      <UnreadMsgsCount userId={session?.user?._id}/>
+                    </div>
         <NavMobile userId={session?.user?._id}/>
       </div>
     </div>

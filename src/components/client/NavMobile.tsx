@@ -7,7 +7,7 @@ import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import NavAction from "./NavAction";
 import UnreadMsgsCount from "./UnreadMsgsCount";
 
-const NavMobile = ({userId} : {userId: string}) => {
+const NavMobile = ({ userId }: { userId: string }) => {
 
   const menuItems = [
     {
@@ -31,11 +31,6 @@ const NavMobile = ({userId} : {userId: string}) => {
       path: "/venues",
       icon: <GrMapLocation />,
     },
-    {
-      name: "Messages",
-      path: "/messages",
-      icon: <FiMessageSquare />,
-    },
   ];
 
   return (
@@ -54,14 +49,7 @@ const NavMobile = ({userId} : {userId: string}) => {
                   href={menuItem.path}
                   className="px-2 text-base cursor-pointer flex gap-2 items-center"
                 >
-                  {menuItem.name === "Messages" ? (
-                    <div className="relative">
-                      <div className="text-xl">{menuItem.icon}</div>
-                      <UnreadMsgsCount userId={userId}/>
-                    </div>
-                  ) : (
-                    <div className="text-xl">{menuItem.icon}</div>
-                  )}
+                  <div className="text-xl">{menuItem.icon}</div>
                   {menuItem.name}
                 </Link>
               ))}
