@@ -34,14 +34,14 @@ const LoginForm = () => {
           toast.error(String(error), { id: toastId });
         }
       }}
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-2 md:gap-4"
     >
-      <div className="space-y-1">
+      <div className="md:space-y-1">
         <Label htmlFor="email">Email</Label>
         <Input id="email" type="email" placeholder="email" name="email" />
       </div>
 
-      <div className="space-y-1">
+      <div className="md:space-y-1">
         <Label htmlFor="password">Password</Label>
         <Input
           id="password"
@@ -103,14 +103,14 @@ const SignupForm = () => {
           toast.error(String(error));
         }
       }}
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-2 md:gap-4"
     >
-      <div className="space-y-1">
+      <div className="md:space-y-1">
         <Label htmlFor="name">Name</Label>
         <Input id="name" type="text" placeholder="name" name="name" />
       </div>
 
-      <div className="space-y-1">
+      <div className="md:space-y-1">
         <Label htmlFor="name">User Name</Label>
         <Input
           onChange={handleUserNameChange}
@@ -129,12 +129,12 @@ const SignupForm = () => {
         )}
       </div>
 
-      <div className="space-y-1">
+      <div className="md:space-y-1">
         <Label htmlFor="email">Email</Label>
         <Input id="email" type="email" placeholder="email" name="email" />
       </div>
 
-      <div className="space-y-1">
+      <div className="md:space-y-1">
         <Label htmlFor="password">Password</Label>
         <Input
           id="password"

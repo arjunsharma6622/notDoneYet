@@ -22,22 +22,27 @@ const Navbar = async () => {
       </div>
 
       <div className="w-full px-2 py-3 md:hidden flex relative justify-between items-center gap-4 border border-b">
-        <div className=" flex gap-4 justify-start items-center w-full">
+        <div className=" flex gap-4 justify-start items-center w-fit">
           <img src={"/logo.png"} alt="logo" className="object-contain w-14" />
         </div>
-        <Link
-          key="messages"
-          href="/messages"
-          className="px-2 text-base cursor-pointer flex gap-2 items-center"
-        >
-          <div className="relative">
-            <div className="text-xl">
-              <MessageSquare className="w-6 h-6" strokeWidth={1.5} />
+        <div className="flex items-center gap-4">
+        {session &&
+          <Link
+            key="messages"
+            href="/messages"
+            className="px-2 text-base cursor-pointer flex gap-2 items-center"
+          >
+            <div className="relative">
+              <div className="text-xl">
+                <MessageSquare className="w-6 h-6" strokeWidth={1.5} />
+              </div>
+              <UnreadMsgsCount userId={session?.user?._id} />
             </div>
-            <UnreadMsgsCount userId={session?.user?._id} />
-          </div>
-        </Link>
+          </Link>
+        }
+        <NavAction />
         <NavMobile />
+      </div>
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import Image from 'next/image'
 import React from 'react'
 import { Button } from '../ui/button';
 import Link from 'next/link';
+import { LogOut } from 'lucide-react';
 
 const NavAction = async () => {
     const session = await auth();
@@ -12,37 +13,35 @@ const NavAction = async () => {
         await signOut();
     };
     return (
-        <div className="flex-[1] flex justify-end mb-6 md:mb-0">
+        <div className="flex-[1] flex justify-end md:mb-0">
             {session && session?.user ? (
-                <div className="relative w-full md:max-w-[250px] md:w-fit flex-col md:flex-row flex items-start md:items-center justify-between gap-4 md:gap-4 cursor-pointer">
-                    <div className="flex items-center gap-2">
-                        <Image
-                            src={session && (session.user.image as string)}
-                            alt=""
-                            width={28}
-                            height={28}
-                            layout="intrinsic"
-                            className="rounded-full object-cover"
-                            referrerPolicy="no-referrer"
-                        />
-
-                        <Link  href={"/dashboard"} className="text-blue-600 underline truncatedText1">
-                            {session.user.name}
+                <div className="relative w-fit flex-row flex items-center gap-2 md:gap-4">
+                        <Link href={"/dashboard"} className="flex items-center gap-2 text-blue-600">
+                            <Image
+                                src={session && (session.user.image as string)}
+                                alt=""
+                                width={28}
+                                height={28}
+                                layout="intrinsic"
+                                className="rounded-full object-cover"
+                                referrerPolicy="no-referrer"
+                            />
+                            <span className='hidden md:block text-sm'>
+                                Me
+                            </span>
                         </Link>
-                    </div>
 
-                    <form className='focus:outline-offset-0 ring-0' action={handleSignOut}>
-                        <Button type="submit">Logout</Button>
+                    <form className='cursor-pointer w-fit focus:outline-offset-0 ring-0 flex items-center gap-2 text-red-600 bg-red-100 rounded-full p-[6px] md:p-2 md:px-4' action={handleSignOut}>
+                        <button className='flex items-center gap-2'>
+                        <span className='hidden md:block text-xs'>Logout</span>
+                        <LogOut strokeWidth={1.5} className='w-5 h-5 '/>
+                        </button>
                     </form>
                 </div>
             ) : (
                 <div className="flex items-center gap-4">
-                    <Button asChild>
-                        <Link href="/login">Login</Link>
-                    </Button>
-                    <Button asChild>
-                        <Link href="/signup">Signup</Link>
-                    </Button>
+                        <Link href="/login" className='hover:opacity-90 px-[14px] md:px-4 py-2 bg-blue-600 rounded-full text-white text-xs md:text-sm'>Login</Link>
+                        <Link href="/signup" className='hover:opacity-90 px-[14px] md:px-4 py-2 bg-blue-600 rounded-full text-white text-xs md:text-sm'>Signup</Link>
                 </div>
             )}
         </div>)

@@ -4,7 +4,6 @@ import { CiMedicalCase } from "react-icons/ci";
 import { FiHome, FiUser } from "react-icons/fi";
 import { GrMapLocation } from "react-icons/gr";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
-import NavAction from "./NavAction";
 
 const NavMobile = () => {
 
@@ -40,7 +39,6 @@ const NavMobile = () => {
         </SheetTrigger>
         <SheetContent side="right">
           <div className="grid w-[200px] p-4">
-            <NavAction />
             <div className="flex flex-col gap-4">
               {menuItems.map((menuItem) => (
                 <Link

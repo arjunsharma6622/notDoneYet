@@ -13,22 +13,21 @@ import Image from "next/legacy/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-const Page = async () => {
+const Signup = async () => {
   const session = await auth();
   const user = session?.user;
 
   if (user) redirect("/dashboard");
 
   return (
-    <div className="flex justify-center items-center mt-10 md:mt-20 px-4">
-      <Card className="w-[450px]">
-        <CardHeader className="">
+      <Card className="max-w-1/2 w-full mx-2 md:w-[70%]">
+        <CardHeader className="p-4 md:p-6">
           <CardTitle>Signup</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-4 md:p-6">
           <SignupForm />
         </CardContent>
-        <CardFooter className="flex flex-col gap-6 mt-1">
+        <CardFooter className="flex p-4 md:p-6 flex-col gap-5 md:gap-6 mt-1">
           <div className="w-full relative">
             <hr className="w-full h-[1px]" />
             <span className="text-sm px-3 bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
@@ -63,8 +62,7 @@ const Page = async () => {
           </p>
         </CardFooter>
       </Card>
-    </div>
-  );
+    );
 };
 
-export default Page;
+export default Signup;
