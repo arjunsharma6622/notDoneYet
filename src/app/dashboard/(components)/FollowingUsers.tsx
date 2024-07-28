@@ -16,12 +16,11 @@ const FollowingUsers = ({ userId }: { userId: string }) => {
   } = useSWR(`${API_HEAD}/user/following/${userId}`, fetcher);
 
   return (<>
-  {following?.length > 0 &&
-    <div className="border rounded-md">
-      <div className="w-full px-3 border-b py-3">
-        <h1 className="text-xl font-bold">Your Network</h1>
-      </div>
-      <Suspense fallback={<FollowingSkeleton />}>
+    {!isLoading && following?.length > 0 ?
+      <div className="border rounded-md">
+        <div className="w-full px-3 border-b py-3">
+          <h1 className="text-xl font-bold">Your Network</h1>
+        </div>
         <div className="flex flex-col px-5">
           {following?.map((follow: any, index: number) => (
             <FollowingUserCard
@@ -33,9 +32,19 @@ const FollowingUsers = ({ userId }: { userId: string }) => {
             />
           ))}
         </div>
-      </Suspense>
-    </div>
-  }
+      </div>
+      :
+      <div className="border rounded-md">
+        <div className="w-full px-3 border-b py-3">
+          <h1 className="text-xl font-bold">Your Network</h1>
+        </div>
+        <div className="flex flex-col px-5 gap-4 py-4">
+          {[...Array(6)].map((follow: any, index: number) => (
+            <FollowingSkeleton />
+          ))}
+        </div>
+      </div>
+    }
   </>
   );
 };

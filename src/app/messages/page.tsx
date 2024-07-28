@@ -2,13 +2,15 @@ import { auth } from "@/auth";
 import { Edit, MessageCircle } from "lucide-react";
 import { redirect } from "next/navigation";
 import Sidebar from "./(components)/Sidebar";
+import FollowingUsers from "../dashboard/(components)/FollowingUsers";
 
 const Page = async () => {
   const session = await auth();
   if (!session) {
     redirect("/login");
   }
-  return (<>
+  return (
+  <>
     <div className="flex items-center justify-center w-full">
       <div
         className="flex justify-between gap-4 w-full mx-2 md:mx-0 md:w-[95%] mt-5 overflow-hidden"
@@ -23,7 +25,9 @@ const Page = async () => {
             <p className="text-center">
             Click on a conversation to start messaging <br /> or <br /> Click on <Edit className="w-4 h-4 inline" /> to start a new conversation
             </p>
+
           </div>
+
         </div>
       </div>
     </div>

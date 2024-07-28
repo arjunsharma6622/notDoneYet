@@ -1,3 +1,4 @@
+import FollowingUsers from '@/app/dashboard/(components)/FollowingUsers';
 import CurrentConversation from '../(components)/CurrentConversation';
 
 const ConversationPage = ({ session, currentConversationId }: any) => {
@@ -12,6 +13,9 @@ const ConversationPage = ({ session, currentConversationId }: any) => {
             currentConversationId={currentConversationId}
             session={session}
           />
+                          {/* <div className="w-full flex md:flex-col flex-col md:flex-[3] gap-4">
+                  <FollowingUsers userId={session?.user?._id} />
+                </div> */}
         </div>
     </div>
     );
