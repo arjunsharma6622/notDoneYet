@@ -1,13 +1,12 @@
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { CiMedicalCase } from "react-icons/ci";
-import { FiHome, FiMessageSquare, FiUser } from "react-icons/fi";
+import { FiHome, FiUser } from "react-icons/fi";
 import { GrMapLocation } from "react-icons/gr";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import NavAction from "./NavAction";
-import UnreadMsgsCount from "./UnreadMsgsCount";
 
-const NavMobile = ({ userId }: { userId: string }) => {
+const NavMobile = () => {
 
   const menuItems = [
     {
@@ -37,7 +36,7 @@ const NavMobile = ({ userId }: { userId: string }) => {
     <>
       <Sheet>
         <SheetTrigger asChild>
-          <Menu className={`h-6 w-6 cursor-pointer md:hidden`} />
+          <Menu className={`h-7 w-7 cursor-pointer md:hidden`} />
         </SheetTrigger>
         <SheetContent side="right">
           <div className="grid w-[200px] p-4">
