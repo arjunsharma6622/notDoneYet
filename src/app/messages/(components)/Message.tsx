@@ -20,18 +20,14 @@ const Message = ({
         }  flex items-start gap-3`}
       >
         <div
-          className={`flex flex-col gap-1 ${
+          className={`flex flex-col gap-0 ${
             currentUser ? "items-end" : "items-start"
           }`}
         >
-          <span className="text-xs text-gray-500">
-            {formatMessageTime(message?.createdAt)}
-          </span>
-
           <div
             className={`max-w-xl flex relative text-sm items-center gap-4 ${
-              currentUser ? "rounded-tr-none" : "rounded-tl-none"
-            } bg-gray-100 py-2 rounded-xl px-4`}
+              currentUser ? "rounded-br-none" : "rounded-bl-none"
+            } bg-gray-200 py-2 rounded-xl px-4`}
           >
             <div>
               <p>{message?.content}</p>
@@ -48,19 +44,23 @@ const Message = ({
               )}
             </div>
           </div>
+          <span className="text-[10px] text-gray-500">
+            {formatMessageTime(message?.createdAt)}
+          </span>
         </div>
-
+{/* { showImage &&
         <div className="">
           <Image
             src={currentUser ? session?.user?.image : otherUser?.image}
             alt=""
-            width={40}
-            height={40}
+            width={30}
+            height={30}
             layout="intrinsic"
             className="rounded-full"
             referrerPolicy="no-referrer"
           />
         </div>
+} */}
       </div>
     </div>
   );

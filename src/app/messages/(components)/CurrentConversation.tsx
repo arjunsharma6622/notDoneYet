@@ -129,12 +129,30 @@ const CurrentConversation = ({ currentConversationId, session }: any) => {
               </div>
             </div>
 
-            <div className="flex flex-col gap-4 w-full px-8 pt-4 mb-4 overflow-y-scroll h-full">
+            <style jsx>{`
+  .custom-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .custom-scrollbar {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
+`}</style>
+
+            <div className="flex flex-col gap-2 w-full px-8 pt-4 mb-4 overflow-y-scroll h-full custom-scrollbar">
               {currentConversation?.messages?.map(
                 (message: any, index: any) => {
                   const otherUser = currentConversation?.users.filter(
                     (user: any) => user._id !== session?.user._id,
                   )[0];
+
+                  const currentUser = session?.user._id === message.senderId;
+
+                  const showUserImage = 
+                    index === currentConversation.messages.length - 1 || 
+                    currentConversation.messages[index + 1]?.senderId !== message.senderId ||
+                    new Date(message.createdAt).getDate() !== new Date(currentConversation.messages[index + 1]?.createdAt).getDate();
+
 
                   if (
                     new Date(message.createdAt).getDate() !==
@@ -155,31 +173,69 @@ const CurrentConversation = ({ currentConversationId, session }: any) => {
                             </div>
                           </div>
                         </div>
-
-                        <div>
+                        <div key={index} className="flex flex-col gap-1">
                           <Message
                             key={index}
                             currentUser={message.senderId === session?.user._id}
                             session={session}
                             message={message}
                             otherUser={otherUser}
+                            showImage={showUserImage}
                           />
+                          {showUserImage &&
+                        <div className={`flex items-center ${currentUser ? "justify-end -mr-2" : "justify-start -ml-2"}`}>
+
+                              <Image
+                                src={currentUser ? session?.user?.image : otherUser?.image}
+                                alt=""
+                                width={40}
+                                height={40}
+                                layout="intrinsic"
+                                className="rounded-full"
+                                referrerPolicy="no-referrer"
+                              />
+                            </div>
+
+                          }
                         </div>
                       </div>
                     );
                   }
 
                   return (
-                    <Message
-                      key={index}
-                      currentUser={message.senderId === session?.user._id}
-                      session={session}
-                      message={message}
-                      otherUser={otherUser}
-                    />
+                    <div key={index} className="flex flex-col gap-1">
+                      <Message
+                        key={index}
+                        currentUser={message.senderId === session?.user._id}
+                        session={session}
+                        message={message}
+                        otherUser={otherUser}
+                        showImage={showUserImage}
+                      />
+                      {showUserImage &&
+                        <div className={`flex items-center ${currentUser ? "justify-end -mr-2" : "justify-start -ml-2"}`}>
+                          <Image
+                            src={currentUser ? session?.user?.image : otherUser?.image}
+                            alt=""
+                            width={40}
+                            height={40}
+                            layout="intrinsic"
+                            className="rounded-full"
+                            referrerPolicy="no-referrer"
+                          />
+                        </div>
+                      }
+
+
+                    </div>
+
                   );
-                },
+
+                }
+
               )}
+
+
 
               <div ref={messagesEndRef} />
             </div>
