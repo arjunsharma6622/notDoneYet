@@ -40,7 +40,7 @@ const FollowingUsers = ({ userId }: { userId: string }) => {
         </div>
         <div className="flex flex-col px-5 gap-4 py-4">
           {[...Array(6)].map((follow: any, index: number) => (
-            <FollowingSkeleton />
+            <FollowingSkeleton key={index}/>
           ))}
         </div>
       </div>
