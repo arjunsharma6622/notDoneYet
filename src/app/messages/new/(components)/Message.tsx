@@ -1,5 +1,4 @@
 import { BiCheckDouble } from "react-icons/bi";
-import Image from "next/legacy/image";
 import { formatMessageTime } from "../../(utils)/FormatDate";
 
 const Message = ({

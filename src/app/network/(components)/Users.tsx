@@ -5,7 +5,6 @@ import UserCard from './UserCard';
 
 const Users = async () => {
     const session: any = await auth();
-
     const users = await axios.get(`${API_HEAD}/user/recommended/${session?.user?._id}`);
 
     return (

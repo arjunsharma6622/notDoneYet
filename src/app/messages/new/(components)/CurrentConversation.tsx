@@ -19,8 +19,6 @@ const CurrentConversation = ({ newUserId, session }: any) => {
   });
   const [currentUser, setCurrentUser]: any = useState(null);
 
-  console.log(currentConversation)
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,6 +30,21 @@ const CurrentConversation = ({ newUserId, session }: any) => {
     };
     fetchData();
   }, [newUserId]);
+
+  useEffect(() => {
+    const fetchConversation = async () => {
+      try {
+        const response = await axios.get(
+          `${API_HEAD}/conversation/${newUserId}/${session?.user._id}`,
+        );
+        setCurrentConversation(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchConversation();
+  }, [newUserId, session?.user._id]
+  );
   
   const router = useRouter();
 

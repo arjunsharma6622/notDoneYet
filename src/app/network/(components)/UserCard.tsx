@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button'
 import { MapPin, Phone } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -20,10 +19,8 @@ const UserCard = ({ user }: any) => {
           <span className='text-xs'><MapPin className='w-4 h-4 inline' /> {user?.address?.city}, {user?.address?.state}</span>
         }
 
-      <Link href={`/${user?.role}/${user?.userName}`}>
-          <Button className='w-full mt-2 rounded-full'>
-            View Profile
-          </Button>
+      <Link prefetch={false} href={`/${user?.role}/${user?.userName}`} className='text-sm px-4 py-1 bg-blue-600 rounded-full text-white w-full'>
+            View
         </Link>
       </div>
     </div>
