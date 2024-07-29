@@ -8,6 +8,7 @@ import UnreadMsgsCount from "./client/UnreadMsgsCount";
 
 const Navbar = async () => {
   const session: any = await auth();
+
   return (
     <div className="sticky top-0 z-[30] bg-white">
       <div className="w-full  top-4 md:flex hidden px-20 py-3 border border-b items-center">

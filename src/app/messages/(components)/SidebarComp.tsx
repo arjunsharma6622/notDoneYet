@@ -15,10 +15,10 @@ const SidebarComp = ({session, currentConversationId} : any) => {
             const conversations = await axios.get(
               `${API_HEAD}/conversation/user/${session?.user._id}`,
             );
-    
-            const sortedConversations = conversations?.data?.sort((a:any, b:any) => {
-              const aLastMsgTime = a.messages[a.messages.length - 1].createdAt;
-              const bLastMsgTime = b.messages[b.messages.length - 1].createdAt;
+
+            const sortedConversations = conversations?.data?.sort((a: any, b: any) => {
+              const aLastMsgTime = a.messages.length > 0 ? new Date(a.messages[a.messages.length - 1].createdAt).getTime() : new Date(a.createdAt).getTime();
+              const bLastMsgTime = b.messages.length > 0 ? new Date(b.messages[b.messages.length - 1].createdAt).getTime() : new Date(b.createdAt).getTime();
               return bLastMsgTime - aLastMsgTime;
             });
     
@@ -43,18 +43,6 @@ const SidebarComp = ({session, currentConversationId} : any) => {
               placeholder="search message"
             />
             <Search className="inline ml-1 text-lg text-gray-400" />
-          </div>
-
-          <div className="w-fit bg-blue-100 text-blue-600 p-2 rounded-full cursor-pointer">
-            <Edit
-              className="w-5 h-5"
-              strokeWidth={1.5}
-              // onClick={() => {
-              //   setWriteNewMsg(!writeNewMsg);
-              //   setNewUserToSendMsg(null);
-              //   setCurrentConversation(null);
-              // }}
-            />
           </div>
         </div>
 

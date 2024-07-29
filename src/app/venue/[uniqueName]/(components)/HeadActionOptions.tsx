@@ -1,7 +1,10 @@
 "use client";
 
-import { followUser, toggleProfileLike, unfollowUser } from "@/actions/user";
+import { toggleProfileLike } from "@/actions/user";
+import { API_HEAD } from "@/lib/utils";
+import axios from "axios";
 import Link from "next/link";
+import { useState } from "react";
 import { BiShare } from "react-icons/bi";
 import { FiMoreVertical } from "react-icons/fi";
 import { RiHeart2Fill, RiHeart2Line } from "react-icons/ri";
@@ -14,7 +17,11 @@ const HeadActionOptions = ({
   userData: any;
   session: any;
 }) => {
-  const handleFollowClick = async () => {
+
+  const [isFollowing, setIsFollowing] = useState(userData?.followers?.includes(session?.user?._id));
+  const [isFollowLoading, setIsFollowLoading] = useState(false);
+
+  const handleToggleFollowClick = async () => {
     try {
       if (!session?.user) {
         toast.info("Please login to follow user", {
@@ -26,25 +33,27 @@ const HeadActionOptions = ({
         });
         return;
       }
+      
       if (userData._id === session?.user?._id) {
         toast.info("You can't follow yourself");
         return;
       }
-      await followUser(userData._id, session?.user?._id);
-      toast.success("Following user");
-    } catch (err) {
-      console.error("Error following user:", err);
-      toast.error("Error following user");
-    }
-  };
 
-  const handleUnfollowClick = async () => {
-    try {
-      await unfollowUser(userData._id, session?.user?._id);
-      toast.success("Unfollowed user");
-    } catch (err) {
-      console.error("Error unfollowing user:", err);
-      toast.error("Error unfollowing user");
+      setIsFollowLoading(true)
+      const response = await axios.post(`${API_HEAD}/user/toggleFollow`, {
+        currentUserId : session?.user?._id,
+        selectedUserId: userData._id
+      })
+      if (response?.data?.message === "Success") {
+        setIsFollowing(!isFollowing)
+        setIsFollowLoading(false)
+        toast.success("Following user");
+      }
+    }
+    catch (err) {
+      setIsFollowLoading(false)
+      console.error("Error following user:", err);
+      toast.error("Error following user" + err);
     }
   };
 
@@ -74,7 +83,7 @@ const HeadActionOptions = ({
 
   return (
     <div className="flex items-center gap-4">
-      {userData?.followers?.includes(session?.user?._id) ? (
+      {isFollowing ? (
         <Link href={`/messages/`}>
           <button
             className="bg-blue-600 text-white py-1 px-4 rounded-sm"
@@ -84,7 +93,7 @@ const HeadActionOptions = ({
           </button>
         </Link>
       ) : (
-        <form action={handleFollowClick}>
+        <form action={handleToggleFollowClick}>
           <button
             className="bg-blue-600 text-white py-1 px-4 rounded-sm"
             type="submit"

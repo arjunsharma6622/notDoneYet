@@ -38,9 +38,8 @@ const ConversationCard = ({
   return (
     <Link
       href={`/messages/${conversation._id}`}
-      className={`flex items-start border-b justify-start cursor-pointer gap-2 py-4 px-4 ${
-        currentConversationId === conversation._id ? "bg-gray-100" : ""
-      }`}
+      className={`flex items-start border-b justify-start cursor-pointer gap-2 py-4 px-4 ${currentConversationId === conversation._id ? "bg-gray-100" : ""
+        }`}
       key={conversation._id}
     >
       <div className="">
@@ -60,15 +59,18 @@ const ConversationCard = ({
         <div className="flex justify-between flex-col items-start w-full">
           <div className="flex w-full items-center justify-between">
             <h1 className="text-sm font-medium">{otherUser?.name}</h1>
-            <span className="text-xs text-gray-500">
-              {formatDate(lastMessage?.createdAt)}
-            </span>
+            {lastMessage &&
+              <span className="text-xs text-gray-500">
+                {formatDate(lastMessage?.createdAt)}
+              </span>
+            }
           </div>
           <span className="text-sm text-gray-500"></span>
         </div>
 
         <div className="relative flex justify-between items-center">
           <div className=" text-xs flex truncated-text w-fit">
+            { lastMessage ?
             <span
               className={`${unread > 0 ? "text-black font-medium" : "text-gray-500"} truncatedText1`}
             >
@@ -77,6 +79,11 @@ const ConversationCard = ({
                 : otherUser?.name?.split(" ")[0] + ": "}
               {lastMessage?.content}
             </span>
+
+            :
+
+            <span className="text-gray-500">You followed {otherUser?.name?.split(" ")[0]}</span>
+}
             {unread > 0 && (
               <div className="absolute top-0 right-0">
                 <div className="flex items-center justify-center w-4 h-4 bg-red-500 rounded-full text-white text-xs">

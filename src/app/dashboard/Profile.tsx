@@ -6,7 +6,6 @@ import Certificates from "./(components)/Certificates";
 import Experience from "./(components)/Experience";
 import Head from "./(components)/Head";
 import Posts from "./(components)/Posts";
-import RecommendedUsers from "./(components)/RecommendedUsers";
 import Skills from "./(components)/Skills";
 import UserProfileSkeleton from "./(components)/UserProfileSkleton";
 import Products from "./(components)/brand/Products";

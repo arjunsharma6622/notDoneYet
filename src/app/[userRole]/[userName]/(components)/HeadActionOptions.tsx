@@ -1,11 +1,13 @@
 "use client";
 
-import { followUser, toggleProfileLike, unfollowUser } from "@/actions/user";
-import { Flame } from "lucide-react";
+import { toggleProfileLike } from "@/actions/user";
+import { API_HEAD } from "@/lib/utils";
+import axios from "axios";
+import { Flame, LoaderCircle } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 import { BiShare } from "react-icons/bi";
 import { FiMoreVertical } from "react-icons/fi";
-import { RiHeart2Fill, RiHeart2Line } from "react-icons/ri";
 import { toast } from "sonner";
 
 const HeadActionOptions = ({
@@ -15,7 +17,12 @@ const HeadActionOptions = ({
   userData: any;
   session: any;
 }) => {
-  const handleFollowClick = async () => {
+
+  const [isFollowing, setIsFollowing] = useState(userData?.followers?.includes(session?.user?._id));
+  const [isFollowLoading, setIsFollowLoading] = useState(false);
+  const [conversationId, setConversationId] = useState<string | null>(null);
+
+  const handleToggleFollowClick = async () => {
     try {
       if (!session?.user) {
         toast.info("Please login to follow user", {
@@ -27,29 +34,32 @@ const HeadActionOptions = ({
         });
         return;
       }
+      
       if (userData._id === session?.user?._id) {
         toast.info("You can't follow yourself");
         return;
       }
-      await followUser(userData._id, session?.user?._id);
-      toast.success("Following user");
-    } catch (err) {
+
+      setIsFollowLoading(true)
+      const response = await axios.post(`${API_HEAD}/user/toggleFollow`, {
+        currentUserId : session?.user?._id,
+        selectedUserId: userData._id
+      })
+      if (response?.data?.message === "Success") {
+        setIsFollowing(!isFollowing)
+        setIsFollowLoading(false)
+        setConversationId(response?.data?.conversationId)
+        toast.success("Following user");
+      }
+    }
+    catch (err) {
+      setIsFollowLoading(false)
       console.error("Error following user:", err);
-      toast.error("Error following user");
+      toast.error("Error following user" + err);
     }
   };
 
-  const handleUnfollowClick = async () => {
-    try {
-      await unfollowUser(userData._id, session?.user?._id);
-      toast.success("Unfollowed user");
-    } catch (err) {
-      console.error("Error unfollowing user:", err);
-      toast.error("Error unfollowing user");
-    }
-  };
-
-  const handleLikeProfile = async ({error} : any) => {
+  const handleLikeProfile = async ({ error }: any) => {
     try {
       if (!session?.user) {
         toast.info("Please login to like profile", {
@@ -66,7 +76,7 @@ const HeadActionOptions = ({
         return;
       }
       const message = await toggleProfileLike(session?.user?._id, userData._id);
-      if(message?.error) {
+      if (message?.error) {
         toast.info(message?.error?.message);
         return
       }
@@ -79,8 +89,8 @@ const HeadActionOptions = ({
 
   return (
     <div className="flex items-center gap-4">
-      {userData?.followers?.includes(session?.user?._id) ? (
-        <Link href={`/messages/`}>
+      {(isFollowing && conversationId) ? (
+        <Link href={`/messages/${conversationId}`}>
           <button
             className="bg-blue-600 text-white py-2 px-4 rounded-full"
             type="submit"
@@ -89,12 +99,15 @@ const HeadActionOptions = ({
           </button>
         </Link>
       ) : (
-        <form action={handleFollowClick}>
+        <form action={handleToggleFollowClick}>
           <button
             className="bg-blue-600 text-white py-2 px-4 rounded-full"
             type="submit"
           >
             Follow
+            {
+              isFollowLoading && <LoaderCircle className="inline ml-2 animate-spin w-5 h-5"/>
+            }
           </button>
         </form>
       )}
@@ -104,11 +117,11 @@ const HeadActionOptions = ({
           type="submit"
           className="px-2 py-2 rounded-full bg-orange-100 cursor-pointer flex items-center gap-2"
         >
-          { userData?.profileLikes?.length > 0 &&
-          <span className="text-orange-600 text-sm font-medium">
-            {userData?.profileLikes?.length}
-          </span>
-}
+          {userData?.profileLikes?.length > 0 &&
+            <span className="text-orange-600 text-sm font-medium">
+              {userData?.profileLikes?.length}
+            </span>
+          }
           {userData?.profileLikes?.includes(session?.user?._id) ? (
             <Flame fill="#ea580c" className="text-orange-600 w-5 h-5" />
           ) : (

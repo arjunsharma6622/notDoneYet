@@ -23,7 +23,7 @@ const Page = async () => {
           <div className="text-gray-500 hidden md:flex w-full h-full border rounded-xl items-center gap-4 flex-col justify-center text-sm">
             <MessageCircle strokeWidth={1.5} className="w-10 h-10 " />
             <p className="text-center">
-            Click on a conversation to start messaging <br /> or <br /> Click on <Edit className="w-4 h-4 inline" /> to start a new conversation
+            Click on a conversation to start messaging
             </p>
 
           </div>

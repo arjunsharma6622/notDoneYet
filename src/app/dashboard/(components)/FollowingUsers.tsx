@@ -1,7 +1,7 @@
 "use client"
 
 import { API_HEAD } from "@/lib/utils";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import useSWR from "swr";
 import FollowingSkeleton from "./FollowingSkeleton";
 import FollowingUserCard from "./FollowingUserCard";
@@ -15,25 +15,28 @@ const FollowingUsers = ({ userId }: { userId: string }) => {
     isLoading,
   } = useSWR(`${API_HEAD}/user/following/${userId}`, fetcher);
 
+  const [followingUsers, setFollowingUsers] = useState(following)
+
   return (<>
-    {!isLoading && following?.length > 0 ?
+    {(!isLoading && following?.length > 0 && followingUsers?.length > 0) ?
       <div className="border rounded-md">
         <div className="w-full px-3 border-b py-3">
           <h1 className="text-xl font-bold">Your Network</h1>
         </div>
         <div className="flex flex-col px-5">
-          {following?.map((follow: any, index: number) => (
+          {followingUsers?.map((follow: any, index: number) => (
             <FollowingUserCard
               key={follow._id}
               follow={follow}
-              following={following}
               index={index}
               sessionUserId={userId}
+              followingUsers={followingUsers}
+              setFollowingUsers={setFollowingUsers}
             />
           ))}
         </div>
       </div>
-      :
+      : isLoading &&
       <div className="border rounded-md">
         <div className="w-full px-3 border-b py-3">
           <h1 className="text-xl font-bold">Your Network</h1>
