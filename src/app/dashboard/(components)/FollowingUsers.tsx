@@ -1,54 +1,61 @@
 "use client"
 
 import { API_HEAD } from "@/lib/utils";
-import { Suspense, useState } from "react";
-import useSWR from "swr";
+import axios from "axios";
+import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import FollowingSkeleton from "./FollowingSkeleton";
 import FollowingUserCard from "./FollowingUserCard";
 
 const FollowingUsers = ({ userId }: { userId: string }) => {
 
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const {
-    data: following,
-    error,
-    isLoading,
-  } = useSWR(`${API_HEAD}/user/following/${userId}`, fetcher);
+  const [followingUsers, setFollowingUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [followingUsers, setFollowingUsers] = useState(following)
+  useEffect(() => {
+    const fetchFollowingUsers = async () => {
+      const response = await axios.get(`${API_HEAD}/user/following/${userId}`);
+      const data = response.data;
+      setFollowingUsers(data);
+      setIsLoading(false);
+    }
+    fetchFollowingUsers();
+  }, [userId]);
 
-  return (<>
-    {(!isLoading && following?.length > 0 && followingUsers?.length > 0) ?
-      <div className="border rounded-md">
-        <div className="w-full px-3 border-b py-3">
-          <h1 className="text-xl font-bold">Your Network</h1>
-        </div>
-        <div className="flex flex-col px-5">
-          {followingUsers?.map((follow: any, index: number) => (
-            <FollowingUserCard
-              key={follow._id}
-              follow={follow}
-              index={index}
-              sessionUserId={userId}
-              followingUsers={followingUsers}
-              setFollowingUsers={setFollowingUsers}
-            />
-          ))}
-        </div>
+
+  return (
+    <div className="border rounded-md">
+      <div className="w-full px-3 border-b py-3">
+        <h1 className="text-xl font-bold">Your Network</h1>
       </div>
-      : isLoading &&
-      <div className="border rounded-md">
-        <div className="w-full px-3 border-b py-3">
-          <h1 className="text-xl font-bold">Your Network</h1>
-        </div>
+      {(!isLoading) ? // if not loading then show the following users
+        followingUsers.length > 0 ?
+          <div className="flex flex-col px-5">
+            {followingUsers?.map((follow: any, index: number) => (
+              <FollowingUserCard
+                key={follow._id}
+                follow={follow}
+                index={index}
+                sessionUserId={userId}
+                followingUsers={followingUsers}
+                setFollowingUsers={setFollowingUsers}
+              />
+            ))}
+          </div>
+          : <div className="w-full text-sm text-gray-500 flex flex-col items-center justify-center text-center h-24">
+            <p>You dont follow anyone</p>
+            <p>Go to the <Link href={"/network"} className="font-medium text-blue-600 underline">Network page <ArrowUpRight strokeWidth={1.6} className="w-5 h-5 inline -ml-1 mb-1" /></Link>  to follow people</p>
+          </div>
+
+        : isLoading &&
         <div className="flex flex-col px-5 gap-4 py-4">
           {[...Array(6)].map((follow: any, index: number) => (
-            <FollowingSkeleton key={index}/>
+            <FollowingSkeleton key={index} />
           ))}
         </div>
-      </div>
-    }
-  </>
+      }
+    </div>
   );
 };
 

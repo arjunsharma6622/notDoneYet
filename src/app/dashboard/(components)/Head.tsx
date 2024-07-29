@@ -2,9 +2,9 @@ import { IconButton } from "@/components/ui/IconButton";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { useState } from "react";
-import { FiArrowUpRight, FiInfo, FiMapPin } from "react-icons/fi";
 import BasicProfileEdit from "../(modals)/BasicProfileEdit";
 import ImageEdit from "../(modals)/images/ImageEdit";
+import { ArrowUpRight, Info, MapPin } from "lucide-react";
 
 const Head = ({ userData }: { userData: any }) => {
   const [openImagesEdit, setOpenImagesEdit] = useState(false);
@@ -80,13 +80,13 @@ const Head = ({ userData }: { userData: any }) => {
           <h1 className="text-xs md:text-sm mt-1 md:mt-1">{userData?.bio}</h1>
           {userData?.address ? (
             <div className="flex items-center justify-start gap-1">
-              <FiMapPin className="text-gray-500 w-3 h-3 md:w-4 md:h-4" />
+              <MapPin className="text-gray-500 w-3 h-3 md:w-4 md:h-4" />
               <p className="mt-1 text-xs md:text-sm text-gray-500">{`${userData.address?.city}, ${userData.address?.state}, ${userData.address?.country}`}</p>
             </div>
           ) : (
             <div>
               <div className="mt-1 text-xs md:text-sm text-gray-500 flex items-center gap-1">
-                <FiInfo className="w-4 h-4 mr-1" />
+                <Info className="w-4 h-4 mr-1" />
                 <p>
                   No address added.{" "}
                   <span
@@ -107,7 +107,7 @@ const Head = ({ userData }: { userData: any }) => {
               href={`/${userRoles[userData?.role]?.toLowerCase()}/${userData?.userName}`}
             >
               <span className="">View my profile</span>
-              <FiArrowUpRight className="inline w-4 h-4 md:w-5 md:h-5 mb-1" />
+              <ArrowUpRight className="inline w-4 h-4 md:w-5 md:h-5 mb-1" />
             </Link>
           )}
         </div>

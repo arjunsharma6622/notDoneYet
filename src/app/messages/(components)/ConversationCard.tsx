@@ -1,9 +1,9 @@
 import { API_HEAD } from "@/lib/utils";
+import { formatDate } from "@/utils/FormatDate";
 import axios from "axios";
 import Image from "next/legacy/image";
-import { useEffect, useState } from "react";
-import { formatDate } from "../(utils)/FormatDate";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const ConversationCard = ({
   session,

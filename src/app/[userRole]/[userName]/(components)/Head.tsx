@@ -1,4 +1,4 @@
-import { FiMapPin } from "react-icons/fi";
+import { MapPin } from "lucide-react";
 import HeadActionOptions from "./HeadActionOptions";
 import { Separator } from "@/components/ui/separator";
 
@@ -48,7 +48,7 @@ const Head = ({ userData, session }: any) => {
           <h1 className="mt-1 text-sm">{userData.bio}</h1>
           {userData.address && (
             <div className="flex items-center justify-start gap-1">
-              <FiMapPin className="text-gray-500 w-4 h-4" />
+              <MapPin className="text-gray-500 w-4 h-4" />
               <p className="mt-1 text-sm text-gray-500">{`${userData.address?.city}, ${userData.address?.state}, ${userData.address?.country}`}</p>
             </div>
           )}

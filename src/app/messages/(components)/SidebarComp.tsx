@@ -2,7 +2,7 @@
 
 import { API_HEAD } from '@/lib/utils';
 import axios from 'axios';
-import { Edit, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import ConversationCard from './ConversationCard';
 

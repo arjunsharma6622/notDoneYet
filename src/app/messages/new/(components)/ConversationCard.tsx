@@ -3,7 +3,7 @@ import axios from "axios";
 import Image from "next/legacy/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { formatDate } from "../../(utils)/FormatDate";
+import { formatDate } from "@/utils/FormatDate";
 
 const ConversationCard = ({
   session,

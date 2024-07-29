@@ -1,5 +1,5 @@
+import { formatMessageTime } from "@/utils/FormatDate";
 import { BiCheckDouble } from "react-icons/bi";
-import { formatMessageTime } from "../../(utils)/FormatDate";
 
 const Message = ({
   message,

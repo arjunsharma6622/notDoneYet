@@ -15,19 +15,19 @@ const FollowingUserCard = ({
   follow: any;
   index: number;
   sessionUserId: string;
-  followingUsers : any,
-  setFollowingUsers : any
+  followingUsers: any
+  setFollowingUsers: any
 }) => {
 
   const handleToggleFollowClick = async () => {
     try {
       const response = await axios.post(`${API_HEAD}/user/toggleFollow`, {
-        currentUserId : sessionUserId,
+        currentUserId: sessionUserId,
         selectedUserId: follow._id
       })
       if (response?.data?.message === "Success") {
         // remove the follow._id user from teh followingusers using the setfollowing
-        setFollowingUsers(followingUsers.filter((user:any) => user._id !== follow._id))
+        setFollowingUsers(followingUsers.filter((user: any) => user._id !== follow._id))
         toast.success("Following user");
       }
     }
@@ -61,13 +61,13 @@ const FollowingUserCard = ({
         <h1 className="">{follow?.name}</h1>
         <div className="flex items-center gap-2">
           <button className="px-3 py-1 mt-1 text-sm bg-primary text-white rounded-full">
-        <Link href={`/messages/${follow?.conversationId ? follow?.conversationId : `new/${follow?._id}`}`} >
-          Message
-        </Link>
-        </button>
-        <button onClick={handleToggleFollowClick} className="bg-red-500 px-3 py-1 mt-1 text-sm text-white rounded-full">
-          Unfollow
-        </button>
+            <Link href={`/messages/${follow?.conversationId ? follow?.conversationId : `new/${follow?._id}`}`} >
+              Message
+            </Link>
+          </button>
+          <button onClick={handleToggleFollowClick} className="bg-red-500 px-3 py-1 mt-1 text-sm text-white rounded-full">
+            Unfollow
+          </button>
         </div>
       </div>
     </div>

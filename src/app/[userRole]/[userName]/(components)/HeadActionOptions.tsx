@@ -3,11 +3,9 @@
 import { toggleProfileLike } from "@/actions/user";
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
-import { Flame, LoaderCircle } from "lucide-react";
+import { EllipsisVertical, Flame, LoaderCircle, Share2 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { BiShare } from "react-icons/bi";
-import { FiMoreVertical } from "react-icons/fi";
 import { toast } from "sonner";
 
 const HeadActionOptions = ({
@@ -89,8 +87,8 @@ const HeadActionOptions = ({
 
   return (
     <div className="flex items-center gap-4">
-      {(isFollowing && conversationId) ? (
-        <Link href={`/messages/${conversationId}`}>
+      {(isFollowing) ? (
+        <Link href={`/messages/${conversationId ? conversationId : ''}`}>
           <button
             className="bg-blue-600 text-white py-2 px-4 rounded-full"
             type="submit"
@@ -131,10 +129,10 @@ const HeadActionOptions = ({
       </form>
 
       <div className="px-2 py-2 rounded-full bg-blue-100 cursor-pointer -scale-x-100">
-        <BiShare className="text-blue-600 w-5 h-5" />
+        <Share2 className="text-blue-600 w-5 h-5" />
       </div>
       <div className="px-2 py-2 rounded-full bg-gray-100 cursor-pointer">
-        <FiMoreVertical className="text-gray-600 w-5 h-5" />
+        <EllipsisVertical className="text-gray-600 w-5 h-5" />
       </div>
     </div>
   );

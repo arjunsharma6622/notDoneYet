@@ -1,8 +1,7 @@
 import { auth } from "@/auth";
-import { Edit, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { redirect } from "next/navigation";
 import Sidebar from "./(components)/Sidebar";
-import FollowingUsers from "../dashboard/(components)/FollowingUsers";
 
 const Page = async () => {
   const session = await auth();

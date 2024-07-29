@@ -7,8 +7,8 @@ import { ArrowLeft, LoaderCircle, SendHorizonal } from "lucide-react";
 import Image from "next/legacy/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { formatConversationDate } from "../../(utils)/FormatDate";
 import Message from "./Message";
+import { formatConversationDate } from "@/utils/FormatDate";
 
 const CurrentConversation = ({ newUserId, session }: any) => {
   const [currentMessage, setCurrentMessage] = useState("");
