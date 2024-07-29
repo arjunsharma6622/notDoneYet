@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import FollowingUsers from "./(components)/FollowingUsers";
 import Users from "./(components)/Users";
-import UserSkeleton from "./(components)/UserSkeleton";
+import UserSkeleton from "@/components/skeletons/UserSkeleton";
 
 const Page = async () => {
   const session: any = await auth();

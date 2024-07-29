@@ -2,11 +2,9 @@
 
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
-import { ArrowUpRight } from "lucide-react";
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import FollowingSkeleton from "./FollowingSkeleton";
 import FollowingUserCard from "./FollowingUserCard";
+import FollowingSkeleton from "@/components/skeletons/FollowingSkeleton";
 
 const FollowingUsers = ({ userId }: { userId: string }) => {
 
