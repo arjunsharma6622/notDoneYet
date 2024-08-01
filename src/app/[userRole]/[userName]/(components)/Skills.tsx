@@ -9,10 +9,10 @@ const Skills = ({ userData }: any) => {
         </h2>
       </div>
 
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap gap-1 items-center md:gap-4">
         {userData.sports?.map((sport: string) => (
-          <div key={sport} className="bg-gray-200 rounded-full px-4 py-1">
-            <span className="">{sport}</span>
+          <div key={sport} className="bg-gray-200 rounded-full px-3 md:px-4 py-1">
+            <span className="text-sm md:text-base">{sport}</span>
           </div>
         ))}
       </div>

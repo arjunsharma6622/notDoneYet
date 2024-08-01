@@ -14,7 +14,7 @@ const page = async ({params}: {params: { userRole: string; userName: string }}) 
     <div className=" flex justify-center gap-5 w-full ">
       {postsData && (
         <div className="md:w-[95%] flex md:flex-row md:gap-10 flex-col items-start mt-5">
-          <div className="flex-[3] sticky top-20">
+          <div className="flex-[3] hidden md:block sticky top-20">
             <UserInfoCard userName={userName}/>
           </div>
 

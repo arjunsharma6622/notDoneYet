@@ -3,13 +3,14 @@
 import { useState } from "react";
 import ImagesModal from "./ImagesModal";
 import Image from "next/legacy/image";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
 
-const PostImageSection = ({ images, openModalOnClick=true }: any) => {
+const PostImageSection = ({ images, openModalOnClick = true }: any) => {
   const [openImagesModal, setOpenImagesModal] = useState(false);
   return (
     <div className="cursor-pointer max-w-[650px]">
       {images.length > 0 && (
-        <div onClick={() => setOpenImagesModal(true)}>
+        <div className="w-full" onClick={() => setOpenImagesModal(true)}>
           {images.length === 1 && (
             <Image
               alt=""
@@ -17,7 +18,7 @@ const PostImageSection = ({ images, openModalOnClick=true }: any) => {
               height={325}
               layout="intrinsic"
               src={images[0]}
-              className="object-cover rounded-md"
+              className="w-full object-cover rounded-md aspect-[2/1]"
             />
           )}
           {images.length === 2 && (
@@ -25,18 +26,17 @@ const PostImageSection = ({ images, openModalOnClick=true }: any) => {
               <Image
                 alt=""
                 width={650}
-                height={450}
                 layout="intrinsic"
+                height={450}
                 src={images[0]}
-                className="w-full h-full object-cover rounded-md"
+                className="w-full h-full object-cover rounded-md aspect-[2/1]"
               />
               <Image
                 alt=""
                 width={650}
                 height={450}
-                layout="intrinsic"
                 src={images[1]}
-                className="w-full h-full object-cover rounded-md"
+                className="w-full object-cover rounded-md aspect-[2/1]"
               />
             </div>
           )}
@@ -109,6 +109,31 @@ const PostImageSection = ({ images, openModalOnClick=true }: any) => {
           )}
         </div>
       )}
+
+
+      {/* <Carousel className="md:hidden">
+        <CarouselContent>
+          {images?.map((image: any) => (
+            <CarouselItem key={image}>
+              <Image
+                src={image}
+                width={500}
+                height={500}
+                alt="image"
+                className="w-full object-cover aspect-[2/1]"
+              />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        {images?.length > 1 && (
+          <>
+            <CarouselPrevious />
+            <CarouselNext />
+          </>
+        )}
+      </Carousel>
+ */}
+
 
       {openImagesModal && openModalOnClick && (
         <div className="absolute">

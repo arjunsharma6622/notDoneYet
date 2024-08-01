@@ -5,6 +5,7 @@ import { useState } from "react";
 import BasicProfileEdit from "../(modals)/BasicProfileEdit";
 import ImageEdit from "../(modals)/images/ImageEdit";
 import { ArrowUpRight, Info, MapPin } from "lucide-react";
+import Image from "next/image";
 
 const Head = ({ userData }: { userData: any }) => {
   const [openImagesEdit, setOpenImagesEdit] = useState(false);
@@ -21,26 +22,26 @@ const Head = ({ userData }: { userData: any }) => {
     <>
       <div>
         <div className="relative">
-          <img
+          <Image
             src={
               userData?.backgroundImg ||
               "https://www.fr.com/images/demo/fish-richardson-header-default.png"
             }
             referrerPolicy="no-referrer"
-            width={1600}
-            height={400}
+            width={700}
+            height={500}
             alt=""
-            className="object-cover aspect-[4/1] rounded-tr-md rounded-tl-md"
+            className="w-full object-cover aspect-[4/1] rounded-tr-md rounded-tl-md"
           />
-          <img
+          <Image
             src={
               userData?.image ||
               "https://www.fr.com/images/demo/fish-richardson-header-default.png"
             }
             referrerPolicy="no-referrer"
             alt=""
-            width={160}
-            height={160}
+            width={200}
+            height={200}
             className="absolute left-10 -bottom-6 md:-bottom-8 border-white border-4 md:border-8 w-20 h-20 md:w-44 md:h-44 object-cover rounded-full"
           />
 
@@ -53,7 +54,7 @@ const Head = ({ userData }: { userData: any }) => {
         </div>
 
         <div className="px-2 md:px-6 mt-2 md:mt-6 flex flex-col">
-          <span className="text-[10px]">{userRoles[userData?.role]}</span>
+          <span className="text-[10px] md:text-xs">{userRoles[userData?.role]}</span>
 
           <div className="flex justify-between items-center">
             <div className="flex gap-1 md:gap-3 items-start md:items-center flex-col md:flex-row">
@@ -79,9 +80,9 @@ const Head = ({ userData }: { userData: any }) => {
 
           <h1 className="text-xs md:text-sm mt-1 md:mt-1">{userData?.bio}</h1>
           {userData?.address ? (
-            <div className="flex items-center justify-start gap-1">
-              <MapPin className="text-gray-500 w-3 h-3 md:w-4 md:h-4" />
-              <p className="mt-1 text-xs md:text-sm text-gray-500">{`${userData.address?.city}, ${userData.address?.state}, ${userData.address?.country}`}</p>
+            <div className="flex items-center justify-start gap-1 mt-1 ">
+              <MapPin className="text-gray-500 w-3 h-3 md:w-4 md:h-4 " />
+              <p className="text-xs md:text-sm text-gray-500">{`${userData.address?.city}, ${userData.address?.state}, ${userData.address?.country}`}</p>
             </div>
           ) : (
             <div>

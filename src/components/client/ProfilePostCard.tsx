@@ -1,9 +1,9 @@
 import { timeAgo } from "@/lib/utils";
-import Image from "next/legacy/image";
 import Link from "next/link";
 import PostCardMore from "./PostCardMore";
 import PostImageSection from "./PostImageSection";
 import { Heart } from "lucide-react";
+import Image from "next/image";
 
 const ProfilePostCard = ({ post, currUser, dashboardCard }: any) => {
   return (

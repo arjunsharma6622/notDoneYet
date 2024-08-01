@@ -2,7 +2,7 @@
 
 import { addComment, toggleLike } from "@/actions/posts";
 import { timeAgo } from "@/lib/utils";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { FiMessageCircle, FiShare } from "react-icons/fi";
@@ -56,8 +56,8 @@ const PostCard = ({ postData, currUser }: any) => {
   return (
     <div className="flex border flex-col rounded-md px-2 py-2 gap-2 max-w-[650px]">
       <div className="flex items-center justify-between gap-4 border-b pb-2">
-        <div className="flex items-center gap-2">
-          <Link href={`/${postData?.user?.role}/${postData?.user?.userName}`}>
+        <div className="flex items-center justify-start gap-2">
+          <Link className="flex w-12 h-12" href={`/${postData?.user?.role}/${postData?.user?.userName}`}>
             <Image
               src={postData?.user?.image}
               alt=""
@@ -67,7 +67,7 @@ const PostCard = ({ postData, currUser }: any) => {
               className="rounded-full w-12 h-12"
             />
           </Link>
-          <div>
+          <div className="flex  flex-col w-fit">
             <div className="text-base flex items-center gap-2">
               <Link
                 href={`/${postData?.user?.role}/${postData?.user?.userName}`}
@@ -79,7 +79,7 @@ const PostCard = ({ postData, currUser }: any) => {
                 {timeAgo(postData?.createdAt)}
               </span>
             </div>
-            <p className="text-xs">{postData?.user?.bio}</p>
+            <p className="text-xs truncatedText1">{postData?.user?.bio}</p>
           </div>
         </div>
 
