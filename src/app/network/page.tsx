@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import FollowingUsers from "./(components)/FollowingUsers";
 import Users from "./(components)/Users";
-import UserSkeleton from "@/components/skeletons/UserSkeleton";
+import UsersLoadingSkeleton from "@/components/skeletons/User/UsersLoadingSkeleton";
 
 const Page = async () => {
   const session: any = await auth();
@@ -20,18 +20,7 @@ const Page = async () => {
             <h1 className="text-2xl font-bold">Discover new network</h1>
           </div>
           <Suspense fallback={
-            <>
-              <div className="md:hidden grid md:grid-cols-4 gap-4">
-                {[...Array(4)].map((i) => (
-                  <UserSkeleton key={i} />
-                ))}
-              </div>
-              <div className="hidden  md:grid md:grid-cols-4 gap-4">
-                {[...Array(12)].map((i) => (
-                  <UserSkeleton key={i} />
-                ))}
-              </div>
-            </>
+            <UsersLoadingSkeleton />
           }>
             <Users />
           </Suspense>

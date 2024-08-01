@@ -1,8 +1,8 @@
 "use client";
 
-import ChooseRole from "@/components/ChooseRole";
 import About from "./(components)/About";
 import Certificates from "./(components)/Certificates";
+import ChooseRole from "./(components)/ChooseRole";
 import Experience from "./(components)/Experience";
 import FollowingUsers from "./(components)/FollowingUsers";
 import Head from "./(components)/Head";
@@ -15,7 +15,7 @@ import PastEvents from "./(components)/venue/PastEvents";
 import Venues from "./(components)/venue/Venues";
 
 const Profile = ({ session, userData }: any) => {
- 
+
   return (
     <div className="relative flex items-center justify-center px-2 ">
       {userData ? (

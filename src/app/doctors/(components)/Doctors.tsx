@@ -5,15 +5,15 @@ import React from 'react'
 import DoctorCard from './DoctorCard';
 
 const Doctors = async () => {
-    const session: any = await auth();
+  const session: any = await auth();
 
-    const doctors = await axios.get(`${API_HEAD}/user?roles=doctor`)
+  const doctors = await axios.get(`${API_HEAD}/user?roles=doctor`)
 
-    return (
-    <div>
-        {doctors?.data?.map((doctor: any) => (
-          <DoctorCard key={doctor._id} doctor={doctor} />
-        ))}
+  return (
+    <div className="md:grid md:grid-cols-4 md:items-start flex flex-col gap-4 justify-center items-center">
+      {doctors?.data?.map((doctor: any) => (
+        <DoctorCard key={doctor._id} doctor={doctor} />
+      ))}
     </div>
   )
 }

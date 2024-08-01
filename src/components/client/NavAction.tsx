@@ -31,8 +31,8 @@ const NavAction = async () => {
                             </span>
                         </Link>
 
-                    <form className='cursor-pointer w-fit focus:outline-offset-0 ring-0 flex items-center gap-2 text-red-600 bg-red-100 rounded-full p-[6px] md:p-2 md:px-4' action={handleSignOut}>
-                        <button className='flex items-center gap-2'>
+                    <form className='' action={handleSignOut}>
+                        <button className='flex items-center gap-2 cursor-pointer w-fit focus:outline-offset-0 ring-0 text-red-600 bg-red-100 rounded-full p-[6px] md:p-2 md:px-4'>
                         <span className='hidden md:block text-xs'>Logout</span>
                         <LogOut strokeWidth={1.5} className='w-5 h-5 '/>
                         </button>

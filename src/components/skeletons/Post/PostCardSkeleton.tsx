@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton"
 
-const PostSkeleton = () => {
+const PostCardSkeleton = () => {
     return (
         <div className="flex items-center justify-center flex-col gap-2 border rounded-xl p-4 w-full">
             <div className="w-full flex items-center justify-start gap-4 pb-4 border-b">
@@ -22,13 +22,8 @@ const PostSkeleton = () => {
 
                 <Skeleton className="h-44 w-full bg-gray-200 rounded-xl" />
             </div>
-            {/* <div className="flex items-center justify-between gap-4 w-full">
-                <Skeleton className="h-8 w-20 bg-gray-200 rounded-full" />
-                <Skeleton className="h-8 w-20 bg-gray-200 rounded-full" />
-                <Skeleton className="h-8 w-20 bg-gray-200 rounded-full" />
-            </div> */}
         </div>
     )
 }
 
-export default PostSkeleton
+export default PostCardSkeleton

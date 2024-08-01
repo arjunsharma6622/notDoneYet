@@ -8,7 +8,7 @@ const Users = async () => {
     const users = await axios.get(`${API_HEAD}/user/recommended/${session?.user?._id}`);
 
     return (
-    <div className="grid md:grid-cols-4 gap-4">
+    <div className="md:grid md:grid-cols-4 md:items-start flex flex-col gap-4 justify-center items-center">
         {users?.data?.map((user: any) => (
           <UserCard key={user._id} user={user} />
         ))}

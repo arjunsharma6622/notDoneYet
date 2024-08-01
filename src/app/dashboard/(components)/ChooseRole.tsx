@@ -21,6 +21,7 @@ const ChooseRole = ({ userData, className }: any) => {
         role: choosenRole,
       });
       toast.success("Role updated successfully");
+      window.location.reload();
     } catch (error) {
       console.error(error);
       toast.error("Error updating role");

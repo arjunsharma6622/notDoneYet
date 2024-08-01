@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import RecommendedPosts from "@/components/client/RecommendedPosts";
 import UserInfoCard from "@/components/client/UserInfoCard";
-import PostSkeleton from "@/components/skeletons/PostSkeleton";
+import PostsSkeleton from "@/components/skeletons/Post/PostsSkeleton";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
@@ -29,16 +29,10 @@ export default async function Home() {
           </div>
           <div className="flex-[6]">
             <Suspense fallback={
-              <div className="flex flex-col gap-4">
-                {[...Array(2)]?.map((index) => (
-                  <PostSkeleton key={index} />
-                ))}
-              </div>
+              <PostsSkeleton cardsToShow={2} />
             }>
               <RecommendedPosts userId={user?._id} />
             </Suspense>
-
-
           </div>
 
           <div className="flex-[3]"></div>
