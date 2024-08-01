@@ -3,11 +3,11 @@
 import { toggleProfileLike } from "@/actions/user";
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
+import { Flame } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { BiShare } from "react-icons/bi";
 import { FiMoreVertical } from "react-icons/fi";
-import { RiHeart2Fill, RiHeart2Line } from "react-icons/ri";
 import { toast } from "sonner";
 
 const HeadActionOptions = ({
@@ -95,7 +95,7 @@ const HeadActionOptions = ({
       ) : (
         <form action={handleToggleFollowClick}>
           <button
-            className="bg-blue-600 text-white py-1 px-4 rounded-sm"
+            className="bg-blue-600 text-white py-1 px-4 rounded-full"
             type="submit"
           >
             Follow
@@ -106,17 +106,17 @@ const HeadActionOptions = ({
       <form action={handleLikeProfile}>
         <button
           type="submit"
-          className="px-2 py-2 rounded-full bg-pink-100 cursor-pointer flex items-center gap-2"
+          className="px-2 py-2 rounded-full bg-orange-100 cursor-pointer flex items-center gap-2"
         >
-          { userData?.profileLikes?.length > 0 &&
-          <span className="text-pink-600 text-sm font-medium">
-            {userData?.profileLikes?.length}
-          </span>
-}
+          {userData?.profileLikes?.length > 0 &&
+            <span className="text-orange-600 text-sm font-medium">
+              {userData?.profileLikes?.length}
+            </span>
+          }
           {userData?.profileLikes?.includes(session?.user?._id) ? (
-            <RiHeart2Fill className="text-pink-600 w-5 h-5" />
+            <Flame fill="#ea580c" className="text-orange-600 w-5 h-5" />
           ) : (
-            <RiHeart2Line className="text-pink-600 w-5 h-5" />
+            <Flame className="text-orange-600 w-5 h-5" />
           )}
         </button>
       </form>

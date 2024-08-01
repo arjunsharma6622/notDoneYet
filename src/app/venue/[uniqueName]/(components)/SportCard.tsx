@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
-import React from 'react'
+import Image from 'next/image'
 import { FiCalendar, FiClock } from 'react-icons/fi'
 
 const SportCard = ({sport} : any) => {
@@ -12,10 +12,12 @@ const SportCard = ({sport} : any) => {
       <CarouselContent>   
         {sport?.images?.map((image: any) => (
           <CarouselItem key={image}>
-            <img
+            <Image
+              width={500}
+              height={500}
               src={image}
               alt="image"
-              className="w-full object-cover"
+              className="w-full object-cover aspect-[2/1]"
             />
           </CarouselItem>
         ))}
