@@ -1,4 +1,5 @@
-import axiosInstance from "@/utils/axiosInstance";
+import { API_HEAD } from "@/lib/utils";
+import axios from "axios";
 import About from "./(components)/About";
 import Products from "./(components)/brand/Products";
 import Education from "./(components)/Education";
@@ -9,8 +10,8 @@ import Skills from "./(components)/Skills";
 
 const Profile = async ({ userData }: any) => {
 
-  const postData = await axiosInstance
-    .get(`/posts/getPosts/user?userId=${userData._id}`)
+  const postData = await axios
+    .get(`${API_HEAD}/posts/getPosts/user?userId=${userData._id}`)
     .then((res) => res.data)
     .catch((err) => console.error("Error", err));
 

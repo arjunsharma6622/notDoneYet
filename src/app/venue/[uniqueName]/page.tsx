@@ -1,4 +1,4 @@
-import axiosInstance from "@/utils/axiosInstance";
+import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import type { Metadata, ResolvingMetadata } from "next";
 import VenueProfile from "./VenueProfile";
@@ -50,8 +50,8 @@ export async function generateMetadata(
 const Page = async ({ params }: { params: { uniqueName: string } }) => {
   const uniqueName = params.uniqueName;
 
-  const venueData = await axiosInstance
-    .get(`/venue/uniqueName/${uniqueName}`)
+  const venueData = await axios
+    .get(`${API_HEAD}/venue/uniqueName/${uniqueName}`)
     .then((res) => res.data)
     .catch((err) => console.error("Error", err.response?.data?.error));
 

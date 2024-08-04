@@ -1,12 +1,12 @@
 import PostCard from '@/components/client/PostCard'
 import UserInfoCard from '@/components/client/UserInfoCard'
 import { API_HEAD } from '@/lib/utils'
-import axiosInstance from '@/utils/axiosInstance'
+import axios from 'axios'
 
 const page = async ({params}: {params: { userRole: string; userName: string }}) => {
   const userName = params.userName
   
-  const postsData = await axiosInstance.get(`${API_HEAD}/posts/getPosts/user?userName=${userName}`).then((res) => res.data)
+  const postsData = await axios.get(`${API_HEAD}/posts/getPosts/user?userName=${userName}`).then((res) => res.data)
 
   return (
     <div className=" flex justify-center gap-5 w-full ">

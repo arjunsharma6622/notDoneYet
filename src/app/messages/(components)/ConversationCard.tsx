@@ -1,3 +1,5 @@
+"use client"
+
 import { API_HEAD } from "@/lib/utils";
 import axiosInstance from "@/utils/axiosInstance";
 import { formatDate } from "@/utils/FormatDate";

@@ -1,13 +1,11 @@
 "use client"
 
-import { API_HEAD } from "@/lib/utils";
-import axios from "axios";
+import axiosInstance from "@/utils/axiosInstance";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import FollowingSkeleton from "./FollowingSkeleton";
 import FollowingUserCard from "./FollowingUserCard";
-import axiosInstance from "@/utils/axiosInstance";
 
 const FollowingUsers = () => {
 

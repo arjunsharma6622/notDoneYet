@@ -1,7 +1,6 @@
 "use client";
-import { API_HEAD } from "@/lib/utils";
+
 import axiosInstance from "@/utils/axiosInstance";
-import axios from "axios";
 import Image from "next/legacy/image";
 import Link from "next/link";
 import { toast } from "sonner";
