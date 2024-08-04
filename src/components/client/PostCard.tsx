@@ -11,8 +11,9 @@ import { toast } from "sonner";
 import PostCardMore from "./PostCardMore";
 import PostImageSection from "./PostImageSection";
 import UserCommentCard from "./UserCommentCard";
+import { authenticatedUser } from "@/utils/data";
 
-const PostCard = ({ postData, currUser }: any) => {
+const PostCard = ({ postData }: any) => {
   const [openCommentInput, setOpenCommentInput]: [boolean, any] =
     useState(false);
   const [commentText, setCommentText]: [string, any] = useState("");
@@ -22,7 +23,7 @@ const PostCard = ({ postData, currUser }: any) => {
     try {
       console.log("clicked on like");
 
-      const res: any = await toggleLike(postData?._id, currUser._id);
+      const res: any = await toggleLike(postData?._id, authenticatedUser._id);
       toast.success(res.message);
     } catch (err) {
       console.log(err);
@@ -37,7 +38,7 @@ const PostCard = ({ postData, currUser }: any) => {
         return;
       }
 
-      await addComment(currUser._id, postData?._id, null, commentText);
+      await addComment(authenticatedUser._id, postData?._id, null, commentText);
       setCommentText("");
 
       toast.success("Comment posted successfully");
@@ -50,7 +51,7 @@ const PostCard = ({ postData, currUser }: any) => {
   };
 
   const isPostLiked = postData?.likes?.some(
-    (like: any) => like._id === currUser?._id
+    (like: any) => like._id === authenticatedUser?._id
   );
 
   return (
@@ -83,7 +84,7 @@ const PostCard = ({ postData, currUser }: any) => {
           </div>
         </div>
 
-        <PostCardMore postData={postData} currUser={currUser} />
+        {/* <PostCardMore postData={postData} currUser={currUser} /> */}
       </div>
 
       <div className="w-full flex flex-col gap-4 px-2 py-2">
@@ -134,7 +135,7 @@ const PostCard = ({ postData, currUser }: any) => {
         <div className="flex flex-col w-full px-4">
           <div className="w-full border-b py-3 flex items-start gap-2">
             <Image
-              src={currUser.image}
+              src={authenticatedUser.image}
               alt="profile"
               width={36}
               height={36}

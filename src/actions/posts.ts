@@ -23,6 +23,8 @@ export const createPost = async (postData: any) => {
     console.log(error);
   }
 };
+
+
 export const toggleLike = async (postId: string, userId: string) => {
   try {
     await connectDB();
@@ -55,6 +57,8 @@ export const toggleLike = async (postId: string, userId: string) => {
     console.log(error);
   }
 };
+
+
 export const addComment = async (
   userId: string,
   postId: string,

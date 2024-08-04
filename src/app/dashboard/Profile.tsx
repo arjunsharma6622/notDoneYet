@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import About from "./(components)/About";
 import Certificates from "./(components)/Certificates";
 import ChooseRole from "./(components)/ChooseRole";
@@ -14,25 +13,8 @@ import Products from "./(components)/brand/Products";
 import Education from "./(components)/doctor/Education";
 import PastEvents from "./(components)/venue/PastEvents";
 import Venues from "./(components)/venue/Venues";
-import axios from "axios";
-import { API_HEAD } from "@/lib/utils";
 
-const Profile = ({ session, userData }: any) => {
-
-  useEffect(() => {
-    const fetchCookieApi = async () => {
-      try{
-        const res = await axios.get(`${API_HEAD}/set-cookie/secure`, {
-          withCredentials: true
-        })
-        console.log(res.data)
-      }
-      catch(err){
-        console.log(err)
-      }
-    }
-    fetchCookieApi()
-  }, [])
+const Profile = ({ userData }: any) => {
 
   return (
     <div className="relative flex items-center justify-center px-2 ">
@@ -69,7 +51,7 @@ const Profile = ({ session, userData }: any) => {
 
               {userData?.role !== "brand" && userData?.role !== "venue" && (
                 <div className="w-full flex md:flex-col flex-col md:flex-[3] gap-4">
-                  <FollowingUsers userId={session?.user?._id} />
+                  <FollowingUsers />
                 </div>
               )}
             </div>

@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button'
-import { ArrowUpRight, MapPin, Navigation, Phone, User } from 'lucide-react'
+import { MapPin, Navigation, Phone } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
 
 const VenueCard = ({ venue }: any) => {
   const sportsAvailable = venue?.sports?.map((sport: any) => sport.name)

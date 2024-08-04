@@ -5,7 +5,7 @@ import Link from 'next/link'
 const UserCard = ({ user }: any) => {
   return (
     <div className='relative w-full h-fit shadow rounded-md max-w-xs flex items-center gap-2 flex-col text-center'>
-      <img src={user?.backgroundImg} alt="" className='w-full aspect-[4/1] object-cover rounded-t-md' />
+      <Image width={400} height={400} src={user?.backgroundImg} alt="" className='w-full aspect-[4/1] object-cover rounded-t-md' />
       <Image width={100} height={100}  src={user?.image} alt="x" className='absolute top-4 w-16 h-16 rounded-full object-cover' />
       <div className='w-full flex flex-col gap-1 mt-0 p-3'>
         <h1 className='text-xl font-bold'>{user?.name}</h1>

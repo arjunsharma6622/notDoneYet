@@ -7,22 +7,22 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import FollowingSkeleton from "./FollowingSkeleton";
 import FollowingUserCard from "./FollowingUserCard";
+import axiosInstance from "@/utils/axiosInstance";
 
-const FollowingUsers = ({ userId }: { userId: string }) => {
+const FollowingUsers = () => {
 
   const [followingUsers, setFollowingUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchFollowingUsers = async () => {
-      const response = await axios.get(`${API_HEAD}/user/following/${userId}`);
-      const data = response.data;
-      setFollowingUsers(data);
+      const response = await axiosInstance.get(`/user/following`);
+      const userFollowings = response.data.data.userFollowings;
+      setFollowingUsers(userFollowings);
       setIsLoading(false);
     }
     fetchFollowingUsers();
-  }, [userId]);
-
+  }, []);
 
   return (
     <div className="border rounded-md">
@@ -37,7 +37,6 @@ const FollowingUsers = ({ userId }: { userId: string }) => {
                 key={follow._id}
                 follow={follow}
                 index={index}
-                sessionUserId={userId}
                 followingUsers={followingUsers}
                 setFollowingUsers={setFollowingUsers}
               />

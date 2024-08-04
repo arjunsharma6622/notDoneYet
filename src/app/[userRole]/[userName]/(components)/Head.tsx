@@ -3,7 +3,7 @@ import HeadActionOptions from "./HeadActionOptions";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 
-const Head = ({ userData, session }: any) => {
+const Head = ({ userData }: any) => {
   const userRoles: { [key: string]: string } = {
     athlete: "Athlete",
     brand: "Brand",
@@ -59,7 +59,7 @@ const Head = ({ userData, session }: any) => {
           )}
         </div>
 
-        <HeadActionOptions userData={userData} session={session} />
+        <HeadActionOptions userData={userData} />
       </div>
     </div>
   );

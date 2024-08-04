@@ -1,5 +1,6 @@
 "use client";
 import { API_HEAD } from "@/lib/utils";
+import axiosInstance from "@/utils/axiosInstance";
 import axios from "axios";
 import Image from "next/legacy/image";
 import Link from "next/link";
@@ -8,27 +9,24 @@ import { toast } from "sonner";
 const FollowingUserCard = ({
   follow,
   index,
-  sessionUserId,
   followingUsers,
   setFollowingUsers
 }: {
   follow: any;
   index: number;
-  sessionUserId: string;
   followingUsers: any
   setFollowingUsers: any
 }) => {
 
   const handleToggleFollowClick = async () => {
     try {
-      const response = await axios.post(`${API_HEAD}/user/toggleFollow`, {
-        currentUserId: sessionUserId,
+      const response = await axiosInstance.post(`/user/toggleFollow`, {
         selectedUserId: follow._id
       })
-      if (response?.data?.message === "Success") {
+      if (response?.data?.statusCode === 200) {
         // remove the follow._id user from teh followingusers using the setfollowing
         setFollowingUsers(followingUsers.filter((user: any) => user._id !== follow._id))
-        toast.success("Following user");
+        toast.success("User unfollowed");
       }
     }
     catch (err) {

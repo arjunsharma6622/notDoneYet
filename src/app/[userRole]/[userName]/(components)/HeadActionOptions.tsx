@@ -2,6 +2,7 @@
 
 import { toggleProfileLike } from "@/actions/user";
 import { API_HEAD } from "@/lib/utils";
+import { authenticatedUser } from "@/utils/data";
 import axios from "axios";
 import { EllipsisVertical, Flame, LoaderCircle, Share2 } from "lucide-react";
 import Link from "next/link";
@@ -10,19 +11,17 @@ import { toast } from "sonner";
 
 const HeadActionOptions = ({
   userData,
-  session,
 }: {
   userData: any;
-  session: any;
 }) => {
 
-  const [isFollowing, setIsFollowing] = useState(userData?.followers?.includes(session?.user?._id));
+  const [isFollowing, setIsFollowing] = useState(userData?.followers?.includes(authenticatedUser?._id));
   const [isFollowLoading, setIsFollowLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
 
   const handleToggleFollowClick = async () => {
     try {
-      if (!session?.user) {
+      if (!authenticatedUser) {
         toast.info("Please login to follow user", {
           action: (
             <Link href={"/login"} className="text-black underline">
@@ -33,14 +32,14 @@ const HeadActionOptions = ({
         return;
       }
       
-      if (userData._id === session?.user?._id) {
+      if (userData._id === authenticatedUser?._id) {
         toast.info("You can't follow yourself");
         return;
       }
 
       setIsFollowLoading(true)
       const response = await axios.post(`${API_HEAD}/user/toggleFollow`, {
-        currentUserId : session?.user?._id,
+        currentUserId : authenticatedUser?._id,
         selectedUserId: userData._id
       })
       if (response?.data?.message === "Success") {
@@ -59,7 +58,7 @@ const HeadActionOptions = ({
 
   const handleLikeProfile = async ({ error }: any) => {
     try {
-      if (!session?.user) {
+      if (!authenticatedUser) {
         toast.info("Please login to like profile", {
           action: (
             <Link href={"/login"} className="text-black underline">
@@ -69,11 +68,11 @@ const HeadActionOptions = ({
         });
         return;
       }
-      if (userData._id === session?.user?._id) {
+      if (userData._id === authenticatedUser?._id) {
         toast.info("You can't like yourself");
         return;
       }
-      const message = await toggleProfileLike(session?.user?._id, userData._id);
+      const message = await toggleProfileLike(authenticatedUser?._id, userData._id);
       if (message?.error) {
         toast.info(message?.error?.message);
         return
@@ -120,7 +119,7 @@ const HeadActionOptions = ({
               {userData?.profileLikes?.length}
             </span>
           }
-          {userData?.profileLikes?.includes(session?.user?._id) ? (
+          {userData?.profileLikes?.includes(authenticatedUser?._id) ? (
             <Flame fill="#ea580c" className="text-orange-600 w-5 h-5" />
           ) : (
             <Flame className="text-orange-600 w-5 h-5" />

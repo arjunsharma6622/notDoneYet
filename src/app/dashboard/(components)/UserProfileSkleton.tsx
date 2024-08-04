@@ -1,3 +1,5 @@
+import FollowingSkeleton from "@/components/skeletons/FollowingSkeleton";
+
 const UserProfileSkeleton = () => {
   return (
     <div
@@ -56,15 +58,10 @@ const UserProfileSkeleton = () => {
           </div>
         </div>
       </div>
-      <div className="w-full flex flex-col md:flex-[3] h-full border  rounded-md">
-        <div className="flex flex-col gap-4 items-center justify-center py-6 px-4 md:px-6">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <div
-              key={index}
-              className="h-32 w-full bg-gray-200 animate-pulse rounded-lg"
-            ></div>
+      <div className="flex flex-col px-5 gap-4 py-4 w-full md:flex-[3] h-fit border  rounded-md">
+          {[...Array(6)].map((follow: any, index: number) => (
+            <FollowingSkeleton key={index} />
           ))}
-        </div>
       </div>
     </div>
   );

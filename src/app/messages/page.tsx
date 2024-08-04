@@ -1,13 +1,8 @@
-import { auth } from "@/auth";
 import { MessageCircle } from "lucide-react";
-import { redirect } from "next/navigation";
 import Sidebar from "./(components)/Sidebar";
 
-const Page = async () => {
-  const session = await auth();
-  if (!session) {
-    redirect("/login");
-  }
+const Page = () => {
+  
   return (
   <>
     <div className="flex items-center justify-center w-full">

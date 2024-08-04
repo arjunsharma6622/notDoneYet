@@ -1,6 +1,6 @@
 import CurrentConversation from '../(components)/CurrentConversation';
 
-const ConversationPage = ({ session, currentConversationId }: any) => {
+const ConversationPage = ({ currentConversationId }: any) => {
   
     return (
       <div className="flex items-center justify-center w-full">
@@ -10,7 +10,6 @@ const ConversationPage = ({ session, currentConversationId }: any) => {
         >
           <CurrentConversation
             currentConversationId={currentConversationId}
-            session={session}
           />
         </div>
     </div>

@@ -2,15 +2,16 @@
 
 import { Button } from "@/components/ui/button";
 import { API_HEAD } from "@/lib/utils";
-import axios from "axios";
+import { formatConversationDate } from "@/utils/FormatDate";
+import axiosInstance from "@/utils/axiosInstance";
+import { authenticatedUser } from "@/utils/data";
 import { ArrowLeft, LoaderCircle, SendHorizonal } from "lucide-react";
 import Image from "next/legacy/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Message from "./Message";
-import { formatConversationDate } from "@/utils/FormatDate";
 
-const CurrentConversation = ({ currentConversationId, session }: any) => {
+const CurrentConversation = ({ currentConversationId }: any) => {
   const [currentMessage, setCurrentMessage] = useState("");
   const [isMessageSending, setIsMessageSending] = useState(false);
   const [currentConversation, setCurrentConversation]: any = useState(null);
@@ -18,10 +19,10 @@ const CurrentConversation = ({ currentConversationId, session }: any) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const conversation = await axios.get(
+        const response = await axiosInstance.get(
           `${API_HEAD}/conversation/${currentConversationId}`,
         );
-        setCurrentConversation(conversation.data);
+        setCurrentConversation(response.data.data);
       } catch (error) {
         console.log(error);
       }
@@ -35,20 +36,16 @@ const CurrentConversation = ({ currentConversationId, session }: any) => {
   const messagesEndRef: any = useRef(null);
 
   const handleSendMessage = async () => {
-    const message = {
-      senderId: session?.user._id,
-      content: currentMessage,
-    };
 
     try {
       setIsMessageSending(true);
-      const response = await axios.post(
-        `${API_HEAD}/conversation/${currentConversation?._id}/`,
-        message,
-      );
+      const response = await axiosInstance.post(
+        `${API_HEAD}/conversation/addMessage/${currentConversation?._id}/`, { content: currentMessage });
+      
+      const newAddedMessage = response?.data?.data
 
       setCurrentConversation((prevConversation: any) => {
-        const updatedMessages = [...prevConversation.messages, response.data];
+        const updatedMessages = [...prevConversation.messages, newAddedMessage];
         return { ...prevConversation, messages: updatedMessages };
       });
       setIsMessageSending(false);
@@ -70,19 +67,16 @@ const CurrentConversation = ({ currentConversationId, session }: any) => {
       console.log("updating seen");
       if (currentConversation) {
         try {
-          await axios.put(
-            `${API_HEAD}/conversation/${currentConversation?._id}/seen`,
-            {
-              currUserId: session?.user._id,
-            },
-          );
+          await axiosInstance.put(
+            `${API_HEAD}/conversation/${currentConversation?._id}/seen`);
         } catch (error) {
           console.log(error);
         }
       }
     };
     updateSeen();
-  }, [currentConversation, session?.user._id]);
+  }, [currentConversation]);
+
 
 
   return (
@@ -98,7 +92,7 @@ const CurrentConversation = ({ currentConversationId, session }: any) => {
                   <Image
                     src={
                       currentConversation?.users?.filter(
-                        (user: any) => user._id !== session?.user._id,
+                        (user: any) => user._id !== authenticatedUser._id,
                       )[0]?.image
                     }
                     alt=""
@@ -113,14 +107,14 @@ const CurrentConversation = ({ currentConversationId, session }: any) => {
                   <span>
                     {
                       currentConversation?.users?.filter(
-                        (user: any) => user._id !== session?.user._id,
+                        (user: any) => user._id !== authenticatedUser._id,
                       )[0]?.name
                     }
                   </span>
                   <span className="text-gray-400 text-[9px] md:text-xs truncatedText1">
                     {
                       currentConversation?.users?.filter(
-                        (user: any) => user._id !== session?.user._id,
+                        (user: any) => user._id !== authenticatedUser._id,
                       )[0]?.bio
                     }
                   </span>
@@ -142,13 +136,13 @@ const CurrentConversation = ({ currentConversationId, session }: any) => {
               {currentConversation?.messages?.map(
                 (message: any, index: any) => {
                   const otherUser = currentConversation?.users.filter(
-                    (user: any) => user._id !== session?.user._id,
+                    (user: any) => user._id !== authenticatedUser._id,
                   )[0];
 
-                  const currentUser = session?.user._id === message.senderId;
+                  const currentUser = authenticatedUser._id === message.senderId;
 
-                  const showUserImage = 
-                    index === currentConversation.messages.length - 1 || 
+                  const showUserImage =
+                    index === currentConversation.messages.length - 1 ||
                     currentConversation.messages[index + 1]?.senderId !== message.senderId ||
                     new Date(message.createdAt).getDate() !== new Date(currentConversation.messages[index + 1]?.createdAt).getDate();
 
@@ -175,17 +169,16 @@ const CurrentConversation = ({ currentConversationId, session }: any) => {
                         <div key={index} className="flex flex-col gap-1">
                           <Message
                             key={index}
-                            currentUser={message.senderId === session?.user._id}
-                            session={session}
+                            currentUser={message.senderId === authenticatedUser._id}
                             message={message}
                             otherUser={otherUser}
                             showImage={showUserImage}
                           />
                           {showUserImage &&
-                        <div className={`flex items-center ${currentUser ? "justify-end -mr-2" : "justify-start -ml-2"}`}>
+                            <div className={`flex items-center ${currentUser ? "justify-end -mr-2" : "justify-start -ml-2"}`}>
 
                               <Image
-                                src={currentUser ? session?.user?.image : otherUser?.image}
+                                src={currentUser ? authenticatedUser.image : otherUser?.image}
                                 alt=""
                                 width={40}
                                 height={40}
@@ -205,8 +198,7 @@ const CurrentConversation = ({ currentConversationId, session }: any) => {
                     <div key={index} className="flex flex-col gap-1">
                       <Message
                         key={index}
-                        currentUser={message.senderId === session?.user._id}
-                        session={session}
+                        currentUser={message.senderId === authenticatedUser._id}
                         message={message}
                         otherUser={otherUser}
                         showImage={showUserImage}
@@ -214,7 +206,7 @@ const CurrentConversation = ({ currentConversationId, session }: any) => {
                       {showUserImage &&
                         <div className={`flex items-center ${currentUser ? "justify-end -mr-2" : "justify-start -ml-2"}`}>
                           <Image
-                            src={currentUser ? session?.user?.image : otherUser?.image}
+                            src={currentUser ? authenticatedUser.image : otherUser?.image}
                             alt=""
                             width={40}
                             height={40}

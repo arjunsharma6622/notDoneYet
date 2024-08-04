@@ -1,22 +1,23 @@
 "use client"
 
 import { API_HEAD } from '@/lib/utils'
-import axios from 'axios'
+import axiosInstance from '@/utils/axiosInstance'
 import { useEffect, useState } from 'react'
 
-const UnreadMsgsCount = ({ userId }: { userId: string }) => {
+const UnreadMsgsCount = () => {
     const [unreadMsgsCount, setUnreadMsgsCount] = useState(0)
     useEffect(() => {
         const fetchUnreadMsgsCount = async () => {
             try {
-                const response = await axios.get(`${API_HEAD}/conversation/unreadCount/user/${userId}`);
-                setUnreadMsgsCount(response.data.unreadCount);
+                const response = await axiosInstance.get(`${API_HEAD}/conversation/unreadCount/user`);
+                const unreadCount = response?.data?.data?.unreadCount;
+                setUnreadMsgsCount(unreadCount);
             } catch (error) {
                 console.error(error);
             }
         }
         fetchUnreadMsgsCount();
-    }, [userId])
+    }, [])
 
     return (
         <>

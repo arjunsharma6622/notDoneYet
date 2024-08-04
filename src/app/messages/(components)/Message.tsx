@@ -4,9 +4,6 @@ import { BiCheckDouble } from "react-icons/bi";
 const Message = ({
   message,
   currentUser,
-  otherUser,
-  showImage,
-  session,
 }: any) => {
   return (
     <div
@@ -14,19 +11,16 @@ const Message = ({
       className={`flex ${currentUser ? "justify-end" : "justify-start"}`}
     >
       <div
-        className={`${
-          currentUser ? "" : "flex-row-reverse"
-        }  flex items-start gap-3`}
+        className={`${currentUser ? "" : "flex-row-reverse"
+          }  flex items-start gap-3`}
       >
         <div
-          className={`flex flex-col gap-0 ${
-            currentUser ? "items-end" : "items-start"
-          }`}
+          className={`flex flex-col gap-0 ${currentUser ? "items-end" : "items-start"
+            }`}
         >
           <div
-            className={`max-w-xl flex relative text-sm items-center gap-4 ${
-              currentUser ? "rounded-br-none" : "rounded-bl-none"
-            } bg-gray-200 py-2 rounded-xl px-4`}
+            className={`max-w-xl flex relative text-sm items-center gap-4 ${currentUser ? "rounded-br-none" : "rounded-bl-none"
+              } bg-gray-200 py-2 rounded-xl px-4`}
           >
             <div>
               <p>{message?.content}</p>
@@ -47,22 +41,8 @@ const Message = ({
             {formatMessageTime(message?.createdAt)}
           </span>
         </div>
-{/* { showImage &&
-        <div className="">
-          <Image
-            src={currentUser ? session?.user?.image : otherUser?.image}
-            alt=""
-            width={30}
-            height={30}
-            layout="intrinsic"
-            className="rounded-full"
-            referrerPolicy="no-referrer"
-          />
-        </div>
-} */}
       </div>
     </div>
-  );
-};
+  )};
 
 export default Message;

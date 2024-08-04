@@ -1,8 +1,7 @@
-import { auth } from "@/auth";
-import axios from "axios";
 import { API_HEAD } from "@/lib/utils";
-import Profile from "./Profile";
+import axios from "axios";
 import type { Metadata, ResolvingMetadata } from "next";
+import Profile from "./Profile";
 
 type Props = {
   params: { userRole: string; userName: string };
@@ -57,7 +56,6 @@ const Page = async ({
 }: {
   params: { userRole: string; userName: string };
 }) => {
-  const session = await auth();
   const userName = params.userName;
   const userRole = params.userRole;
 

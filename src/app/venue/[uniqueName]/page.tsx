@@ -1,6 +1,5 @@
-import { auth } from "@/auth";
+import axiosInstance from "@/utils/axiosInstance";
 import axios from "axios";
-import { API_HEAD } from "@/lib/utils";
 import type { Metadata, ResolvingMetadata } from "next";
 import VenueProfile from "./VenueProfile";
 
@@ -49,11 +48,10 @@ export async function generateMetadata(
 }
 
 const Page = async ({ params }: { params: { uniqueName: string } }) => {
-  const session = await auth();
   const uniqueName = params.uniqueName;
 
-  const venueData = await axios
-    .get(`${API_HEAD}/venue/uniqueName/${uniqueName}`)
+  const venueData = await axiosInstance
+    .get(`/venue/uniqueName/${uniqueName}`)
     .then((res) => res.data)
     .catch((err) => console.error("Error", err.response?.data?.error));
 
@@ -61,7 +59,7 @@ const Page = async ({ params }: { params: { uniqueName: string } }) => {
     <div className="relative flex items-center justify-center w-full">
       <div className="md:w-[95%] flex md:flex-row md:gap-10 flex-col items-start mt-5">
         <div className="w-full flex flex-col gap-5 md:flex-[9]">
-          <VenueProfile venueData={venueData} session={session} />
+          <VenueProfile venueData={venueData} />
         </div>
       </div>
     </div>

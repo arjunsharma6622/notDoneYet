@@ -1,23 +1,64 @@
-import { API_HEAD } from "@/lib/utils";
-import axios from "axios";
+// "use client"
+
+// import axiosInstance from "@/utils/axiosInstance";
+// import { useEffect, useState } from "react";
+// import PostCard from "./PostCard";
+
+// const RecommendedPosts = () => {
+//   const [recommendedPosts, setRecommendedPosts] = useState<any>([]);
+
+//   useEffect(() => {
+//     axiosInstance
+//       .get("/posts/user/recommendedPosts")
+//       .then((res) => {
+//         setRecommendedPosts(res.data);
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//   }, []);
+
+
+//   return (
+//     <div className="flex flex-col gap-4">
+//       {recommendedPosts?.map((post: any) => (
+//         <PostCard postData={post} key={post?._id} />
+//       ))}
+//     </div>
+//   );
+// };
+
+// export default RecommendedPosts;
+
+
+"use client"
+
+import useSWR from "swr";
+import axiosInstance from "@/utils/axiosInstance";
 import PostCard from "./PostCard";
+import PostsSkeleton from "../skeletons/Post/PostsSkeleton";
 
-const RecommendedPosts = async ({userId} : {userId: string}) => {
+// Axios fetcher function
+const fetcher = (url: string) => axiosInstance.get(url).then((res) => res.data);
 
-  const userData = await axios.get(`${API_HEAD}/user/getUser?userId=${userId}`)
-  .then((res) => res.data)
-  .catch((err) => console.error("Error", err));
+const RecommendedPosts = () => {
+  const { data: recommendedPosts, error, isLoading } = useSWR("/posts/user/recommendedPosts", fetcher);
 
-  const recommendedPosts = await axios.get(`${API_HEAD}/posts/recommended/${userData?._id}`)
-    .then((res) => res.data)
-    .catch((err) => console.error("Error", err));
+  // if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading recommended posts.</div>;
 
   return (
-    <div className="flex flex-col gap-4">
-      {recommendedPosts?.map((post: any) => (
-        <PostCard postData={post} currUser={userData} key={post?._id} />
-      ))}
-    </div>
+    <>
+      { recommendedPosts && !isLoading ?
+        <div className="flex flex-col gap-4">
+          {recommendedPosts?.map((post: any) => (
+            <PostCard postData={post} key={post?._id} />
+          ))}
+        </div>
+        :
+        <PostsSkeleton cardsToShow={2} />
+      }
+    </>
   );
 };
 

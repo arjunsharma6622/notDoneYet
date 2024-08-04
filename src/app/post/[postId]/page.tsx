@@ -1,11 +1,9 @@
-import { auth } from "@/auth";
 import PostCard from "@/components/client/PostCard";
 import UserInfoCard from "@/components/client/UserInfoCard";
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 
 const page = async ({ params }: { params: { postId: string } }) => {
-  const session = await auth();
   const postID = params.postId;
 
   const postData = await axios
@@ -18,11 +16,11 @@ const page = async ({ params }: { params: { postId: string } }) => {
       {postData && postData.user && (
         <div className="md:w-[95%] flex md:flex-row md:gap-10 flex-col items-start mt-5">
           <div className="flex-[3] sticky top-20">
-            <UserInfoCard userName={postData?.user?.userName} />
+            <UserInfoCard />
           </div>
 
           <div className="flex-[6]">
-            <PostCard postData={postData} currUser={session?.user} />
+            <PostCard postData={postData}/>
           </div>
 
           <div className="flex-[3]"></div>

@@ -1,17 +1,15 @@
-import { auth } from "@/auth";
 import ProductCard from "@/components/client/ProductCard";
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
+import Image from "next/legacy/image";
 import { FiChevronDown, FiSearch } from "react-icons/fi";
 import Filters from "./(components)/Filters";
-import Image from "next/legacy/image";
 
 const Page = async ({
   params,
 }: {
   params: { userRole: string; userName: string };
 }) => {
-  const session = await auth();
 
   const userName = params.userName;
   const userRole = params.userRole;

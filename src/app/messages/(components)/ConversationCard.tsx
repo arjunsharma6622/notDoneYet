@@ -1,29 +1,28 @@
 import { API_HEAD } from "@/lib/utils";
+import axiosInstance from "@/utils/axiosInstance";
 import { formatDate } from "@/utils/FormatDate";
-import axios from "axios";
 import Image from "next/legacy/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const ConversationCard = ({
-  session,
+  authenticatedUser,
   conversation,
   otherUser,
   lastMessage,
   currentConversationId,
-  setNewUserToSendMsg,
-  setWriteNewMsg,
 }: any) => {
   const [unread, setUnread] = useState(0);
 
   useEffect(() => {
     const fetchUnread = async () => {
       try {
-        const unread = await axios.get(
+        const response = await axiosInstance.get(
           `${API_HEAD}/conversation/${conversation._id}/unread`,
         );
-        if (unread?.data?._id != session?.user._id) {
-          setUnread(unread.data?.count);
+        const unread = response?.data?.data
+        if (unread?._id != authenticatedUser._id) {
+          setUnread(unread?.count);
         } else {
           setUnread(0);
         }
@@ -33,7 +32,7 @@ const ConversationCard = ({
     };
 
     fetchUnread();
-  }, [session?.user._id, conversation, conversation._id]);
+  }, [authenticatedUser, conversation._id]);
 
   return (
     <Link
@@ -74,7 +73,7 @@ const ConversationCard = ({
             <span
               className={`${unread > 0 ? "text-black font-medium" : "text-gray-500"} truncatedText1`}
             >
-              {lastMessage?.senderId === session?.user._id
+              {lastMessage?.senderId === authenticatedUser._id
                 ? "You: "
                 : otherUser?.name?.split(" ")[0] + ": "}
               {lastMessage?.content}

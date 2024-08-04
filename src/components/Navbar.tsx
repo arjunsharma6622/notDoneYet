@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { authenticatedUser } from "@/utils/data";
 import { MessageSquareText } from "lucide-react";
 import Link from "next/link";
 import NavAction from "./client/NavAction";
@@ -6,8 +6,7 @@ import NavDesktop from "./client/NavDesktop";
 import NavMobile from "./client/NavMobile";
 import UnreadMsgsCount from "./client/UnreadMsgsCount";
 
-const Navbar = async () => {
-  const session: any = await auth();
+const Navbar =  () => {
 
   return (
     <div className="sticky top-0 z-[30] bg-white">
@@ -16,8 +15,7 @@ const Navbar = async () => {
           <Link href={"/"} className="flex-[1] flex justify-start gap-4 items-center w-full">
             <img src={"/logo.png"} alt="logo" className="object-contain w-16" />
           </Link>
-          {/* <Link href={"http://localhost:8000/auth/google"} target="_self"  className="bg-yellow-400 text-white">Google LGN</Link> */}
-          <NavDesktop userId={session?.user?._id} />
+          <NavDesktop />
           <NavAction />
         </div>
       </div>
@@ -27,23 +25,23 @@ const Navbar = async () => {
           <img src={"/logo.png"} alt="logo" className="object-contain w-14" />
         </Link>
         <div className="flex items-center gap-4">
-        {session &&
-          <Link
-            key="messages"
-            href="/messages"
-            className="px-2 text-base cursor-pointer flex gap-2 items-center"
-          >
-            <div className="relative">
-              <div className="text-xl">
-                <MessageSquareText className="w-6 h-6" strokeWidth={1.5} />
+          {authenticatedUser &&
+            <Link
+              key="messages"
+              href="/messages"
+              className="px-2 text-base cursor-pointer flex gap-2 items-center"
+            >
+              <div className="relative">
+                <div className="text-xl">
+                  <MessageSquareText className="w-6 h-6" strokeWidth={1.5} />
+                </div>
+                {authenticatedUser && <UnreadMsgsCount />}
               </div>
-              <UnreadMsgsCount userId={session?.user?._id} />
-            </div>
-          </Link>
-        }
-        <NavAction />
-        <NavMobile />
-      </div>
+            </Link>
+          }
+          <NavAction />
+          <NavMobile />
+        </div>
       </div>
     </div>
   );

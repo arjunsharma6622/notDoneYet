@@ -1,16 +1,11 @@
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
+"use client"
+
+import UsersLoadingSkeleton from "@/components/skeletons/User/UsersLoadingSkeleton";
 import { Suspense } from "react";
 import FollowingUsers from "./(components)/FollowingUsers";
 import Users from "./(components)/Users";
-import UsersLoadingSkeleton from "@/components/skeletons/User/UsersLoadingSkeleton";
 
-const Page = async () => {
-  const session: any = await auth();
-
-  if (!session) {
-    redirect("/login");
-  }
+const Page = () => {
 
   return (
     <div className="flex items-center justify-center w-full">
@@ -27,7 +22,7 @@ const Page = async () => {
         </div>
 
         <div className="flex-[1] w-full flex flex-col gap-4">
-          <FollowingUsers userId={session?.user?._id} />
+          <FollowingUsers />
         </div>
       </div>
     </div>

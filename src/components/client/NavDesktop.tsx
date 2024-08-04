@@ -4,20 +4,19 @@ import { HeartPulse, Home, MapPinned, MessageSquareText, UsersRound } from "luci
 import Link from "next/link";
 import UnreadMsgsCount from "./UnreadMsgsCount";
 
-const NavDesktop = ({ userId }: { userId: string }) => {
-
+const NavDesktop = () => {
 
   const menuItems = [
     {
       name: "Home",
       path: "/",
-      icon: <Home strokeWidth={1.5}/>,
+      icon: <Home strokeWidth={1.5} />,
       subItems: ["Home", "About", "Contact"],
     },
     {
       name: "Network",
       path: "/network",
-      icon: <UsersRound strokeWidth={1.5}/>,
+      icon: <UsersRound strokeWidth={1.5} />,
     },
     {
       name: "Doctors",
@@ -27,14 +26,15 @@ const NavDesktop = ({ userId }: { userId: string }) => {
     {
       name: "Venues",
       path: "/venues",
-      icon: <MapPinned strokeWidth={1.5}/>,
+      icon: <MapPinned strokeWidth={1.5} />,
     },
     {
       name: "Messages",
       path: "/messages",
-      icon: <MessageSquareText strokeWidth={1.5}/>,
+      icon: <MessageSquareText strokeWidth={1.5} />,
     },
   ];
+
   return (
     <div className="flex gap-4 items-center justify-center">
       {menuItems.map((menuItem) => (
@@ -46,7 +46,7 @@ const NavDesktop = ({ userId }: { userId: string }) => {
           {menuItem.name === "Messages" ? (
             <div className="relative">
               <div className="text-xl">{menuItem.icon}</div>
-              <UnreadMsgsCount userId={userId}/>
+                <UnreadMsgsCount />
             </div>
           ) : (
             <div className="text-xl">{menuItem.icon}</div>

@@ -1,6 +1,4 @@
-import { auth } from "@/auth";
-import { API_HEAD } from "@/lib/utils";
-import axios from "axios";
+import axiosInstance from "@/utils/axiosInstance";
 import About from "./(components)/About";
 import Products from "./(components)/brand/Products";
 import Education from "./(components)/Education";
@@ -10,10 +8,9 @@ import Posts from "./(components)/Posts";
 import Skills from "./(components)/Skills";
 
 const Profile = async ({ userData }: any) => {
-  const session: any = await auth();
 
-  const postData = await axios
-    .get(`${API_HEAD}/posts/getPosts/user?userId=${userData._id}`)
+  const postData = await axiosInstance
+    .get(`/posts/getPosts/user?userId=${userData._id}`)
     .then((res) => res.data)
     .catch((err) => console.error("Error", err));
 
@@ -24,7 +21,7 @@ const Profile = async ({ userData }: any) => {
           <h1>hello</h1>
         ) : (
           <div className="flex flex-col rounded-md border gap-4">
-            <Head session={session} userData={userData} />
+            <Head userData={userData} />
 
             <About userData={userData} />
 
