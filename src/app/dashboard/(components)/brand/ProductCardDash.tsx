@@ -5,7 +5,6 @@ import { IconButton } from "@/components/ui/IconButton";
 import Image from "next/legacy/image";
 import { useState } from "react";
 import { BiSolidStar } from "react-icons/bi";
-import { FiTrash } from "react-icons/fi";
 import DeleteProduct from "../../(modals)/Brand/DeleteProduct";
 
 const ProductCard = ({ product }: any) => {

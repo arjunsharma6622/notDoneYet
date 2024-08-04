@@ -5,10 +5,12 @@ import axiosInstance from '@/utils/axiosInstance';
 import { Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import ConversationCard from './ConversationCard';
-import { authenticatedUser } from '@/utils/data';
+import useAuth from '@/context/useAuth';
 
 const Sidebar = () => {
-
+  const {auth} = useAuth();
+  const {authenticatedUser} = auth;
+  
   const [allConversations, setAllConversations] = useState<any[]>([]);
 
   useEffect(() => {

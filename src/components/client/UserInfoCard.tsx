@@ -1,7 +1,12 @@
-import { authenticatedUser } from "@/utils/data";
+"use client"
+
+import useAuth from "@/context/useAuth";
 import Image from "next/legacy/image";
 
 const UserInfoCard = () => {
+  const { auth } = useAuth();
+  const authenticatedUser = auth?.user;
+
   return (
     <div className="flex flex-col gap-2 items-center justify-start border rounded-md h-fit px-4 py-4">
       <Image

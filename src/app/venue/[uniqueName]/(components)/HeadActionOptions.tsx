@@ -1,8 +1,8 @@
 "use client";
 
 import { toggleProfileLike } from "@/actions/user";
+import useAuth from "@/context/useAuth";
 import { API_HEAD } from "@/lib/utils";
-import { authenticatedUser } from "@/utils/data";
 import axios from "axios";
 import { Flame } from "lucide-react";
 import Link from "next/link";
@@ -16,6 +16,8 @@ const HeadActionOptions = ({
 }: {
   userData: any;
 }) => {
+  const {auth} = useAuth()
+  const {authenticatedUser} = auth
 
   const [isFollowing, setIsFollowing] = useState(userData?.followers?.includes(authenticatedUser?._id));
   const [isFollowLoading, setIsFollowLoading] = useState(false);

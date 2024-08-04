@@ -3,6 +3,7 @@ import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/context/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,9 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar />
-        {children}
-        <Toaster richColors={true} position="bottom-center" duration={2000} />
+        <AuthProvider>
+          <Navbar />
+          {children}
+          <Toaster richColors={true} position="bottom-center" duration={2000} />
+        </AuthProvider>
       </body>
     </html>
   );

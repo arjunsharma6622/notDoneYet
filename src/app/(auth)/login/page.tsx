@@ -27,8 +27,6 @@ const LoginForm = () => {
     try {
       const response = await axios.post(`${API_HEAD}/auth/login`, { email, password }, { withCredentials: true });
 
-      console.log(response.data.data);
-
       if (response.status === 200) {
         toast.success(response.data.message);
         router.push("/dashboard");

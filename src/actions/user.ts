@@ -101,7 +101,9 @@ export const toggleProfileLike : any = async (userId: string, profileId: string)
 
     const isLiked = user.likedProfiles.includes(profileId);
     if (isLiked) {
+      
       // error can occur if the current user id is not present in the profile likes of the other user, and vice versa, : TODD: need to fix
+
       if(profile.profileLikes.includes(userId)){
         profile.profileLikes = profile.profileLikes.filter(
           (_id: string) => _id != userId,

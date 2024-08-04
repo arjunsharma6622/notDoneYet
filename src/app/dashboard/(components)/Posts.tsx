@@ -1,10 +1,9 @@
-import { API_HEAD } from "@/lib/utils";
-import { useState } from "react";
-import { FiPlus } from "react-icons/fi";
-import useSWR from "swr";
-import PostForm from "../(modals)/PostForm";
 import ProfilePostCard from "@/components/client/ProfilePostCard";
 import { IconButton } from "@/components/ui/IconButton";
+import { API_HEAD } from "@/lib/utils";
+import { useState } from "react";
+import useSWR from "swr";
+import PostForm from "../(modals)/PostForm";
 
 const Posts = ({ userData }: { userData: any }) => {
   const [openPostForm, setOpenPostForm] = useState(false);

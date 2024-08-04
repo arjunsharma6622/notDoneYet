@@ -1,9 +1,11 @@
-import { authenticatedUser } from '@/utils/data';
+import useAuth from '@/context/useAuth';
 import { LogOut } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const NavAction = () => {
+    const {auth} = useAuth();
+    const {authenticatedUser} = auth;
 
     return (
         <div className="flex-[1] flex justify-end md:mb-0">

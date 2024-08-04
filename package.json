@@ -10,8 +10,6 @@
     "prettify": "prettier -w ./src/"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.569.0",
-    "@aws-sdk/s3-request-presigner": "^3.569.0",
     "@hookform/resolvers": "^3.4.2",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-dialog": "^1.1.1",
@@ -33,9 +31,7 @@
     "lucide-react": "^0.377.0",
     "mongoose": "^7.6.1",
     "next": "14.2.3",
-    "next-auth": "beta",
     "next-themes": "^0.3.0",
-    "pusher-js": "^8.4.0-rc2",
     "rc-slider": "^10.6.2",
     "react": "^18",
     "react-dom": "^18",

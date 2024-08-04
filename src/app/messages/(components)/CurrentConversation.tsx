@@ -4,14 +4,18 @@ import { Button } from "@/components/ui/button";
 import { API_HEAD } from "@/lib/utils";
 import { formatConversationDate } from "@/utils/FormatDate";
 import axiosInstance from "@/utils/axiosInstance";
-import { authenticatedUser } from "@/utils/data";
 import { ArrowLeft, LoaderCircle, SendHorizonal } from "lucide-react";
 import Image from "next/legacy/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Message from "./Message";
+import useAuth from "@/context/useAuth";
 
 const CurrentConversation = ({ currentConversationId }: any) => {
+
+  const {auth} = useAuth()
+  const {authenticatedUser} = auth
+
   const [currentMessage, setCurrentMessage] = useState("");
   const [isMessageSending, setIsMessageSending] = useState(false);
   const [currentConversation, setCurrentConversation]: any = useState(null);

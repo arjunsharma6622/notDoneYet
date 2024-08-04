@@ -4,7 +4,7 @@ import VenueCard from './VenueCard';
 
 const Venues = async () => {
 
-  const venues = await axios.get(`${API_HEAD}/venue/`)
+  const venues = await axios.get(`${API_HEAD}/venue/`).then((res) => res.data).catch((err) => console.error("Error", err));
   
   return (
     <div className="md:grid md:grid-cols-4 md:items-start flex flex-col gap-4 justify-center items-center">

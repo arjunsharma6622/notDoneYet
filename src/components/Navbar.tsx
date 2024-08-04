@@ -1,4 +1,6 @@
-import { authenticatedUser } from "@/utils/data";
+"use client"
+
+import useAuth from "@/context/useAuth";
 import { MessageSquareText } from "lucide-react";
 import Link from "next/link";
 import NavAction from "./client/NavAction";
@@ -7,6 +9,8 @@ import NavMobile from "./client/NavMobile";
 import UnreadMsgsCount from "./client/UnreadMsgsCount";
 
 const Navbar =  () => {
+  const {auth} = useAuth()
+  const {authenticatedUser} = auth
 
   return (
     <div className="sticky top-0 z-[30] bg-white">
