@@ -14,7 +14,7 @@ import useAuth from "@/context/useAuth";
 const CurrentConversation = ({ currentConversationId }: any) => {
 
   const {auth} = useAuth()
-  const {authenticatedUser} = auth
+  const {user : authenticatedUser} = auth;
 
   const [currentMessage, setCurrentMessage] = useState("");
   const [isMessageSending, setIsMessageSending] = useState(false);

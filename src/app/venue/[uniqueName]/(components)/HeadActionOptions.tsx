@@ -17,7 +17,7 @@ const HeadActionOptions = ({
   userData: any;
 }) => {
   const {auth} = useAuth()
-  const {authenticatedUser} = auth
+  const {user : authenticatedUser} = auth;
 
   const [isFollowing, setIsFollowing] = useState(userData?.followers?.includes(authenticatedUser?._id));
   const [isFollowLoading, setIsFollowLoading] = useState(false);

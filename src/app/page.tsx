@@ -1,7 +1,10 @@
+"use client"
+
 import RecommendedPosts from "@/components/client/RecommendedPosts";
 import UserInfoCard from "@/components/client/UserInfoCard";
+import withAuth from "@/hocs/withAuth";
 
-export default function Home() {
+function Home() {
   return (
     <div className="flex justify-center gap-5 w-full">
         <div className="w-full flex gap-10 md:flex-row flex-col text-center md:items-start m-2">
@@ -16,3 +19,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default withAuth(Home)

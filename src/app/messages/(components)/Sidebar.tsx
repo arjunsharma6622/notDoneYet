@@ -9,7 +9,7 @@ import useAuth from '@/context/useAuth';
 
 const Sidebar = () => {
   const {auth} = useAuth();
-  const {authenticatedUser} = auth;
+  const {user : authenticatedUser} = auth;
   
   const [allConversations, setAllConversations] = useState<any[]>([]);
 

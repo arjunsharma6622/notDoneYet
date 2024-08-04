@@ -10,7 +10,7 @@ import UnreadMsgsCount from "./client/UnreadMsgsCount";
 
 const Navbar =  () => {
   const {auth} = useAuth()
-  const {authenticatedUser} = auth
+  const {user : authenticatedUser} = auth;
 
   return (
     <div className="sticky top-0 z-[30] bg-white">

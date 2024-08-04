@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, ReactNode } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import { AuthContext } from "./AuthContext";
 
 interface AuthProviderProps {
@@ -8,21 +8,30 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-    const [auth, setAuth] = useState({
-        isAuthenticated : true,
-        user : {
-            "_id": "6634d5b0e3a83ed0e86f08fe",
-            "name": "Upender Reddy",
-            "userName": "doctor",
-            "email": "doctor@mail.com",
-            "role": "doctor",
-            "image": "https://res.cloudinary.com/dexnb3wk2/image/upload/v1716747960/ndy/users/6634d5b0e3a83ed0e86f08fe/profileImages/crop_ii2001.jpg",
-            "bio": "Committed to athlete well-being and peak performance through expertise in sports medicine!",
-            "backgroundImg": "https://res.cloudinary.com/dexnb3wk2/image/upload/v1721421824/ndy/users/6634d5b0e3a83ed0e86f08fe/profileImages/crop_silb9b.jpg",
-            "followers": 1,
-            "following": 1
-          }
-    });
+    const [auth, setAuthState] = useState({ isAuthenticated: false, user: null });
+    const [isInitialized, setIsInitialized] = useState(false);
+
+    useEffect(() => {
+        const storedAuth = typeof window !== 'undefined' ? localStorage.getItem('auth') : null;
+        if (storedAuth) {
+            setAuthState(JSON.parse(storedAuth));
+        }
+        setIsInitialized(true);
+    }, []);
+
+    useEffect(() => {
+        if (isInitialized) {
+            localStorage.setItem('auth', JSON.stringify(auth));
+        }
+    }, [auth, isInitialized]);
+
+    const setAuth = (newAuthState: any) => {
+        setAuthState(newAuthState);
+    };
+
+    if (!isInitialized) {
+        return null; // or a loading spinner
+    }
 
     return (
         <AuthContext.Provider value={{ auth, setAuth }}>
@@ -30,4 +39,3 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         </AuthContext.Provider>
     );
 };
-

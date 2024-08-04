@@ -8,7 +8,7 @@ const Venues = async () => {
   
   return (
     <div className="md:grid md:grid-cols-4 md:items-start flex flex-col gap-4 justify-center items-center">
-      {venues?.data?.map((venue: any) => (
+      {venues?.map((venue: any) => (
         <VenueCard key={venue._id} venue={venue} />
       ))}
     </div>

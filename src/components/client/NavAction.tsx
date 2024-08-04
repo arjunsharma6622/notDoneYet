@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const NavAction = () => {
     const {auth} = useAuth();
-    const {authenticatedUser} = auth;
+    const {user : authenticatedUser} = auth;
 
     return (
         <div className="flex-[1] flex justify-end md:mb-0">

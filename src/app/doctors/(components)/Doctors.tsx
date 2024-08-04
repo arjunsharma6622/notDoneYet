@@ -8,7 +8,7 @@ const Doctors = async () => {
 
   return (
     <div className="md:grid md:grid-cols-4 md:items-start flex flex-col gap-4 justify-center items-center">
-      {doctors?.data?.map((doctor: any) => (
+      {doctors?.map((doctor: any) => (
         <DoctorCard key={doctor._id} doctor={doctor} />
       ))}
     </div>

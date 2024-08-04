@@ -3,6 +3,7 @@
 import axiosInstance from "@/utils/axiosInstance";
 import { useEffect, useState } from "react";
 import Profile from "./Profile";
+import withAuth from "@/hocs/withAuth";
 
 const fetchAuthenticatedUser = async () => {
   try {
@@ -40,4 +41,4 @@ const Page =  () => {
   );
 };
 
-export default Page;
+export default withAuth(Page);

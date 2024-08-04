@@ -16,8 +16,11 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { API_HEAD } from "@/lib/utils";
 import { toast } from "sonner";
+import useAuth from "@/context/useAuth";
 
 const LoginForm = () => {
+  const {auth, setAuth} = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -27,7 +30,12 @@ const LoginForm = () => {
     try {
       const response = await axios.post(`${API_HEAD}/auth/login`, { email, password }, { withCredentials: true });
 
-      if (response.status === 200) {
+      if (response.status === 200 && response.data.success && response.data.data) {
+        // if login successful the set the setAuth from context
+        setAuth({
+          isAuthenticated: true,
+          user : response.data.data.user
+        })
         toast.success(response.data.message);
         router.push("/dashboard");
       }

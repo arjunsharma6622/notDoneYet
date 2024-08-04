@@ -1,29 +1,21 @@
 "use client";
 
 import { addComment, toggleLike } from "@/actions/posts";
+import useAuth from "@/context/useAuth";
 import { timeAgo } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { FiMessageCircle, FiShare } from "react-icons/fi";
 import { RiHeart2Fill, RiHeart2Line } from "react-icons/ri";
 import { toast } from "sonner";
 import PostCardMore from "./PostCardMore";
 import PostImageSection from "./PostImageSection";
 import UserCommentCard from "./UserCommentCard";
-import { AuthContext } from "@/context/AuthContext";
 
 const PostCard = ({ postData }: any) => {
-  // const {auth} = useAuth()
-  // const authenticatedUser = auth?.user;
-
-  const context = useContext(AuthContext);
-
-  if (context === undefined) {
-      throw new Error('useAuth must be used within an AuthProvider');
-  }
-
-  const { authenticatedUser } = context.auth;
+  const {auth} = useAuth()
+  const {user : authenticatedUser} = auth;
 
   const [openCommentInput, setOpenCommentInput]: [boolean, any] =
     useState(false);
