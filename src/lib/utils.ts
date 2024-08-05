@@ -159,12 +159,12 @@ export const amenities = [
 export const API_HEAD =
   process.env.NODE_ENV === "development"
     ? "http://localhost:8000/api"
-    : "https://notdoneyet-server.vercel.app/api";
+    : "https://api.notdoneyet.in/api";
 
 export const CLIENT_HEAD =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
-    : "https://notdoneyet.vercel.app";
+    : "https://notdoneyet.in";
     // ? "https://notdoneyet.vercel.app"
     // : "http://localhost:3000";
 
