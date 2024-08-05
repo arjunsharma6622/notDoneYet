@@ -7,7 +7,7 @@ const NavMobile = ({pathName} : {pathName : string}) => {
   const menuItems = [
     {
       name: "Home",
-      path: "/",
+      path: "/feed",
       icon: <Home strokeWidth={1.5}/>,
       subItems: ["Home", "About", "Contact"],
     },
