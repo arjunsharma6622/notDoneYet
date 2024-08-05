@@ -1,7 +1,10 @@
+"use client"
+
 import { MessageCircle } from "lucide-react";
 import Sidebar from "./(components)/Sidebar";
+import withAuth from "@/hocs/withAuth";
 
-const Page = () => {
+const Messages = () => {
   
   return (
   <>
@@ -29,4 +32,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default withAuth(Messages);

@@ -7,10 +7,13 @@ import NavAction from "./client/NavAction";
 import NavDesktop from "./client/NavDesktop";
 import NavMobile from "./client/NavMobile";
 import UnreadMsgsCount from "./client/UnreadMsgsCount";
+import { usePathname } from "next/navigation";
 
-const Navbar =  () => {
-  const {auth} = useAuth()
-  const {user : authenticatedUser} = auth;
+const Navbar = () => {
+  const { auth } = useAuth()
+  const { isAuthenticated, user: authenticatedUser } = auth;
+
+  const pathname = usePathname();
 
   return (
     <div className="sticky top-0 z-[30] bg-white">
@@ -19,7 +22,7 @@ const Navbar =  () => {
           <Link href={"/"} className="flex-[1] flex justify-start gap-4 items-center w-full">
             <img src={"/logo.png"} alt="logo" className="object-contain w-16" />
           </Link>
-          <NavDesktop />
+          <NavDesktop pathName={pathname} />
           <NavAction />
         </div>
       </div>
@@ -39,12 +42,14 @@ const Navbar =  () => {
                 <div className="text-xl">
                   <MessageSquareText className="w-6 h-6" strokeWidth={1.5} />
                 </div>
-                {authenticatedUser && <UnreadMsgsCount />}
-              </div>
+                {(isAuthenticated && authenticatedUser) &&
+                  <UnreadMsgsCount />
+                }
+                </div>
             </Link>
           }
           <NavAction />
-          <NavMobile />
+          <NavMobile pathName={pathname} />
         </div>
       </div>
     </div>

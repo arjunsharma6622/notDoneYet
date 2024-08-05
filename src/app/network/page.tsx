@@ -4,8 +4,9 @@ import UsersLoadingSkeleton from "@/components/skeletons/User/UsersLoadingSkelet
 import { Suspense } from "react";
 import FollowingUsers from "./(components)/FollowingUsers";
 import Users from "./(components)/Users";
+import withAuth from "@/hocs/withAuth";
 
-const Page = () => {
+const Network = () => {
 
   return (
     <div className="flex items-center justify-center w-full">
@@ -29,4 +30,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default withAuth(Network);

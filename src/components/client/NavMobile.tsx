@@ -2,7 +2,7 @@ import { HeartPulse, Home, MapPinned, Menu, UsersRound } from "lucide-react";
 import Link from "next/link";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 
-const NavMobile = () => {
+const NavMobile = ({pathName} : {pathName : string}) => {
 
   const menuItems = [
     {
@@ -41,9 +41,9 @@ const NavMobile = () => {
                 <Link
                   key={menuItem.name}
                   href={menuItem.path}
-                  className="px-2 text-base cursor-pointer flex gap-2 items-center"
+                  className={`${pathName === menuItem.path ? "text-blue-600" : ""} px-2 text-base cursor-pointer flex gap-2 items-center`}
                 >
-                  <div className="text-xl">{menuItem.icon}</div>
+                  <div className={`text-xl`}>{menuItem.icon}</div>
                   {menuItem.name}
                 </Link>
               ))}

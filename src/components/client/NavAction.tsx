@@ -1,11 +1,29 @@
 import useAuth from '@/context/useAuth';
+import axiosInstance from '@/utils/axiosInstance';
 import { LogOut } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 const NavAction = () => {
-    const {auth} = useAuth();
+    const {auth, setAuth} = useAuth();
     const {user : authenticatedUser} = auth;
+
+    const handleLogout = async () => {
+        try{
+            const response = await axiosInstance.post('/auth/logout')
+            if (response.status === 200) {
+                setAuth({
+                    isAuthenticated: false,
+                    user : null
+                })
+            }
+            toast.success(response.data.data.message)
+        }
+        catch (err : any) {
+            toast.error(err.response.data.message)
+        }
+    }
 
     return (
         <div className="flex-[1] flex justify-end md:mb-0">
@@ -26,7 +44,7 @@ const NavAction = () => {
                         </span>
                     </Link>
 
-                    <button className='flex items-center gap-2 cursor-pointer w-fit focus:outline-offset-0 ring-0 text-red-600 bg-red-100 rounded-full p-[6px] md:p-2 md:px-4'>
+                    <button onClick={handleLogout} className='flex items-center gap-2 cursor-pointer w-fit focus:outline-offset-0 ring-0 text-red-600 bg-red-100 rounded-full p-[6px] md:p-2 md:px-4'>
                         <span className='hidden md:block text-xs'>Logout</span>
                         <LogOut strokeWidth={1.5} className='w-5 h-5 ' />
                     </button>
