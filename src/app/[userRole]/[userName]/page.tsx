@@ -8,6 +8,7 @@ type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
+
 export async function generateMetadata(
   { params, searchParams }: Props,
   parent: ResolvingMetadata,
@@ -21,7 +22,7 @@ export async function generateMetadata(
   if (userRole !== "venue") {
     userData = await axios
       .get(
-        `https://notdoneyet-server.vercel.app/api/user/profile/details?role=${userRole}&userName=${userName}`,
+        `https://api.notdoneyet.in/api/user/profile/details?role=${userRole}&userName=${userName}`,
       )
       .then((res) => res.data)
       .catch((err) => console.error("Error", err.response?.data?.error));
@@ -30,18 +31,18 @@ export async function generateMetadata(
   if (userData && userRole !== "venue") {
     return {
       title: userData.name,
-      description: userData.bio,
+      description: `${userData.bio}, ${userData.about}`,
       openGraph: {
         title: userData.name,
-        description: userData.bio,
-        images: [userData.image, userData.backgroundImg],
+        description: `${userData.bio}, ${userData.about}`,
+        images: [userData.image],
         siteName: "Not Done Yet",
       },
       twitter: {
         card: "summary_large_image",
         title: userData.name,
-        description: userData.bio,
-        images: [userData.image, userData.backgroundImg],
+        description: `${userData.bio}, ${userData.about}`,
+        images: [userData.image],
       },
     };
   }
