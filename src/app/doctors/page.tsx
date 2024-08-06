@@ -1,12 +1,10 @@
 import UsersLoadingSkeleton from "@/components/skeletons/User/UsersLoadingSkeleton";
 import { CLIENT_HEAD } from "@/lib/utils";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import { Suspense } from "react";
 import Doctors from "./(components)/Doctors";
 
-export async function generateMetadata(
-  parent: ResolvingMetadata,
-): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Doctors - Not Done Yet",
     description: `Connecting Athletes with Expert Medical Professionals, Find the right Doctor for your Needs`,

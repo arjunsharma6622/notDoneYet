@@ -1,12 +1,10 @@
 import VenuesLoadingSkeleton from "@/components/skeletons/Venue/VenuesLoadingSkeleton";
+import { CLIENT_HEAD } from "@/lib/utils";
+import { Metadata } from "next";
 import { Suspense } from "react";
 import Venues from "./(components)/Venues";
-import { Metadata, ResolvingMetadata } from "next";
-import { CLIENT_HEAD } from "@/lib/utils";
 
-export async function generateMetadata(
-  parent: ResolvingMetadata,
-): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Venues - Not Done Yet",
     description: `Discover Top Sports Venues in India, Find the perfect Venue for your Event`,
