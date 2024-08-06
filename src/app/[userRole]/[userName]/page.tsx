@@ -43,7 +43,7 @@ export async function generateMetadata(
         card: "summary_large_image",
         title: userData.name,
         description: `${userData.bio}, ${userData.about}`,
-        images: [userData.image],
+        images: [`${CLIENT_HEAD}/api/og/profile?name=${userData.name}&bio=${userData.bio ? userData.bio : ''}&userName=${userName}&role=${userRole}&image=${userData.image}`],
       },
     };
   }
