@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: "Doctors - Not Done Yet",
       description: `Connecting Athletes with Expert Medical Professionals, Find the right Doctor for your Needs`,
-      images: [`${CLIENT_HEAD}/api/og/profile?pageName=Doctors&heading=Connecting Athletes with Expert Medical Professionals&subHeading=Find the right Doctor for your Needs`],
+      images: [`${CLIENT_HEAD}/api/og/users?pageName=Doctors&heading=Connecting Athletes with Expert Medical Professionals&subHeading=Find the right Doctor for your Needs`],
     },
   };
 }
