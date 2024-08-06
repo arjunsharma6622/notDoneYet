@@ -1,8 +1,8 @@
 "use client";
 
-import { addComment, toggleLike } from "@/actions/posts";
 import useAuth from "@/context/useAuth";
 import { timeAgo } from "@/lib/utils";
+import axiosInstance from "@/utils/axiosInstance";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -14,8 +14,8 @@ import PostImageSection from "./PostImageSection";
 import UserCommentCard from "./UserCommentCard";
 
 const PostCard = ({ postData }: any) => {
-  const {auth} = useAuth()
-  const {user : authenticatedUser} = auth;
+  const { auth } = useAuth()
+  const { user: authenticatedUser } = auth;
 
   const [openCommentInput, setOpenCommentInput]: [boolean, any] =
     useState(false);
@@ -26,7 +26,10 @@ const PostCard = ({ postData }: any) => {
     try {
       console.log("clicked on like");
 
-      const res: any = await toggleLike(postData?._id, authenticatedUser._id);
+      // const res: any = await toggleLike(postData?._id, authenticatedUser._id);
+
+      const res: any = await axiosInstance.post(`/posts/togglePostLike`, { postId: postData?._id })
+
       toast.success(res.message);
     } catch (err) {
       console.log(err);
@@ -41,7 +44,12 @@ const PostCard = ({ postData }: any) => {
         return;
       }
 
-      await addComment(authenticatedUser._id, postData?._id, null, commentText);
+      const res: any = await axiosInstance.post(`/posts/addComment`, { 
+        postId: postData?._id,
+        commentText
+       })
+
+      
       setCommentText("");
 
       toast.success("Comment posted successfully");
@@ -114,9 +122,8 @@ const PostCard = ({ postData }: any) => {
           </div>
 
           <div
-            className={`flex flex-[1] justify-center items-center gap-2 cursor-pointer ${
-              openCommentInput ? "text-orange-500" : ""
-            }`}
+            className={`flex flex-[1] justify-center items-center gap-2 cursor-pointer ${openCommentInput ? "text-orange-500" : ""
+              }`}
             onClick={() => setOpenCommentInput(!openCommentInput)}
           >
             <FiMessageCircle className="w-5 h-5" />

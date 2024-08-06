@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { FiEdit3, FiPlus } from "react-icons/fi";
+import { IconButton } from "@/components/ui/IconButton";
+import { useState } from "react";
 import AddCertificate from "../(modals)/AddCertificates";
 import EditCertificates from "../(modals)/EditCertificate";
-import { IconButton } from "@/components/ui/IconButton";
 
 const Certificates = ({ userData }: { userData: any }) => {
   const [openCertificatesEdit, setOpenCertificatesEdit] = useState(false);

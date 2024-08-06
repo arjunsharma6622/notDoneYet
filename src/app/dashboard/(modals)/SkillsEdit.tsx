@@ -1,9 +1,8 @@
 import ModalLayout from "@/components/ModalLayout";
 import { Button } from "@/components/ui/button";
-import { API_HEAD } from "@/lib/utils";
-import axios from "axios";
+import axiosInstance from "@/utils/axiosInstance";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FiX, FiXCircle } from "react-icons/fi";
 import { toast } from "sonner";
 
@@ -25,8 +24,8 @@ const SkillsEdit = ({
     try {
       console.log("In handle user update");
       console.log(userData);
-      const res = await axios.patch(
-        `${API_HEAD}/user/${userData._id}`,
+      const res = await axiosInstance.patch(
+        `/user/`,
         userData,
       );
       toast.success("Sports Updated");

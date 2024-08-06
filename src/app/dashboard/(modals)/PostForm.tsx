@@ -1,5 +1,5 @@
-import { createPost } from "@/actions/posts";
 import ModalLayout from "@/components/ModalLayout";
+import axiosInstance from "@/utils/axiosInstance";
 import { useState } from "react";
 import { BiImageAdd } from "react-icons/bi";
 import { FiX } from "react-icons/fi";
@@ -34,7 +34,7 @@ const PostForm = ({
     try {
       postData.images = imageUrls;
       console.log("Data with images", postData);
-      await createPost({ ...postData, user: user._id });
+      await axiosInstance.post("/posts/", postData);
       setImages([]);
       toast.success("Post created successfully");
       setOpen(false);

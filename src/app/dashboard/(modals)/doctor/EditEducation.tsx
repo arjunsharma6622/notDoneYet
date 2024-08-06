@@ -1,7 +1,6 @@
 import ModalLayout from "@/components/ModalLayout";
 import { Button } from "@/components/ui/button";
-import { API_HEAD } from "@/lib/utils";
-import axios from "axios";
+import axiosInstance from "@/utils/axiosInstance";
 import dateFormat from "dateformat";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -50,7 +49,7 @@ const EditEducation = ({
         }),
       };
 
-      await axios.patch(`${API_HEAD}/user/${userData._id}`, updatedUserData);
+      await axiosInstance.patch(`/user/`, updatedUserData);
 
       setSelectedEducation(null);
 
@@ -70,7 +69,7 @@ const EditEducation = ({
           (edu: any) => edu._id !== education._id,
         ),
       };
-      await axios.patch(`${API_HEAD}/user/${userData._id}`, updatedUserData);
+      await axiosInstance.patch(`/user/`, updatedUserData);
       toast.success("Profile Updated");
       window.location.reload();
     } catch (err) {

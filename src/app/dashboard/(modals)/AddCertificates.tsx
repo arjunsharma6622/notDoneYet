@@ -1,8 +1,8 @@
 import ModalLayout from "@/components/ModalLayout";
 import { Button } from "@/components/ui/button";
-import React, { useState } from "react";
-import { FiFile, FiImage, FiX } from "react-icons/fi";
 import axios from "axios";
+import { useState } from "react";
+import { FiImage, FiX } from "react-icons/fi";
 import { toast } from "sonner";
 
 const AddCertificate = ({ open, setOpen, user }: any) => {

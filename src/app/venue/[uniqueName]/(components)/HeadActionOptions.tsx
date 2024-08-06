@@ -1,8 +1,8 @@
 "use client";
 
-import { toggleProfileLike } from "@/actions/user";
 import useAuth from "@/context/useAuth";
 import { API_HEAD } from "@/lib/utils";
+import axiosInstance from "@/utils/axiosInstance";
 import axios from "axios";
 import { Flame } from "lucide-react";
 import Link from "next/link";
@@ -74,8 +74,12 @@ const HeadActionOptions = ({
         toast.info("You can't like yourself");
         return;
       }
-      const message = await toggleProfileLike(authenticatedUser?._id, userData._id);
-      toast.success(message as string);
+      const response = await axiosInstance.post(`/user/toggleProfileLike`, {
+        profileId: userData._id
+      })
+      if (response?.data?.statusCode === 200) {
+        toast.success(response?.data?.message);
+      }
     } catch (err) {
       console.error("Error liking user:", err);
       toast.error("Error liking user");

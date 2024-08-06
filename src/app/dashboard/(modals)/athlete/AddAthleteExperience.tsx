@@ -1,9 +1,9 @@
-import { updateAthleteExperience } from "@/actions/user";
 import ModalLayout from "@/components/ModalLayout";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useEffect, useState } from "react";
+import axiosInstance from "@/utils/axiosInstance";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiImage, FiLink, FiX } from "react-icons/fi";
 import { toast } from "sonner";
@@ -25,7 +25,7 @@ const AddAthleteExperience = ({ user, open, setOpen }: { user: any, open: boolea
         ...userData,
         experience: [...userData.experience, { ...data, type: experienceType }],
       };
-      await updateAthleteExperience(updatedExperienceData);
+      await axiosInstance.patch(`/user/`, updatedExperienceData);
       toast.success("Profile Updated");
       setOpen(false);
       reset();

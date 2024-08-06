@@ -1,9 +1,8 @@
-import { updateUser } from "@/actions/user";
 import ModalLayout from "@/components/ModalLayout";
 import { IconButton } from "@/components/ui/IconButton";
 import { Button } from "@/components/ui/button";
 import { API_HEAD } from "@/lib/utils";
-import axios from "axios";
+import axiosInstance from "@/utils/axiosInstance";
 import dateFormat from "dateformat";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -59,7 +58,7 @@ const EditAthleteExperience = ({
       console.log("upddate experience data is");
       console.log(updatedUserData);
 
-      await axios.patch(`${API_HEAD}/user/${userData._id}`, updatedUserData);
+      await axiosInstance.patch(`${API_HEAD}/user/`, updatedUserData);
 
       setSelectedExperience(null);
 
@@ -81,7 +80,9 @@ const EditAthleteExperience = ({
           (exp: any) => exp._id !== experience._id,
         ),
       };
-      await updateUser(updatedUserData);
+
+      await axiosInstance.patch(`${API_HEAD}/user/`, updatedUserData);
+      
       toast.success("Profile Updated");
       setOpen(false);
       window.location.reload();

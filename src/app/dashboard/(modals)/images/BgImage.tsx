@@ -1,6 +1,7 @@
 import EasyCrop from "@/components/client/EasyCrop";
 import { Button } from "@/components/ui/button";
 import { API_HEAD } from "@/lib/utils";
+import axiosInstance from "@/utils/axiosInstance";
 import axios from "axios";
 import { useState } from "react";
 import { FiImage, FiXCircle } from "react-icons/fi";
@@ -28,7 +29,7 @@ const BgImage = ({
         );
       }
       // then save the new image url to the database
-      await axios.patch(`${API_HEAD}/user/${user?._id}`, {
+      await axiosInstance.patch(`/user/`, {
         backgroundImg: backgroundImage,
       });
       setBackgroundImage(null);

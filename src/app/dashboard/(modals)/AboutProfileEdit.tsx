@@ -1,7 +1,6 @@
-import { updateUser } from "@/actions/user";
 import ModalLayout from "@/components/ModalLayout";
 import { Button } from "@/components/ui/button";
-import { useEffect } from "react";
+import axiosInstance from "@/utils/axiosInstance";
 import { useForm } from "react-hook-form";
 import { FiX } from "react-icons/fi";
 import { toast } from "sonner";
@@ -21,7 +20,7 @@ const AboutProfileEdit = ({
 
   const onSubmit = async (data: any) => {
     try {
-      await updateUser(data);
+      await axiosInstance.patch(`/user/`, data);
       toast.success("Profile Updated");
       setOpen(false);
     } catch (err) {

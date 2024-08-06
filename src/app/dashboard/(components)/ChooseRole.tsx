@@ -1,7 +1,7 @@
 "use client";
 
 import { API_HEAD } from "@/lib/utils";
-import axios from "axios";
+import axiosInstance from "@/utils/axiosInstance";
 import Image from "next/legacy/image";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -17,7 +17,7 @@ const ChooseRole = ({ userData, className }: any) => {
 
   const handleRoleSave = async () => {
     try {
-      const response = await axios.patch(`${API_HEAD}/user/${userData?._id}`, {
+      const response = await axiosInstance.patch(`${API_HEAD}/user/`, {
         role: choosenRole,
       });
       toast.success("Role updated successfully");

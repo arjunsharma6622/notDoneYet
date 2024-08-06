@@ -1,6 +1,6 @@
-import { updateUser } from "@/actions/user";
 import ModalLayout from "@/components/ModalLayout";
 import { Button } from "@/components/ui/button";
+import axiosInstance from "@/utils/axiosInstance";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -42,7 +42,7 @@ const BasicProfileEdit = ({
   const onSubmit = async (data: any) => {
     console.log(data);
     try {
-      await updateUser(data);
+      await axiosInstance.patch(`/user/`, data);
       toast.success("Profile Updated");
       setOpen(false);
       window.location.reload();

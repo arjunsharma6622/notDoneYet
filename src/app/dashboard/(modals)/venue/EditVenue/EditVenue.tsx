@@ -2,6 +2,7 @@ import ModalLayout from "@/components/ModalLayout";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { API_HEAD } from "@/lib/utils";
+import axiosInstance from "@/utils/axiosInstance";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -141,7 +142,7 @@ type EditVenueSchemaType = z.infer<typeof EditVenueSchema>;
 
   const handleEditVenue = async (data: any) => {
     try {
-      const res = await axios.patch(`${API_HEAD}/venue/${venueDetails._id}`, {
+      const res = await axiosInstance.patch(`/venue/`, {
         ...data,
       });
       toast.success("Venue updated successfully");

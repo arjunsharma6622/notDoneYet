@@ -1,7 +1,6 @@
 import ModalLayout from "@/components/ModalLayout";
 import { Button } from "@/components/ui/button";
-import { API_HEAD } from "@/lib/utils";
-import axios from "axios";
+import axiosInstance from "@/utils/axiosInstance";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiX } from "react-icons/fi";
@@ -19,7 +18,7 @@ const AddEducation = ({ user, open, setOpen }: any) => {
 
   const handleUserUpdate = async (data: any) => {
     try {
-      await axios.patch(`${API_HEAD}/user/${userData._id}`, {
+      await axiosInstance.patch(`/user/`, {
         education: [...userData.education, data],
       });
       toast.success("Profile Updated");

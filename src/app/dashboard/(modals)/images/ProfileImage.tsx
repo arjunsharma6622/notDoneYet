@@ -3,6 +3,7 @@
 import EasyCrop from "@/components/client/EasyCrop";
 import { Button } from "@/components/ui/button";
 import { API_HEAD } from "@/lib/utils";
+import axiosInstance from "@/utils/axiosInstance";
 import axios from "axios";
 import { useState } from "react";
 import { FiImage, FiXCircle } from "react-icons/fi";
@@ -24,7 +25,7 @@ const handleSaveImage = async () => {
       await axios.get(`${API_HEAD}/images/deleteImage?imageUrl=${user?.image}`);
     }
     // then save the new image url to the database
-    await axios.patch(`${API_HEAD}/user/${user?._id}`, { image: profileImage });
+    await axiosInstance.patch(`/user/`, { image: profileImage });
     setProfileImage(null)
     toast.success("Image uploaded successfully");
     setOpen(false);

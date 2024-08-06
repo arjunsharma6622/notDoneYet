@@ -1,7 +1,6 @@
 import ModalLayout from "@/components/ModalLayout";
 import { Button } from "@/components/ui/button";
-import { API_HEAD } from "@/lib/utils";
-import axios from "axios";
+import axiosInstance from "@/utils/axiosInstance";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiImage, FiLink, FiX } from "react-icons/fi";
@@ -27,7 +26,7 @@ const AddDoctorExperience = ({
 
   const handleUserUpdate = async (data: any) => {
     try {
-      await axios.patch(`${API_HEAD}/user/${userData._id}`, {
+      await axiosInstance.patch(`/user/`, {
         experience: [...userData.experience, data],
       });
 

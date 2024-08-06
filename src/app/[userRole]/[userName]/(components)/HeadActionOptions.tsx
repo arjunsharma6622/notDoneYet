@@ -1,9 +1,7 @@
 "use client";
 
-import { toggleProfileLike } from "@/actions/user";
 import useAuth from "@/context/useAuth";
-import { API_HEAD } from "@/lib/utils";
-import axios from "axios";
+import axiosInstance from "@/utils/axiosInstance";
 import { EllipsisVertical, Flame, LoaderCircle, Share2 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -40,14 +38,13 @@ const HeadActionOptions = ({
       }
 
       setIsFollowLoading(true)
-      const response = await axios.post(`${API_HEAD}/user/toggleFollow`, {
-        currentUserId : authenticatedUser?._id,
+      const response = await axiosInstance.post(`/user/toggleFollow`, {
         selectedUserId: userData._id
       })
-      if (response?.data?.message === "Success") {
+      if (response?.data?.statusCode === 200) {
         setIsFollowing(!isFollowing)
         setIsFollowLoading(false)
-        setConversationId(response?.data?.conversationId)
+        setConversationId(response?.data?.data?.conversationId)
         toast.success("Following user");
       }
     }
@@ -74,12 +71,13 @@ const HeadActionOptions = ({
         toast.info("You can't like yourself");
         return;
       }
-      const message = await toggleProfileLike(authenticatedUser?._id, userData._id);
-      if (message?.error) {
-        toast.info(message?.error?.message);
-        return
+
+      const response = await axiosInstance.post(`/user/toggleProfileLike`, {
+        profileId: userData._id
+      })
+      if (response?.data?.statusCode === 200) {
+        toast.success(response?.data?.message);
       }
-      toast.success(message as string);
     } catch (err) {
       console.error("Error liking user:", err);
       toast.error(`${err}`);

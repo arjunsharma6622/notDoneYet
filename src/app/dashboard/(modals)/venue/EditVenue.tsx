@@ -1,6 +1,7 @@
 import ModalLayout from "@/components/ModalLayout";
 import { Button } from "@/components/ui/button";
 import { API_HEAD } from "@/lib/utils";
+import axiosInstance from "@/utils/axiosInstance";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -42,8 +43,8 @@ const EditVenue = ({
         ...data,
       };
 
-      const res = await axios.patch(
-        `${API_HEAD}/venue/${selectedVenue._id}`,
+      const res = await axiosInstance.patch(
+        `/venue/`,
         updatedVenueData,
       );
 
