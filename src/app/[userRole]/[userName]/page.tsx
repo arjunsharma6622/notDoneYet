@@ -35,7 +35,7 @@ export async function generateMetadata(
       openGraph: {
         title: userData.name,
         description: `${userData.bio}, ${userData.about}`,
-        images: [`${CLIENT_HEAD}/api/og/profile?name=${userData.name}&bio=${userData.bio}&userName=${userName}&role=${userRole}&image=${userData.image}`],
+        images: [`${CLIENT_HEAD}/api/og/profile?name=${userData.name}&bio=${userData.bio ? userData.bio : ''}&userName=${userName}&role=${userRole}&image=${userData.image}`],
         siteName: "Not Done Yet",
         url: `https://notdoneyet.in/${userRole}/${userName}`,
       },

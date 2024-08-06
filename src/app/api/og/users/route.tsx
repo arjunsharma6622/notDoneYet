@@ -52,7 +52,7 @@ export async function GET(req: NextRequest) {
                 <div tw='flex flex-col gap-5 items-center justify-center'>
                     <div tw='flex flex-col items-center max-w-2xl'>
                         <p tw='text-3xl font-black'>{heading}</p>
-                        <p tw='text-gray-600 text-base -mt-1 font-light'>{subHeading}</p>
+                        <p tw='text-gray-600 text-lg -mt-1 font-light'>{subHeading}</p>
                         {pageName === "Doctors" &&
                             <div tw='flex items-center justify-center gap-10' style={{ gap: '30px' }}>
                                 <IconWrapper>
@@ -98,7 +98,7 @@ export async function GET(req: NextRequest) {
                                 </IconWrapper>
                             </div>
                         }
-                        <p tw="text-gray-500 text-sm">notdoneyet.in/{pageName}</p>
+                        <p tw="text-gray-500 text-base">notdoneyet.in/{pageName}</p>
                     </div>
                 </div>
             </div>

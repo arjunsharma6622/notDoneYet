@@ -41,23 +41,23 @@ export async function GET(req: NextRequest) {
             >
 
                 <div tw="flex items-center justify-center bg-gray-100 p-4 py-2 rounded-2xl">
-                    <img src="https://www.notdoneyet.in/logo_long.svg" alt="NDY Logo" style={{ height: '50px' }} />
+                    <img src="https://www.notdoneyet.in/logo_long.png" alt="NDY Logo" style={{ height: '50px' }} />
                     <span tw="text-3xl font-bold ml-4">/  {role}</span>
                 </div>
 
                 <div tw='flex flex-col items-center justify-center'>
                     {role === 'venue' ?
-                        <img tw='border-white' src={image} alt="User Icon" style={{ height: '180px', borderRadius: '20px' }} />
+                        <img tw='border-white' src={image} alt="User Icon" style={{ height: '200px', borderRadius: '20px' }} />
                         :
-                        <img tw='border-white' src={image} alt="User Icon" style={{ height: '180px', borderRadius: '100%' }} />
+                        <img tw='border-white' src={image} alt="User Icon" style={{ height: '200px', borderRadius: '100%' }} />
                     }
 
                     <div tw='flex flex-col items-center max-w-2xl'>
-                        <p tw='text-5xl font-black'>{name}</p>
+                        <p tw='text-6xl font-black'>{name}</p>
                         {bio &&
-                            <p tw='text-gray-600 text-base -mt-1 font-light'>{bio}</p>
+                            <p tw='text-gray-600 text-lg -mt-1 font-light'>{bio}</p>
                         }
-                        <p tw="text-gray-500 text-sm">notdoneyet.in/{role}/{userName}</p>
+                        <p tw="text-gray-500 text-base">notdoneyet.in/{role}/{userName}</p>
                     </div>
                 </div>
             </div>
