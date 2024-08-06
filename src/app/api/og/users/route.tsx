@@ -45,7 +45,7 @@ export async function GET(req: NextRequest) {
             >
 
                 <div tw="flex items-center justify-center gap-2 bg-gray-100 p-6 py-4 rounded-2xl">
-                    <img src="https://www.notdoneyet.in/logo_long.svg" alt="NDY Logo" style={{ height: '50px' }} />
+                    <img src="https://www.notdoneyet.in/logo_long.png" alt="NDY Logo" style={{ height: '50px' }} />
                     <span tw="text-3xl font-bold ml-4">/  {pageName}</span>
                 </div>
 
