@@ -60,7 +60,7 @@ const EditVenue = ({
 
   const handleDeleteVenue = async ({ venueId }: { venueId: string }) => {
     try {
-      await axios.delete(`/api/venue/${venueId}`);
+      await axios.delete(`${API_HEAD}/venue/${venueId}`);
 
       toast.success("Venue deleted successfully");
 

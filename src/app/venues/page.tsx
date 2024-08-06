@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const page = () => {
+const Page = () => {
   return (
     <div className="flex justify-center w-full">
       <div className="w-full flex gap-10 flex-col items-sart m-5">
@@ -37,4 +37,4 @@ const page = () => {
   )
 };
 
-export default page;
+export default Page;

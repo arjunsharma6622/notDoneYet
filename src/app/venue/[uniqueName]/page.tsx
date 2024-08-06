@@ -18,7 +18,7 @@ export async function generateMetadata(
   // fetch data
   const venueData = await axios
     .get(
-      `https://notdoneyet-server.vercel.app/api/venue/uniqueName/${uniqueName}`,
+      `https://api.notdoneyet.in/venue/uniqueName/${uniqueName}`,
     )
     .then((res) => res.data)
     .catch((err) => console.error("Error", err.response?.data?.error));

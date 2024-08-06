@@ -22,7 +22,7 @@ export async function generateMetadata(
   if (userRole !== "venue") {
     userData = await axios
       .get(
-        `https://api.notdoneyet.in/api/user/profile/details?role=${userRole}&userName=${userName}`,
+        `https://api.notdoneyet.in/user/profile/details?role=${userRole}&userName=${userName}`,
       )
       .then((res) => res.data)
       .catch((err) => console.error("Error", err.response?.data?.error));

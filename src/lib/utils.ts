@@ -158,8 +158,8 @@ export const amenities = [
 
 export const API_HEAD =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:8000/api"
-    : "https://api.notdoneyet.in/api";
+    ? "http://localhost:8000"
+    : "https://api.notdoneyet.in";
 
 export const CLIENT_HEAD =
   process.env.NODE_ENV === "development"
