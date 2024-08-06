@@ -1,6 +1,30 @@
 import VenuesLoadingSkeleton from "@/components/skeletons/Venue/VenuesLoadingSkeleton";
 import { Suspense } from "react";
 import Venues from "./(components)/Venues";
+import { Metadata, ResolvingMetadata } from "next";
+import { CLIENT_HEAD } from "@/lib/utils";
+
+export async function generateMetadata(
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  return {
+    title: "Venues - Not Done Yet",
+    description: `Discover Top Sports Venues in India, Find the perfect Venue for your Event`,
+    openGraph: {
+      title: "Venues - Not Done Yet",
+      description: `Discover Top Sports Venues in India, Find the perfect Venue for your Event`,
+      images: [`${CLIENT_HEAD}/api/og/users?pageName=Venues&heading=Discover Top Sports Venues in India&subHeading=Find the perfect Venue for your Event`],
+      siteName: "Not Done Yet",
+      url: `https://notdoneyet.in/venues`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Venues - Not Done Yet",
+      description: `Discover Top Sports Venues in India, Find the perfect Venue for your Event`,
+      images: [`${CLIENT_HEAD}/api/og/users?pageName=Venues&heading=Discover Top Sports Venues in India&subHeading=Find the perfect Venue for your Event`],
+    },
+  };
+}
 
 const page = () => {
   return (

@@ -1,4 +1,4 @@
-import { API_HEAD } from "@/lib/utils";
+import { API_HEAD, CLIENT_HEAD } from "@/lib/utils";
 import axios from "axios";
 import type { Metadata, ResolvingMetadata } from "next";
 import VenueProfile from "./VenueProfile";
@@ -30,14 +30,15 @@ export async function generateMetadata(
       openGraph: {
         title: venueData.name,
         description: venueData.description,
-        images: [...venueData.images],
+        images: [`${CLIENT_HEAD}/api/og/profile?name=${venueData.name}&userName=${venueData.uniqueName}&role=${'venue'}&image=${venueData.images[0]}`],
         siteName: "Not Done Yet",
+        url: `https://notdoneyet.in/venue/${uniqueName}`,
       },
       twitter: {
         card: "summary_large_image",
         title: venueData.name,
         description: venueData.description,
-        images: [...venueData.images],
+        images: [`${CLIENT_HEAD}/api/og/profile?name=${venueData.name}&userName=${venueData.uniqueName}&role=${'venue'}&image=${venueData.images[0]}`],
       },
     };
   }

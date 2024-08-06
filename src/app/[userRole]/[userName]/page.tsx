@@ -1,4 +1,4 @@
-import { API_HEAD } from "@/lib/utils";
+import { API_HEAD, CLIENT_HEAD } from "@/lib/utils";
 import axios from "axios";
 import type { Metadata, ResolvingMetadata } from "next";
 import Profile from "./Profile";
@@ -35,8 +35,9 @@ export async function generateMetadata(
       openGraph: {
         title: userData.name,
         description: `${userData.bio}, ${userData.about}`,
-        images: [userData.image],
+        images: [`${CLIENT_HEAD}/api/og/profile?name=${userData.name}&bio=${userData.bio}&userName=${userName}&role=${userRole}&image=${userData.image}`],
         siteName: "Not Done Yet",
+        url: `https://notdoneyet.in/${userRole}/${userName}`,
       },
       twitter: {
         card: "summary_large_image",
