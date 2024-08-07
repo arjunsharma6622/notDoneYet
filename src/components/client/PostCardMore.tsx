@@ -6,6 +6,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { API_HEAD, CLIENT_HEAD } from "@/lib/utils";
+import axiosInstance from "@/utils/axiosInstance";
 import axios from "axios";
 import { BiBookmark, BiSolidBookmark } from "react-icons/bi";
 import {
@@ -41,7 +42,7 @@ const PostCardMore = ({ postData, currUser, dashboardCard }: any) => {
 
   const handlePostDelete = async () => {
     try {
-      const res: any = await axios.delete(`${API_HEAD}/posts/${postData?._id}`);
+      const res: any = await axiosInstance.delete(`/posts/${postData?._id}`);
       toast.success("Post deleted successfully");
     } catch (err) {
       toast.error("Failed to delete post");

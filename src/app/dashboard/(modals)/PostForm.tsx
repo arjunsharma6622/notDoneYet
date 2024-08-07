@@ -33,7 +33,7 @@ const PostForm = ({
   const handlePostCreate = async () => {
     try {
       postData.images = imageUrls;
-      console.log("Data with images", postData);
+      console.log("PostData", postData);
       await axiosInstance.post("/posts/", postData);
       setImages([]);
       toast.success("Post created successfully");
