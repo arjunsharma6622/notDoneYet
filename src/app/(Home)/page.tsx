@@ -1,7 +1,7 @@
 "use client"
 
 import withFeed from "@/hocs/withFeed";
-import StaticHome from "./Static/Static";
+import StaticHome from "./Static";
 
 function Home() {
   return (
