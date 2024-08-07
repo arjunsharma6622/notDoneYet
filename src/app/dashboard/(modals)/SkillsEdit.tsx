@@ -28,7 +28,7 @@ const SkillsEdit = ({
         `/user/`,
         userData,
       );
-      toast.success("Sports Updated");
+      toast.success("Skills Updated");
       setOpen(false);
       window.location.reload();
     } catch (err) {
@@ -36,7 +36,6 @@ const SkillsEdit = ({
     }
   };
 
-  console.log(userData);
 
   return (
     <div>
@@ -77,7 +76,7 @@ const SkillsEdit = ({
                       onClick={() => {
                         setUserData({
                           ...userData,
-                          sports: [...userData.sports, newSport],
+                          skills: [...userData.skills, newSport],
                         });
                         setNewSport("");
                       }}
@@ -87,19 +86,19 @@ const SkillsEdit = ({
                   </div>
 
                   <div className="flex flex-wrap items-center gap-2">
-                    {userData.sports?.map((sport: any, index: number) => (
+                    {userData.skills?.map((skill: any, index: number) => (
                       <div
                         className="bg-gray-200 px-3 py-1 rounded-full flex items-center gap-1"
                         key={index}
                       >
-                        <span>{sport}</span>
+                        <span>{skill}</span>
                         <FiXCircle
                           className="inline ml-2 text-xl cursor-pointer text-red-500"
                           onClick={() =>
                             setUserData((prevUserData: any) => ({
                               ...prevUserData,
-                              sports: prevUserData.sports.filter(
-                                (item: any) => item !== sport,
+                              skills: prevUserData.skills.filter(
+                                (item: any) => item !== skill,
                               ),
                             }))
                           }
