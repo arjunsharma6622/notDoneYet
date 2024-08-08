@@ -1,42 +1,45 @@
 import ModalLayout from "@/components/ModalLayout";
 import { Button } from "@/components/ui/button";
-import axiosInstance from "@/utils/axiosInstance";
+import { FormButton } from "@/components/ui/FormButton";
+import useFormSubmit from "@/hooks/useFormSubmit";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiImage, FiLink, FiX } from "react-icons/fi";
-import { toast } from "sonner";
 
 const AddDoctorExperience = ({
   user,
+  setUserData,
   open,
   setOpen,
 }: {
   user: any;
+  setUserData: any;
   open: boolean;
   setOpen: (open: boolean) => void;
 }) => {
-  const [userData, setUserData] = useState(user);
+
+  const [userExperience, setUserExperience] = useState(user.experience);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-    watch,
   } = useForm();
 
-  const handleUserUpdate = async (data: any) => {
-    try {
-      await axiosInstance.patch(`/user/`, {
-        experience: [...userData.experience, data],
-      });
 
-      toast.success("Profile Updated");
-      reset();
-      window.location.reload();
-    } catch (err) {
-      toast.error("Profile Update Failed");
-      console.log(err);
+  const { onSubmit, isLoading } = useFormSubmit('/user/', "patch");
+
+  const handleUserUpdate = async (data: any) => {
+    const payloadToSend = {
+      experience: [...userExperience, data],
     }
+
+    onSubmit(payloadToSend, (updatedData) => {
+      setUserData((prev: any) => ({ ...prev, ...updatedData }));
+      setOpen(false);
+      reset();
+    })
   };
 
   return (
@@ -152,19 +155,16 @@ const AddDoctorExperience = ({
                 </div>
               </div>
               <div className="flex items-center justify-end gap-4 border-t px-6 py-3">
-                <Button
-                  variant="destructive"
-                  className="px-6 py-2 rounded-sm font-semibold"
-                  onClick={() => setOpen(false)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  className="px-6 bg-primary py-2 rounded-sm font-semibold"
+              <FormButton
                   type="submit"
-                >
-                  Save
-                </Button>
+                  variant={"cancel"}
+                  onClick={() => setOpen(false)}
+                />
+                <FormButton
+                  type="submit"
+                  variant={"save"}
+                  isLoading={isLoading}
+                />
               </div>
             </form>
           </div>

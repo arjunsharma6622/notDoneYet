@@ -1,16 +1,17 @@
 import ModalLayout from "@/components/ModalLayout";
-import { Button } from "@/components/ui/button";
-import axiosInstance from "@/utils/axiosInstance";
+import { FormButton } from "@/components/ui/FormButton";
+import useFormSubmit from "@/hooks/useFormSubmit";
 import { useForm } from "react-hook-form";
 import { FiX } from "react-icons/fi";
-import { toast } from "sonner";
 
 const AboutProfileEdit = ({
   user,
+  setUserData,
   open,
   setOpen,
 }: {
   user: any;
+  setUserData: any;
   open: boolean;
   setOpen: (open: boolean) => void;
 }) => {
@@ -18,15 +19,18 @@ const AboutProfileEdit = ({
     defaultValues: user,
   });
 
-  const onSubmit = async (data: any) => {
-    try {
-      await axiosInstance.patch(`/user/`, data);
-      toast.success("Profile Updated");
-      setOpen(false);
-    } catch (err) {
-      console.log(err);
+  const { onSubmit, isLoading } = useFormSubmit('/user/', 'patch')
+
+  const handleFormSubmit = (data: any) => {
+    const payloadToSend = {
+      about: data.about
     }
-  };
+
+    onSubmit(payloadToSend, (updatedData) => {
+      setUserData((prev: any) => ({ ...prev, ...updatedData }));
+      setOpen(false);
+    })
+  }
 
   return (
     <div>
@@ -41,7 +45,7 @@ const AboutProfileEdit = ({
               />
             </div>
             <form
-              onSubmit={handleSubmit(onSubmit)}
+              onSubmit={handleSubmit(handleFormSubmit)}
               className="flex flex-col gap-6 overflow-scroll"
             >
               <div className="flex flex-col gap-2 px-6">
@@ -49,7 +53,7 @@ const AboutProfileEdit = ({
                 <textarea
                   id=""
                   cols={30}
-                  rows={4}
+                  rows={10}
                   placeholder="Add something about yourself"
                   className="border rounded-md focus:outline-none p-3"
                   {...register("about", { required: true })}
@@ -57,19 +61,8 @@ const AboutProfileEdit = ({
               </div>
 
               <div className="flex items-center justify-end gap-4 border-t px-6 py-4">
-                <Button
-                  variant="destructive"
-                  className="px-6  py-2 rounded-sm font-semibold"
-                  onClick={() => setOpen(false)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  className="px-6 bg-primary py-2 rounded-sm font-semibold"
-                >
-                  Save
-                </Button>
+                <FormButton onClick={() => setOpen(false)} variant={"cancel"} />
+                <FormButton type="submit" variant={"save"} isLoading={isLoading} />
               </div>
             </form>
           </div>

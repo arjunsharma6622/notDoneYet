@@ -4,7 +4,7 @@ import { useState } from "react";
 import AddEducation from "../../(modals)/doctor/AddEducation";
 import EditEducation from "../../(modals)/doctor/EditEducation";
 
-const Education = ({ userData }: { userData: any }) => {
+const Education = ({ userData, setUserData }: { userData: any, setUserData: any }) => {
   const [openEducationAdd, setOpenEducationAdd] = useState(false);
   const [openEducationEdit, setOpenEducationEdit] = useState(false);
   return (
@@ -36,6 +36,7 @@ const Education = ({ userData }: { userData: any }) => {
         <div className="absolute">
           <AddEducation
             user={userData}
+            setUserData={setUserData}
             open={openEducationAdd}
             setOpen={setOpenEducationAdd}
           />
@@ -46,6 +47,7 @@ const Education = ({ userData }: { userData: any }) => {
         <div className="absolute">
           <EditEducation
             user={userData}
+            setUserData={setUserData}
             open={openEducationEdit}
             setOpen={setOpenEducationEdit}
           />

@@ -2,7 +2,7 @@ import { IconButton } from "@/components/ui/IconButton";
 import { useState } from "react";
 import SkillsEdit from "../(modals)/SkillsEdit";
 
-const Skills = ({ userData }: any) => {
+const Skills = ({ userData, setUserData }: { userData: any, setUserData: any }) => {
   const [openSkillsEdit, setOpenSkillsEdit] = useState(false);
   return (
     <>
@@ -35,6 +35,7 @@ const Skills = ({ userData }: any) => {
             open={openSkillsEdit}
             setOpen={setOpenSkillsEdit}
             user={userData}
+            setUserData={setUserData}
           />
         </div>
       )}

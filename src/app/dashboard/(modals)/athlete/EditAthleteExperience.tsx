@@ -1,20 +1,20 @@
 import ModalLayout from "@/components/ModalLayout";
-import { IconButton } from "@/components/ui/IconButton";
-import { Button } from "@/components/ui/button";
-import { API_HEAD } from "@/lib/utils";
-import axiosInstance from "@/utils/axiosInstance";
+import { FormButton } from "@/components/ui/FormButton";
+import useFormSubmit from "@/hooks/useFormSubmit";
 import dateFormat from "dateformat";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiImage, FiLink, FiX } from "react-icons/fi";
-import { toast } from "sonner";
+import AthleteExperienceInfoCard from "./AthleteExperienceInfoCard";
 
 const EditAthleteExperience = ({
   user,
+  setUserData,
   open,
   setOpen,
 }: {
   user: any;
+  setUserData: any;
   open: boolean;
   setOpen: (open: boolean) => void;
 }) => {
@@ -25,7 +25,7 @@ const EditAthleteExperience = ({
     setValue,
     formState: { errors },
   } = useForm();
-  const [userData, setUserData] = useState(user);
+  const [userExperience, setUserExperience] = useState(user.experience);
   const [selectedExperience, setSelectedExperience]: any = useState(null);
 
   useEffect(() => {
@@ -40,56 +40,25 @@ const EditAthleteExperience = ({
     });
   }, [selectedExperience, reset]);
 
-  const onSubmit = handleSubmit(async (data) => {
-    try {
-      console.log("In handle user update");
-      console.log(data);
+  const { onSubmit, isLoading: isExperienceUpdating } = useFormSubmit('/user/', "patch")
 
-      const updatedUserData = {
-        ...userData,
-        experience: userData.experience.map((experience: any) => {
-          if (experience._id === selectedExperience._id) {
-            return data;
-          }
-          return experience;
-        }),
-      };
+  const handleExperienceUpdate = handleSubmit((data) => {
+    const payloadToSend = {
+      experience: userExperience.map((experience: any) => {
+        if (experience._id === selectedExperience._id) {
+          return data;
+        }
+        return experience;
+      }),
+    };
 
-      console.log("upddate experience data is");
-      console.log(updatedUserData);
-
-      await axiosInstance.patch(`${API_HEAD}/user/`, updatedUserData);
-
+    onSubmit(payloadToSend, (updatedData) => {
+      setUserData((prev: any) => ({ ...prev, ...updatedData }));
+      setUserExperience(updatedData.experience);
       setSelectedExperience(null);
-
-      toast.success("Profile Updated");
-      setOpen(false);
       reset();
-      window.location.reload();
-    } catch (err) {
-      toast.error("Profile Update Failed");
-      console.log(err);
-    }
+    });
   });
-
-  const deleteExperience = async (experience: any) => {
-    try {
-      const updatedUserData = {
-        ...userData,
-        experience: userData.experience.filter(
-          (exp: any) => exp._id !== experience._id,
-        ),
-      };
-
-      await axiosInstance.patch(`${API_HEAD}/user/`, updatedUserData);
-      
-      toast.success("Profile Updated");
-      setOpen(false);
-      window.location.reload();
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   return (
     <div>
@@ -106,7 +75,7 @@ const EditAthleteExperience = ({
 
             {selectedExperience ? (
               <form
-                onSubmit={onSubmit}
+                onSubmit={handleExperienceUpdate}
                 className="flex flex-col gap-6 overflow-scroll"
               >
                 <div className="flex flex-col gap-6 px-6 py-4 overflow-y-scroll">
@@ -294,41 +263,22 @@ const EditAthleteExperience = ({
                   </div>
                 </div>
                 <div className="flex items-center justify-end gap-4 border-t px-6 py-3">
-                  <Button
-                    variant="destructive"
-                    className="px-6 py-2 rounded-sm font-semibold"
-                    onClick={() => setSelectedExperience(null)}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    className="px-6 bg-primary py-2 rounded-sm font-semibold"
+                  <FormButton
                     type="submit"
-                  >
-                    Save
-                  </Button>
+                    variant={"cancel"}
+                    onClick={() => setSelectedExperience(null)}
+                  />
+                  <FormButton
+                    type="submit"
+                    variant={"save"}
+                    isLoading={isExperienceUpdating}
+                  />
                 </div>
               </form>
             ) : (
               <div className="flex flex-col gap-4 pb-4 px-6">
                 {user.experience?.map((experience: any, index: number) => (
-                  <div
-                    key={index}
-                    className="px-6 py-2 bg-gray-200 flex items-center gap-6 border rounded-md w-fit"
-                  >
-                    {experience.title} . {experience.sport} .{" "}
-                    {dateFormat(experience.date, "mmmm, yyyy")}
-                    <div className="flex items-center justify-normal gap-4">
-                      <IconButton
-                        variant="edit"
-                        onClick={() => setSelectedExperience(experience)}
-                      />
-                      <IconButton
-                        variant="delete"
-                        onClick={() => deleteExperience(experience)}
-                      />
-                    </div>
-                  </div>
+                  <AthleteExperienceInfoCard experience={experience} setSelectedExperience={setSelectedExperience} userExperience={user.experience} setUserExperience={setUserExperience} setUserData={setUserData} key={index} />
                 ))}
               </div>
             )}

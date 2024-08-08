@@ -7,13 +7,13 @@ import EditAthleteExperience from "../(modals)/athlete/EditAthleteExperience";
 import AddDoctorExperience from "../(modals)/doctor/AddDoctorExperience";
 import EditDoctorExperience from "../(modals)/doctor/EditDoctorExperience";
 
-const Experience = ({ userData }: { userData: any }) => {
+const Experience = ({ userData, setUserData }: { userData: any, setUserData: any }) => {
   const [openExperienceAdd, setOpenExperienceAdd] = useState(false);
   const [openExperienceEdit, setOpenExperienceEdit] = useState(false);
 
   const sortedExperience = userData.experience?.sort((a: any, b: any) => {
-    const dateA = a.endDate ? new Date(a.endDate).getTime() : new Date(a.date).getTime();
-    const dateB = b.endDate ? new Date(b.endDate).getTime() : new Date(b.date).getTime();
+    const dateA = a.endDate ? new Date(a.endDate).getTime() : new Date(a.startDate).getTime();
+    const dateB = b.endDate ? new Date(b.endDate).getTime() : new Date(b.startDate).getTime();
     return dateB - dateA;
   });
 
@@ -56,6 +56,7 @@ const Experience = ({ userData }: { userData: any }) => {
           {userData?.role === "athlete" && (
             <AddAthleteExperience
               user={userData}
+              setUserData={setUserData}
               open={openExperienceAdd}
               setOpen={setOpenExperienceAdd}
             />
@@ -63,6 +64,7 @@ const Experience = ({ userData }: { userData: any }) => {
           {userData?.role === "doctor" && (
             <AddDoctorExperience
               user={userData}
+              setUserData={setUserData}
               open={openExperienceAdd}
               setOpen={setOpenExperienceAdd}
             />
@@ -75,6 +77,7 @@ const Experience = ({ userData }: { userData: any }) => {
           {userData?.role === "athlete" && (
             <EditAthleteExperience
               user={userData}
+              setUserData={setUserData}
               open={openExperienceEdit}
               setOpen={setOpenExperienceEdit}
             />
@@ -82,6 +85,7 @@ const Experience = ({ userData }: { userData: any }) => {
           {userData?.role === "doctor" && (
             <EditDoctorExperience
               user={userData}
+              setUserData={setUserData}
               open={openExperienceEdit}
               setOpen={setOpenExperienceEdit}
             />

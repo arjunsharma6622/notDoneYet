@@ -1,11 +1,10 @@
 "use client"
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import useAuth from "@/context/useAuth";
-import { LoaderCircle } from "lucide-react";
-import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
+import useAuth from "@/context/useAuth";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const withAuth = (WrappedComponent: React.ComponentType) => {
   const WithAuthComponent = (props: any) => {
@@ -24,7 +23,6 @@ const withAuth = (WrappedComponent: React.ComponentType) => {
       return <div className="w-full flex h-[calc(100vh-300px)] items-center justify-center gap-4 animate-">
         <Skeleton className="bg-transparent">
           <Image src="/logo_long.svg" alt="logo" width={200} height={200} />
-          {/* <LoaderCircle strokeWidth={1.5} className="w-5 h-5 animate-spin text-red-500" /> */}
         </Skeleton>
       </div>;
     }

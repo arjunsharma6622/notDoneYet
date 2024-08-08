@@ -1,13 +1,23 @@
 import ModalLayout from "@/components/ModalLayout";
 import { Button } from "@/components/ui/button";
-import axiosInstance from "@/utils/axiosInstance";
+import { FormButton } from "@/components/ui/FormButton";
+import useFormSubmit from "@/hooks/useFormSubmit";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiX } from "react-icons/fi";
-import { toast } from "sonner";
 
-const AddEducation = ({ user, open, setOpen }: any) => {
-  const [userData, setUserData] = useState(user);
+const AddEducation = ({
+  user,
+  setUserData,
+  open,
+  setOpen,
+}: {
+  user: any;
+  setUserData: any;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}) => {
+  const [userEducation, setUserEducation] = useState(user.education);
   const {
     register,
     handleSubmit,
@@ -16,19 +26,18 @@ const AddEducation = ({ user, open, setOpen }: any) => {
     watch,
   } = useForm();
 
-  const handleUserUpdate = async (data: any) => {
-    try {
-      await axiosInstance.patch(`/user/`, {
-        education: [...userData.education, data],
-      });
-      toast.success("Profile Updated");
-      window.location.reload();
-      reset();
-    } catch (err) {
-      toast.error("Profile Update Failed");
-      console.log(err);
+  const { onSubmit, isLoading } = useFormSubmit('/user/', 'patch')
+
+  const handleFormSubmit = (data: any) => {
+    const payloadToSend = {
+      education: [...userEducation, data]
     }
-  };
+    onSubmit(payloadToSend, (updatedData) => {
+      setUserData((prev: any) => ({ ...prev, ...updatedData }));
+      setOpen(false);
+      reset();
+    })
+  }
 
   return (
     <div>
@@ -43,7 +52,7 @@ const AddEducation = ({ user, open, setOpen }: any) => {
               />
             </div>
             <form
-              onSubmit={handleSubmit(handleUserUpdate)}
+              onSubmit={handleSubmit(handleFormSubmit)}
               className="flex flex-col gap-6 overflow-scroll"
             >
               <div className="flex flex-col gap-6 px-6 py-4 overflow-y-scroll">
@@ -99,8 +108,9 @@ const AddEducation = ({ user, open, setOpen }: any) => {
                           placeholder="GPA/Score"
                           id="educationGPA"
                           className="border rounded-md px-3 py-2 w-full focus:outline-none"
-                          {...register("gpa")}
+                          {...register("gpa", { required: true, valueAsNumber: true })}
                         />
+                        {errors.gpa && <p>GPA is required.</p>}
                       </div>
                     </div>
                     <div className="flex justify-between gap-6 items-center">
@@ -138,19 +148,8 @@ const AddEducation = ({ user, open, setOpen }: any) => {
                 </div>
               </div>
               <div className="flex items-center justify-end gap-4 border-t px-6 py-3">
-                <Button
-                  variant="destructive"
-                  className="px-6 py-2 rounded-sm font-semibold"
-                  onClick={() => setOpen(false)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  className="px-6 bg-primary py-2 rounded-sm font-semibold"
-                  type="submit"
-                >
-                  Save
-                </Button>
+                <FormButton onClick={() => setOpen(false)} variant={"cancel"} />
+                <FormButton type="submit" variant={"save"} isLoading={isLoading} />
               </div>
             </form>
           </div>

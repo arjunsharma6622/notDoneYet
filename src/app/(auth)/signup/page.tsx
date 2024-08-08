@@ -1,14 +1,17 @@
 "use client"
 
-import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Link from "next/link";
-import axios from "axios";
-import { useRouter } from "next/navigation";
+import withFeed from "@/hocs/withFeed";
 import { API_HEAD } from "@/lib/utils";
+import axiosInstance from "@/utils/axiosInstance";
+import axios from "axios";
+import { LoaderCircle } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const SignupForm = () => {
@@ -17,6 +20,8 @@ const SignupForm = () => {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [userNameAvailable, setUserNameAvailable] = useState(true);
+
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +31,7 @@ const SignupForm = () => {
   useEffect(() => {
     const checkUserName = async () => {
       try {
-        const response = await axios.get(`${API_HEAD}/checkUserName?userName=${userName}`);
+        const response = await axiosInstance.get(`/checkUserName?userName=${userName}`);
         const available = response?.data?.available;
         setUserNameAvailable(available);
       } catch (error) {
@@ -50,13 +55,16 @@ const SignupForm = () => {
     }
 
     try {
+      setIsLoading(true);
       const response = await axios.post(`${API_HEAD}/auth/signup`, { name, email, password, userName });
 
       if (response.status === 201) {
+        setIsLoading(false);
         toast.success("Account created successfully");
         router.push("/login");
       }
     } catch (error: any) {
+      setIsLoading(false);
       toast.error(error.response?.data?.message || "Something went wrong");
     }
   };
@@ -117,7 +125,12 @@ const SignupForm = () => {
         />
       </div>
 
-      <Button type="submit">Signup</Button>
+      <Button type="submit">
+        Signup
+        {isLoading &&
+          <LoaderCircle className="ml-2 w-5 h-5 animate-spin" />
+        }
+      </Button>
     </form>
   );
 };
@@ -150,4 +163,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default withFeed(Signup);

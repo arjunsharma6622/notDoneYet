@@ -1,9 +1,9 @@
 import ModalLayout from "@/components/ModalLayout";
-import axiosInstance from "@/utils/axiosInstance";
+import { FormButton } from "@/components/ui/FormButton";
+import useFormSubmit from "@/hooks/useFormSubmit";
 import { useState } from "react";
 import { BiImageAdd } from "react-icons/bi";
 import { FiX } from "react-icons/fi";
-import { toast } from "sonner";
 import MultiImages from "./MultiImages";
 
 const PostForm = ({
@@ -30,19 +30,17 @@ const PostForm = ({
     event.target.style.height = `${event.target.scrollHeight}px`;
   };
 
+  const {onSubmit, isLoading} = useFormSubmit("/posts/", "post");
+
   const handlePostCreate = async () => {
-    try {
       postData.images = imageUrls;
-      console.log("PostData", postData);
-      await axiosInstance.post("/posts/", postData);
-      setImages([]);
-      toast.success("Post created successfully");
-      setOpen(false);
-      window.location.reload();
-    } catch (err) {
-      toast.error("Error creating post");
-      console.error("Error uploading images:", err);
-    }
+      const payloadToSend = {
+          ...postData
+      }
+      onSubmit(payloadToSend, (updatedData) => {
+        setImages([]);
+        setOpen(false);
+      })
   };
 
   return (
@@ -118,12 +116,7 @@ const PostForm = ({
               </div>
 
               <div className="flex items-center justify-end gap-4 border-t px-6 py-3">
-                <button
-                  onClick={handlePostCreate}
-                  className="w-fit bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded"
-                >
-                  Create Post
-                </button>
+                <FormButton onClick={handlePostCreate} type="submit" text="Create Post" isLoading={isLoading} />
               </div>
             </div>
           </div>

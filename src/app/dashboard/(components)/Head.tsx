@@ -7,7 +7,7 @@ import ImageEdit from "../(modals)/images/ImageEdit";
 import { ArrowUpRight, Info, MapPin } from "lucide-react";
 import Image from "next/image";
 
-const Head = ({ userData }: { userData: any }) => {
+const Head = ({ userData, setUserData}: { userData: any, setUserData: any }) => {
   const [openImagesEdit, setOpenImagesEdit] = useState(false);
   const [openDetailsEdit, setOpenDetailsEdit] = useState(false);
 
@@ -129,6 +129,7 @@ const Head = ({ userData }: { userData: any }) => {
             open={openDetailsEdit}
             setOpen={setOpenDetailsEdit}
             user={userData}
+            setUserData={setUserData}
           />
         </div>
       )}

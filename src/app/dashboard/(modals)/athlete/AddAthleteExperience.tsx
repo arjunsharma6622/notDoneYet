@@ -1,16 +1,26 @@
 import ModalLayout from "@/components/ModalLayout";
-import { Button } from "@/components/ui/button";
+import { FormButton } from "@/components/ui/FormButton";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import axiosInstance from "@/utils/axiosInstance";
+import useFormSubmit from "@/hooks/useFormSubmit";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiImage, FiLink, FiX } from "react-icons/fi";
-import { toast } from "sonner";
 
-const AddAthleteExperience = ({ user, open, setOpen }: { user: any, open: boolean, setOpen: (open: boolean) => void }) => {
-  const [userData, setUserData] = useState(user);
+const AddAthleteExperience = ({
+  user,
+  setUserData,
+  open,
+  setOpen,
+}: {
+  user: any;
+  setUserData: any;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}) => {
+  const [userExperience, setUserExperience] = useState(user.experience);
   const [experienceType, setExperienceType] = useState("training");
+
   const {
     register,
     handleSubmit,
@@ -19,20 +29,17 @@ const AddAthleteExperience = ({ user, open, setOpen }: { user: any, open: boolea
     watch,
   } = useForm();
 
+  const { onSubmit, isLoading } = useFormSubmit("/user/", "patch");
+
   const handleUserUpdate = async (data: any) => {
-    try {
-      const updatedExperienceData = {
-        ...userData,
-        experience: [...userData.experience, { ...data, type: experienceType }],
-      };
-      await axiosInstance.patch(`/user/`, updatedExperienceData);
-      toast.success("Profile Updated");
+    const payloadToSend = {
+      experience: [...userExperience, { ...data, type: experienceType }],
+    };
+    onSubmit(payloadToSend, (updatedData) => {
+      setUserData((prev: any) => ({ ...prev, ...updatedData }));
       setOpen(false);
       reset();
-      window.location.reload();
-    } catch (err) {
-      console.log(err);
-    }
+    });
   };
 
   return (
@@ -41,7 +48,9 @@ const AddAthleteExperience = ({ user, open, setOpen }: { user: any, open: boolea
         <ModalLayout>
           <div className="w-[95%] md:w-[55%] max-h-[90%] bg-white rounded-md flex flex-col gap-4">
             <div className="flex items-center justify-between border-b px-6 py-5">
-              <h1 className="text-2xl font-bold">Experience - {experienceType}</h1>
+              <h1 className="text-2xl font-bold">
+                Experience - {experienceType}
+              </h1>
               <FiX
                 className="cursor-pointer h-6 w-6 text-gray-600"
                 onClick={() => setOpen(false)}
@@ -57,7 +66,11 @@ const AddAthleteExperience = ({ user, open, setOpen }: { user: any, open: boolea
                     What type of Experience is it?
                   </p>
 
-                  <RadioGroup onValueChange={(value) => setExperienceType(value)} defaultValue="training" className="flex items-center gap-4 mt-2">
+                  <RadioGroup
+                    onValueChange={(value) => setExperienceType(value)}
+                    defaultValue="training"
+                    className="flex items-center gap-4 mt-2"
+                  >
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="training" id="r1" />
                       <Label htmlFor="r1">Training</Label>
@@ -106,10 +119,12 @@ const AddAthleteExperience = ({ user, open, setOpen }: { user: any, open: boolea
                       ></textarea>
                     </div>
                     <div className="flex items-center justify-between w-full gap-6">
-                      {experienceType === "training" &&
+                      {experienceType === "training" && (
                         <>
                           <div className="w-full">
-                            <label htmlFor="experienceStartDate">Start Date</label>
+                            <label htmlFor="experienceStartDate">
+                              Start Date
+                            </label>
                             <input
                               type="date"
                               id="experienceStartDate"
@@ -127,8 +142,8 @@ const AddAthleteExperience = ({ user, open, setOpen }: { user: any, open: boolea
                             />
                           </div>
                         </>
-                      }
-                      {experienceType === "tournament" &&
+                      )}
+                      {experienceType === "tournament" && (
                         <>
                           <div className="w-full">
                             <label htmlFor="experienceDate">Date</label>
@@ -153,10 +168,7 @@ const AddAthleteExperience = ({ user, open, setOpen }: { user: any, open: boolea
                             />
                           </div>
                         </>
-                      }
-
-
-
+                      )}
                     </div>
                     <div className="flex items-center justify-between w-full gap-6">
                       <div className="w-full">
@@ -170,7 +182,7 @@ const AddAthleteExperience = ({ user, open, setOpen }: { user: any, open: boolea
                         />
                       </div>
 
-                      {experienceType === "tournament" &&
+                      {experienceType === "tournament" && (
                         <div className="w-full">
                           <label htmlFor="experienceOutcome">Outcome</label>
                           <select
@@ -184,8 +196,7 @@ const AddAthleteExperience = ({ user, open, setOpen }: { user: any, open: boolea
                             <option value="draw">Draw</option>
                           </select>
                         </div>
-                      }
-
+                      )}
                     </div>
                     <div className="flex items-center justify-between w-full gap-6">
                       <div className="w-full">
@@ -211,7 +222,7 @@ const AddAthleteExperience = ({ user, open, setOpen }: { user: any, open: boolea
                         />
                       </div>
                     </div>
-                    {experienceType === "tournament" &&
+                    {experienceType === "tournament" && (
                       <div>
                         <label htmlFor="experienceHealthInjury">
                           Health Injury
@@ -224,7 +235,7 @@ const AddAthleteExperience = ({ user, open, setOpen }: { user: any, open: boolea
                           {...register("healthInjury")}
                         />
                       </div>
-                    }
+                    )}
 
                     <div className="w-full flex items-center gap-4">
                       <span>Attachments</span>
@@ -237,21 +248,17 @@ const AddAthleteExperience = ({ user, open, setOpen }: { user: any, open: boolea
                 </div>
               </div>
 
-
               <div className="flex items-center justify-end gap-4 border-t px-6 py-3">
-                <Button
-                  variant="destructive"
-                  className="px-6 py-2 rounded-sm font-semibold"
-                  onClick={() => setOpen(false)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  className="px-6 bg-primary py-2 rounded-sm font-semibold"
+                <FormButton
                   type="submit"
-                >
-                  Save
-                </Button>
+                  variant={"cancel"}
+                  onClick={() => setOpen(false)}
+                />
+                <FormButton
+                  type="submit"
+                  variant={"save"}
+                  isLoading={isLoading}
+                />
               </div>
             </form>
           </div>

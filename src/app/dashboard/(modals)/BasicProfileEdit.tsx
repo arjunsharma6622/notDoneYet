@@ -1,18 +1,19 @@
 import ModalLayout from "@/components/ModalLayout";
-import { Button } from "@/components/ui/button";
-import axiosInstance from "@/utils/axiosInstance";
+import { FormButton } from "@/components/ui/FormButton";
+import useFormSubmit from "@/hooks/useFormSubmit";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FiX } from "react-icons/fi";
-import { toast } from "sonner";
 
 const BasicProfileEdit = ({
   user,
+  setUserData,
   open,
   setOpen,
 }: {
   user: any;
+  setUserData: any;
   open: boolean;
   setOpen: (open: boolean) => void;
 }) => {
@@ -39,17 +40,29 @@ const BasicProfileEdit = ({
     setValue("address.postalCode", user.address?.postalCode);
   }, [user, setValue]);
 
-  const onSubmit = async (data: any) => {
-    console.log(data);
-    try {
-      await axiosInstance.patch(`/user/`, data);
-      toast.success("Profile Updated");
-      setOpen(false);
-      window.location.reload();
-    } catch (err) {
-      console.log(err);
+
+  const { onSubmit, isLoading } = useFormSubmit("/user/", "patch");
+
+  const handleFormSubmit = (data: any) => {
+    const payloadToSend = {
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      bio: data.bio,
+      address: {
+        street: data.address.street,
+        city: data.address.city,
+        state: data.address.state,
+        country: data.address.country,
+        postalCode: data.address.postalCode
+      }
     }
-  };
+    onSubmit(payloadToSend, (updatedData) => {
+      setUserData((prev: any) => ({ ...prev, ...updatedData }));
+      setOpen(false);
+    })
+  }
+
 
   return (
     <div>
@@ -64,7 +77,7 @@ const BasicProfileEdit = ({
               />
             </div>
             <form
-              onSubmit={handleSubmit(onSubmit)}
+              onSubmit={handleSubmit(handleFormSubmit)}
               className="flex flex-col gap-6 overflow-scroll"
             >
               <div className="overflow-y-scroll px-6 flex flex-col gap-6">
@@ -227,20 +240,10 @@ const BasicProfileEdit = ({
               </div>
 
               <div className="flex items-center justify-end gap-4 border-t px-6 py-3">
-                <Button
-                  variant="destructive"
-                  className="px-6  py-2 rounded-sm font-semibold"
-                  onClick={() => setOpen(false)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  className="px-6 bg-primary py-2 rounded-sm font-semibold"
-                >
-                  Save
-                </Button>
+                <FormButton onClick={() => setOpen(false)} variant={"cancel"} />
+                <FormButton type="submit" variant={"save"} isLoading={isLoading} />
               </div>
+              
             </form>
           </div>
         </ModalLayout>

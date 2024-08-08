@@ -2,7 +2,7 @@ import { IconButton } from "@/components/ui/IconButton";
 import { useState } from "react";
 import AboutProfileEdit from "../(modals)/AboutProfileEdit";
 
-const About = ({ userData }: { userData: any }) => {
+const About = ({ userData, setUserData }: { userData: any, setUserData: any }) => {
   const [openAboutEdit, setOpenAboutEdit] = useState(false);
   return (
     <>
@@ -21,6 +21,7 @@ const About = ({ userData }: { userData: any }) => {
             open={openAboutEdit}
             setOpen={setOpenAboutEdit}
             user={userData}
+            setUserData={setUserData}
           />
         </div>
       )}

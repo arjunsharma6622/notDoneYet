@@ -4,7 +4,7 @@ import DoctorCard from './DoctorCard';
 const Doctors = async () => {
 
   const doctors = await axiosInstance.get(`/user?roles=doctor`)
-  .then((res) => res.data)
+  .then((res) => res.data.data.users)
   .catch((err) => console.error("Error", err));
 
   return (

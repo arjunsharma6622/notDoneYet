@@ -15,7 +15,6 @@ const fetchAuthenticatedUser = async () => {
   }
 };
 
-
 const Page =  () => {
 
   const [userData, setUserData] = useState(null);
@@ -33,10 +32,12 @@ const Page =  () => {
     getUserData();
   }, []);
 
+  console.log('userData', userData);
+
 
   return (
     <div>
-      <Profile userData={userData}/>
+      <Profile userData={userData} setUserData={setUserData}/>
     </div>
   );
 };
