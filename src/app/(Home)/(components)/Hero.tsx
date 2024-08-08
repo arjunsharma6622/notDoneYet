@@ -1,4 +1,5 @@
 import { CLIENT_HEAD } from '@/lib/utils'
+import { whatsAppCommunityLink } from '@/utils/data'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -16,7 +17,7 @@ const Hero = () => {
                     </h1>
 
                     <div className="mt-4 flex text-xs md:text-base items-center justify-center flex-row gap-2 md:gap-4">
-                        <Link href="https://chat.whatsapp.com/B7weei5shYhHdlH3nopdN9" className="bg-black text-white px-3 md:px-6 py-3 rounded-full font-bold hover:bg-gray-800 transition">
+                        <Link href={whatsAppCommunityLink} className="bg-black text-white px-3 md:px-6 py-3 rounded-full font-bold hover:bg-gray-800 transition">
                             Join Our Network
                         </Link>
                         <Link href={`${CLIENT_HEAD}/signup`} className="bg-red-600 text-white px-4 md:px-6 py-3 rounded-full font-bold hover:bg-gray-800 transition">

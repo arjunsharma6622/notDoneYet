@@ -26,8 +26,6 @@ const PostCard = ({ postData }: any) => {
     try {
       console.log("clicked on like");
 
-      // const res: any = await toggleLike(postData?._id, authenticatedUser._id);
-
       const res: any = await axiosInstance.post(`/posts/togglePostLike`, { postId: postData?._id })
 
       toast.success(res.message);
@@ -66,20 +64,24 @@ const PostCard = ({ postData }: any) => {
   );
 
   return (
-    <div className="flex border flex-col rounded-md px-2 py-2 gap-2 max-w-[650px]">
+    <div className="flex border flex-col rounded-md px-2 py-2 gap-2 max-w-[650px] bg-white">
       <div className="flex items-center justify-between gap-4 border-b pb-2">
         <div className="flex items-center justify-start gap-2">
-          <Link className="flex w-12 h-12" href={`/${postData?.user?.role}/${postData?.user?.userName}`}>
+          <div>
+          <Link className="flex w-12 h-12 rounded-full" href={`/${postData?.user?.role}/${postData?.user?.userName}`}>
             <Image
               src={postData?.user?.image}
               alt=""
               width={48}
               height={48}
               referrerPolicy="no-referrer"
-              className="rounded-full w-12 h-12"
+              loading="lazy"
+              className="rounded-full w-12 h-12 object-cover"
             />
           </Link>
-          <div className="flex  flex-col w-fit">
+          </div>
+
+          <div className="flex flex-col w-fit">
             <div className="text-base flex items-center gap-2">
               <Link
                 href={`/${postData?.user?.role}/${postData?.user?.userName}`}
@@ -91,7 +93,7 @@ const PostCard = ({ postData }: any) => {
                 {timeAgo(postData?.createdAt)}
               </span>
             </div>
-            <p className="text-xs truncatedText1">{postData?.user?.bio}</p>
+            <p className="text-xs text-gray-500 truncatedText1 text-start">{postData?.user?.bio}</p>
           </div>
         </div>
 

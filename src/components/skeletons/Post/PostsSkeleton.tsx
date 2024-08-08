@@ -2,7 +2,7 @@ import PostCardSkeleton from './PostCardSkeleton'
 
 const PostsSkeleton = ({ cardsToShow }: { cardsToShow: number }) => {
     return (
-        <div className="flex flex-col gap-4 w-full">
+        <div className="flex flex-col gap-2 w-full">
             {[...Array(cardsToShow)]?.map((_, index) => (
                 <PostCardSkeleton key={index} />
             ))}

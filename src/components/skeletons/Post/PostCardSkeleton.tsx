@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 const PostCardSkeleton = () => {
     return (
-        <div className="flex items-center justify-center flex-col gap-2 border rounded-xl p-4 w-full">
+        <div className="flex items-center justify-center flex-col gap-2 border rounded-xl p-2 w-full bg-white">
             <div className="w-full flex items-center justify-start gap-4 pb-4 border-b">
                 <div>
                 <Skeleton className="h-16 w-16 flex rounded-full bg-gray-300" />

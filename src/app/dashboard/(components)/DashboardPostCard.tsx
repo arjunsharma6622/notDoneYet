@@ -1,11 +1,13 @@
+import PostImageSection from "@/components/client/PostImageSection";
 import { timeAgo } from "@/lib/utils";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import PostCardMore from "./PostCardMore";
-import PostImageSection from "./PostImageSection";
+import DashboardPostCardMore from "./DashboardPostCardMore";
+import { useState } from "react";
 
-const ProfilePostCard = ({ post, currUser, dashboardCard }: any) => {
+const DashboardPostCard = ({ post, setUserPosts }: any) => {
+  const [moreOptionsOpen, setMoreOptionsOpen] = useState(false);
   return (
     <div className="rounded-md flex flex-col gap-2 border px-2 py-2 w-full">
       <div className="flex items-start flex-col justify-start gap-4 w-full">
@@ -33,9 +35,11 @@ const ProfilePostCard = ({ post, currUser, dashboardCard }: any) => {
               </span>
             </div>
           </div>
-            <PostCardMore
+            <DashboardPostCardMore
+              moreOptionsOpen={moreOptionsOpen}
+              setMoreOptionsOpen={setMoreOptionsOpen}
               postData={post}
-              currUser={currUser}
+              setUserPosts={setUserPosts}
             />
         </div>
 
@@ -66,4 +70,4 @@ const ProfilePostCard = ({ post, currUser, dashboardCard }: any) => {
   );
 };
 
-export default ProfilePostCard;
+export default DashboardPostCard;

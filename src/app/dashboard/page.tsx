@@ -23,7 +23,7 @@ const Page =  () => {
     const getUserData = async () => {
       try {
         const data = await fetchAuthenticatedUser();
-        setUserData(data.user);
+        setUserData(data);
       } catch (error) {
         // Handle error (e.g., redirect to login if unauthorized)
       }

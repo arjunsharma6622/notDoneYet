@@ -15,7 +15,7 @@ const RecommendedPosts = () => {
   return (
     <>
       { recommendedPosts && !isLoading ?
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
           {recommendedPosts?.map((post: any) => (
             <PostCard postData={post} key={post?._id} />
           ))}

@@ -1,0 +1,1 @@
+export const whatsAppCommunityLink = "https://chat.whatsapp.com/B7weei5shYhHdlH3nopdN9"
