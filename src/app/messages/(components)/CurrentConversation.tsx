@@ -63,7 +63,7 @@ const CurrentConversation = ({ currentConversationId }: any) => {
 
   useEffect(() => {
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+      messagesEndRef.current.scrollIntoView({ "behavior" : "instant" });
     }
   }, [currentConversation?.messages]);
 
