@@ -1,6 +1,4 @@
-import React from "react";
 import dateFormat from "dateformat";
-import Image from "next/legacy/image";
 import { MapPin } from "lucide-react";
 
 const AthleteExperienceCard = ({ experience }: any) => {
@@ -9,14 +7,6 @@ const AthleteExperienceCard = ({ experience }: any) => {
 
       <div className="flex items-center justify-between gap-0">
         <h1 className="text-xl font-semibold">{experience.title}</h1>
-        {/* <div className="flex items-center gap-1">
-        <img
-          src={`/images/${experience.type}.png`}
-          alt="ds"
-          className="w-10 grayscale"
-        />
-        <span className="font-medium text-xs">{experience.type}</span>
-      </div> */}
       </div>
 
       <div className="flex flex-col gap-1 text-sm pb-3">

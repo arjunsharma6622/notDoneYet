@@ -71,7 +71,7 @@ const CurrentConversation = ({ currentConversationId }: any) => {
       console.log("updating seen");
       if (currentConversation) {
         try {
-          await axiosInstance.put(
+          await axiosInstance.patch(
             `${API_HEAD}/conversation/${currentConversation?._id}/seen`);
         } catch (error) {
           console.log(error);

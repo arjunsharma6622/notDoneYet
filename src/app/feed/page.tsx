@@ -14,7 +14,7 @@ function Feed() {
           <UserInfoCard />
         </div>
         <div className="flex-[8] flex flex-col gap-2">
-          <AddPostInputBox />
+          <AddPostInputBox/>
           <RecommendedPosts />
         </div>
         <div className="flex-[4] hidden md:block">

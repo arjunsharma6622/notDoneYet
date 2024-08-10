@@ -1,11 +1,25 @@
 "use client";
 
-import EditProduct from "@/app/dashboard/(modals)/Brand/EditProduct";
 import { IconButton } from "@/components/ui/IconButton";
+import dynamic from "next/dynamic";
 import Image from "next/legacy/image";
 import { useState } from "react";
 import { BiSolidStar } from "react-icons/bi";
-import DeleteProduct from "../../(modals)/Brand/DeleteProduct";
+import LoadingModal from "../../(modals)/LoadingModal";
+
+const EditProduct = dynamic(
+  () => import("../../(modals)/Brand/EditProduct"),
+  {
+    loading: () => <LoadingModal />,
+    ssr: false
+})
+
+const DeleteProduct = dynamic(
+  () => import("../../(modals)/Brand/DeleteProduct"),
+  {
+    loading: () => <LoadingModal />,
+    ssr: false
+})
 
 const ProductCard = ({ product }: any) => {
   const [openEdit, setOpenEdit] = useState(false);

@@ -30,6 +30,7 @@ const BasicProfileEdit = ({
 
   useEffect(() => {
     setValue("name", user.name);
+    setValue("username", user.username);
     setValue("email", user.email);
     setValue("phone", user.phone);
     setValue("bio", user.bio);
@@ -85,6 +86,7 @@ const BasicProfileEdit = ({
                   <h2 className="text-xl font-semibold underline">
                     Basic Details
                   </h2>
+
                   <div>
                     <label
                       htmlFor="name"
@@ -104,6 +106,30 @@ const BasicProfileEdit = ({
                       </span>
                     )}
                   </div>
+                  <div>
+                    <label
+                      htmlFor="userName"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      User Name
+                    </label>
+                    <div className="border rounded-md w-full flex items-center">
+                      <p className="h-full border-r px-3 py-2 text-base block text-gray-500">notdoneyet.in/{user.role}</p>
+                    <input
+                      type="text"
+                      id="userName"
+                      {...register("userName", { required: true })}
+                      className="focus:outline-none w-full px-3 py-2 rounded-md"
+                    />
+                    </div>
+                    {errors.userName && (
+                      <span className="text-red-500 text-sm">
+                        User Name is required
+                      </span>
+                    )}
+                  </div>
+
+
                   <div>
                     <label
                       htmlFor="email"

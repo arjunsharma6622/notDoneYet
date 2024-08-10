@@ -1,8 +1,22 @@
 import DoctorEducationCard from "@/components/DoctorEducationCard";
 import { IconButton } from "@/components/ui/IconButton";
+import dynamic from "next/dynamic";
 import { useState } from "react";
-import AddEducation from "../../(modals)/doctor/AddEducation";
-import EditEducation from "../../(modals)/doctor/EditEducation";
+import LoadingModal from "../../(modals)/LoadingModal";
+
+const AddEducation = dynamic(
+  () => import("../../(modals)/doctor/AddEducation"),
+  {
+    loading: () => <LoadingModal />,
+    ssr: false
+})
+
+const EditEducation = dynamic(
+  () => import("../../(modals)/doctor/EditEducation"),
+  {
+    loading: () => <LoadingModal />,
+    ssr: false
+})
 
 const Education = ({ userData, setUserData }: { userData: any, setUserData: any }) => {
   const [openEducationAdd, setOpenEducationAdd] = useState(false);

@@ -1,11 +1,20 @@
-import PostForm from '@/app/dashboard/(modals)/PostForm'
+import LoadingModal from '@/app/dashboard/(modals)/LoadingModal'
 import useAuth from '@/context/useAuth'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { useState } from 'react'
+
+const PostForm = dynamic(
+  () => import("@/app/dashboard/(modals)/PostForm"),
+  {
+    loading: () => <LoadingModal />,
+    ssr: false
+})
 
 const AddPostInputBox = () => {
   const { auth } = useAuth()
   const { user: authenticatedUser } = auth
+  
   const [openPostForm, setOpenPostForm] = useState(false);
   const addPostMessage = {
     athlete: "Share your journey. Inspire others!",

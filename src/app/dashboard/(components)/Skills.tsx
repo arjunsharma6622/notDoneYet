@@ -1,6 +1,14 @@
 import { IconButton } from "@/components/ui/IconButton";
+import dynamic from "next/dynamic";
 import { useState } from "react";
-import SkillsEdit from "../(modals)/SkillsEdit";
+import LoadingModal from "../(modals)/LoadingModal";
+
+const SkillsEdit = dynamic(
+  () => import("../(modals)/SkillsEdit"),
+  {
+    loading: () => <LoadingModal />,
+    ssr: false
+  })
 
 const Skills = ({ userData, setUserData }: { userData: any, setUserData: any }) => {
   const [openSkillsEdit, setOpenSkillsEdit] = useState(false);

@@ -1,11 +1,37 @@
 import AthleteExperienceCard from "@/components/AtheleteExperienceCard";
 import DoctorExperienceCard from "@/components/DoctorExperienceCard";
 import { IconButton } from "@/components/ui/IconButton";
+import dynamic from "next/dynamic";
 import React, { useState } from "react";
-import AddAthleteExperience from "../(modals)/athlete/AddAthleteExperience";
-import EditAthleteExperience from "../(modals)/athlete/EditAthleteExperience";
-import AddDoctorExperience from "../(modals)/doctor/AddDoctorExperience";
-import EditDoctorExperience from "../(modals)/doctor/EditDoctorExperience";
+import LoadingModal from "../(modals)/LoadingModal";
+
+const AddAthleteExperience = dynamic(
+  () => import("../(modals)/athlete/AddAthleteExperience"),
+  {
+    loading: () => <LoadingModal />,
+    ssr: false
+})
+
+const AddDoctorExperience = dynamic(
+  () => import("../(modals)/doctor/AddDoctorExperience"),
+  {
+    loading: () => <LoadingModal />,
+    ssr: false
+})
+
+const EditAthleteExperience = dynamic(
+  () => import("../(modals)/athlete/EditAthleteExperience"),
+  {
+    loading: () => <LoadingModal />,
+    ssr: false
+})
+
+const EditDoctorExperience = dynamic(
+  () => import("../(modals)/doctor/EditDoctorExperience"),
+  {
+    loading: () => <LoadingModal />,
+    ssr: false
+})
 
 const Experience = ({ userData, setUserData }: { userData: any, setUserData: any }) => {
   const [openExperienceAdd, setOpenExperienceAdd] = useState(false);

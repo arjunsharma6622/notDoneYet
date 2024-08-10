@@ -1,9 +1,17 @@
 import VenueCard from "@/components/VenueCard";
 import { IconButton } from "@/components/ui/IconButton";
 import { API_HEAD } from "@/lib/utils";
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import useSWR from "swr";
-import AddVenue from "../../(modals)/venue/AddVenue/AddVenue";
+import LoadingModal from "../../(modals)/LoadingModal";
+
+const AddVenue = dynamic(
+  () => import("../../(modals)/venue/AddVenue/AddVenue"),
+  {
+    loading: () => <LoadingModal />,
+    ssr: false
+})
 
 const Venues = ({ userData }: any) => {
   const [openAddVenue, setOpenAddVenue] = useState(false);

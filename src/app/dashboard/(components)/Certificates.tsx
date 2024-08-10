@@ -1,7 +1,21 @@
 import { IconButton } from "@/components/ui/IconButton";
+import dynamic from "next/dynamic";
 import { useState } from "react";
-import AddCertificate from "../(modals)/AddCertificates";
-import EditCertificates from "../(modals)/EditCertificate";
+import LoadingModal from "../(modals)/LoadingModal";
+
+const AddCertificate = dynamic(
+  () => import("../(modals)/AddCertificates"),
+  {
+    loading: () => <LoadingModal />,
+    ssr: false
+  })
+
+const EditCertificates = dynamic(
+  () => import("../(modals)/EditCertificate"),
+  {
+    loading: () => <LoadingModal />,
+    ssr: false
+  })
 
 const Certificates = ({ userData }: { userData: any }) => {
   const [openCertificatesEdit, setOpenCertificatesEdit] = useState(false);

@@ -1,6 +1,5 @@
 "use client"
 
-import { API_HEAD } from '@/lib/utils'
 import axiosInstance from '@/utils/axiosInstance'
 import { useEffect, useState } from 'react'
 
@@ -9,7 +8,7 @@ const UnreadMsgsCount = () => {
     useEffect(() => {
         const fetchUnreadMsgsCount = async () => {
             try {
-                const response = await axiosInstance.get(`${API_HEAD}/conversation/unreadCount/user`);
+                const response = await axiosInstance.get(`/conversation/unreadCount/user`);
                 const unreadCount = response?.data?.data?.unreadCount;
                 setUnreadMsgsCount(unreadCount);
             } catch (error) {

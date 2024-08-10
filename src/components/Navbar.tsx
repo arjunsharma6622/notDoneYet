@@ -3,11 +3,11 @@
 import useAuth from "@/context/useAuth";
 import { MessageSquareText } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import NavAction from "./client/NavAction";
 import NavDesktop from "./client/NavDesktop";
 import NavMobile from "./client/NavMobile";
 import UnreadMsgsCount from "./client/UnreadMsgsCount";
-import { usePathname } from "next/navigation";
 import StaticPageNavbar from "./StaticPageNavbar";
 
 const Navbar = () => {

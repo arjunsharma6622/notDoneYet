@@ -1,9 +1,17 @@
 "use client";
 
-import { useState } from "react";
-import ImagesModal from "./ImagesModal";
+import LoadingModal from "@/app/dashboard/(modals)/LoadingModal";
+import dynamic from "next/dynamic";
 import Image from "next/legacy/image";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
+import { useState } from "react";
+
+const ImagesModal = dynamic(
+  () => import("./ImagesModal"),
+  {
+    loading: () => <LoadingModal />,
+    ssr: false
+})
+
 
 const PostImageSection = ({ images, openModalOnClick = true }: any) => {
   const [openImagesModal, setOpenImagesModal] = useState(false);

@@ -1,52 +1,8 @@
-// "use client";
-
-// import Image from 'next/image';
-// import { useEffect, useState } from 'react';
-
-// const Navbar = () => {
-//   const [isVisible, setIsVisible] = useState(true);
-
-//   useEffect(() => {
-//     const handleScroll = () => {
-//       if (window.scrollY > 60) {
-//         setIsVisible(false);
-//       } else {
-//         setIsVisible(true);
-//       }
-//     };
-
-//     window.addEventListener('scroll', handleScroll);
-
-//     // Cleanup the event listener on component unmount
-//     return () => {
-//       window.removeEventListener('scroll', handleScroll);
-//     };
-//   }, []);
-
-//   return (
-//     <header className="h-10 w-full z-[999]">
-//       <div className={`w-full ${!isVisible ? 'bg-white fixed top-0 shadow' : 'bg-transparent'} py-4 flex px-10 justify-between items-center transition-all duration-500 z-[999]`}>
-//           <Image src="/logo_long.svg" alt="Logo" width={200} height={700} />
-//         <nav>
-//           <ul className="flex items-center gap-10 text-lg">
-//             <li><a href="#about" className="text-black">About</a></li>
-//             <li><a href="#projects" className="text-black">Projects</a></li>
-//             <li><a href="#contact" className="text-black">Contact</a></li>
-//           </ul>
-//         </nav>
-//       </div>
-//     </header>
-//   );
-// }
-
-// export default Navbar;
-
-
 "use client"
 
-import Image from "next/image"
-import Link from "next/link"
-import { useEffect, useState } from "react"
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function StaticPageNavbar() {
 

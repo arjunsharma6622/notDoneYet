@@ -2,12 +2,26 @@ import { IconButton } from "@/components/ui/IconButton";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { useState } from "react";
-import BasicProfileEdit from "../(modals)/BasicProfileEdit";
-import ImageEdit from "../(modals)/images/ImageEdit";
 import { ArrowUpRight, Info, MapPin } from "lucide-react";
 import Image from "next/image";
+import LoadingModal from "../(modals)/LoadingModal";
+import dynamic from "next/dynamic";
 
-const Head = ({ userData, setUserData}: { userData: any, setUserData: any }) => {
+const BasicProfileEdit = dynamic(
+  () => import("../(modals)/BasicProfileEdit"),
+  {
+    loading: () => <LoadingModal />,
+    ssr: false
+  })
+
+const ImageEdit = dynamic(
+  () => import("../(modals)/images/ImageEdit"),
+  {
+    loading: () => <LoadingModal />,
+    ssr: false
+  })
+
+const Head = ({ userData, setUserData }: { userData: any, setUserData: any }) => {
   const [openImagesEdit, setOpenImagesEdit] = useState(false);
   const [openDetailsEdit, setOpenDetailsEdit] = useState(false);
 

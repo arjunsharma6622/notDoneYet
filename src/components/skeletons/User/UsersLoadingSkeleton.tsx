@@ -1,4 +1,3 @@
-import React from 'react'
 import UserCardSkeleton from './UserSkeletonCard'
 
 const UsersLoadingSkeleton = () => {

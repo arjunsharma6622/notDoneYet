@@ -1,13 +1,27 @@
 "use client";
 
-import DeleteVenue from "@/app/dashboard/(modals)/venue/DeleteVenue";
-import EditVenue from "@/app/dashboard/(modals)/venue/EditVenue/EditVenue";
 import Image from "next/legacy/image";
 import Link from "next/link";
 import { useState } from "react";
 import { BiSolidStar } from "react-icons/bi";
 import { FiArrowUpRight, FiClock, FiMapPin } from "react-icons/fi";
 import { IconButton } from "./ui/IconButton";
+import LoadingModal from "@/app/dashboard/(modals)/LoadingModal";
+import dynamic from "next/dynamic";
+
+const EditVenue = dynamic(
+  () => import("@/app/dashboard/(modals)/venue/EditVenue"),
+  {
+    loading: () => <LoadingModal />,
+    ssr: false
+})
+
+const DeleteVenue = dynamic(
+  () => import("@/app/dashboard/(modals)/venue/DeleteVenue"),
+  {
+    loading: () => <LoadingModal />,
+    ssr: false
+})
 
 const VenueCard = ({ venueDetails, userData }: any) => {
   const [openBookingModal, setOpenBookingModal] = useState(false);

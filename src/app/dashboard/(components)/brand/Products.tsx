@@ -1,9 +1,17 @@
 import { IconButton } from "@/components/ui/IconButton";
 import { API_HEAD } from "@/lib/utils";
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import useSWR from "swr";
-import AddProduct from "../../(modals)/Brand/AddProduct";
+import LoadingModal from "../../(modals)/LoadingModal";
 import ProductCard from "./ProductCardDash";
+
+const AddProduct = dynamic(
+  () => import("../../(modals)/Brand/AddProduct"),
+  {
+    loading: () => <LoadingModal />,
+    ssr: false
+})
 
 const Products = ({ userData }: { userData: any }) => {
   const [openAddProduct, setOpenAddProduct] = useState(false);

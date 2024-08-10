@@ -1,9 +1,9 @@
 "use client";
 
+import useAuth from "@/context/useAuth";
 import { HeartPulse, Home, MapPinned, MessageSquareText, UsersRound } from "lucide-react";
 import Link from "next/link";
 import UnreadMsgsCount from "./UnreadMsgsCount";
-import useAuth from "@/context/useAuth";
 
 const NavDesktop = ({pathName} : {pathName : string}) => {
   const {auth} = useAuth()
