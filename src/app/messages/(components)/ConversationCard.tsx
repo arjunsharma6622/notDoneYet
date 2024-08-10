@@ -23,11 +23,7 @@ const ConversationCard = ({
           `${API_HEAD}/conversation/${conversation._id}/unread`,
         );
         const unread = response?.data?.data
-        if (unread?._id != authenticatedUser._id) {
-          setUnread(unread?.count);
-        } else {
-          setUnread(0);
-        }
+        setUnread(unread?.count);
       } catch (error) {
         console.log(error);
       }

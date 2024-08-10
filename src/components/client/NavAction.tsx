@@ -46,7 +46,7 @@ const NavAction = ({ pathName }: { pathName: string }) => {
                     </Link>
 
                     {pathName === "/dashboard" &&
-                        <div className="absolute -bottom-[11px] h-[6px] w-full bg-blue-200 rounded-t-xl"></div>
+                        <div className="absolute -bottom-[11px] h-[4px] w-full bg-blue-200 rounded-t-xl"></div>
                     }
                     </div>
 

@@ -59,7 +59,7 @@ const NavDesktop = ({ pathName }: { pathName: string }) => {
             {menuItem.name}
           </Link>
           {pathName === menuItem.path &&
-            <div className="absolute -bottom-[15px] h-[6px] w-full bg-blue-200 rounded-t-xl"></div>
+            <div className="absolute -bottom-[15px] h-[4px] w-full bg-blue-200 rounded-t-xl"></div>
           }
         </div>
       ))}

@@ -19,8 +19,8 @@ const Message = ({
             }`}
         >
           <div
-            className={`max-w-xl flex relative text-sm items-center gap-4 ${currentUser ? "rounded-br-none" : "rounded-bl-none"
-              } bg-gray-200 py-2 rounded-xl px-4`}
+            className={`max-w-xl flex relative text-sm items-center gap-4 ${currentUser ? "rounded-br-none bg-gray-200" : "rounded-bl-none bg-red-200"
+              } py-2 rounded-xl px-4`}
           >
             <div>
               <p>{message?.content}</p>
