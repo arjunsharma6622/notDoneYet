@@ -1,15 +1,15 @@
 import PostCard from "@/components/client/PostCard";
 import UserInfoCard from "@/components/client/UserInfoCard";
-import { API_HEAD } from "@/lib/utils";
-import axios from "axios";
+import axiosInstance from "@/utils/axiosInstance";
 
-const page = async ({ params }: { params: { postId: string } }) => {
+const Page = async ({ params }: { params: { postId: string } }) => {
   const postID = params.postId;
 
-  const postData = await axios
-    .get(`${API_HEAD}/posts/${postID}`)
-    .then((res) => res.data)
+  const postData = await axiosInstance
+    .get(`/posts/${postID}`)
+    .then((res) => res.data.data)
     .catch((err) => console.error("Error", err));
+
 
   return (
     <div className=" flex justify-center gap-5 w-full ">
@@ -30,4 +30,4 @@ const page = async ({ params }: { params: { postId: string } }) => {
   );
 };
 
-export default page;
+export default Page;

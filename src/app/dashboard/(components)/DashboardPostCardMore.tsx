@@ -28,7 +28,7 @@ const DashboardPostCardMore = ({ postData, moreOptionsOpen, setMoreOptionsOpen, 
       setIsDeleting(true);
       const res: any = await axiosInstance.delete(`/posts/${postData?._id}`);
       setUserPosts((prev: any) => prev.filter((post: any) => post._id !== postData?._id));
-      toast.success("Post deleted successfully");
+      if(res?.data?.statusCode === 200) toast.success(res.data.message);
     } catch (err) {
       toast.error("Failed to delete post");
       console.log(err);

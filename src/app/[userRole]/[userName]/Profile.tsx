@@ -1,5 +1,3 @@
-import { API_HEAD } from "@/lib/utils";
-import axios from "axios";
 import About from "./(components)/About";
 import Products from "./(components)/brand/Products";
 import Education from "./(components)/Education";
@@ -9,11 +7,6 @@ import Posts from "./(components)/Posts";
 import Skills from "./(components)/Skills";
 
 const Profile = async ({ userData }: any) => {
-
-  const postData = await axios
-    .get(`${API_HEAD}/posts/getPosts/user?userId=${userData._id}`)
-    .then((res) => res.data)
-    .catch((err) => console.error("Error", err));
 
   return (
     <div>
@@ -32,7 +25,7 @@ const Profile = async ({ userData }: any) => {
               <Skills userData={userData} />
             )}
 
-            <Posts userData={userData} postData={postData} />
+            <Posts userData={userData} />
 
             {(userData.role === "doctor" || userData.role === "athlete") && (
               <Experience userData={userData} />

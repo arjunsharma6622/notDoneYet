@@ -10,7 +10,9 @@ const fetcher = (url: string) => axiosInstance.get(url).then((res) => res.data);
 
 const RecommendedPosts = () => {
 
-  const { data: recommendedPosts, error, isLoading } = useSWR("/posts/user/recommendedPosts", fetcher);
+  const { data, error, isLoading } = useSWR("/posts/user/recommendedPosts", fetcher);
+
+  const recommendedPosts = data?.data
 
   return (
     <>

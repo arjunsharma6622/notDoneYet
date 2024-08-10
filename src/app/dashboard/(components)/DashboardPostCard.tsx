@@ -43,7 +43,7 @@ const DashboardPostCard = ({ post, setUserPosts }: any) => {
             />
         </div>
 
-        <Link href={`/post/${post._id}`} className="flex flex-col gap-2">
+        <Link href={`${post?.user?.role}/${post?.user?.userName}/post/${post._id}`} className="flex flex-col gap-2">
           <PostImageSection openModalOnClick={false} images={post?.images} />
           <p className="flex-[11] text-sm truncatedText">{post.description}</p>
         </Link>

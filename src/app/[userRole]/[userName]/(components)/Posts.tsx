@@ -1,8 +1,16 @@
 import ProfilePostCard from "@/components/client/ProfilePostCard";
+import { API_HEAD } from "@/lib/utils";
+import axios from "axios";
 import Link from "next/link";
 import { FiArrowUpRight } from "react-icons/fi";
 
-const Posts = ({ postData, userData }: { postData: any; userData: any }) => {
+const Posts = async ({ userData }: { userData: any }) => {
+
+  const postData = await axios
+  .get(`${API_HEAD}/posts/getPosts/user?userId=${userData._id}`)
+  .then((res) => res.data.data)
+  .catch((err) => console.error("Error", err));
+
   return (
     <div className="flex flex-col gap-4 border-t py-2 px-3 md:px-6 md:py-4">
       <div className="flex justify-between items-center">

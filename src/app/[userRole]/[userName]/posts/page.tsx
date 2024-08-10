@@ -6,7 +6,7 @@ import axios from 'axios'
 const page = async ({params}: {params: { userRole: string; userName: string }}) => {
   const userName = params.userName
   
-  const postsData = await axios.get(`${API_HEAD}/posts/getPosts/user?userName=${userName}`).then((res) => res.data)
+  const postsData = await axios.get(`${API_HEAD}/posts/getPosts/user?userName=${userName}`).then((res) => res.data.data)
 
   return (
     <div className=" flex justify-center gap-5 w-full ">
