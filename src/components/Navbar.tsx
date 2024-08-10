@@ -23,13 +23,13 @@ const Navbar = () => {
         :
         <div className="sticky top-0 z-[30] bg-white">
 
-          <div className="w-full  top-4 md:flex hidden px-20 py-3 border border-b items-center">
+          <div className="w-full  top-4 md:flex hidden px-20 py-3 md:py-2 border border-b items-center">
             <div className=" w-full flex justify-between items-center gap-8">
               <Link href={"/"} className="flex-[1] flex justify-start gap-4 items-center w-full">
                 <img src={"/logo.png"} alt="logo" className="object-contain w-16" />
               </Link>
               <NavDesktop pathName={pathname} />
-              <NavAction />
+              <NavAction pathName={pathname}/>
             </div>
           </div>
 
@@ -55,7 +55,7 @@ const Navbar = () => {
                   </div>
                 </Link>
               }
-              <NavAction />
+              <NavAction pathName={pathname}/>
               <NavMobile pathName={pathname} />
             </div>
           </div>

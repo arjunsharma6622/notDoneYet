@@ -5,22 +5,22 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { toast } from 'sonner';
 
-const NavAction = () => {
-    const {auth, setAuth} = useAuth();
-    const {user : authenticatedUser} = auth;
+const NavAction = ({ pathName }: { pathName: string }) => {
+    const { auth, setAuth } = useAuth();
+    const { user: authenticatedUser } = auth;
 
     const handleLogout = async () => {
-        try{
+        try {
             const response = await axiosInstance.post('/auth/logout')
             if (response.status === 200) {
                 setAuth({
                     isAuthenticated: false,
-                    user : null
+                    user: null
                 })
             }
             toast.success(response.data.data.message)
         }
-        catch (err : any) {
+        catch (err: any) {
             toast.error(err.response.data.message)
         }
     }
@@ -29,6 +29,7 @@ const NavAction = () => {
         <div className="flex-[1] flex justify-end md:mb-0">
             {authenticatedUser ? (
                 <div className="relative w-fit flex-row flex items-center gap-6">
+                    <div className='relative'>
                     <Link href={"/dashboard"} className="flex items-center gap-2 text-blue-600">
                         <Image
                             src={authenticatedUser && (authenticatedUser?.image as string)}
@@ -44,10 +45,16 @@ const NavAction = () => {
                         </span>
                     </Link>
 
+                    {pathName === "/dashboard" &&
+                        <div className="absolute -bottom-[11px] h-[6px] w-full bg-blue-200 rounded-t-xl"></div>
+                    }
+                    </div>
+
                     <button onClick={handleLogout} className='flex items-center gap-2 cursor-pointer w-fit focus:outline-offset-0 ring-0 text-red-600 bg-red-100 rounded-full p-[6px] md:p-2 md:px-4'>
                         <span className='hidden md:block text-xs'>Logout</span>
                         <LogOut strokeWidth={1.5} className='w-5 h-5 ' />
                     </button>
+
                 </div>
             ) : (
                 <div className="flex items-center gap-4">

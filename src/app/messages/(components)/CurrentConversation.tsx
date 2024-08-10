@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Message from "./Message";
 import useAuth from "@/context/useAuth";
+import withAuth from "@/hocs/withAuth";
 
 const CurrentConversation = ({ currentConversationId }: any) => {
 
@@ -96,7 +97,7 @@ const CurrentConversation = ({ currentConversationId }: any) => {
                   <Image
                     src={
                       currentConversation?.users?.filter(
-                        (user: any) => user._id !== authenticatedUser._id,
+                        (user: any) => user?._id !== authenticatedUser?._id,
                       )[0]?.image
                     }
                     alt=""
@@ -111,14 +112,14 @@ const CurrentConversation = ({ currentConversationId }: any) => {
                   <span>
                     {
                       currentConversation?.users?.filter(
-                        (user: any) => user._id !== authenticatedUser._id,
+                        (user: any) => user?._id !== authenticatedUser?._id,
                       )[0]?.name
                     }
                   </span>
                   <span className="text-gray-400 text-[9px] md:text-xs truncatedText1">
                     {
                       currentConversation?.users?.filter(
-                        (user: any) => user._id !== authenticatedUser._id,
+                        (user: any) => user?._id !== authenticatedUser?._id,
                       )[0]?.bio
                     }
                   </span>
@@ -173,7 +174,7 @@ const CurrentConversation = ({ currentConversationId }: any) => {
                         <div key={index} className="flex flex-col gap-1">
                           <Message
                             key={index}
-                            currentUser={message.senderId === authenticatedUser._id}
+                            currentUser={message?.senderId === authenticatedUser?._id}
                             message={message}
                             otherUser={otherUser}
                             showImage={showUserImage}
@@ -202,7 +203,7 @@ const CurrentConversation = ({ currentConversationId }: any) => {
                     <div key={index} className="flex flex-col gap-1">
                       <Message
                         key={index}
-                        currentUser={message.senderId === authenticatedUser._id}
+                        currentUser={message.senderId === authenticatedUser?._id}
                         message={message}
                         otherUser={otherUser}
                         showImage={showUserImage}
@@ -210,7 +211,7 @@ const CurrentConversation = ({ currentConversationId }: any) => {
                       {showUserImage &&
                         <div className={`flex items-center ${currentUser ? "justify-end -mr-2" : "justify-start -ml-2"}`}>
                           <Image
-                            src={currentUser ? authenticatedUser.image : otherUser?.image}
+                            src={currentUser ? authenticatedUser?.image : otherUser?.image}
                             alt=""
                             width={40}
                             height={40}
@@ -264,4 +265,4 @@ const CurrentConversation = ({ currentConversationId }: any) => {
   );
 };
 
-export default CurrentConversation;
+export default withAuth(CurrentConversation);
