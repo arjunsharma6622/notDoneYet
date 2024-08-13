@@ -3,7 +3,6 @@ import { useEffect } from "react";
 const ModalLayout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     document.body.style.overflow = "hidden";
-
     return () => {
       document.body.style.overflow = "auto";
     };

@@ -20,7 +20,8 @@ const AddPostInputBox = () => {
     athlete: "Share your journey. Inspire others!",
     doctor: "Post insights that help the community.",
     venue: "Promote your events and success stories.",
-    brand: "Highlight your brand’s impact in sports."
+    brand: "Highlight your brand’s impact in sports.",
+    user : "Share your experience. Inspire others!"
   }
 
   return (

@@ -7,8 +7,10 @@ import { Label } from "@/components/ui/label";
 import withFeed from "@/hocs/withFeed";
 import { API_HEAD } from "@/lib/utils";
 import axiosInstance from "@/utils/axiosInstance";
+import { getGoogleAuthUrl } from "@/utils/getGoogleAuthUrl";
 import axios from "axios";
 import { LoaderCircle } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -141,7 +143,7 @@ const Signup = () => {
       <CardHeader className="p-4 md:p-6">
         <CardTitle>Signup</CardTitle>
       </CardHeader>
-      <CardContent className="p-4 md:p-6">
+      <CardContent className="p-4 md:p-6 md:py-2">
         <SignupForm />
       </CardContent>
       <CardFooter className="flex p-4 md:p-6 flex-col gap-5 md:gap-6 mt-1">
@@ -151,6 +153,13 @@ const Signup = () => {
             Or
           </span>
         </div>
+
+        <Link href={getGoogleAuthUrl()} className="mt-2 flex justify-center gap-4 items-center border rounded-full py-2 px-4 w-full" target="_self">
+          <Image src="/images/google.svg" width={20} height={20} alt="google logo" />
+          <span className="text-sm">
+            Login with google
+          </span>
+        </Link>
 
         <p className="text-sm">
           Already have an account?{" "}

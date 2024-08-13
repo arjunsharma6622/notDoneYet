@@ -14,7 +14,9 @@ import useAuth from "@/context/useAuth";
 import withAuth from "@/hocs/withAuth";
 import withFeed from "@/hocs/withFeed";
 import axiosInstance from "@/utils/axiosInstance";
+import { getGoogleAuthUrl } from "@/utils/getGoogleAuthUrl";
 import { LoaderCircle } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -73,7 +75,7 @@ const Page = () => {
       <CardHeader className="p-4 md:p-6">
         <CardTitle>Login</CardTitle>
       </CardHeader>
-      <CardContent className="p-4 md:p-6">
+      <CardContent className="p-4 md:p-6 md:py-2">
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-2 md:gap-4">
           <div className="md:space-y-1">
@@ -100,7 +102,7 @@ const Page = () => {
             />
           </div>
 
-          <Button type="submit">
+          <Button type="submit" className="rounded-full">
             Login
             {isLoading &&
               <LoaderCircle className="ml-2 w-5 h-5 animate-spin" />
@@ -108,6 +110,7 @@ const Page = () => {
           </Button>
         </form>
       </CardContent>
+
       <CardFooter className="flex p-4 md:p-6 flex-col gap-5 md:gap-6 mt-1">
         <div className="w-full relative">
           <hr className="w-full h-[1px]" />
@@ -115,6 +118,13 @@ const Page = () => {
             Or
           </span>
         </div>
+
+        <Link href={getGoogleAuthUrl()} className="mt-2 flex justify-center gap-4 items-center border rounded-full py-2 px-4 w-full" target="_self">
+          <Image src="/images/google.svg" width={20} height={20} alt="google logo" />
+          <span className="text-sm">
+            Login with google
+          </span>
+        </Link>
 
         <p className="text-sm">
           {`Don't have an account?`}{" "}

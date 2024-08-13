@@ -11,9 +11,9 @@ const Posts = ({ userData }: { userData: any }) => {
   const [openPostForm, setOpenPostForm] = useState(false);
 
   const { isLoading, error, refetch } = useFetchData<any>(
-    `${API_HEAD}/posts/getPosts/user?userId=${userData?._id}`,
+    `${API_HEAD}/posts/getPosts/authenticated`,
     (fetchedData) => {
-      setUserPosts(fetchedData);
+      setUserPosts(fetchedData.data);
     }
   );
 

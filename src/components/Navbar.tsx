@@ -29,7 +29,7 @@ const Navbar = () => {
                 <img src={"/logo.png"} alt="logo" className="object-contain w-16" />
               </Link>
               <NavDesktop pathName={pathname} />
-              <NavAction pathName={pathname}/>
+              <NavAction pathName={pathname} />
             </div>
           </div>
 
@@ -55,7 +55,7 @@ const Navbar = () => {
                   </div>
                 </Link>
               }
-              <NavAction pathName={pathname}/>
+              <NavAction pathName={pathname} />
               <NavMobile pathName={pathname} />
             </div>
           </div>

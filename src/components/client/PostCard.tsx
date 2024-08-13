@@ -3,11 +3,11 @@
 import useAuth from "@/context/useAuth";
 import { timeAgo } from "@/lib/utils";
 import axiosInstance from "@/utils/axiosInstance";
-import { LoaderCircle, MessageCircle, Share } from "lucide-react";
+import { Heart, Loader, LoaderCircle, MessageCircle, Share, ThumbsUp } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RiHeart2Fill, RiHeart2Line } from "react-icons/ri";
 import { toast } from "sonner";
 import PostImageSection from "./PostImageSection";
@@ -28,23 +28,31 @@ const PostCard = ({ postData }: any) => {
     useState(false);
   const [commentText, setCommentText]: [string, any] = useState("");
   const [openLikes, setOpenLikes]: [boolean, any] = useState(false);
+  
+  const [postLikes, setPostLikes]: [any, any] = useState(postData?.likes);
+  const [isPostLikeLoading, setIsPostLikeLoading]: [boolean, any] = useState(false);
+
+
+  const [isPostLiked, setIsPostLiked]: [boolean, any] = useState(
+    postLikes?.some((user: any) => user._id === authenticatedUser?._id)
+  )
 
   const handlePostLike = async () => {
     try {
-      console.log("clicked on like");
-
+      setIsPostLikeLoading(true)
       const res: any = await axiosInstance.post(`/posts/togglePostLike`, { postId: postData?._id })
-
-      toast.success(res.message);
+      setPostLikes(res.data.data.updatedLikes)
+      setIsPostLiked(!isPostLiked)
+      toast.success(res.data.message);
     } catch (err) {
       console.log(err);
       toast.error("Failed to like post");
     }
+    finally {
+      setIsPostLikeLoading(false)
+    }
   };
 
-  const isPostLiked = postData?.likes?.some(
-    (like: any) => like._id === authenticatedUser?._id
-  );
 
   return (
     <div className="flex border flex-col rounded-md px-2 py-2 gap-2 max-w-[650px] bg-white">
@@ -91,26 +99,28 @@ const PostCard = ({ postData }: any) => {
       </div>
 
       <div className="flex items-center justify-between w-full">
-        <div className="flex items-center border-t pt-3 justify-between w-full px-6 gap-2">
+        <div className="flex items-center text-sm border-t pt-3 justify-between w-full px-6 gap-2">
           <div
             className={`flex flex-[1] items-center cursor-pointer gap-2 ${isPostLiked ? "text-pink-500" : ""}`}
             onClick={handlePostLike}
           >
-            {isPostLiked ? (
-              <RiHeart2Fill className="w-5 h-5" />
+            {isPostLikeLoading ? 
+              <LoaderCircle strokeWidth={1.7} className="animate-spin md:h-5 md:w-5 w-4 h-4" />
+            : isPostLiked ? (
+              <Heart fill="pink" className="w-4 h-4 md:w-5 md:h-5" />
             ) : (
-              <RiHeart2Line className="w-5 h-5" />
+              <Heart className="w-4 h-4 md:w-5 md:h-5" />
             )}
-            {postData?.likes?.length > 0 && <>{postData?.likes?.length}</>}
+            {postLikes?.length > 0 && <>{postLikes?.length}</>}
 
-            <span>{postData?.likes?.length > 1 ? "Likes" : "Like"}</span>
+            <span>{postLikes?.length > 1 ? "Likes" : "Like"}</span>
           </div>
 
           <div
-            className={`flex flex-[1] justify-center items-center gap-2 cursor-pointer ${openCommentInput ? "text-orange-500" : ""
+            className={`flex flex-[1] justify-center ${openCommentInput ? "text-blue-500" : ""
               }`}
-            onClick={() => setOpenCommentInput(!openCommentInput)}
           >
+            <div className="w-fit flex justify-center items-center gap-2 cursor-pointer" onClick={() => setOpenCommentInput(!openCommentInput)}>
             <MessageCircle className="w-5 h-5" />
             {postData?.comments?.length > 0 && (
               <>{postData?.comments?.length}</>
@@ -118,6 +128,7 @@ const PostCard = ({ postData }: any) => {
             <span>
               {postData?.comments?.length > 1 ? "Comments" : "Comment"}
             </span>
+            </div>
           </div>
 
           <div className="flex flex-[1] justify-end items-center gap-2">
@@ -137,20 +148,20 @@ const PostCard = ({ postData }: any) => {
 
       {/* come back and take a look at it */}
 
-      {/* {openLikes && (
+      {/* {!openLikes && (
         <div className="flex flex-col w-full px-4">
           <div className="w-full border-b py-3 flex items-start gap-2">
             {postData?.likes?.map((like: any) => (
               <div
                 key={like._id}
-                className="w-10 h-10 rounded-full overflow-hidden"
+                className="w-8 h-8 rounded-full overflow-hidden"
               >
                 <Image
                   src={like.image}
                   alt="profile"
-                  width={40}
-                  height={40}
-                  className="object-cover"
+                  width={20}
+                  height={20}
+                  className="object-cover w-full h-full"
                   referrerPolicy="no-referrer"
                 />
               </div>
