@@ -1,4 +1,3 @@
-import { API_HEAD } from "@/lib/utils";
 
 export const getGoogleAuthUrl = () => {
     const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
