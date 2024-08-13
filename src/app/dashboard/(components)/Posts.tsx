@@ -1,10 +1,10 @@
+import PostCardSkeleton from "@/components/skeletons/Post/PostCardSkeleton";
 import { IconButton } from "@/components/ui/IconButton";
 import useFetchData from "@/hooks/useFetchData";
 import { API_HEAD } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PostForm from "../(modals)/PostForm";
 import DashboardPostCard from "./DashboardPostCard";
-import PostCardSkeleton from "@/components/skeletons/Post/PostCardSkeleton";
 
 const Posts = ({ userData }: { userData: any }) => {
   const [userPosts, setUserPosts] = useState([]);
@@ -16,20 +16,6 @@ const Posts = ({ userData }: { userData: any }) => {
       setUserPosts(fetchedData.data);
     }
   );
-
-  const fetchUserPosts = async () => {
-    try {
-      const res = await fetch(`${API_HEAD}/posts/getPosts/user?userId=${userData?._id}`);
-      const data = await res.json();
-      setUserPosts(data);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  useEffect(() => {
-    fetchUserPosts();
-  }, [])
 
   return (
     <>
