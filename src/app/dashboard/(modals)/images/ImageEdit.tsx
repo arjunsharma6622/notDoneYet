@@ -1,14 +1,13 @@
 "use client";
 
+import ModalLayout from "@/components/ModalLayout";
 import { Separator } from "@/components/ui/separator";
+import axiosInstance from "@/utils/axiosInstance";
 import { useState } from "react";
 import { FiX } from "react-icons/fi";
+import { toast } from "sonner";
 import BgImage from "./BgImage";
 import ProfileImage from "./ProfileImage";
-import ModalLayout from "@/components/ModalLayout";
-import { API_HEAD } from "@/lib/utils";
-import axios from "axios";
-import { toast } from "sonner";
 
 const ImageEdit = ({ open, setOpen, user }: any) => {
   const [selectedSection, setSelectedSection] = useState("profileImage");
@@ -18,14 +17,14 @@ const ImageEdit = ({ open, setOpen, user }: any) => {
   const handleTerminateSaveImage = async () => {
     try {
       if (backgroundImage) {
-        await axios.get(
-          `${API_HEAD}/images/deleteImage?imageUrl=${backgroundImage}`,
+        await axiosInstance.delete(
+          `/images/deleteImage?imageUrl=${backgroundImage}`,
         );
         toast.success("Image(s) deleted successfully");
       }
       if (profileImage) {
-        await axios.get(
-          `${API_HEAD}/images/deleteImage?imageUrl=${profileImage}`,
+        await axiosInstance.delete(
+          `/images/deleteImage?imageUrl=${profileImage}`,
         );
         toast.success("Image(s) deleted successfully");
       }

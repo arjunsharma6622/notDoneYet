@@ -97,7 +97,7 @@ const EasyCrop = ({
   return (
     <div className=" flex flex-col gap-3 items-center justify-center">
       <div
-        className=""
+        className="border border-gray-200 rounded-xl"
         style={{
           display: image === null ? "none" : "block",
         }}
@@ -128,10 +128,11 @@ const EasyCrop = ({
 
       <button
       type="button"
-        className={`bg-blue-500 text-white py-2 px-4 rounded ${image === null ? "hidden" : "flex"} items-center justify-center gap-2 w-full`}
+        className={`bg-blue-600 text-white py-2 px-4 rounded-full ${image === null ? "hidden" : "flex"} items-center justify-center gap-2 w-fit px-6`}
         onClick={() => {
           showCroppedImage();
         }}
+        disabled={isUploading}
       >
         {!isUploading ? (
           <>

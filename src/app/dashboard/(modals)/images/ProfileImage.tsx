@@ -1,16 +1,15 @@
 "use client"
 
 import EasyCrop from "@/components/client/EasyCrop";
-import { Button } from "@/components/ui/button";
-import { API_HEAD } from "@/lib/utils";
+import { FormButton } from "@/components/ui/FormButton";
 import axiosInstance from "@/utils/axiosInstance";
-import axios from "axios";
 import { useState } from "react";
 import { FiImage, FiXCircle } from "react-icons/fi";
 import { toast } from "sonner";
 
 const ProfileImage = ({user, profileImage, setProfileImage, setOpen} : any) => {
   const [image, setImage ] : any = useState(null);
+  const [isProfileUpdating, setIsProfileUpdating] = useState(false);
 
   const handleImageChange = (e: any) => {
     const files = Array.from(e.target.files);
@@ -20,9 +19,10 @@ const ProfileImage = ({user, profileImage, setProfileImage, setOpen} : any) => {
 
 const handleSaveImage = async () => {
   try {
+    setIsProfileUpdating(true);
     // delete the previous image first
     if (user?.image) {
-      await axios.get(`${API_HEAD}/images/deleteImage?imageUrl=${user?.image}`);
+      await axiosInstance.delete(`/images/deleteImage?imageUrl=${user?.image}`);
     }
     // then save the new image url to the database
     await axiosInstance.patch(`/user/`, { image: profileImage });
@@ -30,7 +30,11 @@ const handleSaveImage = async () => {
     toast.success("Image uploaded successfully");
     setOpen(false);
   } catch (err) {
+    setIsProfileUpdating(false);
     console.error("Error uploading images to Cloudinary:", err);
+  }
+  finally{
+    setIsProfileUpdating(false);
   }
 };
 
@@ -39,7 +43,7 @@ const handleTerminateSaveImage = async () => {
   try{
     // delete the newly uploaded image as user is terminating the process
     if (profileImage) {
-      await axios.get(`${API_HEAD}/images/deleteImage?imageUrl=${profileImage}`);
+      await axiosInstance.delete(`/images/deleteImage?imageUrl=${profileImage}`);
     }
 
     toast.success("Image deleted successfully");
@@ -115,7 +119,7 @@ return (
             />
           </div>
 
-          <Button onClick={handleSaveImage}>Save / Upload</Button>
+          <FormButton variant="save" className="w-full" isLoading={isProfileUpdating} onClick={handleSaveImage}>Save</FormButton>
         </div>
       )}
     </div>

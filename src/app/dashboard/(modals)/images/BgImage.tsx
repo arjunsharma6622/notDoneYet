@@ -1,8 +1,7 @@
 import EasyCrop from "@/components/client/EasyCrop";
 import { Button } from "@/components/ui/button";
-import { API_HEAD } from "@/lib/utils";
+import { FormButton } from "@/components/ui/FormButton";
 import axiosInstance from "@/utils/axiosInstance";
-import axios from "axios";
 import { useState } from "react";
 import { FiImage, FiXCircle } from "react-icons/fi";
 import { toast } from "sonner";
@@ -14,6 +13,7 @@ const BgImage = ({
   setOpen,
 }: any) => {
   const [bgImage, setBgImage]: any = useState(null);
+  const [isProfileUpdating, setIsProfileUpdating] = useState(false);
 
   const handleBgImageChange = (e: any) => {
     const files = Array.from(e.target.files);
@@ -22,10 +22,11 @@ const BgImage = ({
 
   const handleSaveImage = async () => {
     try {
+      setIsProfileUpdating(true);
       // delete the previous image first
       if (user?.backgroundImg) {
-        await axios.get(
-          `${API_HEAD}/images/deleteImage?imageUrl=${user?.backgroundImg}`,
+        await axiosInstance.delete(
+          `/images/deleteImage?imageUrl=${user?.backgroundImg}`,
         );
       }
       // then save the new image url to the database
@@ -36,7 +37,11 @@ const BgImage = ({
       toast.success("Image uploaded successfully");
       setOpen(false);
     } catch (err) {
+      setIsProfileUpdating(false);
       console.error("Error uploading images to Cloudinary:", err);
+    }
+    finally{
+      setIsProfileUpdating(false);
     }
   };
 
@@ -44,8 +49,8 @@ const BgImage = ({
     try {
       // delete the newly uploaded image as user is terminating the process
       if (backgroundImage) {
-        await axios.get(
-          `${API_HEAD}/images/deleteImage?imageUrl=${backgroundImage}`,
+        await axiosInstance.delete(
+          `/images/deleteImage?imageUrl=${backgroundImage}`,
         );
       }
 
@@ -122,7 +127,7 @@ const BgImage = ({
               />
             </div>
 
-            <Button onClick={handleSaveImage}>Save / Upload</Button>
+            <FormButton variant="save" className="w-fit px-10" isLoading={isProfileUpdating} onClick={handleSaveImage}>Save / Upload</FormButton>
           </div>
         )}
       </div>
