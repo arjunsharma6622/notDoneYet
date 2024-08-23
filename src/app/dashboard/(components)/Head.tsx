@@ -47,6 +47,7 @@ const Head = ({ userData, setUserData }: { userData: any, setUserData: any }) =>
             alt=""
             className="w-full object-cover aspect-[4/1] rounded-tr-md rounded-tl-md"
           />
+
           <Image
             src={
               userData?.image ||

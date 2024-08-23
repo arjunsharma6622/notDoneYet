@@ -1,6 +1,7 @@
 "use client";
 
 import useAuth from "@/context/useAuth";
+import useFormSubmit from "@/hooks/useFormSubmit";
 import axiosInstance from "@/utils/axiosInstance";
 import { EllipsisVertical, Flame, LoaderCircle, Share2 } from "lucide-react";
 import Link from "next/link";
@@ -12,12 +13,13 @@ const HeadActionOptions = ({
 }: {
   userData: any;
 }) => {
-  const {auth} = useAuth()
-  const {user : authenticatedUser} = auth;
+  const { auth } = useAuth()
+  const { user: authenticatedUser } = auth;
 
   const [isFollowing, setIsFollowing] = useState(userData?.followers?.includes(authenticatedUser?._id));
   const [isFollowLoading, setIsFollowLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
+  const [profileLikes, setProfileLikes] = useState(userData?.profileLikes);
 
   const handleToggleFollowClick = async () => {
     try {
@@ -31,7 +33,7 @@ const HeadActionOptions = ({
         });
         return;
       }
-      
+
       if (userData._id === authenticatedUser?._id) {
         toast.info("You can't follow yourself");
         return;
@@ -55,7 +57,10 @@ const HeadActionOptions = ({
     }
   };
 
-  const handleLikeProfile = async ({ error }: any) => {
+  const { onSubmit: onProfileLike, isLoading: isProfileLikeLoading } = useFormSubmit('/user/toggleProfileLike', 'post')
+
+
+  const handleLikeProfile = async () => {
     try {
       if (!authenticatedUser) {
         toast.info("Please login to like profile", {
@@ -71,18 +76,20 @@ const HeadActionOptions = ({
         toast.info("You can't like yourself");
         return;
       }
-
-      const response = await axiosInstance.post(`/user/toggleProfileLike`, {
-        profileId: userData._id
+      onProfileLike({ profileId: userData._id }, (data) => {
+        if(data.liked === 1){
+          setProfileLikes([...profileLikes, authenticatedUser?._id])
+        }else{
+          setProfileLikes(profileLikes.filter((id: string) => id !== authenticatedUser?._id))
+        }
       })
-      if (response?.data?.statusCode === 200) {
-        toast.success(response?.data?.message);
-      }
     } catch (err) {
       console.error("Error liking user:", err);
       toast.error(`${err}`);
     }
   };
+
+
 
   return (
     <div className="flex items-center gap-4">
@@ -103,7 +110,7 @@ const HeadActionOptions = ({
           >
             Follow
             {
-              isFollowLoading && <LoaderCircle className="inline ml-2 animate-spin w-5 h-5"/>
+              isFollowLoading && <LoaderCircle className="inline ml-2 animate-spin w-5 h-5" />
             }
           </button>
         </form>
@@ -114,22 +121,21 @@ const HeadActionOptions = ({
           type="submit"
           className="px-2 py-2 rounded-full bg-orange-100 cursor-pointer flex items-center gap-2"
         >
-          {userData?.profileLikes?.length > 0 &&
+          {profileLikes?.length > 0 &&
             <span className="text-orange-600 text-sm font-medium">
-              {userData?.profileLikes?.length}
+              {profileLikes?.length}
             </span>
           }
-          {userData?.profileLikes?.includes(authenticatedUser?._id) ? (
-            <Flame fill="#ea580c" className="text-orange-600 w-5 h-5" />
-          ) : (
-            <Flame className="text-orange-600 w-5 h-5" />
-          )}
+          {isProfileLikeLoading ?
+            <LoaderCircle className="text-orange-600 w-5 h-5 animate-spin" />
+            :
+            profileLikes?.includes(authenticatedUser?._id) ? (
+              <Flame fill="#ea580c" className="text-orange-600 w-5 h-5" />
+            ) : (
+              <Flame className="text-orange-600 w-5 h-5" />
+            )}
         </button>
       </form>
-
-      <div className="px-2 py-2 rounded-full bg-blue-100 cursor-pointer -scale-x-100">
-        <Share2 className="text-blue-600 w-5 h-5" />
-      </div>
       <div className="px-2 py-2 rounded-full bg-gray-100 cursor-pointer">
         <EllipsisVertical className="text-gray-600 w-5 h-5" />
       </div>

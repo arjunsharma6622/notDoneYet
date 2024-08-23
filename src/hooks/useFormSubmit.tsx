@@ -13,9 +13,9 @@ const useFormSubmit = (url: string, method: "patch" | "post" | "put" = "patch") 
         toast.success(response.data.message);
         onSuccess?.(response.data.data); // Pass the updated data to the onSuccess callback
       }
-    } catch (err) {
+    } catch (err : any) {
       console.error(err);
-      toast.error("An error occurred");
+      toast.error(err.response?.data?.message || "Something went wrong");
     } finally {
       setIsLoading(false);
     }

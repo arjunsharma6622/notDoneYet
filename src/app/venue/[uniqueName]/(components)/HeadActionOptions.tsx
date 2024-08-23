@@ -1,10 +1,11 @@
 "use client";
 
 import useAuth from "@/context/useAuth";
+import useFormSubmit from "@/hooks/useFormSubmit";
 import { API_HEAD } from "@/lib/utils";
 import axiosInstance from "@/utils/axiosInstance";
 import axios from "axios";
-import { Flame } from "lucide-react";
+import { EllipsisVertical, Flame, LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { BiShare } from "react-icons/bi";
@@ -16,11 +17,14 @@ const HeadActionOptions = ({
 }: {
   userData: any;
 }) => {
-  const {auth} = useAuth()
-  const {user : authenticatedUser} = auth;
+  const { auth } = useAuth()
+  const { user: authenticatedUser } = auth;
 
   const [isFollowing, setIsFollowing] = useState(userData?.followers?.includes(authenticatedUser?._id));
   const [isFollowLoading, setIsFollowLoading] = useState(false);
+
+  const [profileLikes, setProfileLikes] = useState(userData?.profileLikes);
+
 
   const handleToggleFollowClick = async () => {
     try {
@@ -34,7 +38,7 @@ const HeadActionOptions = ({
         });
         return;
       }
-      
+
       if (userData._id === authenticatedUser?._id) {
         toast.info("You can't follow yourself");
         return;
@@ -42,7 +46,7 @@ const HeadActionOptions = ({
 
       setIsFollowLoading(true)
       const response = await axios.post(`${API_HEAD}/user/toggleFollow`, {
-        currentUserId : authenticatedUser?._id,
+        currentUserId: authenticatedUser?._id,
         selectedUserId: userData._id
       })
       if (response?.data?.message === "Success") {
@@ -57,6 +61,9 @@ const HeadActionOptions = ({
       toast.error("Error following user" + err);
     }
   };
+
+  const { onSubmit: onProfileLike, isLoading: isProfileLikeLoading } = useFormSubmit('/venue/toggleProfileLike', 'post')
+
 
   const handleLikeProfile = async () => {
     try {
@@ -74,15 +81,16 @@ const HeadActionOptions = ({
         toast.info("You can't like yourself");
         return;
       }
-      const response = await axiosInstance.post(`/user/toggleProfileLike`, {
-        profileId: userData._id
+      onProfileLike({ profileId: userData._id }, (data) => {
+        if (data.liked === 1) {
+          setProfileLikes([...profileLikes, authenticatedUser?._id])
+        } else {
+          setProfileLikes(profileLikes.filter((id: string) => id !== authenticatedUser?._id))
+        }
       })
-      if (response?.data?.statusCode === 200) {
-        toast.success(response?.data?.message);
-      }
     } catch (err) {
       console.error("Error liking user:", err);
-      toast.error("Error liking user");
+      toast.error(`${err}`);
     }
   };
 
@@ -113,24 +121,23 @@ const HeadActionOptions = ({
           type="submit"
           className="px-2 py-2 rounded-full bg-orange-100 cursor-pointer flex items-center gap-2"
         >
-          {userData?.profileLikes?.length > 0 &&
+          {profileLikes?.length > 0 &&
             <span className="text-orange-600 text-sm font-medium">
-              {userData?.profileLikes?.length}
+              {profileLikes?.length}
             </span>
           }
-          {userData?.profileLikes?.includes(authenticatedUser?._id) ? (
-            <Flame fill="#ea580c" className="text-orange-600 w-5 h-5" />
-          ) : (
-            <Flame className="text-orange-600 w-5 h-5" />
-          )}
+          {isProfileLikeLoading ?
+            <LoaderCircle className="text-orange-600 w-5 h-5 animate-spin" />
+            :
+            profileLikes?.includes(authenticatedUser?._id) ? (
+              <Flame fill="#ea580c" className="text-orange-600 w-5 h-5" />
+            ) : (
+              <Flame className="text-orange-600 w-5 h-5" />
+            )}
         </button>
       </form>
-
-      <div className="px-2 py-2 rounded-full bg-blue-100 cursor-pointer -scale-x-100">
-        <BiShare className="text-blue-600 w-5 h-5" />
-      </div>
       <div className="px-2 py-2 rounded-full bg-gray-100 cursor-pointer">
-        <FiMoreVertical className="text-gray-600 w-5 h-5" />
+        <EllipsisVertical className="text-gray-600 w-5 h-5" />
       </div>
     </div>
   );

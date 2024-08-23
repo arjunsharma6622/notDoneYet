@@ -50,7 +50,7 @@ const BasicVenueDetails = ({
               <Label htmlFor="uniqueName">Unique Name</Label>
 
               <span className="ml-2 text-xs text-gray-500">
-                https://ndy.com/venue/
+                https://notdoneyet.in/venue/
                 {watch("uniqueName")}
               </span>
               <Input
