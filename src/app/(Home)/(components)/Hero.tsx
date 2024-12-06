@@ -1,5 +1,6 @@
 import { CLIENT_HEAD } from '@/lib/utils'
 import { whatsAppCommunityLink } from '@/utils/data'
+import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -16,14 +17,20 @@ const Hero = () => {
 
                     </h1>
 
+
                     <div className="mt-4 flex text-xs md:text-base items-center justify-center flex-row gap-2 md:gap-4">
-                        <Link href={whatsAppCommunityLink} className="bg-black text-white px-3 md:px-6 py-3 rounded-full font-bold hover:bg-gray-800 transition">
+                        {/* <Link href={whatsAppCommunityLink} className="bg-black text-white px-3 md:px-6 py-3 rounded-full font-bold hover:bg-gray-800 transition">
                             Join Our Network
-                        </Link>
+                        </Link> */}
+
                         <Link href={`${CLIENT_HEAD}/signup`} className="bg-red-600 text-white px-4 md:px-6 py-3 rounded-full font-bold hover:bg-gray-800 transition">
-                            Sign Up
+                            Get Started <ArrowRight className='inline' />
                         </Link>
                     </div>
+
+                    <Link href={`${CLIENT_HEAD}/app/android`}>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/1200px-Google_Play_Store_badge_EN.svg.png" alt="" className='h-8 md:h-12 mt-4' />
+                    </Link>
 
                 </section>
             </div>
