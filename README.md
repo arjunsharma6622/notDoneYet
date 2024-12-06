@@ -1,38 +1,23 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# **NDY - Sports Networking Platform**
+https://notdoneyet.in
 
-## Getting Started
+The **Sports Networking Platform** is a dedicated ecosystem designed for athletes, coaches, sports doctors, venues, brands, and associations to connect, collaborate, and grow their presence in the sports industry. The platform provides seamless networking, personalized profiles, and opportunities to share updates, find professionals, and engage in sponsorships.
 
-First, run the development server:
+## Repositories
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This project is divided into three main components, each maintained in a separate repository:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Client - the current repo**  
+   - **Description**: The web-based front-end application for the platform.  
+   - **Technology Stack**: React, Next.js, Tailwind CSS.  
+   - **GitHub Repository**: [Sports Networking Client](https://github.com/arjunsharma6622/notDoneYet)  
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. **Server**  
+   - **Description**: Backend API service handling authentication, data management, and integrations.  
+   - **Technology Stack**: Flask, MongoDB, JWT Authentication.  
+   - **GitHub Repository**: [Sports Networking Server](https://github.com/arjunsharma6622/notDoneYet-server)  
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-# notDoneYet
+3. **Mobile App**  
+   - **Description**: Mobile application providing a native-like experience for users on the go.  
+   - **Technology Stack**: React Native, Expo.  
+   - **GitHub Repository**: [Sports Networking Mobile App](https://github.com/arjunsharma6622/notDoneYet-app)  
