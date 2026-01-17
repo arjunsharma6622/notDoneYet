@@ -35,4 +35,28 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Environment (explicit)
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*.local
+
+# IDE and editors
+.idea/
+.vscode/
+
+# Secrets and keys
+*.key
+secrets/
+
+# Logs
+*.log
+
+# Cache
+.cache/
+
+# OS
 .DS_Store

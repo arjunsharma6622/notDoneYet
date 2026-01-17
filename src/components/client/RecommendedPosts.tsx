@@ -10,7 +10,11 @@ const fetcher = (url: string) => axiosInstance.get(url).then((res) => res.data);
 
 const RecommendedPosts = () => {
 
-  const { data, error, isLoading } = useSWR("/posts/user/recommendedPosts", fetcher);
+  const { data, error, isLoading, mutate } = useSWR("/posts/user/recommendedPosts", fetcher, {
+    revalidateOnFocus: true,
+    revalidateOnReconnect: true,
+    refreshInterval: 0, // Disable auto-refresh, rely on manual revalidation
+  });
 
   const recommendedPosts = data?.data
 

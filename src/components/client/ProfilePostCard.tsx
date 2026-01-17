@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import PostCardMore from "./PostCardMore";
 import PostImageSection from "./PostImageSection";
+import YouTubeVideoSection from "./YouTubeVideoSection";
 
 const ProfilePostCard = ({ post, currUser, dashboardCard }: any) => {
   return (
@@ -40,7 +41,12 @@ const ProfilePostCard = ({ post, currUser, dashboardCard }: any) => {
         </div>
 
         <Link href={`/${post?.user?.role}/${post?.user?.userName}/post/${post._id}`} className="flex flex-col gap-2">
-          <PostImageSection openModalOnClick={false} images={post?.images} />
+          {post?.images?.length > 0 && (
+            <PostImageSection openModalOnClick={false} images={post?.images} />
+          )}
+          {post?.youtubeVideos?.length > 0 && (
+            <YouTubeVideoSection videoIds={post.youtubeVideos} />
+          )}
           <p className="flex-[11] text-sm truncatedText">{post.description}</p>
         </Link>
         {(post?.likes?.length > 0 || post?.comments?.length > 0) &&
