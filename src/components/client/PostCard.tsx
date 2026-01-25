@@ -12,6 +12,7 @@ import { RiHeart2Fill, RiHeart2Line } from "react-icons/ri";
 import { toast } from "sonner";
 import PostImageSection from "./PostImageSection";
 import PostCardMore from "./PostCardMore";
+import YouTubeVideoSection from "./YouTubeVideoSection";
 
 const PostComment = dynamic(
   () => import("./PostComment"),
@@ -93,8 +94,11 @@ const PostCard = ({ postData }: any) => {
 
       <div className="w-full flex flex-col gap-4 px-2 py-2">
         <p className="text-sm text-start">{postData?.description}</p>
-        {postData?.images.length > 0 && (
+        {postData?.images?.length > 0 && (
           <PostImageSection images={postData?.images} />
+        )}
+        {postData?.youtubeVideos?.length > 0 && (
+          <YouTubeVideoSection videoIds={postData.youtubeVideos} />
         )}
       </div>
 

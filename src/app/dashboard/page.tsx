@@ -15,6 +15,7 @@ import UserProfileSkeleton from "./(components)/UserProfileSkleton";
 import Products from "./(components)/brand/Products";
 import Education from "./(components)/doctor/Education";
 import PastEvents from "./(components)/venue/PastEvents";
+import Tournaments from "./(components)/tournament/Tournaments";
 import Venues from "./(components)/venue/Venues";
 
 const fetchAuthenticatedUser = async () => {
@@ -57,6 +58,7 @@ const Page = () => {
                 <div className="w-full  flex flex-col gap-5 border rounded-md md:flex-[8.5]">
                   <Head userData={userData} setUserData={setUserData} />
                   {userData?.role == "venue" && <Venues userData={userData} setUserData={setUserData} />}
+                  {(userData?.role == "venue" || userData?.role == "brand") && <Tournaments userData={userData} />}
                   <Posts userData={userData} />
                   <About userData={userData} setUserData={setUserData} />
                   {userData?.role == "brand" && <Products userData={userData} />}

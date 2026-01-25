@@ -1,11 +1,12 @@
 import PostImageSection from "@/components/client/PostImageSection";
+import YouTubeVideoSection from "@/components/client/YouTubeVideoSection";
 import { timeAgo } from "@/lib/utils";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import DashboardPostCardMore from "./DashboardPostCardMore";
 import { useState } from "react";
-
+//sid
 const DashboardPostCard = ({ post, setUserPosts }: any) => {
   const [moreOptionsOpen, setMoreOptionsOpen] = useState(false);
   return (
@@ -44,7 +45,12 @@ const DashboardPostCard = ({ post, setUserPosts }: any) => {
         </div>
 
         <Link href={`${post?.user?.role}/${post?.user?.userName}/post/${post._id}`} className="flex flex-col gap-2">
-          <PostImageSection openModalOnClick={false} images={post?.images} />
+          {post?.images?.length > 0 && (
+            <PostImageSection openModalOnClick={false} images={post?.images} />
+          )}
+          {post?.youtubeVideos?.length > 0 && (
+            <YouTubeVideoSection videoIds={post.youtubeVideos} />
+          )}
           <p className="flex-[11] text-sm truncatedText">{post.description}</p>
         </Link>
         {(post?.likes?.length > 0 || post?.comments?.length > 0) &&
