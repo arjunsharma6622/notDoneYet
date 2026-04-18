@@ -5,6 +5,7 @@ import Experience from "./(components)/Experience";
 import Head from "./(components)/Head";
 import Posts from "./(components)/Posts";
 import Skills from "./(components)/Skills";
+import Shorts from "./(components)/Shorts";
 
 const Profile = async ({ userData }: any) => {
 
@@ -24,6 +25,8 @@ const Profile = async ({ userData }: any) => {
             {(userData.role === "doctor" || userData.role === "athlete") && (
               <Skills userData={userData} />
             )}
+
+            {userData.role === "page" && <Shorts userData={userData} />}
 
             <Posts userData={userData} />
 

@@ -164,3 +164,8 @@ export const CLIENT_HEAD =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
     : "https://notdoneyet.in";
+
+export const isVideoUrl = (url: string) => {
+  if (!url) return false;
+  return url.match(/\.(mp4|webm|ogg|mov)$/i) || url.includes('/video/upload/');
+};

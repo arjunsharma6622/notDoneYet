@@ -91,7 +91,8 @@ export const tabs = [
     { key: 'brand', label: 'Brand/Sponsor' },
     { key: 'corporate', label: 'Corporate' },
     { key: 'sportstech', label: 'Sports Tech' },
-    { key: 'association', label: 'Association' }
+    { key: 'association', label: 'Association' },
+    { key: 'page', label: 'Page' }
 ];
 
 export const tabContent: any = {
@@ -142,5 +143,11 @@ export const tabContent: any = {
         challenges: ['Looking to increase member engagement?', 'Want to promote your events and activities more effectively?', 'Need to connect with other sports organizations?'],
         solutions: ['Engage your members with targeted content and updates.', 'Promote your events to a wider, relevant audience.', 'Collaborate with other sports organizations to enhance your reach and influence.'],
         image: 'association.png'
+    },
+    page: {
+        headline: 'Build Your Organization’s Presence',
+        challenges: ['Need a central hub for your organization?', 'Want to share updates and media with followers?', 'Looking to establish a professional identity?'],
+        solutions: ['Create a dedicated page for your organization.', 'Share posts, videos, and updates effortlessly.', 'Connect with the community as a unified entity.'],
+        image: 'company.png'
     }
 };

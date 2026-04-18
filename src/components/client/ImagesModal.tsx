@@ -5,8 +5,41 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { isVideoUrl } from "./PostImageSection";
 import { FiX } from "react-icons/fi";
+
+const ModalMediaItem = ({ src }: { src: string }) => {
+  const [videoRatio, setVideoRatio] = useState<string | undefined>();
+
+  if (isVideoUrl(src)) {
+    return (
+      <video
+        src={src}
+        controls
+        className="w-full h-[400px]"
+        style={{
+          objectFit: "contain",
+          backgroundColor: "black",
+          aspectRatio: videoRatio || "auto",
+        }}
+        onLoadedMetadata={(e) => {
+          const { videoWidth, videoHeight } = e.currentTarget;
+          if (videoWidth && videoHeight) {
+            setVideoRatio(`${videoWidth}/${videoHeight}`);
+          }
+        }}
+      />
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      className="w-[100%] h-[400px] object-contain bg-black"
+    />
+  );
+};
 
 const ImagesModal = ({ images, open, setOpen }: any) => {
   useEffect(() => {
@@ -33,10 +66,7 @@ const ImagesModal = ({ images, open, setOpen }: any) => {
               <CarouselContent className="">
                 {images?.map((image: string, index: number) => (
                   <CarouselItem key={index}>
-                    <img
-                      src={image}
-                      className="w-[100%] h-[400px] object-cover"
-                    />
+                    <ModalMediaItem src={image} />
                   </CarouselItem>
                 ))}
               </CarouselContent>

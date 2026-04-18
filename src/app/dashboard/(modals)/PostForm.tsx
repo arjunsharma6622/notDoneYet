@@ -2,9 +2,33 @@ import ModalLayout from "@/components/ModalLayout";
 import { FormButton } from "@/components/ui/FormButton";
 import useFormSubmit from "@/hooks/useFormSubmit";
 import { useState } from "react";
-import { BiImageAdd } from "react-icons/bi";
+import { BiImageAdd, BiVideoPlus } from "react-icons/bi";
 import { FiX } from "react-icons/fi";
 import MultiImages from "./MultiImages";
+
+const PreviewVideo = ({ src }: { src: string }) => {
+  const [videoRatio, setVideoRatio] = useState<string | undefined>();
+
+  return (
+    <video
+      src={src}
+      className="w-full rounded-md"
+      style={{
+        objectFit: "contain",
+        backgroundColor: "black",
+        aspectRatio: videoRatio || "auto",
+        maxHeight: "150px"
+      }}
+      controls
+      onLoadedMetadata={(e) => {
+        const { videoWidth, videoHeight } = e.currentTarget;
+        if (videoWidth && videoHeight) {
+          setVideoRatio(`${videoWidth}/${videoHeight}`);
+        }
+      }}
+    />
+  );
+};
 
 const PostForm = ({
   open,
@@ -25,22 +49,27 @@ const PostForm = ({
     images: [],
   });
 
+  const isVideoUrl = (url: string) => {
+    if (!url) return false;
+    return url.match(/\.(mp4|webm|ogg|mov)$/i) || url.includes('/video/upload/');
+  };
+
   const handleTextareaInput = (event: any) => {
     event.target.style.height = "auto";
     event.target.style.height = `${event.target.scrollHeight}px`;
   };
 
-  const {onSubmit, isLoading} = useFormSubmit("/posts/", "post");
+  const { onSubmit, isLoading } = useFormSubmit("/posts/", "post");
 
   const handlePostCreate = async () => {
-      postData.images = imageUrls;
-      const payloadToSend = {
-          ...postData
-      }
-      onSubmit(payloadToSend, (updatedData) => {
-        setImages([]);
-        setOpen(false);
-      })
+    postData.images = imageUrls;
+    const payloadToSend = {
+      ...postData
+    }
+    onSubmit(payloadToSend, (updatedData) => {
+      setImages([]);
+      setOpen(false);
+    })
   };
 
   return (
@@ -79,11 +108,15 @@ const PostForm = ({
                     <div className="flex flex-wrap gap-2 mt-2">
                       {imageUrls.map((image: any, index: number) => (
                         <div key={index} className="relative w-1/4 h-1/4">
-                          <img
-                            src={image}
-                            alt="Post"
-                            className="w-full h-full object-cover rounded-md"
-                          />
+                          {isVideoUrl(image) ? (
+                            <PreviewVideo src={image} />
+                          ) : (
+                            <img
+                              src={image}
+                              alt="Post"
+                              className="w-full h-full object-cover rounded-md"
+                            />
+                          )}
                         </div>
                       ))}
                     </div>
@@ -94,8 +127,9 @@ const PostForm = ({
                     className="w-fit flex items-center gap-2 cursor-pointer overflow-y-scroll"
                   >
                     <BiImageAdd className="w-6 h-6" />
+                    <BiVideoPlus className="w-6 h-6" />
                     <span className="text-xs text-gray-500">
-                      Add Images to your post
+                      Add Photos or Videos to your post
                     </span>
                   </div>
 

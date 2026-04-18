@@ -40,7 +40,9 @@ const Page = () => {
       setIsLoading(true);
       const response = await axiosInstance.post(`/auth/login`, { email, password });
 
-      if (response.status === 200 && response.data.success && response.data.data) {
+      console.log(response)
+
+      if (response.status === 201 && response.data.success && response.data.data) {
         setIsLoading(false);
         // if login successful the set the setAuth from context
         setAuth({

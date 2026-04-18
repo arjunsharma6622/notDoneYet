@@ -4,7 +4,31 @@ import { Button } from "@/components/ui/button";
 import { API_HEAD } from "@/lib/utils";
 import axios from "axios";
 import { useState } from "react";
-import { BiImageAdd } from "react-icons/bi";
+
+const PreviewVideo = ({ src }: { src: string }) => {
+  const [videoRatio, setVideoRatio] = useState<string | undefined>();
+
+  return (
+    <video
+      src={src}
+      className="w-full rounded-lg"
+      style={{
+        objectFit: "contain",
+        backgroundColor: "black",
+        aspectRatio: videoRatio || "auto",
+        maxHeight: "300px"
+      }}
+      controls
+      onLoadedMetadata={(e) => {
+        const { videoWidth, videoHeight } = e.currentTarget;
+        if (videoWidth && videoHeight) {
+          setVideoRatio(`${videoWidth}/${videoHeight}`);
+        }
+      }}
+    />
+  );
+};
+import { BiImageAdd, BiVideoPlus } from "react-icons/bi";
 import { FiAlertCircle, FiImage, FiX, FiXCircle } from "react-icons/fi";
 import { toast } from "sonner";
 
@@ -22,12 +46,56 @@ const MultiImages = ({
   venueImagePath,
 }: any) => {
   const [image, setImage]: any = useState(null);
+  const [isUploadingVideo, setIsUploadingVideo] = useState(false);
+
+  const handleVideoUpload = async (file: any) => {
+    try {
+      setIsUploadingVideo(true);
+      const toastId = toast.loading("Uploading video...");
+
+      const videoData = new FormData();
+      videoData.append("file", file);
+      videoData.append("upload_preset", "ml_default");
+      videoData.append("folder", baseUrlPath);
+
+      const uploadResponse = await axios.post(
+        "https://api.cloudinary.com/v1_1/dexnb3wk2/video/upload",
+        videoData
+      );
+
+      const videoUrl = uploadResponse.data.secure_url;
+
+      if (inSports) {
+        setImageUrls(sportImagePath, [...imageUrls, videoUrl]);
+      } else if (inVenueImages) {
+        setImageUrls(venueImagePath, [...imageUrls, videoUrl]);
+      } else {
+        setImageUrls((prev: any) => [...prev, videoUrl]);
+      }
+      toast.success("Video uploaded successfully", { id: toastId });
+    } catch (err) {
+      console.log(err);
+      toast.error("Error uploading video");
+    } finally {
+      setIsUploadingVideo(false);
+      setImage(null);
+    }
+  };
 
   const handleImageChange = (e: any) => {
     const files = Array.from(e.target.files);
-    const file = files[0];
+    const file: any = files[0];
     console.log(file);
-    setImage(file);
+    if (file && file.type.startsWith("video/")) {
+      handleVideoUpload(file);
+    } else {
+      setImage(file);
+    }
+  };
+
+  const isVideoUrl = (url: string) => {
+    if (!url) return false;
+    return url.match(/\.(mp4|webm|ogg|mov)$/i) || url.includes('/video/upload/');
   };
 
   const handleRemoveCldImage = async (imageUrl: string) => {
@@ -49,7 +117,7 @@ const MultiImages = ({
         <ModalLayout>
           <div className="w-[95%] md:w-[65%] max-h-[90%] bg-white rounded-md flex flex-col">
             <div className="flex items-center justify-between border-b px-6 py-5">
-              <h1 className="text-2xl font-bold">Add Images</h1>
+              <h1 className="text-2xl font-bold">Add Media</h1>
               <FiX
                 className="w-6 h-6 cursor-pointer"
                 onClick={() => setOpen(false)}
@@ -67,17 +135,27 @@ const MultiImages = ({
                       <input
                         type="file"
                         id="productImage"
-                        accept=".png, .jpg, .jpeg"
+                        accept=".png, .jpg, .jpeg, video/*"
                         style={{ display: "none" }}
                         multiple={false}
                         onChange={handleImageChange}
+                        disabled={isUploadingVideo}
                       />
                       <div className="flex items-center flex-col justify-center gap-2 text-sm">
-                        <BiImageAdd className="w-6 h-6" />
-                        Add Product Image
+                        {isUploadingVideo ? (
+                          <span>Uploading Video...</span>
+                        ) : (
+                          <>
+                            <div className="flex gap-2">
+                              <BiImageAdd className="w-6 h-6" />
+                              <BiVideoPlus className="w-6 h-6" />
+                            </div>
+                            Add Photo or Video
+                          </>
+                        )}
                       </div>
                       <p className="text-xs text-gray-400">
-                        Only .png, .jpg, .jpeg files are allowed
+                        Photos (.png, .jpg) or Videos (.mp4)
                       </p>
                     </label>
                   )}
@@ -108,12 +186,16 @@ const MultiImages = ({
                         .reverse()
                         .map((image: any, index: number) => (
                           <div key={index} className="relative w-full">
-                            <img
-                              key={index}
-                              src={image}
-                              alt=""
-                              className="w-full rounded-lg"
-                            />
+                            {isVideoUrl(image) ? (
+                              <PreviewVideo key={index} src={image} />
+                            ) : (
+                              <img
+                                key={index}
+                                src={image}
+                                alt=""
+                                className="w-full rounded-lg"
+                              />
+                            )}
                             <FiXCircle
                               className="absolute w-6 h-6 top-2 right-2 bg-white rounded-full cursor-pointer text-red-500"
                               onClick={async () => {

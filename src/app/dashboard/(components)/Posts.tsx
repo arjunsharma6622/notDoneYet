@@ -4,11 +4,13 @@ import useFetchData from "@/hooks/useFetchData";
 import { API_HEAD } from "@/lib/utils";
 import { useState } from "react";
 import PostForm from "../(modals)/PostForm";
+import ShortsForm from "../(modals)/ShortsForm";
 import DashboardPostCard from "./DashboardPostCard";
 
 const Posts = ({ userData }: { userData: any }) => {
   const [userPosts, setUserPosts] = useState([]);
   const [openPostForm, setOpenPostForm] = useState(false);
+  const [openShortsForm, setOpenShortsForm] = useState(false);
 
   const { isLoading, error, refetch } = useFetchData<any>(
     `${API_HEAD}/posts/getPosts/authenticated`,
@@ -22,11 +24,18 @@ const Posts = ({ userData }: { userData: any }) => {
       <div className="py-2 px-2 md:px-6 md:py-4   flex flex-col gap-2 border-t">
         <div className="flex justify-between items-center gap-1">
           <h2 className="text-xl font-bold">Posts</h2>
-          <IconButton
-            variant={"addLong"}
-            text="Add Post"
-            onClick={() => setOpenPostForm(true)}
-          />
+          <div className="flex items-center gap-2">
+            <IconButton
+              variant={"addLong"}
+              text="Add Post"
+              onClick={() => setOpenPostForm(true)}
+            />
+            <IconButton
+              variant={"addLong"}
+              text="Add Short"
+              onClick={() => setOpenShortsForm(true)}
+            />
+          </div>
         </div>
         {isLoading ? (
           <div className="flex items-start gap-2 w-full">
@@ -59,6 +68,16 @@ const Posts = ({ userData }: { userData: any }) => {
             open={openPostForm}
             user={userData}
             setOpen={setOpenPostForm}
+          />
+        </div>
+      )}
+
+      {openShortsForm && (
+        <div className="absolute">
+          <ShortsForm
+            open={openShortsForm}
+            user={userData}
+            setOpen={setOpenShortsForm}
           />
         </div>
       )}
